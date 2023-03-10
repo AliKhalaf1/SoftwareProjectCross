@@ -1,3 +1,4 @@
+import 'package:eventbrite_replica/screens/favourites_sign_up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './profile_sign_up.dart';
@@ -26,10 +27,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
       alignment: Alignment.center,
       child: const Text('Search'),
     ),
-    Container(
-      alignment: Alignment.center,
-      child: const Text('Likes'),
-    ),
+    Favourites(),
     Container(
       alignment: Alignment.center,
       child: const Text('tickets'),
