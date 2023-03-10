@@ -28,8 +28,8 @@ class LogInBtn extends StatelessWidget {
               ),
             ),
             onPressed: () => onPressed(context),
-            child: const Text(
-              'Log In',
+            child: Text(
+              text,
               style: TextStyle(fontSize: 16),
             ),
           ),

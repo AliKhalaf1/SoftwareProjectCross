@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import './screens/signup.dart';
 import './screens/tabBarScreen.dart';
+import './screens/email_check.dart';
+import './screens/findTickets.dart';
 
 void main() {
   runApp(const MainApp());
@@ -29,6 +31,8 @@ class _MainAppState extends State<MainApp> {
         TabBarScreen.TabBarScreenRoute: (ctx) =>
             const TabBarScreen(title: 'Eventbrite'),
         Signup.signUpRoute: (ctx) => const Signup(),
+        EmailCheck.emailCheckRoute: (ctx) => const EmailCheck(),
+        FindTickets.findTicketsRoute: (ctx) => const FindTickets(),
       },
     );
   }
