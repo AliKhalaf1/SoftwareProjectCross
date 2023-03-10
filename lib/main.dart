@@ -38,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  var _currentIndex = 0;
+  var _currentIndex = 0;hh
 
   List<Widget> pages = [
     Container(
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_filled),
+              icon: Icon(Icons.home_outlined),
               label: 'Home',
             ),
             BottomNavigationBarItem(
