@@ -1,8 +1,17 @@
+import '/screens/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileLogIn extends StatelessWidget {
   const ProfileLogIn({super.key});
+
+  void loggingIn(BuildContext ctx)
+  {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_)
+    {
+      return const Signup();
+    }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +62,7 @@ class ProfileLogIn extends StatelessWidget {
                 ),
               ),
             ),
-            onPressed: () {},
+            onPressed: () => loggingIn(context),
             child: const Text(
               'Log In',
               style: TextStyle(fontSize: 16),
