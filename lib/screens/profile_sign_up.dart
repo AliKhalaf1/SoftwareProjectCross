@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/button_links.dart';
 
 class ProfileLogIn extends StatelessWidget {
-  const ProfileLogIn({super.key});
-
+  static const profileLogInRoute = '/profile-signup';
   @override
   Widget build(BuildContext context) {
     return Padding(

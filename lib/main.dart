@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './screens/profile_sign_up.dart';
+import 'screens/favourites_sign_up.dart';
 
 void main() {
   runApp(const MainApp());
@@ -21,7 +22,7 @@ class _MainAppState extends State<MainApp> {
       title: 'Eventbrite',
       theme: ThemeData(
         // is not restarted.
-        primarySwatch: Colors.deepOrange,
+        primaryColor: Color.fromRGBO(209, 65, 12, 1),
       ),
       home: const MyHomePage(title: 'Eventbrite'),
     );
@@ -49,15 +50,13 @@ class _MyHomePageState extends State<MyHomePage> {
       alignment: Alignment.center,
       child: const Text('Search'),
     ),
-    Container(
-      alignment: Alignment.center,
-      child: const Text('Likes'),
-    ),
+    //
+    Favourites(),
     Container(
       alignment: Alignment.center,
       child: const Text('tickets'),
     ),
-    const ProfileLogIn(),
+    ProfileLogIn(),
   ];
 
   @override
