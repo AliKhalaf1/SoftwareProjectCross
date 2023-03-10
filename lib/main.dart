@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import './screens/profile_sign_up.dart';
 
 void main() {
   runApp(const MainApp());
@@ -20,7 +21,7 @@ class _MainAppState extends State<MainApp> {
       title: 'Eventbrite',
       theme: ThemeData(
         // is not restarted.
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.deepOrange,
       ),
       home: const MyHomePage(title: 'Eventbrite'),
     );
@@ -37,7 +38,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   var _currentIndex = 0;
 
   List<Widget> pages = [
@@ -57,10 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
       alignment: Alignment.center,
       child: const Text('tickets'),
     ),
-    Container(
-      alignment: Alignment.center,
-      child: const Text('Profile'),
-    ),
+    const ProfileLogIn(),
   ];
 
   @override
@@ -79,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
           onTap: (index) {
             setState(() {
               _currentIndex = index;
-              print(_currentIndex);
             });
           },
           items: const [
@@ -92,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border_sharp),
+              icon: Icon(Icons.arrow_forward_ios),
               label: 'Likes',
             ),
             BottomNavigationBarItem(
