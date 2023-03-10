@@ -38,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  var _currentIndex = 0;hh
+  var _currentIndex = 0;
 
   List<Widget> pages = [
     Container(
