@@ -2,55 +2,39 @@ import '/screens/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../widgets/button_links.dart';
+import '../widgets/log_in_btn.dart';
 
 class ProfileLogIn extends StatelessWidget {
   const ProfileLogIn({super.key});
 
-  void loggingIn(BuildContext ctx)
-  {
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_)
-    {
+  void loggingIn(BuildContext ctx) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return const Signup();
     }));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              const SizedBox(
-                height: 10,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: const [
+              SizedBox(
+                height: 30,
                 child: Text(''),
               ),
-              const SignUpButtonLink('Ticket Issues'),
-              const SignUpButtonLink('Manage Events'),
+              SignUpButtonLink('Ticket Issues'),
+              SignUpButtonLink('Manage Events'),
+              SignUpButtonLink('Settings'),
             ],
           ),
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                  const Color.fromARGB(255, 207, 62, 18)),
-              foregroundColor: MaterialStateProperty.all(Colors.white),
-              shape: MaterialStatePropertyAll(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-            onPressed: () => loggingIn(context),
-            child: const Text(
-              'Log In',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-        ],
-      ),
+        ),
+        LogInBtn('Log In', loggingIn),
+      ],
     );
   }
 }

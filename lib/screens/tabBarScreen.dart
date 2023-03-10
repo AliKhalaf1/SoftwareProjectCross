@@ -15,7 +15,6 @@ class TabBarScreen extends StatefulWidget {
 }
 
 class _TabBarScreenState extends State<TabBarScreen> {
-
   var _currentIndex = 0;
 
   List<Widget> pages = [
@@ -46,7 +45,8 @@ class _TabBarScreenState extends State<TabBarScreen> {
           iconSize: 22,
           elevation: 5,
           backgroundColor: Colors.white,
-          selectedIconTheme: const IconThemeData(color: Colors.deepOrange),
+          selectedIconTheme:
+              IconThemeData(color: Theme.of(context).primaryColor),
           unselectedItemColor: const Color.fromARGB(255, 43, 41, 41),
           showSelectedLabels: false,
           showUnselectedLabels: false,
@@ -66,7 +66,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.arrow_forward_ios),
+              icon: Icon(Icons.favorite_border),
               label: 'Likes',
             ),
             BottomNavigationBarItem(
