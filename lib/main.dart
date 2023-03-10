@@ -21,7 +21,7 @@ class _MainAppState extends State<MainApp> {
       title: 'Eventbrite',
       theme: ThemeData(
         // is not restarted.
-        primarySwatch: Colors.deepOrange,
+        primaryColor: const Color.fromRGBO(206, 65, 12, 1),
       ),
       home: const MyHomePage(title: 'Eventbrite'),
     );
@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.arrow_forward_ios),
+              icon: Icon(Icons.favorite_border),
               label: 'Likes',
             ),
             BottomNavigationBarItem(
