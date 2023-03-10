@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _counterr = 0;
   var _currentIndex = 0;
 
   List<Widget> pages = [
