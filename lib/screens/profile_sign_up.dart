@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../widgets/button_links.dart';
 
 class ProfileLogIn extends StatelessWidget {
   const ProfileLogIn({super.key});
@@ -10,36 +11,16 @@ class ProfileLogIn extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(
-            height: 50,
-            child: Text(''),
-          ),
           Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Ticket Issues',
-                    textAlign: TextAlign.left,
-                  ),
-                ),
+              const SizedBox(
+                height: 10,
+                child: Text(''),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton(
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(Colors.black),
-                  ),
-                  onPressed: () {},
-                  child:
-                      const Text('Manage Features', textAlign: TextAlign.left),
-                ),
-              ),
+              const SignUpButtonLink('Ticket Issues'),
+              const SignUpButtonLink('Manage Events'),
             ],
           ),
           TextButton(
