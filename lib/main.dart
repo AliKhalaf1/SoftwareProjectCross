@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './screens/profile_sign_up.dart';
 import './screens/signup.dart';
 import './screens/tabBarScreen.dart';
 
