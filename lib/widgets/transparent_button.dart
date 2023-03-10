@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-class LogInBtn extends StatelessWidget {
+class TransparentButton extends StatelessWidget {
   final String text;
   final Function onPressed;
-  const LogInBtn(this.text, this.onPressed, {super.key});
+  final Icon icon;
+  const TransparentButton(this.text, this.onPressed, this.icon, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +20,26 @@ class LogInBtn extends StatelessWidget {
           child: TextButton(
             style: ButtonStyle(
               backgroundColor:
-                  MaterialStateProperty.all(Theme.of(context).primaryColor),
-              foregroundColor: MaterialStateProperty.all(Colors.white),
+                  MaterialStateProperty.all(Colors.white),
+              foregroundColor: MaterialStateProperty.all(Colors.black87),
               shape: MaterialStatePropertyAll(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(3),
+                  side: BorderSide( color: Colors.black,)
+                  
                 ),
               ),
             ),
-            onPressed: () => onPressed(context),
-            child: Text(
-              text,
-              style: TextStyle(fontSize: 16),
+            onPressed: () => onPressed,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                icon,
+                Text(
+                  text,
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
             ),
           ),
         ),

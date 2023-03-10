@@ -4,12 +4,25 @@ import '../widgets/log_in_btn.dart';
 import './email_check.dart';
 import './findTickets.dart';
 import '../widgets/button_links.dart';
+import '../widgets/transparent_button.dart';
 
 class Signup extends StatelessWidget {
   const Signup({super.key});
 
   //Routing value
   static const signUpRoute = '/SignUp';
+
+  //facebook icon
+  static const IconData facebookData =
+      IconData(0xe255, fontFamily: 'MaterialIcons');
+  static const Icon facebook =
+      Icon(facebookData, color: Color.fromRGBO(1, 101, 225, 1));
+
+  //google icon
+  static const IconData googleData =
+      IconData(0xe255, fontFamily: 'MaterialIcons');
+  static const Icon google =
+      Icon(facebookData, color: Color.fromRGBO(1, 101, 225, 1));
 
   //Log in with mail function
   void emailLogIn(BuildContext ctx) {
@@ -24,6 +37,12 @@ class Signup extends StatelessWidget {
       return const FindTickets();
     }));
   }
+
+  //Find Ticket with facebook function
+  void SignWithFacebook() {}
+
+  //Find Ticket with google function
+  void SignWithGoogle() {}
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +91,12 @@ class Signup extends StatelessWidget {
                 LogInBtn('Continue with email address', emailLogIn),
 
                 //Second child
-                const SignUpButtonLink('Continue With facebook'),
+                TransparentButton(
+                    'Continue With Facebook', SignWithFacebook, facebook),
 
                 //Third child
-                const SignUpButtonLink('Continue With facebook'),
+                TransparentButton(
+                    'Continue With Google', SignWithGoogle, google),
 
                 //Fourth child
                 TextButton(
