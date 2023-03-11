@@ -2,6 +2,7 @@ import 'package:eventbrite_replica/screens/favourites_sign_up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './profile_sign_up.dart';
+import './event_screen.dart';
 
 class TabBarScreen extends StatefulWidget {
   // const TabBarScreen({super.key});
@@ -19,10 +20,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
   var _currentIndex = 0;
 
   List<Widget> pages = [
-    Container(
-      alignment: Alignment.center,
-      child: const Text('Home'),
-    ),
+    const EventScreen(),
     Container(
       alignment: Alignment.center,
       child: const Text('Search'),

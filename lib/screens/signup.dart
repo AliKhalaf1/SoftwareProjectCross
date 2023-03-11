@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/log_in_btn.dart';
 import './email_check.dart';
 import './findTickets.dart';
-import '../widgets/button_links.dart';
 import '../widgets/transparent_button.dart';
-import '../widgets/google_icon.dart';
 
 class Signup extends StatelessWidget {
   const Signup({super.key});
