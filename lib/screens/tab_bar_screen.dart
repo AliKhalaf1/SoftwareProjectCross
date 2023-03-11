@@ -49,6 +49,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
           landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
           iconSize: 22,
@@ -67,6 +68,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
           },
           items: const [
             BottomNavigationBarItem(
+              backgroundColor: Colors.white,
               icon: Icon(Icons.home_outlined),
               label: 'Home',
             ),

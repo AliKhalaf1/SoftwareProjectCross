@@ -25,9 +25,11 @@ class _MainAppState extends State<MainApp> {
 
       theme: ThemeData(
         // This is the theme of your application.
+
         fontFamily: 'Neue Plack Extended',
         primaryColor: const Color.fromARGB(255, 209, 65, 12),
       ),
+
       // home: const TabBarScreen(title: 'Eventbrite'),
       initialRoute: TabBarScreen.tabBarScreenRoute,
       routes: {
