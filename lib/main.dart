@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import './screens/signup.dart';
-import './screens/tabBarScreen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'screens/sign_up.dart';
+import 'screens/tab_bar_screen.dart';
 import './screens/email_check.dart';
-import './screens/findTickets.dart';
+import 'screens/find_tickets.dart';
 
 void main() {
   runApp(const MainApp());
@@ -21,14 +22,16 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Eventbrite',
+
       theme: ThemeData(
-        // is not restarted.
-        primaryColor: const Color.fromARGB(255, 213, 84, 36),
+        // This is the theme of your application.
+        fontFamily: 'Neue Plack Extended',
+        primaryColor: const Color.fromARGB(255, 209, 65, 12),
       ),
       // home: const TabBarScreen(title: 'Eventbrite'),
-      initialRoute: TabBarScreen.TabBarScreenRoute,
+      initialRoute: TabBarScreen.tabBarScreenRoute,
       routes: {
-        TabBarScreen.TabBarScreenRoute: (ctx) =>
+        TabBarScreen.tabBarScreenRoute: (ctx) =>
             const TabBarScreen(title: 'Eventbrite'),
         Signup.signUpRoute: (ctx) => const Signup(),
         EmailCheck.emailCheckRoute: (ctx) => const EmailCheck(),

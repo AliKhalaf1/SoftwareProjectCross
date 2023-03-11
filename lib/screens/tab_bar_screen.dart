@@ -1,13 +1,24 @@
 import 'package:eventbrite_replica/screens/favourites_sign_up.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './profile_sign_up.dart';
+import 'package:typicons_flutter/typicons_flutter.dart';
+
+//////////////////////FONTS IMPORT/////////////////////////////
+///
+///
+///
+///
+///
+///
+///
+
+///////////////////////////////////////////////////////
 
 class TabBarScreen extends StatefulWidget {
   // const TabBarScreen({super.key});
 
   //Routing value
-  static final TabBarScreenRoute = '/';
+  static const tabBarScreenRoute = '/';
   final String title;
   const TabBarScreen({super.key, required this.title});
 
@@ -27,7 +38,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
       alignment: Alignment.center,
       child: const Text('Search'),
     ),
-    Favourites(),
+    const Favourites(),
     Container(
       alignment: Alignment.center,
       child: const Text('tickets'),
@@ -68,7 +79,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
               label: 'Likes',
             ),
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.ticket),
+              icon: Icon(Typicons.ticket),
               label: 'Tickets',
             ),
             BottomNavigationBarItem(
