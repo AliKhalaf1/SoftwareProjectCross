@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../widgets/log_in_btn.dart';
 import './email_check.dart';
-import './findTickets.dart';
+import 'find_tickets.dart';
 import '../widgets/transparent_button.dart';
+import '../widgets/google_icon.dart';
 
 class Signup extends StatelessWidget {
   const Signup({super.key});
@@ -35,17 +35,17 @@ class Signup extends StatelessWidget {
   }
 
   //Find Ticket with facebook function
-  void SignWithFacebook() {}
+  void signWithFacebook() {}
 
   //Find Ticket with google function
-  void SignWithGoogle() {}
+  void signWithGoogle() {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white38,
-          foregroundColor: Color.fromRGBO(0, 0, 0, 0.7),
+          foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
           elevation: 0),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -88,11 +88,11 @@ class Signup extends StatelessWidget {
 
                 //Second child
                 TransparentButton(
-                    0, 'Continue With Facebook', SignWithFacebook, facebook),
+                    0, 'Continue With Facebook', signWithFacebook, facebook),
 
                 //Third child
                 TransparentButton(
-                    1, 'Continue With Google', SignWithGoogle, facebook),
+                    1, 'Continue With Google', signWithGoogle, facebook),
 
                 //Fourth child
                 TextButton(

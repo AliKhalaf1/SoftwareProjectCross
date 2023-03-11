@@ -1,5 +1,4 @@
-import '/screens/signup.dart';
-import 'package:flutter/cupertino.dart';
+import 'sign_up.dart';
 import 'package:flutter/material.dart';
 import '../widgets/button_links.dart';
 import '../widgets/log_in_btn.dart';
