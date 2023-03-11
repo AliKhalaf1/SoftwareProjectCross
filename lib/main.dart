@@ -23,7 +23,7 @@ class _MainAppState extends State<MainApp> {
       title: 'Eventbrite',
       theme: ThemeData(
         // is not restarted.
-        primaryColor: const Color.fromARGB(255, 207, 62, 18),
+        primaryColor: const Color.fromARGB(255, 213, 84, 36),
       ),
       // home: const TabBarScreen(title: 'Eventbrite'),
       initialRoute: TabBarScreen.TabBarScreenRoute,
