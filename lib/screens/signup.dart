@@ -5,6 +5,7 @@ import './email_check.dart';
 import './findTickets.dart';
 import '../widgets/button_links.dart';
 import '../widgets/transparent_button.dart';
+import '../widgets/google_icon.dart';
 
 class Signup extends StatelessWidget {
   const Signup({super.key});
@@ -15,14 +16,11 @@ class Signup extends StatelessWidget {
   //facebook icon
   static const IconData facebookData =
       IconData(0xe255, fontFamily: 'MaterialIcons');
-  static const Icon facebook =
-      Icon(facebookData, color: Color.fromRGBO(1, 101, 225, 1));
-
-  //google icon
-  static const IconData googleData =
-      IconData(0xe255, fontFamily: 'MaterialIcons');
-  static const Icon google =
-      Icon(facebookData, color: Color.fromRGBO(1, 101, 225, 1));
+  static const Icon facebook = Icon(
+    facebookData,
+    color: Color.fromRGBO(1, 101, 225, 1),
+    size: 30,
+  );
 
   //Log in with mail function
   void emailLogIn(BuildContext ctx) {
@@ -92,11 +90,11 @@ class Signup extends StatelessWidget {
 
                 //Second child
                 TransparentButton(
-                    'Continue With Facebook', SignWithFacebook, facebook),
+                    0, 'Continue With Facebook', SignWithFacebook, facebook),
 
                 //Third child
                 TransparentButton(
-                    'Continue With Google', SignWithGoogle, google),
+                    1, 'Continue With Google', SignWithGoogle, facebook),
 
                 //Fourth child
                 TextButton(

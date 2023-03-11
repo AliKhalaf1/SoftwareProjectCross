@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import '../widgets/google_icon.dart';
+
+
 
 class TransparentButton extends StatelessWidget {
+  final int id;
   final String text;
   final Function onPressed;
   final Icon icon;
-  const TransparentButton(this.text, this.onPressed, this.icon, {super.key});
+  const TransparentButton(this.id,this.text, this.onPressed, this.icon, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class TransparentButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                icon,
+                id == 0? icon: const GoogleLogo(size:20),
                 Text(
                   text,
                   style: TextStyle(fontSize: 16),
