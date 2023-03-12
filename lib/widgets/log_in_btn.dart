@@ -1,4 +1,6 @@
+import 'package:eventbrite_replica/widgets/google_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LogInBtn extends StatelessWidget {
   final String text;
@@ -9,13 +11,13 @@ class LogInBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.only(top: 5),
+      padding: const EdgeInsets.all(5),
       child: SizedBox(
-        height: 66,
+        height: 70,
         width: double.infinity,
         child: Container(
           padding: const EdgeInsets.all(10),
-          height: 80,
+          height: 90,
           child: TextButton(
             style: ButtonStyle(
               backgroundColor:
@@ -28,9 +30,12 @@ class LogInBtn extends StatelessWidget {
               ),
             ),
             onPressed: () => onPressed(context),
-            child: const Text(
-              'Log In',
-              style: TextStyle(fontSize: 16),
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),

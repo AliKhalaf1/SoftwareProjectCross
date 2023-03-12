@@ -1,5 +1,4 @@
-import '/screens/signup.dart';
-import 'package:flutter/cupertino.dart';
+import 'sign_up.dart';
 import 'package:flutter/material.dart';
 import '../widgets/button_links.dart';
 import '../widgets/log_in_btn.dart';
@@ -33,7 +32,23 @@ class ProfileLogIn extends StatelessWidget {
             ],
           ),
         ),
-        LogInBtn('Log In', loggingIn),
+        Container(
+          decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromARGB(255, 235, 233, 233),
+                blurRadius: 1.0,
+                spreadRadius: 0.0,
+                offset: Offset.zero, // shadow direction: bottom right
+              )
+            ],
+            border: Border(
+              bottom: BorderSide(
+                  width: 1, color: Color.fromARGB(255, 232, 231, 231)),
+            ),
+          ),
+          child: LogInBtn('Log In', loggingIn),
+        ),
       ],
     );
   }
