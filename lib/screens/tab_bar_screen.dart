@@ -2,18 +2,8 @@ import 'package:eventbrite_replica/screens/favourites_sign_up.dart';
 import 'package:eventbrite_replica/screens/tickets_sign_up.dart';
 import 'package:flutter/material.dart';
 import './profile_sign_up.dart';
-import 'package:typicons_flutter/typicons_flutter.dart';
 import '../screens/home.dart';
-//////////////////////FONTS IMPORT/////////////////////////////
-///
-///
-///
-///
-///
-///
-///
-
-///////////////////////////////////////////////////////
+import 'package:community_material_icon/community_material_icon.dart';
 
 class TabBarScreen extends StatefulWidget {
   // const TabBarScreen({super.key});
@@ -31,7 +21,12 @@ class _TabBarScreenState extends State<TabBarScreen> {
   var _currentIndex = 0;
 
   List<Widget> pages = [
-    const Home(),
+    GridView(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: double.infinity),
+        children: const [
+          Home(),
+        ]),
     Container(
       alignment: Alignment.center,
       child: const Text('Search'),
@@ -46,6 +41,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
           iconSize: 22,
           elevation: 5,
@@ -76,11 +72,11 @@ class _TabBarScreenState extends State<TabBarScreen> {
               label: 'Likes',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Typicons.ticket),
+              icon: Icon(CommunityMaterialIcons.ticket_confirmation_outline),
               label: 'Tickets',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_4_outlined),
+              icon: Icon(Icons.person_outline_rounded),
               label: 'Profile',
             ),
           ]),

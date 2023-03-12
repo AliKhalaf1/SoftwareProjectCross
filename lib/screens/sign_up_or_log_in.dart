@@ -23,7 +23,7 @@ class Signup extends StatelessWidget {
   //Log in with mail function
   void emailLogIn(BuildContext ctx) {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return const EmailCheck();
+      return EmailCheck();
     }));
   }
 

@@ -1,11 +1,30 @@
 import 'package:eventbrite_replica/widgets/google_icon.dart';
-import 'package:eventbrite_replica/widgets/transparent_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../widgets/sign_in_hint.dart';
+import '../widgets/app_bar_text.dart';
+import 'package:email_validator/email_validator.dart';
 
-class EmailCheck extends StatelessWidget {
-  const EmailCheck({super.key});
+class EmailCheck extends StatefulWidget {
+  //Next_btn_active is a boolean variable that is used to determine whether the next button is active or not. If the email is valid, the next button is active, otherwise it is not active.
+  bool _nextBtnActive = false;
+  EmailCheck({super.key});
   static const emailCheckRoute = '/Email-Check';
+
+  @override
+  State<EmailCheck> createState() => _EmailCheckState();
+}
+
+class _EmailCheckState extends State<EmailCheck> {
+  void _setNextBtnActive(bool set) {
+    if (widget._nextBtnActive != set) {
+      setState(() {
+        widget._nextBtnActive = set;
+      });
+    } else {
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,76 +32,104 @@ class EmailCheck extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
-        title: const Text(
-          'Log in or Sign up',
-          style: TextStyle(
-            color: Colors.black,
-            fontStyle: FontStyle.normal,
-            fontWeight: FontWeight.w700,
-            fontFamily: 'Neue Plak Extended',
-            fontSize: 20,
-          ),
-        ),
+        title: const AppBarText('Log in or Sign up'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Form(
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.only(left: 15, right: 15, top: 10),
-                  margin: const EdgeInsets.only(top: 20),
-                  child: TextFormField(
-                    cursorWidth: 0.5,
-                    cursorColor: Colors.grey,
-                    decoration: const InputDecoration(
-                      focusColor: Colors.black,
-                      labelText: 'Email',
+          Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                margin: const EdgeInsets.only(top: 20),
+                child: TextField(
+                  onChanged: (value) => value.isNotEmpty
+                      ? _setNextBtnActive(EmailValidator.validate(value))
+                      : _setNextBtnActive(false),
+                  keyboardType: TextInputType.emailAddress,
+                  cursorWidth: 0.5,
+                  cursorColor: Colors.grey,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 2,
+                        style: BorderStyle.solid,
+                        color: Color.fromARGB(255, 67, 96, 244),
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-            margin: const EdgeInsets.only(top: 20),
-            width: double.infinity,
-            child: TextButton(
-              style: ButtonStyle(
-                overlayColor: MaterialStateProperty.all<Color>(
-                  Colors.grey,
-                ),
-                textStyle: MaterialStateProperty.all<TextStyle>(
-                  GoogleFonts.notoSansSharada(
-                      color: Colors.black,
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 2,
+                        style: BorderStyle.solid,
+                        color: Color.fromARGB(255, 67, 96, 244),
+                      ),
+                    ),
+                    floatingLabelStyle: TextStyle(
+                      color: Color.fromARGB(255, 67, 96, 244),
                       fontSize: 14,
-                      fontWeight: FontWeight.bold),
-                ),
-                fixedSize: MaterialStateProperty.all<Size>(
-                  const Size(double.infinity, 50),
-                ),
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  const Color.fromRGBO(255, 255, 255, 1),
-                ),
-                foregroundColor: MaterialStateProperty.all<Color>(
-                  const Color.fromRGBO(0, 0, 0, 0.7),
-                ),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    side: const BorderSide(
-                      width: 2.0,
-                      color: Color.fromARGB(175, 154, 153, 153),
                     ),
+                    labelText: 'Email',
+                    hintText: 'Enter email address',
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
                 ),
               ),
-              child: const Text('Next'),
-              onPressed: () {},
-            ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const SingInHint(),
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.only(
+                    left: 15, right: 15, top: 15, bottom: 10),
+                margin: const EdgeInsets.only(top: 20),
+                width: double.infinity,
+                child: TextButton(
+                  style: ButtonStyle(
+                    overlayColor: widget._nextBtnActive
+                        ? MaterialStateProperty.all<Color>(
+                            Color.fromARGB(255, 199, 197, 197))
+                        : MaterialStateProperty.all<Color>(Colors.transparent),
+                    textStyle: MaterialStateProperty.all<TextStyle>(
+                      GoogleFonts.notoSansSharada(
+                          fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                    fixedSize: MaterialStateProperty.all<Size>(
+                      const Size(double.infinity, 50),
+                    ),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromRGBO(255, 255, 255, 1),
+                    ),
+                    foregroundColor: MaterialStateProperty.all<Color>(
+                      widget._nextBtnActive
+                          ? const Color.fromRGBO(0, 0, 0, 0.7)
+                          : Color.fromARGB(255, 186, 186, 186),
+                    ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        side: BorderSide(
+                          width: 2.0,
+                          color: widget._nextBtnActive
+                              ? Color.fromARGB(174, 134, 132, 132)
+                              : const Color.fromARGB(255, 237, 236, 236),
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: const Text('Next'),
+                  onPressed: widget._nextBtnActive
+                      ? () => print('lets gooooooooooo')
+                      : () {},
+                ),
+              ),
+            ],
           ),
         ],
       ),
