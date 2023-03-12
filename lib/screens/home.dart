@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../widgets/event_card.dart';
 import '../models/event.dart';
 
-class EventScreen extends StatelessWidget {
-  const EventScreen({super.key});
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
