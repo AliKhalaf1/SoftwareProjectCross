@@ -88,7 +88,7 @@ flutter:
     - family: Neue Plak Extended
       fonts:
         - asset: assets\fonts\Neue-Plak-Extended-Bold.ttf
-          weight: 700
+          weight: 600
         - asset: assets\fonts\Neue Plak Extended Light.ttf
           weight: 300
         - asset: assets/fonts/Neue Plak Extended Thin.ttf
@@ -96,9 +96,9 @@ flutter:
         - asset: assets/fonts/Neue Plak Extended UltraLight.ttf
           weight: 200
         - asset: assets/fonts/Neue Plak Extended ExtraBlack.ttf
-          weight: 400
+          weight: 800
         - asset: assets/fonts/Neue Plak Extended Black.ttf
-          weight: 600
+          weight: 700
 
 
                 
@@ -110,7 +110,7 @@ flutter:
         - asset: assets/fonts/Neue Plak Regular.ttf
           weight: 400
         - asset: assets/fonts/Neue Plak Bold.ttf
-          weight: 700
+          weight: 600
         - asset: assets/fonts/Neue Plak Light.ttf
           weight: 300
         - asset: assets/fonts/Neue Plak Thin.ttf
@@ -118,7 +118,9 @@ flutter:
         - asset: assets/fonts/Neue Plak UltraLight.ttf
           weight: 200
         - asset: assets/fonts/Neue Plak Black.ttf
-          weight: 400
+          weight: 700
+        - asset: assets/fonts/Neue Plak ExtraBlack.ttf
+          weight: 800
 
 
     - family: Neue Plak Condensed
@@ -126,7 +128,7 @@ flutter:
         - asset: assets/fonts/Neue Plak Condensed Regular.ttf
           weight: 500
         - asset: assets/fonts/Neue Plak Condensed Bold.ttf
-          weight: 700
+          weight: 600
         - asset: assets/fonts/Neue Plak Condensed Light.ttf
           weight: 300
         - asset: assets/fonts/Neue Plak Condensed Thin.ttf
@@ -134,21 +136,23 @@ flutter:
         - asset: assets/fonts/Neue Plak Condensed UltraLight.ttf
           weight: 200
         - asset: assets/fonts/Neue Plak Condensed Black.ttf
-          weight: 400
+          weight: 700
         - asset: assets/fonts/Neue Plak Condensed ExtraBlack.ttf
-          weight: 600
+          weight: 800
 
 
 
     - family: Neue Plak Text
       fonts:
         - asset: assets/fonts/Neue Plak Text italic.ttf
+          weight: 400
           style: italic
         - asset: assets/fonts/Neue Plak Text Bold.ttf
-          weight: 700
+          weight: 600
+          style: normal
         - asset: assets/fonts/Neue Plak Text Bold italic.ttf
           style: italic
-          weight: 700
+          weight: 600
         - asset: assets/fonts/Neue Plak Text Light.ttf
           weight: 300
         - asset: assets/fonts/Neue Plak Text Light italic.ttf
@@ -165,9 +169,10 @@ flutter:
           style: italic
           weight: 100
         - asset: assets/fonts/Neue Plak Text Black.ttf
-          weight: 400
+          weight: 700
+          style: normal
         - asset: assets/fonts/Neue Plak Text Black italic.ttf
-          weight: 400
+          weight: 700
           style: italic
 
 

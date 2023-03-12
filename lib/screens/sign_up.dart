@@ -43,6 +43,7 @@ class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
           backgroundColor: Colors.white38,
           foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
