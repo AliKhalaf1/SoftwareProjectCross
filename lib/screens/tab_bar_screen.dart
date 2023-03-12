@@ -1,18 +1,8 @@
 import 'package:eventbrite_replica/screens/favourites_sign_up.dart';
 import 'package:flutter/material.dart';
 import './profile_sign_up.dart';
-import 'package:typicons_flutter/typicons_flutter.dart';
 import '../screens/home.dart';
-//////////////////////FONTS IMPORT/////////////////////////////
-///
-///
-///
-///
-///
-///
-///
-
-///////////////////////////////////////////////////////
+import 'package:community_material_icon/community_material_icon.dart';
 
 class TabBarScreen extends StatefulWidget {
   // const TabBarScreen({super.key});
@@ -84,11 +74,11 @@ class _TabBarScreenState extends State<TabBarScreen> {
               label: 'Likes',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Typicons.ticket),
+              icon: Icon(CommunityMaterialIcons.ticket_confirmation_outline),
               label: 'Tickets',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_4_outlined),
+              icon: Icon(Icons.person_outline_rounded),
               label: 'Profile',
             ),
           ]),

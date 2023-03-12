@@ -36,7 +36,7 @@ class _MainAppState extends State<MainApp> {
         TabBarScreen.tabBarScreenRoute: (ctx) =>
             const TabBarScreen(title: 'Eventbrite'),
         Signup.signUpRoute: (ctx) => const Signup(),
-        EmailCheck.emailCheckRoute: (ctx) => const EmailCheck(),
+        EmailCheck.emailCheckRoute: (ctx) => EmailCheck(),
         FindTickets.findTicketsRoute: (ctx) => const FindTickets(),
       },
     );
