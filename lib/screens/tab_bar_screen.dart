@@ -30,7 +30,12 @@ class _TabBarScreenState extends State<TabBarScreen> {
   var _currentIndex = 0;
 
   List<Widget> pages = [
-    const Home(),
+    GridView(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: double.infinity),
+        children: const [
+          Home(),
+        ]),
     Container(
       alignment: Alignment.center,
       child: const Text('Search'),
@@ -48,6 +53,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
           iconSize: 22,
           elevation: 5,
