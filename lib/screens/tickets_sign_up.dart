@@ -1,6 +1,13 @@
+import 'package:eventbrite_replica/widgets/log_in_btn_forTickets.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/button_find_things.dart';
+import '../widgets/favourite_ticket_text1.dart';
+import '../widgets/favourite_ticket_text2.dart';
+
 class Tickets extends StatelessWidget {
+  const Tickets({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,77 +21,25 @@ class Tickets extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
-            children: [
-              const SizedBox(
+            children: const [
+              SizedBox(
                 height: 80,
               ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(
-                    left: 15, right: 15, bottom: 5, top: 0),
-                child: const Text(
-                  "Looking for your mobile tickets?",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 42, height: 0.9),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(
-                    left: 15, right: 15, bottom: 10, top: 0),
-                child: const Text(
-                  "Log into the same account you used to buy your tickets.",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 17),
-                ),
-              ),
+              TicketText1(),
+              TicketText2(),
             ],
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
+                height: 55,
                 padding: const EdgeInsets.only(
                     left: 15, right: 15, bottom: 15, top: 0),
-                child: TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        const Color.fromARGB(255, 207, 62, 18)),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                    shape: MaterialStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    'Log In',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
+                child: LogInBtnFavourites(() {}),
               ),
-              Container(
-                padding: const EdgeInsets.only(
-                    left: 15, right: 15, bottom: 15, top: 0),
-                child: TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        const Color.fromARGB(255, 207, 62, 18)),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                    shape: MaterialStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    'Log In',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
+              ButtonThingsToDo(() {}),
             ],
           ),
         ],

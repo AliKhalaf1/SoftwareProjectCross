@@ -1,9 +1,5 @@
 import 'package:eventbrite_replica/screens/favourites_sign_up.dart';
-<<<<<<< HEAD:lib/screens/tabBarScreen.dart
 import 'package:eventbrite_replica/screens/tickets_sign_up.dart';
-import 'package:flutter/cupertino.dart';
-=======
->>>>>>> 9c6d27b029180f05cd7633e2c578f572d7956689:lib/screens/tab_bar_screen.dart
 import 'package:flutter/material.dart';
 import './profile_sign_up.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
@@ -40,16 +36,8 @@ class _TabBarScreenState extends State<TabBarScreen> {
       alignment: Alignment.center,
       child: const Text('Search'),
     ),
-<<<<<<< HEAD:lib/screens/tabBarScreen.dart
-    Favourites(),
-    Tickets(),
-=======
     const Favourites(),
-    Container(
-      alignment: Alignment.center,
-      child: const Text('tickets'),
-    ),
->>>>>>> 9c6d27b029180f05cd7633e2c578f572d7956689:lib/screens/tab_bar_screen.dart
+    const Tickets(),
     const ProfileLogIn(),
   ];
 
