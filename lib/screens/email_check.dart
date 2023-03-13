@@ -1,18 +1,25 @@
-import 'package:eventbrite_replica/widgets/google_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/sign_in_hint.dart';
 import '../widgets/app_bar_text.dart';
 import 'package:email_validator/email_validator.dart';
+import './sign_up_form.dart';
 
 class EmailCheck extends StatefulWidget {
   //Next_btn_active is a boolean variable that is used to determine whether the next button is active or not. If the email is valid, the next button is active, otherwise it is not active.
+  var emailText = TextEditingController();
   bool _nextBtnActive = false;
   EmailCheck({super.key});
   static const emailCheckRoute = '/Email-Check';
 
   @override
   State<EmailCheck> createState() => _EmailCheckState();
+}
+
+void SignUp(BuildContext ctx, String email) {
+  Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+    return SignUpForm(email);
+  }));
 }
 
 class _EmailCheckState extends State<EmailCheck> {
@@ -43,6 +50,7 @@ class _EmailCheckState extends State<EmailCheck> {
                 padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
                 margin: const EdgeInsets.only(top: 20),
                 child: TextField(
+                  controller: widget.emailText,
                   onChanged: (value) => value.isNotEmpty
                       ? _setNextBtnActive(EmailValidator.validate(value))
                       : _setNextBtnActive(false),
@@ -94,7 +102,7 @@ class _EmailCheckState extends State<EmailCheck> {
                   style: ButtonStyle(
                     overlayColor: widget._nextBtnActive
                         ? MaterialStateProperty.all<Color>(
-                            Color.fromARGB(255, 199, 197, 197))
+                            const Color.fromARGB(255, 199, 197, 197))
                         : MaterialStateProperty.all<Color>(Colors.transparent),
                     textStyle: MaterialStateProperty.all<TextStyle>(
                       GoogleFonts.notoSansSharada(
@@ -109,7 +117,7 @@ class _EmailCheckState extends State<EmailCheck> {
                     foregroundColor: MaterialStateProperty.all<Color>(
                       widget._nextBtnActive
                           ? const Color.fromRGBO(0, 0, 0, 0.7)
-                          : Color.fromARGB(255, 186, 186, 186),
+                          : const Color.fromARGB(255, 186, 186, 186),
                     ),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
@@ -117,16 +125,16 @@ class _EmailCheckState extends State<EmailCheck> {
                         side: BorderSide(
                           width: 2.0,
                           color: widget._nextBtnActive
-                              ? Color.fromARGB(174, 134, 132, 132)
+                              ? const Color.fromARGB(174, 134, 132, 132)
                               : const Color.fromARGB(255, 237, 236, 236),
                         ),
                       ),
                     ),
                   ),
-                  child: const Text('Next'),
                   onPressed: widget._nextBtnActive
-                      ? () => print('lets gooooooooooo')
+                      ? () => SignUp(context, widget.emailText.text)
                       : () {},
+                  child: const Text('Next'),
                 ),
               ),
             ],
