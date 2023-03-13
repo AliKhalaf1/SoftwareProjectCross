@@ -1,8 +1,9 @@
-import 'package:eventbrite_replica/widgets/favourite_sign_text1.dart';
-import 'package:eventbrite_replica/widgets/log_in_btn_forTickets.dart';
+import 'package:eventbrite_replica/widgets/title_text_1.dart';
 import 'package:flutter/material.dart';
-import '../widgets/favourite_sign_text2.dart';
-import '../widgets/favourite_sign_text3.dart';
+import '../widgets/title_text_2.dart';
+import '../widgets/text_link.dart';
+import '../widgets/log_in_btn.dart';
+import '../common_functions/log_in.dart';
 
 class Favourites extends StatelessWidget {
   const Favourites({super.key});
@@ -16,25 +17,26 @@ class Favourites extends StatelessWidget {
             image: AssetImage("assets/images/images1.jfif"), fit: BoxFit.cover),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: const [
               SizedBox(
-                height: 80,
+                height: 100,
               ),
-              FavouriteText1(),
-              FavouriteText2(),
-              FavouriteText3(),
+              TitleText1('See your favourite in one place'),
+              Padding(
+                padding: EdgeInsets.only(top: 8.0),
+                child: TitleText2('Log in to see your favourites'),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 8.0),
+                child: TextLink('Explore events'),
+              ),
             ],
           ),
-          Container(
-            height: 55,
-            padding:
-                const EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 0),
-            child: LogInBtnFavourites(() {}),
-          ),
+          const LogInBtn('Log In', loggingIn),
         ],
       ),
     );

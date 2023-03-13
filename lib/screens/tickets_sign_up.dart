@@ -1,9 +1,10 @@
-import 'package:eventbrite_replica/widgets/log_in_btn_forTickets.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/button_find_things.dart';
-import '../widgets/favourite_ticket_text1.dart';
-import '../widgets/favourite_ticket_text2.dart';
+import '../widgets/title_text_1.dart';
+import '../widgets/title_text_2.dart';
+import '../widgets/log_in_btn.dart';
+import '../common_functions/log_in.dart';
 
 class Tickets extends StatelessWidget {
   const Tickets({super.key});
@@ -23,21 +24,19 @@ class Tickets extends StatelessWidget {
           Column(
             children: const [
               SizedBox(
-                height: 80,
+                height: 100,
               ),
-              TicketText1(),
-              TicketText2(),
+              TitleText1('Looking for your mobile tickets?'),
+              TitleText2(
+                  'Log into the same account you used to buy your tickets.'),
             ],
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                height: 55,
-                padding: const EdgeInsets.only(
-                    left: 15, right: 15, bottom: 15, top: 0),
-                child: LogInBtnFavourites(() {}),
+                child: const LogInBtn('Log In', loggingIn),
               ),
               ButtonThingsToDo(() {}),
             ],

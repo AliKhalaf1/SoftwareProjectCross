@@ -6,7 +6,7 @@ class ButtonThingsToDo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 55,
+      height: 65,
       padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 0),
       child: TextButton(
         style: ButtonStyle(

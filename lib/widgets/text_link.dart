@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 
-class FavouriteText3 extends StatelessWidget {
-  const FavouriteText3({super.key});
+class TextLink extends StatelessWidget {
+  final String text;
+  const TextLink(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 6),
       child: TextButton(
+        style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
+        ),
         onPressed: () {},
-        child: const SizedBox(
+        child: SizedBox(
           width: double.infinity,
           child: Text(
-            "Explore events",
+            text,
             textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: 17,
+            style: const TextStyle(
+              fontSize: 15,
               color: Color.fromRGBO(66, 94, 203, 1),
               fontWeight: FontWeight.w600,
             ),
