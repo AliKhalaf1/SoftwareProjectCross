@@ -42,7 +42,7 @@ class ProfileLogIn extends StatelessWidget {
                   width: 1, color: Color.fromARGB(255, 232, 231, 231)),
             ),
           ),
-          child: LogInBtn('Log In', loggingIn),
+          child: const LogInBtn('Log In', loggingIn),
         ),
       ],
     );

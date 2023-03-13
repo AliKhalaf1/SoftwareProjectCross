@@ -22,23 +22,21 @@ class EventCard extends StatelessWidget {
       onTap: () => selectEvent,
 
       child: Container(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Row(
           children: [
-            Container(width: 200,height: 200, child: Image.network(event.eventImg,fit: BoxFit.cover,)),
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(DateFormat.yMMMd().format(event.date)),
-                  Text(event.description),
-                  Text(event.state == 0? 'online':'offline'),
-                  Row(
-                    //last elements
-                  )
+            SizedBox(width: 150,height: 150, child: Image.network(event.eventImg,fit: BoxFit.cover,)),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(DateFormat.yMMMd().format(event.date)),
+                Text(event.description),
+                Text(event.state == 0? 'online':'offline'),
+                Row(
+                  //last elements
+                )
             
-                ],
-              ),
+              ],
             )
             
           ],

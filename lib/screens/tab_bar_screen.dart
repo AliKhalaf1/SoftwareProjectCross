@@ -21,12 +21,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
   var _currentIndex = 0;
 
   List<Widget> pages = [
-    GridView(
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: double.infinity),
-        children: const [
-          Home(),
-        ]),
+    const Home(),
     Container(
       alignment: Alignment.center,
       child: const Text('Search'),
