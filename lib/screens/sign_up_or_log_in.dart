@@ -1,3 +1,5 @@
+import 'package:eventbrite_replica/widgets/title_text_1.dart';
+import 'package:eventbrite_replica/widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
 import '../widgets/log_in_btn.dart';
 import './email_check.dart';
@@ -5,8 +7,8 @@ import 'find_tickets.dart';
 import '../widgets/transparent_button.dart';
 import '../widgets/google_icon.dart';
 
-class Signup extends StatelessWidget {
-  const Signup({super.key});
+class SignUpOrLogIn extends StatelessWidget {
+  const SignUpOrLogIn({super.key});
 
   //Routing value
   static const signUpRoute = '/SignUp';
@@ -45,44 +47,40 @@ class Signup extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          backgroundColor: Colors.white38,
-          foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
-          elevation: 0),
+        backgroundColor: Colors.white38,
+        foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
+        elevation: 0,
+      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+        padding: const EdgeInsets.only(left: 20, right: 20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // fisrt column of page
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const <Widget>[
-                // child one
-                Text('Let\'s get started',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 40)),
-                SizedBox(
-                  height: 15,
-                ),
-                // child two
-                SizedBox(
-                  width: 250,
-                  child: Text(
-                    'Sign up or log in in to see what\'s happening near you',
-                    style: TextStyle(
-                        color: Color.fromRGBO(0, 0, 0, 0.8),
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
+            // first column of page
+            Padding(
+              padding: const EdgeInsets.only(bottom: 70, top: 70),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const <Widget>[
+                  // child one
+                  TitleText1('Let\'s get started'),
+
+                  // child two
+                  SizedBox(
+                    width: 250,
+                    child: TitleText2(
+                      'Sign up or log in in to see what\'s happening near you',
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
 
             //second column of page
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 //First child
                 LogInBtn('Continue with email address', emailLogIn),
@@ -99,7 +97,7 @@ class Signup extends StatelessWidget {
                 TextButton(
                   onPressed: () => findTicket(context),
                   child: Text(
-                    'I bought tickets,but I don\'t have an account.',
+                    'I bought tickets, but I don\'t have an account.',
                     style: TextStyle(
                         color: Colors.blue[900],
                         fontSize: 15,

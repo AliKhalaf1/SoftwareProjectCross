@@ -1,16 +1,11 @@
-import 'package:eventbrite_replica/screens/sign_up_or_log_in.dart';
 import 'package:flutter/material.dart';
 import '../widgets/button_links.dart';
 import '../widgets/log_in_btn.dart';
+import 'sign_up_or_log_in.dart';
+import '../common_functions/log_in.dart';
 
 class ProfileLogIn extends StatelessWidget {
   const ProfileLogIn({super.key});
-
-  void loggingIn(BuildContext ctx) {
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return const Signup();
-    }));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +42,13 @@ class ProfileLogIn extends StatelessWidget {
                   width: 1, color: Color.fromARGB(255, 232, 231, 231)),
             ),
           ),
-          child: LogInBtn('Log In', loggingIn),
+          child: Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 5),
+              child: LogInBtn('Log In', loggingIn),
+            ),
+          ),
         ),
       ],
     );

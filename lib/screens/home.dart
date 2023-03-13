@@ -15,7 +15,19 @@ class Home extends StatelessWidget {
         'eventRoute',
         EventState.online);
     return Scaffold(
-      body: EventCard(event),
+      body: Column(
+        children: [
+        const Text("Title"),
+        SizedBox(
+          height: 700,
+          child: ListView.builder(
+            itemBuilder: (ctx, index) {
+              return EventCard(event);
+            },
+            itemCount: 7, //length of the list
+          ),
+        ),
+      ]),
     );
   }
 }
