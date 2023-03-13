@@ -1,3 +1,4 @@
+import 'package:eventbrite_replica/screens/password_check.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/sign_in_hint.dart';
@@ -16,9 +17,9 @@ class EmailCheck extends StatefulWidget {
   State<EmailCheck> createState() => _EmailCheckState();
 }
 
-void SignUp(BuildContext ctx, String email) {
+void SignUp(BuildContext ctx, String email, bool choice) {
   Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-    return SignUpForm(email);
+    return choice ? PasswordCheck(email) : SignUpForm(email);
   }));
 }
 
@@ -132,7 +133,7 @@ class _EmailCheckState extends State<EmailCheck> {
                     ),
                   ),
                   onPressed: widget._nextBtnActive
-                      ? () => SignUp(context, widget.emailText.text)
+                      ? () => SignUp(context, widget.emailText.text, true)
                       : () {},
                   child: const Text('Next'),
                 ),

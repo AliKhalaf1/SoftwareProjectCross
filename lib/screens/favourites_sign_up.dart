@@ -21,18 +21,18 @@ class Favourites extends StatelessWidget {
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              SizedBox(
+            children: [
+              const SizedBox(
                 height: 100,
               ),
-              TitleText1('See your favourite in one place'),
-              Padding(
+              const TitleText1('See your favourite in one place'),
+              const Padding(
                 padding: EdgeInsets.only(top: 8.0),
                 child: TitleText2('Log in to see your favourites'),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 8.0),
-                child: TextLink('Explore events'),
+                padding: const EdgeInsets.only(top: 8.0),
+                child: TextLink('Explore events', 0, () {}),
               ),
             ],
           ),
