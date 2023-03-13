@@ -19,24 +19,30 @@ class Favourites extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              const SizedBox(
-                height: 100,
-              ),
-              const TitleText1('See your favourite in one place'),
-              const Padding(
-                padding: EdgeInsets.only(top: 8.0),
-                child: TitleText2('Log in to see your favourites'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: TextLink('Explore events', 0, () {}),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 15.0, top: 8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const SizedBox(
+                  height: 100,
+                ),
+                const TitleText1('See your favourite in one place'),
+                const Padding(
+                  padding: EdgeInsets.only(top: 8.0),
+                  child: TitleText2('Log in to see your favourites'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: TextLink('Explore events', 0, () {}),
+                ),
+              ],
+            ),
           ),
-          const LogInBtn('Log In', loggingIn),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 6, top: 0),
+            child: const LogInBtn('Log In', loggingIn),
+          ),
         ],
       ),
     );
