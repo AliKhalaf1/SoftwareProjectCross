@@ -1,16 +1,11 @@
-import 'sign_up.dart';
 import 'package:flutter/material.dart';
 import '../widgets/button_links.dart';
 import '../widgets/log_in_btn.dart';
+import 'sign_up_or_log_in.dart';
+import '../common_functions/log_in.dart';
 
 class ProfileLogIn extends StatelessWidget {
   const ProfileLogIn({super.key});
-
-  void loggingIn(BuildContext ctx) {
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return const Signup();
-    }));
-  }
 
   @override
   Widget build(BuildContext context) {

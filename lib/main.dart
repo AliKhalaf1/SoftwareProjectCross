@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'screens/sign_up.dart';
-import 'screens/tab_bar_screen.dart';
+import 'screens/sign_up_or_log_in.dart';
+import './screens/tab_bar_screen.dart';
 import './screens/email_check.dart';
-import 'screens/find_tickets.dart';
+import './screens/find_tickets.dart';
 
 void main() {
   runApp(const MainApp());
@@ -35,8 +35,8 @@ class _MainAppState extends State<MainApp> {
       routes: {
         TabBarScreen.tabBarScreenRoute: (ctx) =>
             const TabBarScreen(title: 'Eventbrite'),
-        Signup.signUpRoute: (ctx) => const Signup(),
-        EmailCheck.emailCheckRoute: (ctx) => const EmailCheck(),
+        SignUpOrLogIn.signUpRoute: (ctx) => const SignUpOrLogIn(),
+        EmailCheck.emailCheckRoute: (ctx) => EmailCheck(),
         FindTickets.findTicketsRoute: (ctx) => const FindTickets(),
       },
     );

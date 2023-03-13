@@ -5,8 +5,8 @@ import 'find_tickets.dart';
 import '../widgets/transparent_button.dart';
 import '../widgets/google_icon.dart';
 
-class Signup extends StatelessWidget {
-  const Signup({super.key});
+class SignUpOrLogIn extends StatelessWidget {
+  const SignUpOrLogIn({super.key});
 
   //Routing value
   static const signUpRoute = '/SignUp';
@@ -23,7 +23,7 @@ class Signup extends StatelessWidget {
   //Log in with mail function
   void emailLogIn(BuildContext ctx) {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return const EmailCheck();
+      return EmailCheck();
     }));
   }
 
