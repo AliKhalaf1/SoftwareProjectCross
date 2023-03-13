@@ -13,12 +13,12 @@ class TransparentButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.only(top: 5),
+      // padding: const EdgeInsets.only(top: 5),
       child: SizedBox(
-        height: 66,
+        height: 70,
         width: double.infinity,
         child: Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
           height: 90,
           child: TextButton(
             style: ButtonStyle(
@@ -39,7 +39,8 @@ class TransparentButton extends StatelessWidget {
                 id == 0 ? icon : const GoogleLogo(size: 20),
                 Text(
                   text,
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ],
             ),

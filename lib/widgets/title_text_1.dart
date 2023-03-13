@@ -8,7 +8,7 @@ class TitleText1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 0),
+      padding: const EdgeInsets.only(right: 15, bottom: 10),
       child: Text(
         text,
         textAlign: TextAlign.left,

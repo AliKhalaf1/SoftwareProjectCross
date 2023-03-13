@@ -8,12 +8,12 @@ class TitleText2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 0),
+      padding: const EdgeInsets.only(bottom: 10, top: 0),
       child: Text(
         text,
         textAlign: TextAlign.left,
         style: const TextStyle(
-            fontSize: 15.5, color: Color.fromARGB(255, 108, 108, 108)),
+            fontSize: 15.5, color: Color.fromRGBO(0, 0, 0, 0.8)),
       ),
     );
   }
