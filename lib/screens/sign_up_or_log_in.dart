@@ -5,8 +5,8 @@ import 'find_tickets.dart';
 import '../widgets/transparent_button.dart';
 import '../widgets/google_icon.dart';
 
-class Signup extends StatelessWidget {
-  const Signup({super.key});
+class SignUpOrLogIn extends StatelessWidget {
+  const SignUpOrLogIn({super.key});
 
   //Routing value
   static const signUpRoute = '/SignUp';
