@@ -39,7 +39,7 @@ class Tickets extends StatelessWidget {
                     left: 15, right: 15, bottom: 15, top: 0),
                 child: LogInBtnFavourites(() {}),
               ),
-              ButtonThingsToDo(() {}),
+              GreyButton(() {}, 'Find things to do'),
             ],
           ),
         ],

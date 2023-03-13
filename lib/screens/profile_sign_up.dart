@@ -1,4 +1,4 @@
-import 'sign_up.dart';
+import 'package:eventbrite_replica/screens/sign_up_or_log_in.dart';
 import 'package:flutter/material.dart';
 import '../widgets/button_links.dart';
 import '../widgets/log_in_btn.dart';
