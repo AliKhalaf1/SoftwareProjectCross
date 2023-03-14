@@ -13,7 +13,7 @@ class TabBarScreen extends StatefulWidget {
   static const tabBarScreenRoute = '/';
   final String title;
   final int tabBarIndex;
-  const TabBarScreen({super.key, required this.title,this.tabBarIndex =0});
+  const TabBarScreen({super.key, required this.title, this.tabBarIndex = 0});
 
   @override
   State<TabBarScreen> createState() => _TabBarScreenState(tabBarIndex);
@@ -28,8 +28,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
       alignment: Alignment.center,
       child: const Text('Search'),
     ),
-    // const Favourites(),
-    const Profile(),
+    const Favourites(),
     const Tickets(),
     const ProfileLogIn(),
   ];

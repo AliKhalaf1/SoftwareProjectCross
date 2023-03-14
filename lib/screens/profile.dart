@@ -4,11 +4,18 @@ import 'package:eventbrite_replica/widgets/round_profile_image.dart';
 import 'package:eventbrite_replica/widgets/verticaldivider.dart';
 import 'package:flutter/material.dart';
 import '../widgets/button_find_things.dart';
-import '../widgets/button_links.dart';
+import '../widgets/button_link.dart';
 import '../widgets/counterbutton.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
+  String name;
+  String email;
+  int likesCount;
+  int myTicketsCount;
+  int followingCount;
+  Profile(this.name, this.email, this.likesCount, this.myTicketsCount,
+      this.followingCount,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +33,13 @@ class Profile extends StatelessWidget {
                   Column(
                     children: [
                       // two texts with icon&layerfortab
-                      const ProfileLayer(
-                          'Ahmed Magdy', 'ahmedfec2000@gmail.com'),
+                      ProfileLayer(name, email),
 
                       const SizedBox(
                         height: 5,
                       ),
                       Container(
+                        margin: const EdgeInsets.only(top: 15, bottom: 15),
                         padding: const EdgeInsets.only(top: 15, bottom: 15),
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
@@ -47,12 +54,12 @@ class Profile extends StatelessWidget {
                         child: IntrinsicHeight(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              CounterButton("Likes", 0),
-                              VDivider(),
-                              CounterButton("My tickets", 0),
-                              VDivider(),
-                              CounterButton("Following", 0),
+                            children: [
+                              CounterButton("Likes", likesCount),
+                              const VDivider(),
+                              CounterButton("My tickets", myTicketsCount),
+                              const VDivider(),
+                              CounterButton("Following", followingCount),
                             ],
                           ),
                         ),
@@ -62,12 +69,12 @@ class Profile extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: const [
-                            SignUpButtonLink("Notification Centre"),
-                            SignUpButtonLink("Linked Accounts"),
-                            SignUpButtonLink("Following"),
-                            SignUpButtonLink("Ticket Issues"),
-                            SignUpButtonLink("Manage Events"),
-                            SignUpButtonLink("Settings"),
+                            ButtonLink("Notification Centre"),
+                            ButtonLink("Linked Accounts"),
+                            ButtonLink("Following"),
+                            ButtonLink("Ticket Issues"),
+                            ButtonLink("Manage Events"),
+                            ButtonLink("Settings"),
                           ],
                         ),
                       )
@@ -79,7 +86,19 @@ class Profile extends StatelessWidget {
           ),
         ),
         Container(
-            height: 70,
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Color.fromARGB(255, 226, 225, 225),
+                  width: 1,
+                ),
+                top: BorderSide(
+                  color: Color.fromRGBO(246, 246, 248, 1),
+                  width: 1,
+                ),
+              ),
+            ),
+            height: 80,
             padding: const EdgeInsetsDirectional.only(top: 15),
             width: double.infinity,
             child: GreyButton(() {}, 'Log out')),

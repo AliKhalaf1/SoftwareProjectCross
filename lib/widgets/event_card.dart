@@ -36,10 +36,12 @@ class EventCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.date)} EET',
+                  Text(
+                      '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.date)} EET',
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w500,fontSize: 14)),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14)),
                   SizedBox(
                       width: 200,
                       child: Text(event.description,
@@ -54,8 +56,10 @@ class EventCard extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(Icons.person_outline_outlined,
-                          color: Color.fromRGBO(0, 0, 0, 0.7),),
+                        const Icon(
+                          Icons.person_outline_outlined,
+                          color: Color.fromRGBO(0, 0, 0, 0.7),
+                        ),
                         event.creatorFollowers < 10000
                             ? Text(
                                 '${event.creatorFollowers} creator followers',

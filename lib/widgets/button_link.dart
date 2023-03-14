@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class SignUpButtonLink extends StatelessWidget {
+class ButtonLink extends StatelessWidget {
   final String text;
-  const SignUpButtonLink(this.text, {super.key});
+  const ButtonLink(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {

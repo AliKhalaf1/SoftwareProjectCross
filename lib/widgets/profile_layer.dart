@@ -9,11 +9,7 @@ class ProfileLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        //we should navigate to edit page
-        // ignore: avoid_print
-        print("help");
-      },
+      onTap: () {},
       child: Container(
         margin: const EdgeInsetsDirectional.only(top: 40),
         width: double.infinity,
@@ -32,20 +28,19 @@ class ProfileLayer extends StatelessWidget {
                   children: [
                     Text(
                       userName,
-                      // ignore: prefer_const_constructors
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 32,
                           height: 0.9,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Neue Plak Extended',
-                          color: const Color.fromRGBO(40, 27, 67, 1)),
+                          color: Color.fromRGBO(40, 27, 67, 1)),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 10),
-                      // ignore: prefer_const_constructors
-                      child: Icon(
-                        Icons.edit,
+                      child: const Icon(
+                        Icons.edit_outlined,
                         size: 20,
-                        color: Colors.blue,
+                        color: Color.fromRGBO(66, 94, 203, 1),
                       ),
                     ),
                   ],
@@ -53,7 +48,8 @@ class ProfileLayer extends StatelessWidget {
                 Text(
                   email,
                   style: const TextStyle(
-                    fontSize: 17,
+                    color: Colors.grey,
+                    fontSize: 15,
                   ),
                 ),
               ],

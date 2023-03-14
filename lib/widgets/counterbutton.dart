@@ -16,22 +16,21 @@ class CounterButton extends StatelessWidget {
           children: [
             Text(
               counter.toString(),
-              // ignore: prefer_const_constructors
-              style: TextStyle(
-                  fontFamily: 'Neue Plak extended',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 19),
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 19,
+              ),
             ),
             const SizedBox(
               height: 2,
             ),
             Text(
               title,
-              // ignore: prefer_const_constructors
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
-                  color: Colors.blue),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                color: Color.fromRGBO(66, 94, 203, 1),
+              ),
             ),
           ],
         ),
