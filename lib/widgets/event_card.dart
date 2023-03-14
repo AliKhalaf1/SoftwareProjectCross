@@ -41,16 +41,16 @@ class EventCard extends StatelessWidget {
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w500,fontSize: 14)),
                   SizedBox(
-                      width: 230,
+                      width: 200,
                       child: Text(event.description,
                           style: const TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 17))),
+                              fontWeight: FontWeight.w500, fontSize: 16))),
                   Text(
                     event.state == 0 ? 'Online' : 'Offline',
                     style: const TextStyle(color: Colors.grey),
                   ),
-                  SizedBox(
-                    width: 230,
+                  FittedBox(
+                    // width: 190,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -61,19 +61,25 @@ class EventCard extends StatelessWidget {
                                 '${event.creatorFollowers} creator followers',
                                 style: const TextStyle(
                                     color: Color.fromRGBO(0, 0, 0, 0.7),
+                                    fontSize: 10,
                                     fontWeight: FontWeight.w500))
                             : Text(
                                 '${event.creatorFollowers} creator follow...',
                                 style: const TextStyle(
                                     color: Color.fromRGBO(0, 0, 0, 0.7),
+                                    fontSize: 10,
                                     fontWeight: FontWeight.w500)),
                         const Icon(
                           Icons.share,
+                          size: 20,
                           color: Color.fromRGBO(0, 0, 0, 0.7),
                         ),
-                        const Icon(
-                          Icons.favorite_border_rounded,
-                          color: Color.fromRGBO(0, 0, 0, 0.7),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child: Icon(
+                            Icons.favorite_border_rounded,
+                            color: Color.fromRGBO(0, 0, 0, 0.7),
+                          ),
                         ),
                       ],
                     ),

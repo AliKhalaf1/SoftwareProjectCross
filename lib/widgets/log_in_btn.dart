@@ -17,7 +17,7 @@ class LogInBtn extends StatelessWidget {
         width: double.infinity,
         child: Container(
           padding: const EdgeInsets.only(top: 10,bottom: 10,right: 10),
-          height: 90,
+          // height: 60,
           child: TextButton(
             style: ButtonStyle(
               backgroundColor:

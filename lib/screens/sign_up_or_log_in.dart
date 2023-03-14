@@ -18,8 +18,8 @@ class SignUpOrLogIn extends StatelessWidget {
       IconData(0xe255, fontFamily: 'MaterialIcons');
   static const Icon facebook = Icon(
     facebookData,
-    color: Color.fromRGBO(1, 101, 225, 1),
-    size: 30,
+    color: Color.fromRGBO(5, 117, 254, 1),
+    size: 23,
   );
 
   //Log in with mail function
@@ -58,7 +58,7 @@ class SignUpOrLogIn extends StatelessWidget {
           children: [
             // first column of page
             Padding(
-              padding: const EdgeInsets.only(bottom: 70, top: 70),
+              padding: const EdgeInsets.only(bottom: 70, top: 50),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,7 +99,7 @@ class SignUpOrLogIn extends StatelessWidget {
                   child: Text(
                     'I bought tickets, but I don\'t have an account.',
                     style: TextStyle(
-                        color: Colors.blue[900],
+                        color: Color.fromARGB(255, 16, 84, 211),
                         fontSize: 15,
                         fontWeight: FontWeight.w500),
                   ),

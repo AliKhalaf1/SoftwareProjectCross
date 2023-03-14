@@ -15,13 +15,15 @@ class TransparentButton extends StatelessWidget {
       color: Colors.white,
       // padding: const EdgeInsets.only(top: 5),
       child: SizedBox(
-        height: 70,
+        height: 65,
         width: double.infinity,
         child: Container(
           padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
-          height: 90,
+          // height: 80,
           child: TextButton(
             style: ButtonStyle(
+              padding:
+                  const MaterialStatePropertyAll(EdgeInsets.only(left: 35)),
               backgroundColor: MaterialStateProperty.all(Colors.white),
               foregroundColor: MaterialStateProperty.all(Colors.black87),
               shape: MaterialStatePropertyAll(
@@ -34,13 +36,21 @@ class TransparentButton extends StatelessWidget {
             ),
             onPressed: () => onPressed,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                id == 0 ? icon : const GoogleLogo(size: 20),
-                Text(
-                  text,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500),
+                id == 0
+                    ? icon
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: const GoogleLogo(size: 16),
+                      ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    text,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
                 ),
               ],
             ),
