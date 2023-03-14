@@ -133,7 +133,7 @@ class _EmailCheckState extends State<EmailCheck> {
                     ),
                   ),
                   onPressed: widget._nextBtnActive
-                      ? () => SignUp(context, widget.emailText.text, true)
+                      ? () => SignUp(context, widget.emailText.text, false)
                       : () {},
                   child: const Text('Next'),
                 ),
