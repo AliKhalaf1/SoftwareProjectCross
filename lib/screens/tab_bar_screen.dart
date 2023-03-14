@@ -12,10 +12,11 @@ class TabBarScreen extends StatefulWidget {
   //Routing value
   static const tabBarScreenRoute = '/';
   final String title;
-  const TabBarScreen({super.key, required this.title});
+  final int tabBarIndex;
+  const TabBarScreen({super.key, required this.title,this.tabBarIndex =0});
 
   @override
-  State<TabBarScreen> createState() => _TabBarScreenState();
+  State<TabBarScreen> createState() => _TabBarScreenState(tabBarIndex);
 }
 
 class _TabBarScreenState extends State<TabBarScreen> {
@@ -32,6 +33,8 @@ class _TabBarScreenState extends State<TabBarScreen> {
     const Tickets(),
     const ProfileLogIn(),
   ];
+
+  _TabBarScreenState(this._currentIndex);
 
   @override
   Widget build(BuildContext context) {
