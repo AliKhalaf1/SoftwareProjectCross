@@ -1,4 +1,5 @@
 import 'package:eventbrite_replica/screens/favourites_sign_up.dart';
+import 'package:eventbrite_replica/screens/profile.dart';
 import 'package:eventbrite_replica/screens/tickets_sign_up.dart';
 import 'package:flutter/material.dart';
 import './profile_sign_up.dart';
@@ -21,12 +22,13 @@ class _TabBarScreenState extends State<TabBarScreen> {
   var _currentIndex = 0;
 
   List<Widget> pages = [
-    const Home(),
+    Home(10),
     Container(
       alignment: Alignment.center,
       child: const Text('Search'),
     ),
-    const Favourites(),
+    // const Favourites(),
+    const Profile(),
     const Tickets(),
     const ProfileLogIn(),
   ];

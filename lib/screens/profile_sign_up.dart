@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/button_links.dart';
 import '../widgets/log_in_btn.dart';
-import 'sign_up_or_log_in.dart';
 import '../common_functions/log_in.dart';
 
 class ProfileLogIn extends StatelessWidget {

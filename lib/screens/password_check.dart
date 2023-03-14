@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 class PasswordCheck extends StatefulWidget {
   bool _passwordVisible = false;
   bool _logInBtnActive = false;
-  var _passwordText = TextEditingController();
+  final _passwordText = TextEditingController();
   final String email;
   PasswordCheck(this.email, {super.key});
 
