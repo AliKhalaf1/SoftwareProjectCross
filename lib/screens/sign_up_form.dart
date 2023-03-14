@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 class SignUpForm extends StatefulWidget {
   bool _signUpBtnActive = false;
   bool _passwordVisible = false;
-  var _passwordText = TextEditingController();
+  final _passwordText = TextEditingController();
   List<bool> checks = [false, false, false, false];
   final String emailText;
   String passText = '';

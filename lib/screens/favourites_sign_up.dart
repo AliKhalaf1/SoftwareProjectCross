@@ -10,34 +10,36 @@ class Favourites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/images/images1.jfif"), fit: BoxFit.cover),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              const SizedBox(
-                height: 100,
-              ),
-              const TitleText1('See your favourite in one place'),
-              const Padding(
-                padding: EdgeInsets.only(top: 8.0),
-                child: TitleText2('Log in to see your favourites'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: TextLink('Explore events', 0, () {}),
-              ),
-            ],
-          ),
-          const LogInBtn('Log In', loggingIn),
-        ],
+    return Scaffold(
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/images1.jfif"), fit: BoxFit.cover),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const SizedBox(
+                  height: 100,
+                ),
+                const TitleText1('See your favourite in one place'),
+                const Padding(
+                  padding: EdgeInsets.only(top: 8.0),
+                  child: TitleText2('Log in to see your favourites'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: TextLink('Explore events', 0, () {}),
+                ),
+              ],
+            ),
+            const LogInBtn('Log In', loggingIn),
+          ],
+        ),
       ),
     );
   }

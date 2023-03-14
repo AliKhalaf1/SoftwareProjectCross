@@ -21,7 +21,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
   var _currentIndex = 0;
 
   List<Widget> pages = [
-    const Home(),
+    Home(10),
     Container(
       alignment: Alignment.center,
       child: const Text('Search'),
