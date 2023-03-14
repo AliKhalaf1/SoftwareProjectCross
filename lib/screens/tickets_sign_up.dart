@@ -5,9 +5,17 @@ import '../widgets/title_text_1.dart';
 import '../widgets/title_text_2.dart';
 import '../widgets/log_in_btn.dart';
 import '../common_functions/log_in.dart';
+import './tab_bar_screen.dart';
 
 class Tickets extends StatelessWidget {
   const Tickets({super.key});
+
+  // on click handler Routing
+  void findThingsToDoHandler(BuildContext ctx) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return const TabBarScreen(title: 'Search',tabBarIndex: 1);
+    }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +48,10 @@ class Tickets extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 const Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 6, top: 0),
+                  padding: EdgeInsets.only(left: 15, right: 6, top: 0),
                   child: LogInBtn('Log In', loggingIn),
                 ),
-                GreyButton(() {}, 'Find things to do'),
+                GreyButton(findThingsToDoHandler, 'Find things to do'),
               ],
             ),
           ],

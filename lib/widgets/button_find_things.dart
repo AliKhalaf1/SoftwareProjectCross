@@ -26,9 +26,7 @@ class GreyButton extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {
-          onPressed;
-        },
+        onPressed: () => onPressed(context),
         child: Text(
           text,
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
