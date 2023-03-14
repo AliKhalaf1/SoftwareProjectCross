@@ -51,62 +51,64 @@ class SignUpOrLogIn extends StatelessWidget {
         foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            // first column of page
-            Padding(
-              padding: const EdgeInsets.only(bottom: 70, top: 50),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const <Widget>[
-                  // child one
-                  TitleText1('Let\'s get started'),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // first column of page
+              Padding(
+                padding: const EdgeInsets.only(bottom: 70, top: 50),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const <Widget>[
+                    // child one
+                    TitleText1('Let\'s get started'),
 
-                  // child two
-                  SizedBox(
-                    width: 250,
-                    child: TitleText2(
-                      'Sign up or log in in to see what\'s happening near you',
+                    // child two
+                    SizedBox(
+                      width: 250,
+                      child: TitleText2(
+                        'Sign up or log in in to see what\'s happening near you',
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
 
-            //second column of page
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                //First child
-                LogInBtn('Continue with email address', emailLogIn),
+              //second column of page
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  //First child
+                  LogInBtn('Continue with email address', emailLogIn),
 
-                //Second child
-                TransparentButton(
-                    0, 'Continue With Facebook', signWithFacebook, facebook),
+                  //Second child
+                  TransparentButton(
+                      0, 'Continue With Facebook', signWithFacebook, facebook),
 
-                //Third child
-                TransparentButton(
-                    1, 'Continue With Google', signWithGoogle, facebook),
+                  //Third child
+                  TransparentButton(
+                      1, 'Continue With Google', signWithGoogle, facebook),
 
-                //Fourth child
-                TextButton(
-                  onPressed: () => findTicket(context),
-                  child: Text(
-                    'I bought tickets, but I don\'t have an account.',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 16, 84, 211),
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
-                  ),
-                )
-              ],
-            )
-          ],
+                  //Fourth child
+                  TextButton(
+                    onPressed: () => findTicket(context),
+                    child: Text(
+                      'I bought tickets, but I don\'t have an account.',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 16, 84, 211),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
