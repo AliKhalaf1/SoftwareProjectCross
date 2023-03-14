@@ -42,8 +42,6 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false, // this is new
-
       appBar: AppBar(
         backgroundColor: Colors.white,
         foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
@@ -52,211 +50,213 @@ class _SignUpFormState extends State<SignUpForm> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            //////////////////////////Email///////////////////////////////////
-            children: [
-              DisabledEmailField(widget: widget),
-              ////////////////////////////Confirm Email///////////////////////////////////
-              Container(
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                margin: const EdgeInsets.only(top: 10),
-                child: TextField(
-                  onChanged: (value) => value.isNotEmpty
-                      ? value == widget.emailText
-                          ? _setCheck(true, 0)
-                          : _setCheck(false, 0)
-                      : _setCheck(false, 0),
-                  keyboardType: TextInputType.emailAddress,
-                  cursorWidth: 0.5,
-                  cursorColor: Colors.grey,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2,
-                        style: BorderStyle.solid,
-                        color: Color.fromARGB(255, 67, 96, 244),
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2,
-                        style: BorderStyle.solid,
-                        color: Color.fromARGB(255, 67, 96, 244),
-                      ),
-                    ),
-                    floatingLabelStyle: TextStyle(
-                      color: Color.fromARGB(255, 67, 96, 244),
-                      fontSize: 14,
-                    ),
-                    labelText: 'Confirm Email*',
-                    hintText: 'Confirm email',
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14,
-                    ),
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
-                margin: const EdgeInsets.only(top: 20),
-                child: Row(
-                  children: <Widget>[
-                    Flexible(
-                      fit: FlexFit.loose,
-                      child: TextField(
-                        selectionWidthStyle: BoxWidthStyle.tight,
-                        onChanged: (value) => value.isNotEmpty
-                            ? _setCheck(true, 1)
-                            : _setCheck(false, 1),
-                        keyboardType: TextInputType.name,
-                        cursorWidth: 0.5,
-                        cursorColor: Colors.grey,
-                        decoration: const InputDecoration(
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2,
-                              style: BorderStyle.solid,
-                              color: Color.fromARGB(255, 67, 96, 244),
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2,
-                              style: BorderStyle.solid,
-                              color: Color.fromARGB(255, 67, 96, 244),
-                            ),
-                          ),
-                          floatingLabelStyle: TextStyle(
-                            color: Color.fromARGB(255, 67, 96, 244),
-                            fontSize: 14,
-                          ),
-                          labelText: 'First Name*',
-                          hintText: 'Enter first name',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
+          Expanded(
+            child: ListView(
+              //////////////////////////Email///////////////////////////////////
+              children: [
+                DisabledEmailField(widget: widget),
+                ////////////////////////////Confirm Email///////////////////////////////////
+                Container(
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                  margin: const EdgeInsets.only(top: 10),
+                  child: TextField(
+                    onChanged: (value) => value.isNotEmpty
+                        ? value == widget.emailText
+                            ? _setCheck(true, 0)
+                            : _setCheck(false, 0)
+                        : _setCheck(false, 0),
+                    keyboardType: TextInputType.emailAddress,
+                    cursorWidth: 0.5,
+                    cursorColor: Colors.grey,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2,
+                          style: BorderStyle.solid,
+                          color: Color.fromARGB(255, 67, 96, 244),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 40,
-                    ),
-                    Flexible(
-                      fit: FlexFit.loose,
-                      child: TextField(
-                        selectionWidthStyle: BoxWidthStyle.tight,
-                        onChanged: (value) => value.isNotEmpty
-                            ? _setCheck(true, 2)
-                            : _setCheck(false, 2),
-                        keyboardType: TextInputType.name,
-                        cursorWidth: 0.5,
-                        cursorColor: Colors.grey,
-                        decoration: const InputDecoration(
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2,
-                              style: BorderStyle.solid,
-                              color: Color.fromARGB(255, 67, 96, 244),
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2,
-                              style: BorderStyle.solid,
-                              color: Color.fromARGB(255, 67, 96, 244),
-                            ),
-                          ),
-                          floatingLabelStyle: TextStyle(
-                            color: Color.fromARGB(255, 67, 96, 244),
-                            fontSize: 14,
-                          ),
-                          labelText: 'Surname*',
-                          hintText: 'Enter surname',
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2,
+                          style: BorderStyle.solid,
+                          color: Color.fromARGB(255, 67, 96, 244),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
-                margin: const EdgeInsets.only(top: 15),
-                child: TextField(
-                  controller: widget._passwordText,
-                  obscureText: !widget._passwordVisible,
-                  onChanged: (value) => value.isNotEmpty
-                      ? (value.length >= 8)
-                          ? _setCheck(true, 3)
-                          : _setCheck(false, 3)
-                      : _setCheck(false, 3),
-                  cursorWidth: 0.5,
-                  cursorColor: Colors.grey,
-                  decoration: InputDecoration(
-                    suffixIcon: widget._passwordVisible
-                        ? IconButton(
-                            icon: Icon(
-                              size: 20,
-                              CupertinoIcons.eye_slash_fill,
-                              color: Colors.grey[600],
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                widget._passwordVisible =
-                                    !widget._passwordVisible;
-                              });
-                            },
-                          )
-                        : IconButton(
-                            icon: Icon(
-                              size: 20,
-                              CupertinoIcons.eye_fill,
-                              color: Colors.grey[600],
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                widget._passwordVisible =
-                                    !widget._passwordVisible;
-                              });
-                            },
-                          ),
-                    border: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2,
-                        style: BorderStyle.solid,
+                      floatingLabelStyle: TextStyle(
                         color: Color.fromARGB(255, 67, 96, 244),
+                        fontSize: 14,
                       ),
-                    ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2,
-                        style: BorderStyle.solid,
-                        color: Color.fromARGB(255, 67, 96, 244),
+                      labelText: 'Confirm Email*',
+                      hintText: 'Confirm email',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
                       ),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                     ),
-                    floatingLabelStyle: const TextStyle(
-                      color: Color.fromARGB(255, 67, 96, 244),
-                      fontSize: 14,
-                    ),
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14,
-                    ),
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+                  margin: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    children: <Widget>[
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: TextField(
+                          selectionWidthStyle: BoxWidthStyle.tight,
+                          onChanged: (value) => value.isNotEmpty
+                              ? _setCheck(true, 1)
+                              : _setCheck(false, 1),
+                          keyboardType: TextInputType.name,
+                          cursorWidth: 0.5,
+                          cursorColor: Colors.grey,
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2,
+                                style: BorderStyle.solid,
+                                color: Color.fromARGB(255, 67, 96, 244),
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2,
+                                style: BorderStyle.solid,
+                                color: Color.fromARGB(255, 67, 96, 244),
+                              ),
+                            ),
+                            floatingLabelStyle: TextStyle(
+                              color: Color.fromARGB(255, 67, 96, 244),
+                              fontSize: 14,
+                            ),
+                            labelText: 'First Name*',
+                            hintText: 'Enter first name',
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 40,
+                      ),
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: TextField(
+                          selectionWidthStyle: BoxWidthStyle.tight,
+                          onChanged: (value) => value.isNotEmpty
+                              ? _setCheck(true, 2)
+                              : _setCheck(false, 2),
+                          keyboardType: TextInputType.name,
+                          cursorWidth: 0.5,
+                          cursorColor: Colors.grey,
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2,
+                                style: BorderStyle.solid,
+                                color: Color.fromARGB(255, 67, 96, 244),
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2,
+                                style: BorderStyle.solid,
+                                color: Color.fromARGB(255, 67, 96, 244),
+                              ),
+                            ),
+                            floatingLabelStyle: TextStyle(
+                              color: Color.fromARGB(255, 67, 96, 244),
+                              fontSize: 14,
+                            ),
+                            labelText: 'Surname*',
+                            hintText: 'Enter surname',
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+                  margin: const EdgeInsets.only(top: 15),
+                  child: TextField(
+                    controller: widget._passwordText,
+                    obscureText: !widget._passwordVisible,
+                    onChanged: (value) => value.isNotEmpty
+                        ? (value.length >= 8)
+                            ? _setCheck(true, 3)
+                            : _setCheck(false, 3)
+                        : _setCheck(false, 3),
+                    cursorWidth: 0.5,
+                    cursorColor: Colors.grey,
+                    decoration: InputDecoration(
+                      suffixIcon: widget._passwordVisible
+                          ? IconButton(
+                              icon: Icon(
+                                size: 20,
+                                CupertinoIcons.eye_slash_fill,
+                                color: Colors.grey[600],
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  widget._passwordVisible =
+                                      !widget._passwordVisible;
+                                });
+                              },
+                            )
+                          : IconButton(
+                              icon: Icon(
+                                size: 20,
+                                CupertinoIcons.eye_fill,
+                                color: Colors.grey[600],
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  widget._passwordVisible =
+                                      !widget._passwordVisible;
+                                });
+                              },
+                            ),
+                      border: const UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2,
+                          style: BorderStyle.solid,
+                          color: Color.fromARGB(255, 67, 96, 244),
+                        ),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2,
+                          style: BorderStyle.solid,
+                          color: Color.fromARGB(255, 67, 96, 244),
+                        ),
+                      ),
+                      floatingLabelStyle: const TextStyle(
+                        color: Color.fromARGB(255, 67, 96, 244),
+                        fontSize: 14,
+                      ),
+                      hintStyle: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
+
           SignUpBtn(widget: widget),
 
           //////////////////////////First Name///////////////////////////////////
