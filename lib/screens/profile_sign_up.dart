@@ -41,7 +41,13 @@ class ProfileLogIn extends StatelessWidget {
                   width: 1, color: Color.fromARGB(255, 232, 231, 231)),
             ),
           ),
-          child: const LogInBtn('Log In', loggingIn),
+          child: Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 5),
+              child: LogInBtn('Log In', loggingIn),
+            ),
+          ),
         ),
       ],
     );

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ButtonThingsToDo extends StatelessWidget {
+class GreyButton extends StatelessWidget {
   final Function onPressed;
-  const ButtonThingsToDo(this.onPressed, {super.key});
+  final String text;
+  const GreyButton(this.onPressed,this.text ,{super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,9 +28,9 @@ class ButtonThingsToDo extends StatelessWidget {
         onPressed: () {
           onPressed;
         },
-        child: const Text(
-          'Find things to do',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        child:  Text(
+        text,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
     );

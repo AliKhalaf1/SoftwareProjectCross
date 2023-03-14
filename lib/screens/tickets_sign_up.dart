@@ -12,7 +12,6 @@ class Tickets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Container(
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
@@ -23,24 +22,28 @@ class Tickets extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              children: const [
-                SizedBox(
-                  height: 100,
-                ),
-                TitleText1('Looking for your mobile tickets?'),
-                TitleText2(
-                    'Log into the same account you used to buy your tickets.'),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, top: 12),
+              child: Column(
+                children: const [
+                  SizedBox(
+                    height: 100,
+                  ),
+                  TitleText1('Looking for your mobile tickets?'),
+                  TitleText2(
+                      'Log into the same account you used to buy your tickets.'),
+                ],
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  child: const LogInBtn('Log In', loggingIn),
+                const Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 6, top: 0),
+                  child: LogInBtn('Log In', loggingIn),
                 ),
-                ButtonThingsToDo(() {}),
+                GreyButton(() {}, 'Find things to do'),
               ],
             ),
           ],

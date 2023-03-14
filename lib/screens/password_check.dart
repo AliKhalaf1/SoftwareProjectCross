@@ -1,4 +1,5 @@
 import 'package:eventbrite_replica/widgets/app_bar_text.dart';
+import 'package:eventbrite_replica/widgets/photo_and_email.dart';
 import 'package:eventbrite_replica/widgets/text_link.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,69 +43,78 @@ class _PasswordCheckState extends State<PasswordCheck> {
           Container(
             padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
             margin: const EdgeInsets.only(top: 15),
-            child: TextField(
-              controller: widget._passwordText,
-              obscureText: !widget._passwordVisible,
-              onChanged: (value) => value.isNotEmpty
-                  ? _setLogInBtnActive(true)
-                  : _setLogInBtnActive(false),
-              cursorWidth: 0.5,
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                suffixIcon: widget._passwordVisible
-                    ? IconButton(
-                        icon: Icon(
-                          size: 20,
-                          CupertinoIcons.eye_slash_fill,
-                          color: Colors.grey[600],
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            widget._passwordVisible = !widget._passwordVisible;
-                          });
-                        },
-                      )
-                    : IconButton(
-                        icon: Icon(
-                          size: 20,
-                          CupertinoIcons.eye_fill,
-                          color: Colors.grey[600],
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            widget._passwordVisible = !widget._passwordVisible;
-                          });
-                        },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                PhotoAndEmail(widget.email,
+                    'https://pbs.twimg.com/profile_images/1523987597751726081/XuQeo7gC_400x400.jpg'),
+                TextField(
+                  controller: widget._passwordText,
+                  obscureText: !widget._passwordVisible,
+                  onChanged: (value) => value.isNotEmpty
+                      ? _setLogInBtnActive(true)
+                      : _setLogInBtnActive(false),
+                  cursorWidth: 0.5,
+                  cursorColor: Colors.grey,
+                  decoration: InputDecoration(
+                    suffixIcon: widget._passwordVisible
+                        ? IconButton(
+                            icon: Icon(
+                              size: 20,
+                              CupertinoIcons.eye_slash_fill,
+                              color: Colors.grey[600],
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                widget._passwordVisible =
+                                    !widget._passwordVisible;
+                              });
+                            },
+                          )
+                        : IconButton(
+                            icon: Icon(
+                              size: 20,
+                              CupertinoIcons.eye_fill,
+                              color: Colors.grey[600],
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                widget._passwordVisible =
+                                    !widget._passwordVisible;
+                              });
+                            },
+                          ),
+                    border: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 2,
+                        style: BorderStyle.solid,
+                        color: Color.fromARGB(255, 67, 96, 244),
                       ),
-                border: const UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 2,
-                    style: BorderStyle.solid,
-                    color: Color.fromARGB(255, 67, 96, 244),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 2,
+                        style: BorderStyle.solid,
+                        color: Color.fromARGB(255, 67, 96, 244),
+                      ),
+                    ),
+                    floatingLabelStyle: const TextStyle(
+                      color: Color.fromARGB(255, 67, 96, 244),
+                      fontSize: 14,
+                    ),
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                    labelText: 'Password*',
+                    labelStyle: const TextStyle(
+                      color: Color.fromARGB(255, 77, 77, 77),
+                      fontSize: 14,
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
                   ),
                 ),
-                focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 2,
-                    style: BorderStyle.solid,
-                    color: Color.fromARGB(255, 67, 96, 244),
-                  ),
-                ),
-                floatingLabelStyle: const TextStyle(
-                  color: Color.fromARGB(255, 67, 96, 244),
-                  fontSize: 14,
-                ),
-                hintStyle: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
-                labelText: 'Password*',
-                labelStyle: const TextStyle(
-                  color: Color.fromARGB(255, 77, 77, 77),
-                  fontSize: 14,
-                ),
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-              ),
+              ],
             ),
           ),
 
