@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'screens/sign_up_or_log_in.dart';
 import './screens/tab_bar_screen.dart';
 import './screens/email_check.dart';

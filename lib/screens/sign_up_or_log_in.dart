@@ -5,7 +5,6 @@ import '../widgets/log_in_btn.dart';
 import './email_check.dart';
 import 'find_tickets.dart';
 import '../widgets/transparent_button.dart';
-import '../widgets/google_icon.dart';
 
 class SignUpOrLogIn extends StatelessWidget {
   const SignUpOrLogIn({super.key});
@@ -97,7 +96,7 @@ class SignUpOrLogIn extends StatelessWidget {
                   //Fourth child
                   TextButton(
                     onPressed: () => findTicket(context),
-                    child: Text(
+                    child: const Text(
                       'I bought tickets, but I don\'t have an account.',
                       style: TextStyle(
                           color: Color.fromARGB(255, 16, 84, 211),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ProfileLayer extends StatelessWidget {
-  final String userName;
+  final String firstName;
+  final String lastName;
   final String email;
 
-  const ProfileLayer(this.userName, this.email, {super.key});
+  const ProfileLayer(this.firstName, this.lastName, this.email, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ProfileLayer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      userName,
+                      '$firstName $lastName',
                       style: const TextStyle(
                           fontSize: 32,
                           height: 0.9,

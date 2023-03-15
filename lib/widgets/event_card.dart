@@ -48,7 +48,7 @@ class EventCard extends StatelessWidget {
                           style: const TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 16))),
                   Text(
-                    event.state == 0 ? 'Online' : 'Offline',
+                    (event.state == EventState.online) ? 'Online' : 'Offline',
                     style: const TextStyle(color: Colors.grey),
                   ),
                   FittedBox(

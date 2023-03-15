@@ -40,9 +40,9 @@ class TransparentButton extends StatelessWidget {
               children: [
                 id == 0
                     ? icon
-                    : Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: const GoogleLogo(size: 16),
+                    : const Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: GoogleLogo(size: 16),
                       ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15),

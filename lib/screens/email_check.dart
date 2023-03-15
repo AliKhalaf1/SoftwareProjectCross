@@ -1,3 +1,4 @@
+import 'package:eventbrite_replica/common_functions/get_users_data.dart';
 import 'package:eventbrite_replica/screens/password_check.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +6,8 @@ import '../widgets/sign_in_hint.dart';
 import '../widgets/app_bar_text.dart';
 import 'package:email_validator/email_validator.dart';
 import './sign_up_form.dart';
+import '../models/user.dart';
+import '../common_functions/get_auths.dart';
 
 class EmailCheck extends StatefulWidget {
   //Next_btn_active is a boolean variable that is used to determine whether the next button is active or not. If the email is valid, the next button is active, otherwise it is not active.
@@ -17,10 +20,17 @@ class EmailCheck extends StatefulWidget {
   State<EmailCheck> createState() => _EmailCheckState();
 }
 
-void SignUp(BuildContext ctx, String email, bool choice) {
-  Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-    return choice ? PasswordCheck(email) : SignUpForm(email);
-  }));
+void emailCheck(BuildContext ctx, String email) {
+  if (checkEmail(email)) {
+    User user1 = getUserData(email);
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return PasswordCheck(email, user1.imageUrl);
+    }));
+  } else {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return SignUpForm(email);
+    }));
+  }
 }
 
 class _EmailCheckState extends State<EmailCheck> {
@@ -133,7 +143,7 @@ class _EmailCheckState extends State<EmailCheck> {
                     ),
                   ),
                   onPressed: widget._nextBtnActive
-                      ? () => SignUp(context, widget.emailText.text, false)
+                      ? () => emailCheck(context, widget.emailText.text)
                       : () {},
                   child: const Text('Next'),
                 ),

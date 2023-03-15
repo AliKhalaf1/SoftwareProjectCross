@@ -7,7 +7,7 @@ class PhotoAndEmail extends StatelessWidget {
   final String email;
   const PhotoAndEmail(this.email, this.imageurl, {super.key});
 
-  void _GoBack(BuildContext context) {
+  void _goBack(BuildContext context) {
     Navigator.pop(context);
   }
 
@@ -21,7 +21,8 @@ class PhotoAndEmail extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: Colors.transparent,
             radius: 40,
-            backgroundImage: AssetImage('assets/images/no_user_found.jfif'),
+            backgroundImage:
+                const AssetImage("assets/images/no_user_found.jfif"),
             child: CircleAvatar(
               radius: 40,
               backgroundColor: Colors.transparent,
@@ -31,11 +32,11 @@ class PhotoAndEmail extends StatelessWidget {
         ),
         Text(email,
             style: GoogleFonts.lato(
-              color: Color.fromARGB(255, 116, 123, 128),
+              color: const Color.fromARGB(255, 116, 123, 128),
               fontWeight: FontWeight.bold,
               fontSize: 15,
             )),
-        TextLink('Change', 1, _GoBack),
+        TextLink('Change', 1, _goBack),
       ],
     );
   }

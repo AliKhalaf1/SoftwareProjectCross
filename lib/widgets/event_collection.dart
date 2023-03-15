@@ -1,4 +1,3 @@
-import 'package:eventbrite_replica/screens/favourites_sign_up.dart';
 import 'package:eventbrite_replica/screens/tab_bar_screen.dart';
 import 'package:eventbrite_replica/widgets/title_text_1.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class EventCollections extends StatelessWidget {
   //View more on click handler
   void viewMoreEvents(BuildContext ctx) {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return const TabBarScreen(title: 'Search',tabBarIndex: 1);
+      return const TabBarScreen(title: 'Search', tabBarIndex: 1);
     }));
   }
 
@@ -33,7 +32,7 @@ class EventCollections extends StatelessWidget {
         }).toList(),
       ),
       collecionListOfEvents.length > 5
-          ?  Center(
+          ? Center(
               child: Padding(
                 padding: const EdgeInsets.only(left: 15, bottom: 15),
                 child: TextButton(

@@ -24,9 +24,7 @@ class ProfileImage extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: Ink.image(
-              image: AssetImage(
-                link,
-              ),
+              image: Image.network(link).image,
               fit: BoxFit.cover,
               width: 92,
               height: 92,

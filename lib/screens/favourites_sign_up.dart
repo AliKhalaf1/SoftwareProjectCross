@@ -15,7 +15,8 @@ class Favourites extends StatelessWidget {
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/images1.jfif"), fit: BoxFit.cover),
+              image: AssetImage("assets/images/images1.jfif"),
+              fit: BoxFit.cover),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -40,9 +41,9 @@ class Favourites extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15, right: 6, top: 0),
-              child: const LogInBtn('Log In', loggingIn),
+            const Padding(
+              padding: EdgeInsets.only(left: 15, right: 6, top: 0),
+              child: LogInBtn('Log In', loggingIn),
             ),
           ],
         ),

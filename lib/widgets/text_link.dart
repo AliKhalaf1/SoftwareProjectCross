@@ -4,7 +4,7 @@ class TextLink extends StatelessWidget {
   final String text;
   final Function onPressed;
   final int alignment;
-  TextLink(this.text, this.alignment, this.onPressed, {super.key});
+  const TextLink(this.text, this.alignment, this.onPressed, {super.key});
 
   @override
   Widget build(BuildContext context) {
