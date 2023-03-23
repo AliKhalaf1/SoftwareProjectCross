@@ -4,10 +4,10 @@ import 'package:eventbrite_replica/widgets/text_link.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../common_functions/get_auths.dart';
-import '../common_functions/get_users_data.dart';
-import '../models/user.dart';
-import '../screens/profile.dart';
+import '../../helper_functions/get_auths.dart';
+import '../../helper_functions/get_users_data.dart';
+import '../../models/user.dart';
+import '../user/profile.dart';
 
 class PasswordCheck extends StatefulWidget {
   bool _passwordVisible = false;

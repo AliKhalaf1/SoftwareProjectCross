@@ -1,6 +1,6 @@
 import 'package:eventbrite_replica/widgets/event_collection.dart';
 import 'package:flutter/material.dart';
-import '../models/event.dart';
+import '../../models/event.dart';
 
 class Home extends StatelessWidget {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

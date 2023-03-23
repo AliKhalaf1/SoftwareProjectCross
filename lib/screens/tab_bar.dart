@@ -1,8 +1,8 @@
-import 'package:eventbrite_replica/screens/favourites_sign_up.dart';
-import 'package:eventbrite_replica/screens/tickets_sign_up.dart';
+import 'package:eventbrite_replica/screens/guest/favourites_sign_up.dart';
+import 'package:eventbrite_replica/screens/guest/tickets_sign_up.dart';
 import 'package:flutter/material.dart';
-import './profile_sign_up.dart';
-import '../screens/home.dart';
+import 'sign_up/profile_sign_up.dart';
+import 'guest/home.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 
 class TabBarScreen extends StatefulWidget {

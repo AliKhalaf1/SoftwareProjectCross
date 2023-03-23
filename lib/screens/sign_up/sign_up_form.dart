@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../widgets/app_bar_text.dart';
+import '../../widgets/app_bar_text.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignUpForm extends StatefulWidget {
