@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'screens/sign_up_or_log_in.dart';
-import './screens/tab_bar_screen.dart';
-import './screens/email_check.dart';
+import 'screens/sign_up/sign_up_or_log_in.dart';
+import 'screens/tab_bar.dart';
+import 'screens/sign_in/email_check.dart';
 import './screens/find_tickets.dart';
 
 void main() {

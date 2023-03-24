@@ -1,4 +1,4 @@
-import 'package:eventbrite_replica/screens/tab_bar_screen.dart';
+import 'package:eventbrite_replica/screens/tab_bar.dart';
 import 'package:eventbrite_replica/widgets/title_text_1.dart';
 import 'package:flutter/material.dart';
 import '../widgets/event_card.dart';

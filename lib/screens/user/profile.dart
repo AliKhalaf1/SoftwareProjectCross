@@ -3,9 +3,9 @@ import 'package:eventbrite_replica/widgets/profile_layer.dart';
 import 'package:eventbrite_replica/widgets/round_profile_image.dart';
 import 'package:eventbrite_replica/widgets/verticaldivider.dart';
 import 'package:flutter/material.dart';
-import '../widgets/button_find_things.dart';
-import '../widgets/button_link.dart';
-import '../widgets/counterbutton.dart';
+import '../../widgets/button_find_things.dart';
+import '../../widgets/button_link.dart';
+import '../../widgets/counterbutton.dart';
 
 class Profile extends StatelessWidget {
   String firstName;
@@ -53,10 +53,7 @@ class Profile extends StatelessWidget {
                             gradient: LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.white,
-                                Color.fromRGBO(246, 246, 248, 1)
-                              ],
+                              colors: [Colors.transparent, Colors.transparent],
                             ),
                           ),
                           child: IntrinsicHeight(
@@ -73,6 +70,7 @@ class Profile extends StatelessWidget {
                           ),
                         ),
                         Container(
+                          color: Colors.white,
                           padding: const EdgeInsets.only(left: 15, right: 15),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -95,6 +93,7 @@ class Profile extends StatelessWidget {
           ),
           Container(
               decoration: const BoxDecoration(
+                color: Colors.white,
                 border: Border(
                   bottom: BorderSide(
                     color: Color.fromARGB(255, 226, 225, 225),

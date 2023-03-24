@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/button_find_things.dart';
-import '../widgets/title_text_1.dart';
-import '../widgets/title_text_2.dart';
-import '../widgets/log_in_btn.dart';
-import '../common_functions/log_in.dart';
-import './tab_bar_screen.dart';
+import '../../widgets/button_find_things.dart';
+import '../../widgets/title_text_1.dart';
+import '../../widgets/title_text_2.dart';
+import '../../widgets/log_in_btn.dart';
+import '../../helper_functions/log_in.dart';
+import '../tab_bar.dart';
 
 class Tickets extends StatelessWidget {
   const Tickets({super.key});
@@ -13,7 +13,7 @@ class Tickets extends StatelessWidget {
   // on click handler Routing
   void findThingsToDoHandler(BuildContext ctx) {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return const TabBarScreen(title: 'Search',tabBarIndex: 1);
+      return const TabBarScreen(title: 'Search', tabBarIndex: 1);
     }));
   }
 
@@ -24,7 +24,8 @@ class Tickets extends StatelessWidget {
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/images.jfif"), fit: BoxFit.cover),
+              image: AssetImage("assets/images/images.jfif"),
+              fit: BoxFit.cover),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

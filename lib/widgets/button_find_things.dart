@@ -7,6 +7,7 @@ class GreyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       height: 65,
       padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 0),
       child: TextButton(
@@ -19,7 +20,7 @@ class GreyButton extends StatelessWidget {
             ),
           ),
           backgroundColor: MaterialStateProperty.all(Colors.white),
-          foregroundColor: MaterialStateProperty.all(Colors.black54),
+          foregroundColor: MaterialStateProperty.all(Colors.black87),
           shape: MaterialStatePropertyAll(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(4),
@@ -29,7 +30,7 @@ class GreyButton extends StatelessWidget {
         onPressed: () => onPressed(context),
         child: Text(
           text,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ),
     );

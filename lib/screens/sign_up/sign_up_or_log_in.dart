@@ -1,10 +1,10 @@
 import 'package:eventbrite_replica/widgets/title_text_1.dart';
 import 'package:eventbrite_replica/widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
-import '../widgets/log_in_btn.dart';
-import './email_check.dart';
-import 'find_tickets.dart';
-import '../widgets/transparent_button.dart';
+import '../../widgets/log_in_btn.dart';
+import '../sign_in/email_check.dart';
+import '../find_tickets.dart';
+import '../../widgets/transparent_button.dart';
 
 class SignUpOrLogIn extends StatelessWidget {
   const SignUpOrLogIn({super.key});

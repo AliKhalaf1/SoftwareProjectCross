@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/button_link.dart';
-import '../widgets/log_in_btn.dart';
-import '../common_functions/log_in.dart';
+import '../../widgets/button_link.dart';
+import '../../widgets/log_in_btn.dart';
+import '../../helper_functions/log_in.dart';
 
 class ProfileLogIn extends StatelessWidget {
   const ProfileLogIn({super.key});
