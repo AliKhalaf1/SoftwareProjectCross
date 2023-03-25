@@ -29,17 +29,17 @@ class _SignUpFormState extends State<SignUpForm> {
   //   1: Great
   //A function that validate user entered password
   bool validatePassword(String pass) {
-    String _password = pass.trim();
-    if (_password.isEmpty) {
+    String password = pass.trim();
+    if (password.isEmpty) {
       setState(() {
         passwordStrength = 0;
       });
-    } else if (_password.length < 8) {
+    } else if (password.length < 8) {
       setState(() {
         passwordStrength = 1 / 4;
       });
     } else {
-      if (passValid.hasMatch(_password)) {
+      if (passValid.hasMatch(password)) {
         setState(() {
           passwordStrength = 1;
         });
@@ -308,7 +308,7 @@ class _SignUpFormState extends State<SignUpForm> {
                               ? 'Passwords must have at least 8 characters'
                               : 'Password strength',
                           style: GoogleFonts.lato(
-                            color: Color.fromARGB(255, 101, 103, 125),
+                            color: const Color.fromARGB(255, 101, 103, 125),
                             fontSize: 13.5,
                           ),
                         ),
