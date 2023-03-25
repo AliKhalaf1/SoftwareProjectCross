@@ -6,7 +6,7 @@ import 'guest/home.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/user/profile.dart';
-import '../helper_functions/get_users_data.dart';
+import '../models/db_mock.dart';
 import '../models/user.dart';
 
 class TabBarScreen extends StatefulWidget {
@@ -29,7 +29,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
     print(status);
     if (status == true) {
       var email = prefs.getString('email') ?? '';
-      User user = getUserData(email);
+      User user = DBMock.getUserData(email);
 
       setState(() {
         widget.tabBarIndex = 4;

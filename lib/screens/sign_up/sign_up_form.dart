@@ -1,13 +1,21 @@
 import 'dart:ui';
+import 'package:eventbrite_replica/models/db_mock.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../helper_functions/log_in.dart';
+import '../../models/auth.dart';
+import '../../models/user.dart';
 import '../../widgets/app_bar_text.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../tab_bar.dart';
 
 class SignUpForm extends StatefulWidget {
   bool _signUpBtnActive = false;
   bool _passwordVisible = false;
   final _passwordText = TextEditingController();
+  final _firstNameText = TextEditingController();
+  final _lastNameText = TextEditingController();
   List<bool> checks = [false, false, false, false];
   final String emailText;
   String passText = '';
@@ -52,6 +60,104 @@ class _SignUpFormState extends State<SignUpForm> {
       }
     }
     return false;
+  }
+
+  void signUp() {
+    String userFirstName = widget._firstNameText.text;
+    String userLastName = widget._lastNameText.text;
+    String userPassword = widget._passwordText.text;
+    String userEmail = widget.emailText;
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Text(
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.roboto(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          'Terms and Conditions'),
+                      const SizedBox(height: 3),
+                      Text(
+                        'By signing up or logging in, you agree to our Terms and Conditions and Privacy Policy',
+                        style: GoogleFonts.roboto(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                FilledButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColor),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ),
+                  ),
+                  child: const Text('Agree'),
+                  onPressed: () {
+                    signUp2();
+                  },
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                      style: TextStyle(
+                        color: Colors.blue[900],
+                      ),
+                      'Cancel'),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  void signUp2() {
+    String userFirstName = widget._firstNameText.text;
+    String userLastName = widget._lastNameText.text;
+    String userPassword = widget._passwordText.text;
+    String userEmail = widget.emailText;
+    bool added = DBMock.addUser(
+      User(
+        userEmail,
+        '',
+        userFirstName,
+        userLastName,
+      ),
+      Auth(userEmail, userPassword),
+    );
+    if (added) {
+      setLoggedIn(userEmail);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      Navigator.of(context)
+          .pushReplacementNamed(TabBarScreen.tabBarScreenRoute, arguments: {
+        'title': 'Eventbrite',
+        'tabBarIndex': 4,
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Email already exists'),
+        ),
+      );
+    }
   }
 
   void _setCheck(bool check, int i) {
@@ -145,6 +251,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       Flexible(
                         fit: FlexFit.loose,
                         child: TextField(
+                          controller: widget._firstNameText,
                           selectionWidthStyle: BoxWidthStyle.tight,
                           onChanged: (value) => value.isNotEmpty
                               ? _setCheck(true, 1)
@@ -187,6 +294,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       Flexible(
                         fit: FlexFit.loose,
                         child: TextField(
+                          controller: widget._lastNameText,
                           selectionWidthStyle: BoxWidthStyle.tight,
                           onChanged: (value) => value.isNotEmpty
                               ? _setCheck(true, 2)
@@ -361,7 +469,7 @@ class _SignUpFormState extends State<SignUpForm> {
               ],
             ),
           ),
-          SizedBox(child: SignUpBtn(widget: widget)),
+          SizedBox(child: SignUpBtn(SignUpFn: signUp, widget: widget)),
         ],
       ),
     );
@@ -369,7 +477,9 @@ class _SignUpFormState extends State<SignUpForm> {
 }
 
 class SignUpBtn extends StatelessWidget {
-  const SignUpBtn({
+  Function SignUpFn;
+  SignUpBtn({
+    required this.SignUpFn,
     super.key,
     required this.widget,
   });
@@ -412,8 +522,7 @@ class SignUpBtn extends StatelessWidget {
             ),
           ),
         ),
-        onPressed:
-            widget._signUpBtnActive ? () => print('lets gooooooooooo') : () {},
+        onPressed: widget._signUpBtnActive ? () => SignUpFn() : () {},
         child: const Text('Sign Up'),
       ),
     );

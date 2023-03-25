@@ -5,8 +5,8 @@ import 'package:eventbrite_replica/widgets/text_link.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../helper_functions/get_auths.dart';
-import '../../helper_functions/get_users_data.dart';
+import '../../helper_functions/log_in.dart';
+import '../../models/db_mock.dart';
 import '../../models/user.dart';
 import '../user/profile.dart';
 import '../tab_bar.dart';
@@ -26,14 +26,8 @@ class PasswordCheck extends StatefulWidget {
   State<PasswordCheck> createState() => _PasswordCheckState();
 }
 
-Future<void> setLoggedIn(email) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool("isLoggedIn", true);
-  prefs.setString("email", email);
-}
-
 void signIn(BuildContext ctx, String password, String email) {
-  if (checkAuth(email, password)) {
+  if (DBMock.checkAuth(email, password)) {
     setLoggedIn(email);
     Navigator.of(ctx).popUntil((route) => route.isFirst);
     Navigator.of(ctx)
