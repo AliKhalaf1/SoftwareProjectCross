@@ -20,7 +20,42 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  // regular expression to check if string
+  RegExp passValid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
+  double passwordStrength = 0;
+  // 0: No password
+  // 1/4: Weak
+  // 1/2: Average
+  //   1: Great
+  //A function that validate user entered password
+  bool validatePassword(String pass) {
+    String _password = pass.trim();
+    if (_password.isEmpty) {
+      setState(() {
+        passwordStrength = 0;
+      });
+    } else if (_password.length < 8) {
+      setState(() {
+        passwordStrength = 1 / 4;
+      });
+    } else {
+      if (passValid.hasMatch(_password)) {
+        setState(() {
+          passwordStrength = 1;
+        });
+        return true;
+      } else {
+        setState(() {
+          passwordStrength = 1 / 2;
+        });
+        return false;
+      }
+    }
+    return false;
+  }
+
   void _setCheck(bool check, int i) {
+    validatePassword(widget._passwordText.text);
     if (widget.checks[i] != check) {
       setState(() {
         widget.passText = widget._passwordText.text;
@@ -52,10 +87,10 @@ class _SignUpFormState extends State<SignUpForm> {
         children: [
           Expanded(
             child: ListView(
-              //////////////////////////Email///////////////////////////////////
               children: [
+                //////////////////////////EMAIL///////////////////////////////////
                 DisabledEmailField(widget: widget),
-                ////////////////////////////Confirm Email///////////////////////////////////
+                ////////////////////////////CONFIM EMAIL FIELD///////////////////////////////////
                 Container(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
                   margin: const EdgeInsets.only(top: 10),
@@ -97,6 +132,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     ),
                   ),
                 ),
+                ////////////////////////////FIRST NAME & LAST NAME FIELDS///////////////////////////////////
                 Container(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
                   margin: const EdgeInsets.only(top: 20),
@@ -186,6 +222,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     ],
                   ),
                 ),
+                ////////////////////////////PASSWORD FIELD///////////////////////////////////
                 Container(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
                   margin: const EdgeInsets.only(top: 15),
@@ -250,6 +287,23 @@ class _SignUpFormState extends State<SignUpForm> {
                         fontSize: 14,
                       ),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                  ),
+                ),
+                ////////////////////////////PASSWORD STRENGTH BAR///////////////////////////////////
+                IntrinsicHeight(
+                  child: ListTile(
+                    minVerticalPadding: 5,
+                    minLeadingWidth: 5,
+                    leading: LinearProgressIndicator(
+                      backgroundColor: Colors.grey[300],
+                      color: passwordStrength <= 1 / 4
+                          ? Color.fromARGB(255, 189, 33, 21)
+                          : passwordStrength == 1 / 2
+                              ? Colors.yellow
+                              : Colors.green[700],
+                      minHeight: 5,
+                      value: passwordStrength,
                     ),
                   ),
                 ),
