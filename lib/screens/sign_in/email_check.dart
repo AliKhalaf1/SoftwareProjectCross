@@ -12,6 +12,7 @@ import '../../helper_functions/get_auths.dart';
 class EmailCheck extends StatefulWidget {
   //Next_btn_active is a boolean variable that is used to determine whether the next button is active or not. If the email is valid, the next button is active, otherwise it is not active.
   var emailText = TextEditingController();
+
   bool _nextBtnActive = false;
   EmailCheck({super.key});
   static const emailCheckRoute = '/Email-Check';

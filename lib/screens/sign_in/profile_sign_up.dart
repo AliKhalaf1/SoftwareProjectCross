@@ -3,26 +3,27 @@ import '../../widgets/button_link.dart';
 import '../../widgets/log_in_btn.dart';
 import '../../helper_functions/log_in.dart';
 
-class ProfileLogIn extends StatelessWidget {
-  const ProfileLogIn({super.key});
+class ProfileSignUp extends StatelessWidget {
+  const ProfileSignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: const [
-              SizedBox(
-                height: 30,
-                child: Text(''),
+        Expanded(
+          child: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: const [
+                    ButtonLink('Ticket Issues'),
+                    ButtonLink('Manage Events'),
+                    ButtonLink('Settings'),
+                  ],
+                ),
               ),
-              ButtonLink('Ticket Issues'),
-              ButtonLink('Manage Events'),
-              ButtonLink('Settings'),
             ],
           ),
         ),

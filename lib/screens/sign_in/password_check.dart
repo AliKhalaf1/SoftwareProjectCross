@@ -1,3 +1,4 @@
+import 'package:eventbrite_replica/screens/sign_in/email_check.dart';
 import 'package:eventbrite_replica/widgets/app_bar_text.dart';
 import 'package:eventbrite_replica/widgets/photo_and_email.dart';
 import 'package:eventbrite_replica/widgets/text_link.dart';
@@ -8,6 +9,8 @@ import '../../helper_functions/get_auths.dart';
 import '../../helper_functions/get_users_data.dart';
 import '../../models/user.dart';
 import '../user/profile.dart';
+import '../tab_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PasswordCheck extends StatefulWidget {
   bool _passwordVisible = false;
@@ -23,13 +26,21 @@ class PasswordCheck extends StatefulWidget {
   State<PasswordCheck> createState() => _PasswordCheckState();
 }
 
+Future<void> setLoggedIn(email) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool("isLoggedIn", true);
+  prefs.setString("email", email);
+}
+
 void signIn(BuildContext ctx, String password, String email) {
   if (checkAuth(email, password)) {
-    User user = getUserData(email);
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return Profile(
-          user.firstName, user.lastName, user.imageUrl, user.email, 0, 0, 0);
-    }));
+    setLoggedIn(email);
+    Navigator.of(ctx).popUntil((route) => route.isFirst);
+    Navigator.of(ctx)
+        .pushReplacementNamed(TabBarScreen.tabBarScreenRoute, arguments: {
+      'title': 'Eventbrite',
+      'tabBarIndex': 4,
+    });
   } else {
     ScaffoldMessenger.of(ctx)
         .showSnackBar(const SnackBar(content: Text('Wrong password')));

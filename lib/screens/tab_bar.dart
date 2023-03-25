@@ -1,9 +1,13 @@
 import 'package:eventbrite_replica/screens/guest/favourites_sign_up.dart';
 import 'package:eventbrite_replica/screens/guest/tickets_sign_up.dart';
 import 'package:flutter/material.dart';
-import 'sign_up/profile_sign_up.dart';
+import 'sign_in/profile_sign_up.dart';
 import 'guest/home.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../screens/user/profile.dart';
+import '../helper_functions/get_users_data.dart';
+import '../models/user.dart';
 
 class TabBarScreen extends StatefulWidget {
   // const TabBarScreen({super.key});
@@ -11,14 +15,66 @@ class TabBarScreen extends StatefulWidget {
   //Routing value
   static const tabBarScreenRoute = '/';
   final String title;
-  final int tabBarIndex;
-  const TabBarScreen({super.key, required this.title, this.tabBarIndex = 0});
+  int tabBarIndex;
+  TabBarScreen({super.key, required this.title, this.tabBarIndex = 4});
 
   @override
   State<TabBarScreen> createState() => _TabBarScreenState(tabBarIndex);
 }
 
 class _TabBarScreenState extends State<TabBarScreen> {
+  Future<void> checkLoggedUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var status = prefs.getBool('isLoggedIn') ?? false;
+    print(status);
+    if (status == true) {
+      var email = prefs.getString('email') ?? '';
+      User user = getUserData(email);
+
+      setState(() {
+        widget.tabBarIndex = 4;
+        pages = [
+          Home(10),
+          Container(
+            alignment: Alignment.center,
+            child: const Text('Search'),
+          ),
+          const FavouritesSignUp(),
+          const TicketsSignUp(),
+          Profile(
+            user.firstName,
+            user.lastName,
+            user.imageUrl,
+            user.email,
+            0,
+            0,
+            0,
+            checkLoggedUser,
+          ),
+        ];
+      });
+    } else {
+      setState(() {
+        pages = [
+          Home(10),
+          Container(
+            alignment: Alignment.center,
+            child: const Text('Search'),
+          ),
+          const FavouritesSignUp(),
+          const TicketsSignUp(),
+          const ProfileSignUp(),
+        ];
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoggedUser();
+  }
+
   var _currentIndex = 0;
 
   List<Widget> pages = [
@@ -27,9 +83,9 @@ class _TabBarScreenState extends State<TabBarScreen> {
       alignment: Alignment.center,
       child: const Text('Search'),
     ),
-    const Favourites(),
-    const Tickets(),
-    const ProfileLogIn(),
+    const FavouritesSignUp(),
+    const TicketsSignUp(),
+    const ProfileSignUp(),
   ];
 
   _TabBarScreenState(this._currentIndex);

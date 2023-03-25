@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/button_find_things.dart';
 import '../../widgets/button_link.dart';
 import '../../widgets/counterbutton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatelessWidget {
   String firstName;
@@ -15,13 +16,21 @@ class Profile extends StatelessWidget {
   int likesCount;
   int myTicketsCount;
   int followingCount;
+  final Function logOut;
   Profile(this.firstName, this.lastName, this.imageUrl, this.email,
-      this.likesCount, this.myTicketsCount, this.followingCount,
+      this.likesCount, this.myTicketsCount, this.followingCount, this.logOut,
       {super.key});
   static const emailCheckRoute = '/profile';
 
-  void logOut(BuildContext ctx) {
-    Navigator.of(ctx).popUntil((route) => route.isFirst);
+  Future<void> setLoggedOut(email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("isLoggedIn", false);
+    prefs.setString("email", '');
+  }
+
+  void logOutLogic(BuildContext ctx) {
+    setLoggedOut(email);
+    logOut();
   }
 
   @override
@@ -108,7 +117,7 @@ class Profile extends StatelessWidget {
               height: 80,
               padding: const EdgeInsetsDirectional.only(top: 15),
               width: double.infinity,
-              child: GreyButton(logOut, 'Log out')),
+              child: GreyButton(logOutLogic, 'Log out')),
         ],
       ),
     );

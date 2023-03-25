@@ -7,13 +7,13 @@ import '../../widgets/log_in_btn.dart';
 import '../../helper_functions/log_in.dart';
 import '../tab_bar.dart';
 
-class Tickets extends StatelessWidget {
-  const Tickets({super.key});
+class TicketsSignUp extends StatelessWidget {
+  const TicketsSignUp({super.key});
 
   // on click handler Routing
   void findThingsToDoHandler(BuildContext ctx) {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return const TabBarScreen(title: 'Search', tabBarIndex: 1);
+      return TabBarScreen(title: 'Search', tabBarIndex: 1);
     }));
   }
 
