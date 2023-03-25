@@ -77,15 +77,19 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
-        title: const AppBarText('Sign up'),
-      ),
+      resizeToAvoidBottomInset: true,
+      appBar: MediaQuery.of(context).orientation == Orientation.landscape
+          ? null
+          : AppBar(
+              backgroundColor: Colors.white,
+              foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
+              title: const AppBarText('Sign up'),
+            ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
+            flex: 5,
             child: ListView(
               children: [
                 //////////////////////////EMAIL///////////////////////////////////
@@ -291,29 +295,73 @@ class _SignUpFormState extends State<SignUpForm> {
                   ),
                 ),
                 ////////////////////////////PASSWORD STRENGTH BAR///////////////////////////////////
-                IntrinsicHeight(
-                  child: ListTile(
-                    minVerticalPadding: 5,
-                    minLeadingWidth: 5,
-                    leading: LinearProgressIndicator(
-                      backgroundColor: Colors.grey[300],
-                      color: passwordStrength <= 1 / 4
-                          ? Color.fromARGB(255, 189, 33, 21)
-                          : passwordStrength == 1 / 2
-                              ? Colors.yellow
-                              : Colors.green[700],
-                      minHeight: 5,
-                      value: passwordStrength,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 10),
+                  child: SizedBox(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          passwordStrength == 0
+                              ? 'Passwords must have at least 8 characters'
+                              : 'Password strength',
+                          style: GoogleFonts.lato(
+                            color: Color.fromARGB(255, 101, 103, 125),
+                            fontSize: 13.5,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              passwordStrength == 0
+                                  ? ''
+                                  : passwordStrength <= 1 / 4
+                                      ? 'Weak'
+                                      : passwordStrength == 1 / 2
+                                          ? 'Average'
+                                          : 'Great!',
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 101, 103, 125),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                            ),
+                            passwordStrength == 0
+                                ? const Text('')
+                                : Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      height: 4,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: LinearProgressIndicator(
+                                          backgroundColor: Colors.grey[300],
+                                          color: passwordStrength <= 1 / 4
+                                              ? const Color.fromARGB(
+                                                  255, 189, 33, 21)
+                                              : passwordStrength == 1 / 2
+                                                  ? Colors.yellow
+                                                  : Colors.green[700],
+                                          minHeight: 5,
+                                          value: passwordStrength,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ],
             ),
           ),
-
-          SignUpBtn(widget: widget),
-
-          //////////////////////////First Name///////////////////////////////////
+          SizedBox(child: SignUpBtn(widget: widget)),
         ],
       ),
     );
@@ -330,51 +378,44 @@ class SignUpBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          color: Colors.white,
-          padding:
-              const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
-          margin: const EdgeInsets.only(top: 20),
-          width: double.infinity,
-          child: TextButton(
-            style: ButtonStyle(
-              overlayColor: widget._signUpBtnActive
-                  ? MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 199, 197, 197))
-                  : MaterialStateProperty.all<Color>(Colors.transparent),
-              textStyle: MaterialStateProperty.all<TextStyle>(
-                GoogleFonts.notoSansSharada(
-                    fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-              fixedSize: MaterialStateProperty.all<Size>(
-                const Size(double.infinity, 50),
-              ),
-              backgroundColor: MaterialStateProperty.all<Color>(
-                widget._signUpBtnActive
-                    ? Theme.of(context).primaryColor
-                    : CupertinoColors.systemGrey6,
-              ),
-              foregroundColor: MaterialStateProperty.all<Color>(
-                widget._signUpBtnActive
-                    ? Colors.white
-                    : const Color.fromARGB(255, 186, 186, 186),
-              ),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
+      margin: const EdgeInsets.only(top: 20),
+      width: double.infinity,
+      child: TextButton(
+        style: ButtonStyle(
+          overlayColor: widget._signUpBtnActive
+              ? MaterialStateProperty.all<Color>(
+                  const Color.fromARGB(255, 199, 197, 197))
+              : MaterialStateProperty.all<Color>(Colors.transparent),
+          textStyle: MaterialStateProperty.all<TextStyle>(
+            GoogleFonts.notoSansSharada(
+                fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          fixedSize: MaterialStateProperty.all<Size>(
+            const Size(double.infinity, 50),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(
+            widget._signUpBtnActive
+                ? Theme.of(context).primaryColor
+                : CupertinoColors.systemGrey6,
+          ),
+          foregroundColor: MaterialStateProperty.all<Color>(
+            widget._signUpBtnActive
+                ? Colors.white
+                : const Color.fromARGB(255, 186, 186, 186),
+          ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
             ),
-            onPressed: widget._signUpBtnActive
-                ? () => print('lets gooooooooooo')
-                : () {},
-            child: const Text('Sign Up'),
           ),
         ),
-      ],
+        onPressed:
+            widget._signUpBtnActive ? () => print('lets gooooooooooo') : () {},
+        child: const Text('Sign Up'),
+      ),
     );
   }
 }
