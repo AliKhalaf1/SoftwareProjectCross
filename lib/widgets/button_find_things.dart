@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class GreyButton extends StatelessWidget {
+class GreyButtonLogout extends StatelessWidget {
   final Function onPressed;
   final String text;
-  const GreyButton(this.onPressed, this.text, {super.key});
+  const GreyButtonLogout(this.onPressed, this.text, {super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
