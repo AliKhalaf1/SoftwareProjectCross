@@ -4,7 +4,7 @@ import '../helper_functions/log_in.dart';
 import '../models/event.dart';
 import 'package:intl/intl.dart';
 
-import '../screens/tab_bar.dart';
+import '../screens/sign_up/sign_up_or_log_in.dart';
 
 class EventCard extends StatefulWidget {
   //event to be shown in the card
@@ -39,8 +39,8 @@ class _EventCardState extends State<EventCard> {
         if (isLogged) {
           widget.event.isFav = !widget.event.isFav;
         } else {
-          Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
-            return TabBarScreen(title: 'Profile', tabBarIndex: 4);
+          Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+            return const SignUpOrLogIn();
           }));
         }
       });
