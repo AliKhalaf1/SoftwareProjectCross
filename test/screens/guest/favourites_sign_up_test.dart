@@ -8,7 +8,7 @@ void main() {
   testWidgets('Favourites Render the four texts', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Favourites(),
+        home: FavouritesSignUp(),
       ),
     );
 
@@ -21,7 +21,7 @@ void main() {
   testWidgets('Renders expected background image', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Favourites(),
+        home: FavouritesSignUp(),
       ),
     );
 
@@ -41,7 +41,7 @@ void main() {
   testWidgets('LogInBtn Tab Test', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Favourites(),
+        home: FavouritesSignUp(),
       ),
     );
 

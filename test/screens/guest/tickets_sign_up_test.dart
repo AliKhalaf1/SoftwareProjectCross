@@ -11,7 +11,7 @@ void main() {
     testWidgets('tickets sign up ...', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Tickets(),
+          home: TicketsSignUp(),
         ),
       );
 
@@ -21,7 +21,7 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Tickets(),
+          home: TicketsSignUp(),
         ),
       );
 
@@ -43,7 +43,7 @@ void main() {
     testWidgets('Renders TitleText2 Widget', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Tickets(),
+          home: TicketsSignUp(),
         ),
       );
       expect(find.text('Looking for your mobile tickets?'), findsOneWidget);
@@ -51,7 +51,7 @@ void main() {
     testWidgets('Renders LogInBtn Widget', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Tickets(),
+          home: TicketsSignUp(),
         ),
       );
 
@@ -62,23 +62,23 @@ void main() {
     testWidgets('Renders GreyButton Widget', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Tickets(),
+          home: TicketsSignUp(),
         ),
       );
 
-      final greyButtonFinder = find.byType(GreyButton);
+      final greyButtonFinder = find.byType(GreyButtonLogout);
       expect(greyButtonFinder, findsOneWidget);
     });
     testWidgets('Tap Find Things To Do Button Navigates',
         (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Tickets(),
+          home: TicketsSignUp(),
         ),
       );
 
       final findThingsBtnFinder =
-          find.widgetWithText(GreyButton, 'Find things to do');
+          find.widgetWithText(GreyButtonLogout, 'Find things to do');
       expect(findThingsBtnFinder, findsOneWidget);
 
       await tester.tap(findThingsBtnFinder);
@@ -90,7 +90,7 @@ void main() {
     testWidgets('Tap login button', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: Tickets(),
+          home: TicketsSignUp(),
         ),
       );
 

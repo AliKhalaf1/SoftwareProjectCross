@@ -22,15 +22,8 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: Profile(
-            firstName,
-            lastName,
-            imageUrl,
-            email,
-            likesCount,
-            myTicketsCount,
-            followingCount,
-          ),
+          home: Profile(firstName, lastName, imageUrl, email, likesCount,
+              myTicketsCount, followingCount, () {}),
         ),
       );
 
@@ -43,7 +36,7 @@ void main() {
       expect(find.byType(CounterButton), findsNWidgets(3));
       expect(find.byType(ButtonLink), findsNWidgets(5));
       expect(find.byType(ButtonNotification), findsNWidgets(1));
-      expect(find.byType(GreyButton), findsOneWidget);
+      expect(find.byType(GreyButtonLogout), findsOneWidget);
     });
   });
 }

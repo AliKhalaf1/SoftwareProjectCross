@@ -4,6 +4,7 @@ import 'package:eventbrite_replica/widgets/profile_layer.dart';
 import 'package:eventbrite_replica/widgets/round_profile_image.dart';
 import 'package:eventbrite_replica/widgets/verticaldivider.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/button_find_things.dart';
 import '../../widgets/button_link.dart';
 import '../../widgets/counterbutton.dart';
@@ -120,7 +121,7 @@ class Profile extends StatelessWidget {
               height: 80,
               padding: const EdgeInsetsDirectional.only(top: 15),
               width: double.infinity,
-              child: GreyButton(logOutLogic, 'Log out')),
+              child: GreyButtonLogout(logOutLogic, 'Log out')),
         ],
       ),
     );
