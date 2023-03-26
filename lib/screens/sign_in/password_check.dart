@@ -30,11 +30,9 @@ void signIn(BuildContext ctx, String password, String email) {
   if (DBMock.checkAuth(email, password)) {
     setLoggedIn(email);
     Navigator.of(ctx).popUntil((route) => route.isFirst);
-    Navigator.of(ctx)
-        .pushReplacementNamed(TabBarScreen.tabBarScreenRoute, arguments: {
-      'title': 'Eventbrite',
-      'tabBarIndex': 4,
-    });
+    Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+      return TabBarScreen(title: 'Profile', tabBarIndex: 4);
+    }));
   } else {
     ScaffoldMessenger.of(ctx)
         .showSnackBar(const SnackBar(content: Text('Wrong password')));

@@ -1,7 +1,7 @@
 import 'package:eventbrite_replica/screens/guest/favourites_sign_up.dart';
 import 'package:eventbrite_replica/screens/guest/tickets_sign_up.dart';
 import 'package:flutter/material.dart';
-import 'sign_in/profile_sign_up.dart';
+import 'guest/profile_sign_up.dart';
 import 'guest/home.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +16,7 @@ class TabBarScreen extends StatefulWidget {
   static const tabBarScreenRoute = '/';
   final String title;
   int tabBarIndex;
-  TabBarScreen({super.key, required this.title, this.tabBarIndex = 4});
+  TabBarScreen({super.key, required this.title, this.tabBarIndex = 0});
 
   @override
   State<TabBarScreen> createState() => _TabBarScreenState(tabBarIndex);

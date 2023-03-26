@@ -13,3 +13,9 @@ Future<void> setLoggedIn(email) async {
   prefs.setBool("isLoggedIn", true);
   prefs.setString("email", email);
 }
+
+
+  Future<bool> checkLoggedUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var status = prefs.getBool('isLoggedIn') ?? false;
+    return status;}
