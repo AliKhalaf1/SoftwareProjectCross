@@ -15,7 +15,7 @@ class EventCollections extends StatelessWidget {
   //View more on click handler
   void viewMoreEvents(BuildContext ctx) {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return const TabBarScreen(title: 'Search', tabBarIndex: 1);
+      return TabBarScreen(title: 'Search', tabBarIndex: 1);
     }));
   }
 

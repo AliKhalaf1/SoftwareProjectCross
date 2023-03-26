@@ -5,8 +5,8 @@ import '../../widgets/text_link.dart';
 import '../../widgets/log_in_btn.dart';
 import '../../helper_functions/log_in.dart';
 
-class Favourites extends StatelessWidget {
-  const Favourites({super.key});
+class FavouritesSignUp extends StatelessWidget {
+  const FavouritesSignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
