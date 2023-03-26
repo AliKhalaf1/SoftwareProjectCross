@@ -1,3 +1,4 @@
+import 'package:eventbrite_replica/widgets/button_notificatin.dart';
 import 'package:eventbrite_replica/widgets/grey_area.dart';
 import 'package:eventbrite_replica/widgets/profile_layer.dart';
 import 'package:eventbrite_replica/widgets/round_profile_image.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/button_find_things.dart';
 import '../../widgets/button_link.dart';
 import '../../widgets/counterbutton.dart';
+
 
 class Profile extends StatelessWidget {
   String firstName;
@@ -37,7 +39,9 @@ class Profile extends StatelessWidget {
                     //uppergray
                     const GreyArea(),
                     //image
-                    ProfileImage(imageUrl),
+                    ProfileImage(imageUrl = (imageUrl != " "
+                        ? imageUrl
+                        : 'https://icons8.com/icon/12438/customer')),
                     Column(
                       children: [
                         // two texts with icon&layerfortab
@@ -75,7 +79,7 @@ class Profile extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: const [
-                              ButtonLink("Notification Centre"),
+                              ButtonNotification("Notification Centre"),
                               ButtonLink("Linked Accounts"),
                               ButtonLink("Following"),
                               ButtonLink("Ticket Issues"),

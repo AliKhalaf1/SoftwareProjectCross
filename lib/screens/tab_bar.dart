@@ -1,5 +1,6 @@
 import 'package:eventbrite_replica/screens/guest/favourites_sign_up.dart';
 import 'package:eventbrite_replica/screens/guest/tickets_sign_up.dart';
+import 'package:eventbrite_replica/screens/user/profile.dart';
 import 'package:flutter/material.dart';
 import 'sign_up/profile_sign_up.dart';
 import 'guest/home.dart';
@@ -27,7 +28,9 @@ class _TabBarScreenState extends State<TabBarScreen> {
       alignment: Alignment.center,
       child: const Text('Search'),
     ),
-    const Favourites(),
+    //const Favourites(),
+    Profile("ahmed", "magdy", "assets/images/no_user_found.jfif",
+        "ahmed@yahoo.com", 5, 4, 4),
     const Tickets(),
     const ProfileLogIn(),
   ];
