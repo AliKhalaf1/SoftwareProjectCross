@@ -38,12 +38,7 @@ class ProfileImage extends StatelessWidget {
                 backgroundImage: NetworkImage(link),
               ),
             ),
-            // child: Ink.image(
-            //   image: Image.asset(link).image,
-            //   fit: BoxFit.cover,
-            //   width: 92,
-            //   height: 92,
-            // ),
+      
           ),
         ),
       ),
