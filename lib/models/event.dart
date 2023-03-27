@@ -3,7 +3,7 @@ library EventModel;
 enum EventState { online, offline }
 
 /// {@category Models}
-///
+/// ![alone](../../assets/doc/camaro.png)
 class Event {
   //parameters of the EventCard Widget
   final String eventImg; /*event card image */

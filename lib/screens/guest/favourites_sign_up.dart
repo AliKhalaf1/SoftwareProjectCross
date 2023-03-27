@@ -10,18 +10,17 @@ import '../../helper_functions/log_in.dart';
 /// {@category Guest}
 /// {@category Screens}
 /// ========================= FavouritesSignUp ========================
-///    • It is surrounded by scafold to be rendered as a screen because it is screen widget 
-///    • Extends StatelessWidget as there is no change in any state in screen that could change rendered page content 
-/// 
+///    • It is surrounded by scafold to be rendered as a screen because it is screen widget
+///    • Extends StatelessWidget as there is no change in any state in screen that could change rendered page content
+///
 ///  =========================== loggingIn ============================
 ///    • Handler for (logIn) button to navigate to SignUpOrLogIn screen when pressing on to it
 ///    • The user can signIn or signUp from navigated page
-/// 
+///
 ///  ============== TitleText1 /  TitleText2 / LogInBtn  ==============
 ///    • Widgets with certain styling and not built in widgets like (i.e. Text)
-///    • You can find them in folder  under the name widgets 
-///  
-
+///    • You can find them in folder  under the name widgets
+///
 
 class FavouritesSignUp extends StatelessWidget {
   const FavouritesSignUp({super.key});
