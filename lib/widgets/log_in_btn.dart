@@ -5,7 +5,14 @@ import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 /// {@category Widgets}
-///
+///<b> TextButton() </b>
+/// with certain styling used for 
+///<b>LogIn</b>
+///.
+/// 
+/// It navigates to 
+///<strong>sign_up_or_log_in</strong>
+///screen.
 class LogInBtn extends StatelessWidget {
   final String text;
   final Function onPressed;
