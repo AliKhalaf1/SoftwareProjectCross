@@ -12,8 +12,24 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../tab_bar.dart';
 
+import '../sign_up/sign_up_or_log_in.dart';
+
 /// {@category Sign Up}
 /// {@category Screens}
+///
+/// <h1>This screen is used to sign up</h1>
+///
+/// it's used in the [SignUpOrLogIn] screen
+///
+/// it's used to get the user's <b>email</b> , <b>first name</b>, <b>last name</b>, <b>password</b> throught Text Fields
+///
+/// it has a password strength bar that checks if the password is strong or not.
+///
+/// after the user enters all the data, and clicks on the sign up button,
+///
+/// it show a dialog to confirm the user's agrrment to the terms and conditions
+///
+/// if the user agrees, it navigates to the [TabBar] screen
 ///
 class SignUpForm extends StatefulWidget {
   bool _signUpBtnActive = false;
@@ -68,14 +84,10 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   void signUp() {
-    String userFirstName = widget._firstNameText.text;
-    String userLastName = widget._lastNameText.text;
-    String userPassword = widget._passwordText.text;
-    String userEmail = widget.emailText;
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          return Container(
+          return SizedBox(
             height: MediaQuery.of(context).size.height * 0.3,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -474,7 +486,7 @@ class _SignUpFormState extends State<SignUpForm> {
               ],
             ),
           ),
-          SizedBox(child: SignUpBtn(SignUpFn: signUp, widget: widget)),
+          SizedBox(child: SignUpBtn(signUpFn: signUp, widget: widget)),
         ],
       ),
     );
@@ -482,9 +494,9 @@ class _SignUpFormState extends State<SignUpForm> {
 }
 
 class SignUpBtn extends StatelessWidget {
-  Function SignUpFn;
+  Function signUpFn;
   SignUpBtn({
-    required this.SignUpFn,
+    required this.signUpFn,
     super.key,
     required this.widget,
   });
@@ -527,7 +539,7 @@ class SignUpBtn extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: widget._signUpBtnActive ? () => SignUpFn() : () {},
+        onPressed: widget._signUpBtnActive ? () => signUpFn() : () {},
         child: const Text('Sign Up'),
       ),
     );

@@ -6,7 +6,6 @@ void main() {
   testWidgets('Log In Btn Test', (WidgetTester tester) async {
     const title = 'Log In';
     final Function onPressed = () {};
-    const primaryColor = Colors.white;
 
     await tester.pumpWidget(
       MaterialApp(

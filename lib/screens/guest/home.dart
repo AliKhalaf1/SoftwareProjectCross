@@ -6,37 +6,37 @@ import '../../models/event.dart';
 
 /// {@category Guest}
 /// {@category Screens}
-/// 
-///It is surrounded by scafold to be rendered as a screen because it is screen widget. 
-/// 
-///Extends StatelessWidget as there is no change in any state in screen that could change rendered page content. 
-/// 
+///
+///It is surrounded by scafold to be rendered as a screen because it is screen widget.
+///
+///Extends StatelessWidget as there is no change in any state in screen that could change rendered page content.
+///
 ///DUMMY DATA to be substituted after linking with Apis and database.
-/// 
+///
 ///<b>ListView</b>
-/// 
-///Wdiget used to add multiple items in column and overflowed items becomes scrollable.
-/// 
+///
+///Widget used to add multiple items in column and overflowed items becomes scrollable.
+///
 ///itemCount:
 ///it takes count of items to render inside ListView.
 ///
-///itemBuilder: 
-///it render each item by loop on them until reaching itemCount.   
-/// 
-///<b>EventCollections</b>  
-/// 
+///itemBuilder:
+///it render each item by loop on them until reaching itemCount.
+///
+///<b>EventCollections</b>
+///
 ///Widget with certain styling and not built in widgets like (i.e. Text)
-/// 
+///
 ///You can find it in folder  under the name widgets
-/// 
+///
 ///It takes (categotey title & list of events) to render events in a coloumn where each is in a card.
-/// 
-///<b>viewMore</b>   
-/// 
+///
+///<b>viewMore</b>
+///
 ///Handler for button navigate to search screen when pressing on to it.
-/// 
+///
 ///Search screen index is 1 in tabBaerScreen so we send its index to tabBaerScreen to understands which page to render.
-/// 
+///
 
 class Home extends StatelessWidget {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -15,11 +15,11 @@ class GreyArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: const [Colors.white, Color.fromRGBO(246, 246, 248, 1)],
+          colors: [Colors.white, Color.fromRGBO(246, 246, 248, 1)],
         ),
       ),
       height: 90,

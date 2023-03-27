@@ -8,12 +8,29 @@ import 'guest/profile_sign_up.dart';
 import 'guest/home.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../screens/user/profile.dart';
 import '../models/db_mock.dart';
 import '../models/user.dart';
 
 /// {@category User}
 /// {@category Screens}
+///
+/// This is the main screen of the app.
+///
+/// It contains a [BottomNavigationBar] that allows the user to navigate between the app's main screens.
+///
+/// The screens are:
+///
+/// * [Home]
+///
+/// * [TicketsSignUp]
+///
+/// * [FavouritesSignUp]
+///
+/// * [Search]
+///
+/// * [Profile]
+///
+/// The [Home] screen is the default screen.
 ///
 class TabBarScreen extends StatefulWidget {
   // const TabBarScreen({super.key});
@@ -35,7 +52,6 @@ class _TabBarScreenState extends State<TabBarScreen> {
   Future<void> checkLoggedUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var status = prefs.getBool('isLoggedIn') ?? false;
-    print(status);
     if (status == true) {
       var email = prefs.getString('email') ?? '';
       User user = DBMock.getUserData(email);

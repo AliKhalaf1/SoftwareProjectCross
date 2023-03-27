@@ -1,6 +1,5 @@
 library PasswordCheckScreen;
 
-import '../../screens/sign_in/email_check.dart';
 import '../../widgets/app_bar_text.dart';
 import '../../widgets/photo_and_email.dart';
 import '../../widgets/text_link.dart';
@@ -9,14 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../helper_functions/log_in.dart';
 import '../../models/db_mock.dart';
-import '../../models/user.dart';
 import '../user/profile.dart';
 import '../tab_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// {@category Sign In}
 /// {@category Screens}
 ///
+/// this screen is used to check if the password is valid or not
+///
+/// if the password is valid, it navigates to the [Profile] screen
+///
+/// if the password is not valid, it shows a snackbar with the message "Wrong password"
 class PasswordCheck extends StatefulWidget {
   bool _passwordVisible = false;
   bool _logInBtnActive = false;

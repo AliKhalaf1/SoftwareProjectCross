@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 /// {@category Widgets}
 /// Colored Google icon used inside signup widget.
-/// 
+///
 class GoogleLogo extends StatelessWidget {
   final double size;
   const GoogleLogo({Key? key, this.size = 300}) : super(key: key);

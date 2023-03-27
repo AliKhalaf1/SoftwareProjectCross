@@ -30,7 +30,7 @@ void main() {
       // Check that all UI elements are present
       expect(find.text('$firstName $lastName'), findsOneWidget);
       expect(find.text(email), findsOneWidget);
-      //expect(find.byType(ProfileImage), findsOneWidget);
+      expect(find.byType(ProfileImage), findsOneWidget);
       expect(find.byType(GreyArea), findsOneWidget);
       expect(find.byType(ProfileLayer), findsOneWidget);
       expect(find.byType(CounterButton), findsNWidgets(3));

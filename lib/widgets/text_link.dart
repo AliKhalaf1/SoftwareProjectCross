@@ -4,6 +4,16 @@ import 'package:flutter/material.dart';
 
 /// {@category Widgets}
 ///
+/// <h1>The TextLink is a StatelessWidget that displays a hyperText that navigates to another page. </h1>
+///
+/// it takes a string as a </b>text</b> , <b>OnPressed</b> Function and an <b>integer</b> as an alignment.
+///
+/// the alignment is used to align the text to the left, center or right.
+///
+/// the text is displayed as a button.
+///
+/// the onPressed callback function is used to navigate to another page.
+///
 class TextLink extends StatelessWidget {
   final String text;
   final Function onPressed;

@@ -6,9 +6,9 @@ import '../screens/sign_up/sign_up_or_log_in.dart';
 
 /// {@category Helper Functions}
 ///
-/// This function is called when the user logs in.
-/// It pushes the SignUpOrLogIn screen to the Navigator stack.
-/// The user can only go back to the LogIn screen when he/she logs out.
+/// <h1>This function is called when the user logs in.</h1>
+///
+/// It's used to navigate to Login Page.
 ///
 void loggingIn(BuildContext ctx) {
   Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
@@ -18,6 +18,12 @@ void loggingIn(BuildContext ctx) {
 
 /// {@category Helper Functions}
 ///
+/// <h1>This function is used to set the user logged using Cache Memory.</h1>
+///
+/// It takes the email of the user as a parameter.
+///
+/// It sets the value of the key "isLoggedIn" to true and the value of the key "email" to the email of the user.
+///
 Future<void> setLoggedIn(email) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool("isLoggedIn", true);
@@ -25,7 +31,7 @@ Future<void> setLoggedIn(email) async {
 }
 
 /// {@category Helper Functions}
-///
+/// <h1>This function is used to check Cache for already logged in user and returns a boolean</h1>
 Future<bool> checkLoggedUser() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var status = prefs.getBool('isLoggedIn') ?? false;

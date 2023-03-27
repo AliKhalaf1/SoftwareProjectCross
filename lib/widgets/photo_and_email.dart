@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 /// {@category Widgets}
 ///
+/// Used to display the user's photo and email in [PasswordCheck] Screen .
 class PhotoAndEmail extends StatelessWidget {
   final String imageurl;
   final String email;

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 
 /// {@category Widgets}
 ///
+/// <h1>This widget is a button that is used to navigate to the [NotificationScreen]</h1>.
+///
+/// It contains a bell icon and takes it's text as input.
 class ButtonNotification extends StatelessWidget {
   final String text;
   const ButtonNotification(this.text, {super.key});
@@ -11,9 +14,6 @@ class ButtonNotification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // alignment: Alignment.topCenter,
-      // margin: const EdgeInsets.all(10),
-      // //padding: const EdgeInsets.all(8.0),
       foregroundDecoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(

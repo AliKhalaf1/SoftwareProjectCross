@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 
 /// {@category Widgets}
 ///
+/// <h1>The VDivider is a StatelessWidget that displays a vertical line. </h1>
+///
+/// it takes no parameters.
+///
+/// it is used to separate widgets in [Profile] and [EventPage].
 class VDivider extends StatelessWidget {
   const VDivider({super.key});
 
