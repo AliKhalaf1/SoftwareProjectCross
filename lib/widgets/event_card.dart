@@ -9,13 +9,16 @@ import 'package:intl/intl.dart';
 import '../screens/sign_up/sign_up_or_log_in.dart';
 
 /// {@category Widgets}
+/// 
 ///   It is StatefulWidget as its content changes depending on actions taken inside screen use this widget. 
 /// 
 ///   It consists of 2 widgets Inkwell and favIcon surrounded by stack.
 /// 
 ///   If user can not add to favourite unless user logged-in or he will be navigated to login screen
 /// 
-///   Date format used here is # 'EEE, MMM d • hh:mmaaa ' 
+///   Date format used here is
+///  
+///<strong>   'EEE, MMM d • hh:mmaaa ' </strong>
 ///
 class EventCard extends StatefulWidget {
   //event to be shown in the card

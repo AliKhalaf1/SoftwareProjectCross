@@ -6,25 +6,22 @@ import '../../models/event.dart';
 
 /// {@category Guest}
 /// {@category Screens}
-///      It is surrounded by scafold to be rendered as a screen because it is screen widget. 
 /// 
-///      Extends StatelessWidget as there is no change in any state in screen that could change rendered page content. 
+///     It is surrounded by scafold to be rendered as a screen because it is screen widget. 
 /// 
-///      DUMMY DATA to be substituted after linking with Apis and database.
+///     Extends StatelessWidget as there is no change in any state in screen that could change rendered page content. 
 /// 
-///     ###ListView
+///     DUMMY DATA to be substituted after linking with Apis and database.
+/// 
+///###  ListView
 /// 
 ///      Wdiget used to add multiple items in column and overflowed items becomes scrollable.
 /// 
-///       #####itemCount
+///      itemCount: it takes count of items to render inside ListView.
 /// 
-///         it takes count of items to render inside ListView.
+///      itemBuilder: it render each item by loop on them until reaching itemCount.   
 /// 
-///       #####itemBuilder
-/// 
-///         it render each item by loop on them until reaching itemCount.
-/// 
-///     ###EventCollections
+///###  EventCollections
 /// 
 ///      Widget with certain styling and not built in widgets like (i.e. Text)
 /// 
@@ -32,7 +29,7 @@ import '../../models/event.dart';
 /// 
 ///      It takes (categotey title & list of events) to render events in a coloumn where each is in a card.
 /// 
-///     ###viewMore
+///###  viewMore
 /// 
 ///      Handler for button navigate to search screen when pressing on to it.
 /// 

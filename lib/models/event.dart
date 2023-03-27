@@ -3,7 +3,21 @@ library EventModel;
 enum EventState { online, offline }
 
 /// {@category Models}
-/// ![alone](../../assets/doc/camaro.png)
+///## Event class that stores each event information inside following attributes
+///
+///   • eventImg: cover image for the event
+/// 
+///   • date: date when the event held
+/// 
+///   • description: short description on the event and activities that will take place
+/// 
+///   • state: Online / Offline
+/// 
+///   • creatorFollowers: number of followers who follow the event organizer
+/// 
+///   • isFav: boolean variable check if user mark this event to its favourites or not
+///  
+/// 
 class Event {
   //parameters of the EventCard Widget
   final String eventImg; /*event card image */
