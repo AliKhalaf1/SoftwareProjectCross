@@ -15,7 +15,7 @@ import '../../models/event.dart';
 /// 
 ///<b>ListView</b>
 /// 
-///      Wdiget used to add multiple items in column and overflowed items becomes scrollable.
+///Wdiget used to add multiple items in column and overflowed items becomes scrollable.
 /// 
 ///itemCount:
 ///it takes count of items to render inside ListView.

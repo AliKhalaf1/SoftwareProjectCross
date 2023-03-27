@@ -18,7 +18,7 @@ import '../screens/sign_up/sign_up_or_log_in.dart';
 /// 
 ///   Date format used here is
 ///  
-///<strong>   'EEE, MMM d • hh:mmaaa ' </strong>
+///<strong>'EEE, MMM d • hh:mmaaa ' </strong>
 ///
 class EventCard extends StatefulWidget {
   //event to be shown in the card
