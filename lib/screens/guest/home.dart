@@ -7,6 +7,8 @@ import '../../models/event.dart';
 /// {@category Guest}
 /// {@category Screens}
 /// ============================== Home ===============================
+///   {@image <image alt='asdadsa' src='../../../assets/doc/Screens/homePage/homeScreen.png'>}
+/// 
 ///    • It is surrounded by scafold to be rendered as a screen because it is screen widget 
 ///    • Extends StatelessWidget as there is no change in any state in screen that could change rendered page content 
 /// 
@@ -19,10 +21,17 @@ import '../../models/event.dart';
 ///    • itemBuilder: it render each item by loop on them until reaching itemCount
 /// 
 ///  ======================== EventCollections ========================
+///   {@image <image alt='asdadsa' src='../../../assets/doc/Screens/homePage/eventCollection.png'>}
+/// 
 ///    • Widget with certain styling and not built in widgets like (i.e. Text)
 ///    • You can find it in folder  under the name widgets
 ///    • It takes (categotey title & list of events) to render events in a coloumn where each is in a card 
-///  
+///  ======================== ViewMore ========================
+///   {@image <image alt='asdadsa' src='../../../assets/doc/Screens/homePage/viewMoreButton.png'>}
+/// 
+///    • Handler for (Find viewMore) button navigate to search screen when pressing on to it
+///    • Search screen --> its index is 1 in tabBaerScreen so we send its index to tabBaerScreen to understands which page to render
+/// 
 
 class Home extends StatelessWidget {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
