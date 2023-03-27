@@ -23,7 +23,8 @@ import '../../widgets/counter_button.dart';
 ///
 /// To log out of the app, the user can tap the "Log out" button at the bottom of the screen.
 ///
-///This class depend mainly on 6 widgets GreyArea , ProfileImage, ProfileLayer, CounterButton, ButtonLink
+///This Screen depends mainly on 6 widgets GreyArea , ProfileImage, ProfileLayer, CounterButton, ButtonLink
+///
 ///and GreyButtonLogOut.
 
 class Profile extends StatelessWidget {

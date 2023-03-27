@@ -1,8 +1,8 @@
-import '../../../lib/screens/guest/tickets_sign_up.dart';
-import '../../../lib/screens/sign_up/sign_up_or_log_in.dart';
-import '../../../lib/screens/tab_bar.dart';
-import '../../../lib/widgets/button_find_things.dart';
-import '../../../lib/widgets/log_in_btn.dart';
+import 'package:Eventbrite/screens/guest/tickets_sign_up.dart';
+import 'package:Eventbrite/screens/sign_up/sign_up_or_log_in.dart';
+import 'package:Eventbrite/screens/tab_bar.dart';
+import 'package:Eventbrite/widgets/button_find_things.dart';
+import 'package:Eventbrite/widgets/log_in_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -7,6 +7,13 @@ import '../../helper_functions/log_in.dart';
 
 /// {@category Guest}
 /// {@category Screens}
+///# The ProfileSignUp class is a StatelessWidget,that defines a screen for the guest user's profile.
+///
+///The screen displays three buttons labeled "Ticket Issues," "Manage Events," and "Settings" inside a ListView widget.
+///
+///At the bottom of the screen, there is a container that contains a LogInBtn widget labeled "Log In".
+///
+/// The LogInBtn widget has a callback function named "loggingIn" that is executed when the button is pressed.
 ///
 class ProfileSignUp extends StatelessWidget {
   const ProfileSignUp({super.key});

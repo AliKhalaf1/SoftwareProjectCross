@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 /// {@category Widgets}
 ///
+/// Static text widget used in [SignIn] screen.
 class SingInHint extends StatelessWidget {
   const SingInHint({super.key});
 

@@ -1,4 +1,3 @@
-/// for documentation
 library GreyButton;
 
 import 'package:flutter/material.dart';

@@ -1,11 +1,11 @@
-import '../../../lib/screens/user/profile.dart';
-import '../../../lib/widgets/button_find_things.dart';
-import '../../../lib/widgets/button_link.dart';
-import '../../../lib/widgets/button_notificatin.dart';
-import '../../../lib/widgets/counter_button.dart';
-import '../../../lib/widgets/grey_area.dart';
-import '../../../lib/widgets/profile_layer.dart';
-import '../../../lib/widgets/round_profile_image.dart';
+import 'package:Eventbrite/screens/user/profile.dart';
+import 'package:Eventbrite/widgets/button_find_things.dart';
+import 'package:Eventbrite/widgets/button_link.dart';
+import 'package:Eventbrite/widgets/button_notificatin.dart';
+import 'package:Eventbrite/widgets/counter_button.dart';
+import 'package:Eventbrite/widgets/grey_area.dart';
+import 'package:Eventbrite/widgets/profile_layer.dart';
+import 'package:Eventbrite/widgets/round_profile_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -15,7 +15,7 @@ void main() {
       const firstName = 'Ahmed';
       const lastName = 'Ehab';
       const email = 'AhmedEhab@yahoo.com';
-      const imageUrl = 'assets/images/no_user_found.jfif';
+      const imageUrl = '';
       const likesCount = 5;
       const myTicketsCount = 2;
       const followingCount = 10;

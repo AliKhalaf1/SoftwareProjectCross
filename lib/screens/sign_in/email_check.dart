@@ -9,10 +9,20 @@ import '../../widgets/app_bar_text.dart';
 import 'package:email_validator/email_validator.dart';
 import '../sign_up/sign_up_form.dart';
 import '../../models/user.dart';
+import '../sign_up/sign_up_or_log_in.dart';
 
 /// {@category Sign In}
 /// {@category Screens}
 ///
+/// this screen is used to check if the email is valid or not
+///
+/// if the email is valid, it navigates to the [PasswordCheck] screen
+///
+/// if the email is not valid, it navigates to the [SignUpForm] screen
+///
+/// it's used in the [SignUpOrLogIn] screen
+///
+
 class EmailCheck extends StatefulWidget {
   //Next_btn_active is a boolean variable that is used to determine whether the next button is active or not. If the email is valid, the next button is active, otherwise it is not active.
   var emailText = TextEditingController();

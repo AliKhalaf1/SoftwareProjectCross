@@ -39,7 +39,7 @@ class ProfileImage extends StatelessWidget {
               child: CircleAvatar(
                 radius: 40,
                 backgroundColor: Colors.transparent,
-                backgroundImage: NetworkImage(link),
+                backgroundImage: link.isNotEmpty ? NetworkImage(link) : null,
               ),
             ),
           ),
