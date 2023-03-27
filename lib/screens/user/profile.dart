@@ -11,6 +11,14 @@ import '../../widgets/button_find_things.dart';
 import '../../widgets/button_link.dart';
 import '../../widgets/counter_button.dart';
 
+/// {@category user}
+/// {@category Screens}
+/// # This class is a StatelessWidget that displays a user's profile information and allows the user to log out.
+///
+/// ##### The Profile class takes in several parameters such as firstName, lastName, email, imageUrl, likesCount, myTicketsCount, followingCount, and logOut.
+///
+///
+
 class Profile extends StatelessWidget {
   String firstName;
   String lastName;
