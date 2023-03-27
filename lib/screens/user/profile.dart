@@ -13,11 +13,18 @@ import '../../widgets/counter_button.dart';
 
 /// {@category user}
 /// {@category Screens}
-/// # This class is a StatelessWidget that displays a user's profile information and allows the user to log out.
+/// # A screen that displays a user's profile information and allows the user to log out.
 ///
-/// ##### The Profile class takes in several parameters such as firstName, lastName, email, imageUrl, likesCount, myTicketsCount, followingCount, and logOut.
+/// This screen displays the user's profile picture, name, email, and various counters for likes, tickets,
+/// and followings.
 ///
+/// It also displays buttons for accessing various parts of the app, such as the notification
+/// center and settings page.
 ///
+/// To log out of the app, the user can tap the "Log out" button at the bottom of the screen.
+///
+///This class depend mainly on 6 widgets GreyArea , ProfileImage, ProfileLayer, CounterButton, ButtonLink
+///and GreyButtonLogOut.
 
 class Profile extends StatelessWidget {
   String firstName;
@@ -57,9 +64,7 @@ class Profile extends StatelessWidget {
                     //uppergray
                     const GreyArea(),
                     //image
-                    ProfileImage(imageUrl = (imageUrl != " "
-                        ? imageUrl
-                        : 'https://icons8.com/icon/12438/customer')),
+                    ProfileImage(imageUrl),
                     Column(
                       children: [
                         // two texts with icon&layerfortab
