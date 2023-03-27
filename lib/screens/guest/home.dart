@@ -6,6 +6,24 @@ import '../../models/event.dart';
 
 /// {@category Guest}
 /// {@category Screens}
+/// ============================== Home ===============================
+///    • It is surrounded by scafold to be rendered as a screen because it is screen widget 
+///    • Extends StatelessWidget as there is no change in any state in screen that could change rendered page content 
+/// 
+/// =========================== DUMMY DATA ============================
+///    • To be substituted after linking with Apis and database
+/// 
+///  =========================== ListView =============================
+///    • Wdiget used to add multiple items in column and overflowed items becomes scrollable
+///    • itemCount: it takes count of items to rendered inside ListView
+///    • itemBuilder: it render each item by loop on them until reaching itemCount
+/// 
+///  ======================== EventCollections ========================
+///    • Widget with certain styling and not built in widgets like (i.e. Text)
+///    • You can find it in folder  under the name widgets
+///    • It takes (categotey title & list of events) to render events in a coloumn where each is in a card 
+///  
+
 class Home extends StatelessWidget {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///------------------------------------------------------- DUMMY DATA -----------------------------------------------------------------
