@@ -14,13 +14,13 @@ import '../../helper_functions/log_in.dart';
 /// 
 ///    Extends StatelessWidget as there is no change in any state in screen that could change rendered page content.
 ///  
-///### Login Button
+///<b>Login Button</b>
 /// 
 ///     Handler for button to navigate to SignUpOrLogIn screen when pressing on to it.
 /// 
 ///     The user can signIn or signUp from navigated page.
 /// 
-///### TitleText1 • TitleText2 • LogInBtn
+///<b>TitleText1 • TitleText2 • LogInBtn</b>
 /// 
 ///     Widgets with certain styling and not built in widgets (i.e. Text)
 /// 
