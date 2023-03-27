@@ -75,8 +75,17 @@ flutter:
     - assets/images/images.jfif
     - assets/images/images1.jfif
     - assets/images/no_user_found.jfif
-    - assets/doc/angela.jfif
-    
+    - assets/images/yla.png
+    - assets/doc/Screens/homePage/homeScreen.png
+    - assets/doc/Screens/homePage/eventCollection.png
+    - assets/doc/Screens/homePage/viewMoreButton.png
+    - assets/doc/Screens/favPage/favPage.png
+    - assets/doc/Screens/favPage/logInBtn.png
+    - assets/doc/Screens/favPage/titles.png
+    - assets/doc/Screens/ticketsPage/ticketsPage.png
+    - assets/doc/Screens/ticketsPage/buttons.png
+    - assets/doc/Screens/ticketsPage/titles.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
