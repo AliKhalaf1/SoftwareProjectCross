@@ -11,25 +11,27 @@ import '../tab_bar.dart';
 
 /// {@category Guest}
 /// {@category Screens}
-/// ========================= TicketsSignUp ===========================
-///  {@image <image alt='asdadsa' src='../../../assets/doc/Screens/ticketsPage/ticketsPage.png'>}
+///      It is surrounded by scafold to be rendered as a screen because it is screen widget. 
 /// 
-///    • It is surrounded by scafold to be rendered as a screen because it is screen widget 
-///    • Extends StatelessWidget as there is no change in any state in screen that could change rendered page content 
+///      Extends StatelessWidget as there is no change in any state in screen that could change rendered page content. 
 /// 
-///  =========================== loggingIn ============================
-///  {@image <image alt='asdadsa' src='../../../assets/doc/Screens/ticketsPage/buttons.png'>}
+///     ###Login Button
 /// 
-///    • Handler for (logIn) button navigate to SignUpOrLogIn screen when pressing on to it
-///    • The user can signIn or signUp from navigated page
-///    • Handler for (Find things to do) button navigate to search screen when pressing on to it
-///    • Search screen --> its index is 1 in tabBaerScreen so we send its index to tabBaerScreen to understands which page to render
+///      Handler for button navigate to SignUpOrLogIn screen when pressing on to it.
 /// 
-///  ==== TitleText1 /  TitleText2 / LogInBtn / GreyButtonLogout =====
-///  {@image <image alt='asdadsa' src='../../../assets/doc/Screens/ticketsPage/titles.png'>}
+///      The user can signIn or signUp from navigated page.
 /// 
-///    • Widgets with certain styling and not built in widgets like (i.e. Text)
-///    • You can find them in folder  under the name widgets 
+///     ###Find things to do Button
+/// 
+///      Handler for button navigate to search screen when pressing on to it.
+/// 
+///      Search screen index is 1 in tabBaerScreen so we send its index to tabBaerScreen to understands which page to render.
+/// 
+///     ###TitleText1 • TitleText2 • LogInBtn • GreyButtonLogout 
+/// 
+///      Widgets with certain styling and not built in widgets like (i.e. Text)
+/// 
+///      You can find them in folder  under the name widgets. 
 ///   
 class TicketsSignUp extends StatelessWidget {
   const TicketsSignUp({super.key});

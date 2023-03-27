@@ -1,7 +1,7 @@
 library EventCard;
 
-import '../../screens/event_page.dart';
 import 'package:flutter/material.dart';
+import '../helper_functions/events_handlers.dart';
 import '../helper_functions/log_in.dart';
 import '../models/event.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +9,13 @@ import 'package:intl/intl.dart';
 import '../screens/sign_up/sign_up_or_log_in.dart';
 
 /// {@category Widgets}
+///   It is StatefulWidget as its content changes depending on actions taken inside screen use this widget. 
+/// 
+///   It consists of 2 widgets Inkwell and favIcon surrounded by stack.
+/// 
+///   If user can not add to favourite unless user logged-in or he will be navigated to login screen
+/// 
+///   Date format used here is # 'EEE, MMM d • hh:mmaaa ' 
 ///
 class EventCard extends StatefulWidget {
   //event to be shown in the card
@@ -25,12 +32,6 @@ class _EventCardState extends State<EventCard> {
   @override
   Widget build(BuildContext context) {
     //Methods
-    //Event selection action function
-    void selectEvent(BuildContext ctx) {
-      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-        return const EventPage();
-      }));
-    }
 
     bool isFavourite() {
       return widget.event.isFav;
@@ -79,7 +80,7 @@ class _EventCardState extends State<EventCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: [                     
                       Text(
                           '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.event.date)} EET',
                           style: TextStyle(

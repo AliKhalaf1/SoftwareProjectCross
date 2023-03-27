@@ -9,21 +9,22 @@ import '../../helper_functions/log_in.dart';
 
 /// {@category Guest}
 /// {@category Screens}
-/// ========================= FavouritesSignUp ========================
-///    • It is surrounded by scafold to be rendered as a screen because it is screen widget 
-///    • Extends StatelessWidget as there is no change in any state in screen that could change rendered page content 
+///   
+///    It is surrounded by scafold to be rendered as a screen because it is screen widget. 
 /// 
-///  =========================== loggingIn ============================
-///  {@image <image alt='asdadsa' src='../../../assets/doc/Screens/favPage/logInBtn.png'>}
+///    Extends StatelessWidget as there is no change in any state in screen that could change rendered page content.
+///  
+///     ###Login Button
 /// 
-///    • Handler for (logIn) button to navigate to SignUpOrLogIn screen when pressing on to it
-///    • The user can signIn or signUp from navigated page
+///    Handler for button to navigate to SignUpOrLogIn screen when pressing on to it.
 /// 
-///  ============== TitleText1 /  TitleText2 / LogInBtn  ==============
-///  {@image <image alt='asdadsa' src='../../../assets/doc/Screens/favPage/titles.png'>}
+///    The user can signIn or signUp from navigated page.
 /// 
-///    • Widgets with certain styling and not built in widgets like (i.e. Text)
-///    • You can find them in folder  under the name widgets 
+///     ###itleText1 • TitleText2 • LogInBtn
+/// 
+///    Widgets with certain styling and not built in widgets (i.e. Text)
+/// 
+///    You can find them in folder  under the name widgets. 
 ///  
 
 
