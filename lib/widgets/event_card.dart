@@ -60,7 +60,10 @@ class _EventCardState extends State<EventCard> {
                 SizedBox(
                     width: 130,
                     height: 130,
-                    child: Image.network(
+                    child: widget.event.eventImg.startsWith('http')? Image.network(
+                      widget.event.eventImg,
+                      fit: BoxFit.cover,
+                    ): Image.asset(
                       widget.event.eventImg,
                       fit: BoxFit.cover,
                     )),
@@ -96,6 +99,7 @@ class _EventCardState extends State<EventCard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Icon(
+                              key: Key("person"),
                               Icons.person_outline_outlined,
                               color: Color.fromRGBO(0, 0, 0, 0.7),
                             ),
@@ -113,6 +117,7 @@ class _EventCardState extends State<EventCard> {
                                         fontSize: 10,
                                         fontWeight: FontWeight.w500)),
                             const Icon(
+                              key: Key("share"),
                               Icons.share,
                               size: 20,
                               color: Color.fromRGBO(0, 0, 0, 0.7),

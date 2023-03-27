@@ -41,6 +41,7 @@ dependencies:
   community_material_icon: ^5.9.55
   email_validator: ^2.1.17
   shared_preferences: ^2.0.20
+  mockito: ^5.0.0
   
   
 
