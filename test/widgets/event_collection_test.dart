@@ -1,8 +1,7 @@
-import '../../lib/models/event.dart';
-import '../../lib/screens/tab_bar.dart';
-import '../../lib/widgets/event_card.dart';
-import '../../lib/widgets/event_collection.dart';
-import '../../lib/widgets/title_text_1.dart';
+import 'package:Eventbrite/models/event.dart';
+import 'package:Eventbrite/widgets/event_card.dart';
+import 'package:Eventbrite/widgets/event_collection.dart';
+import 'package:Eventbrite/widgets/title_text_1.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 

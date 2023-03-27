@@ -1,10 +1,10 @@
-import '../../../lib/screens/find_tickets.dart';
-import '../../../lib/screens/sign_in/email_check.dart';
-import '../../../lib/screens/sign_up/sign_up_or_log_in.dart';
-import '../../../lib/widgets/log_in_btn.dart';
-import '../../../lib/widgets/title_text_1.dart';
-import '../../../lib/widgets/title_text_2.dart';
-import '../../../lib/widgets/transparent_button.dart';
+import 'package:Eventbrite/screens/find_tickets.dart';
+import 'package:Eventbrite/screens/sign_in/email_check.dart';
+import 'package:Eventbrite/screens/sign_up/sign_up_or_log_in.dart';
+import 'package:Eventbrite/widgets/log_in_btn.dart';
+import 'package:Eventbrite/widgets/title_text_1.dart';
+import 'package:Eventbrite/widgets/title_text_2.dart';
+import 'package:Eventbrite/widgets/transparent_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

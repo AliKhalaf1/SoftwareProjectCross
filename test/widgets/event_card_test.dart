@@ -1,6 +1,4 @@
-// import '../../../lib/helper_functions/log_in.dart';
 import 'package:Eventbrite/models/event.dart';
-// import '../../../lib/screens/sign_up/sign_up_or_log_in.dart';
 import 'package:Eventbrite/widgets/event_card.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
