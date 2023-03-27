@@ -1,5 +1,9 @@
+library GoogleLogo;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
 class GoogleLogo extends StatelessWidget {
   final double size;
   const GoogleLogo({Key? key, this.size = 300}) : super(key: key);

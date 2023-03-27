@@ -1,3 +1,5 @@
+library EmailCheckScreen;
+
 import '../../models/db_mock.dart';
 import '../../screens/sign_in/password_check.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,9 @@ import 'package:email_validator/email_validator.dart';
 import '../sign_up/sign_up_form.dart';
 import '../../models/user.dart';
 
+/// {@category Sign In}
+/// {@category Screens}
+///
 class EmailCheck extends StatefulWidget {
   //Next_btn_active is a boolean variable that is used to determine whether the next button is active or not. If the email is valid, the next button is active, otherwise it is not active.
   var emailText = TextEditingController();

@@ -1,3 +1,5 @@
+library ProfileSignUpScreen;
+
 import 'package:flutter/material.dart';
 
 import '../../widgets/button_find_things.dart';

@@ -1,3 +1,5 @@
+library LogInOrSignUpScreen;
+
 import '../../widgets/title_text_1.dart';
 import '../../widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,9 @@ import '../sign_in/email_check.dart';
 import '../find_tickets.dart';
 import '../../widgets/transparent_button.dart';
 
+/// {@category Sign Up}
+/// {@category Screens}
+///
 class SignUpOrLogIn extends StatelessWidget {
   const SignUpOrLogIn({super.key});
 

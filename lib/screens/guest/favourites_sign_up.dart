@@ -1,3 +1,5 @@
+library GuestFavouritesScreen;
+
 import '../../widgets/title_text_1.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/title_text_2.dart';

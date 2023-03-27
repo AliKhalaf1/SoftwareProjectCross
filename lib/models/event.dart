@@ -1,5 +1,9 @@
+library EventModel;
+
 enum EventState { online, offline }
 
+/// {@category Models}
+///
 class Event {
   //parameters of the EventCard Widget
   final String eventImg; /*event card image */
@@ -11,5 +15,5 @@ class Event {
 
   //constructor
   Event(this.creatorFollowers, this.date, this.description, this.eventImg,
-      this.state,this.isFav);
+      this.state, this.isFav);
 }

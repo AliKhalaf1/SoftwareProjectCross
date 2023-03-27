@@ -1,5 +1,9 @@
+library LinkButtonWidget;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
 class ButtonLink extends StatelessWidget {
   final String text;
   const ButtonLink(this.text, {super.key});

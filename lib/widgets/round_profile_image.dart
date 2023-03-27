@@ -1,5 +1,9 @@
+library RoundProfileImage;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
 class ProfileImage extends StatelessWidget {
   final String link;
   const ProfileImage(this.link, {super.key});
@@ -24,16 +28,16 @@ class ProfileImage extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            radius: 40,
-            backgroundImage:
-                const AssetImage("assets/images/no_user_found.jfif"),
-            child: CircleAvatar(
-              radius: 40,
               backgroundColor: Colors.transparent,
-              backgroundImage: NetworkImage(link),
+              radius: 40,
+              backgroundImage:
+                  const AssetImage("assets/images/no_user_found.jfif"),
+              child: CircleAvatar(
+                radius: 40,
+                backgroundColor: Colors.transparent,
+                backgroundImage: NetworkImage(link),
+              ),
             ),
-          ),
             // child: Ink.image(
             //   image: Image.asset(link).image,
             //   fit: BoxFit.cover,

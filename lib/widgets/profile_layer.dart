@@ -1,5 +1,9 @@
+library ProfileLayer;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
 class ProfileLayer extends StatelessWidget {
   final String firstName;
   final String lastName;

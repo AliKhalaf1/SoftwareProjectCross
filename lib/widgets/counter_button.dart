@@ -1,5 +1,9 @@
+library CounterButton;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
 class CounterButton extends StatelessWidget {
   final String title;
   final int counter;

@@ -1,5 +1,9 @@
+library NotificationButton;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
 class ButtonNotification extends StatelessWidget {
   final String text;
   const ButtonNotification(this.text, {super.key});

@@ -1,3 +1,5 @@
+library UserProfileScreen;
+
 import '../../widgets/button_notificatin.dart';
 import '../../widgets/grey_area.dart';
 import '../../widgets/profile_layer.dart';
@@ -7,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/button_find_things.dart';
 import '../../widgets/button_link.dart';
-import '../../widgets/counterbutton.dart';
+import '../../widgets/counter_button.dart';
 
 class Profile extends StatelessWidget {
   String firstName;

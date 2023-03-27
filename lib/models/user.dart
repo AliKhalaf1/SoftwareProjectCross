@@ -1,3 +1,7 @@
+library UserModel;
+
+/// {@category Models}
+///
 class User {
   //parameters
   final String email;

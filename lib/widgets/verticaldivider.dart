@@ -1,5 +1,9 @@
+library VerticalDivider;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
 class VDivider extends StatelessWidget {
   const VDivider({super.key});
 

@@ -1,3 +1,5 @@
+library TabBarScreen;
+
 import '../../screens/guest/favourites_sign_up.dart';
 import '../../screens/guest/tickets_sign_up.dart';
 import '../../screens/user/profile.dart';
@@ -10,6 +12,9 @@ import '../screens/user/profile.dart';
 import '../models/db_mock.dart';
 import '../models/user.dart';
 
+/// {@category User}
+/// {@category Screens}
+///
 class TabBarScreen extends StatefulWidget {
   // const TabBarScreen({super.key});
 
@@ -23,6 +28,9 @@ class TabBarScreen extends StatefulWidget {
   State<TabBarScreen> createState() => _TabBarScreenState(tabBarIndex);
 }
 
+/// {@category User}
+/// {@category Screens}
+///
 class _TabBarScreenState extends State<TabBarScreen> {
   Future<void> checkLoggedUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

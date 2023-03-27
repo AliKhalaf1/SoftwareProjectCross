@@ -1,3 +1,5 @@
+library SignUpFormScreen;
+
 import 'dart:ui';
 import '../../models/db_mock.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +12,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../tab_bar.dart';
 
+/// {@category Sign Up}
+/// {@category Screens}
+///
 class SignUpForm extends StatefulWidget {
   bool _signUpBtnActive = false;
   bool _passwordVisible = false;

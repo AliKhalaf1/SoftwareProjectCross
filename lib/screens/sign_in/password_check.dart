@@ -1,3 +1,5 @@
+library PasswordCheckScreen;
+
 import '../../screens/sign_in/email_check.dart';
 import '../../widgets/app_bar_text.dart';
 import '../../widgets/photo_and_email.dart';
@@ -12,6 +14,9 @@ import '../user/profile.dart';
 import '../tab_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// {@category Sign In}
+/// {@category Screens}
+///
 class PasswordCheck extends StatefulWidget {
   bool _passwordVisible = false;
   bool _logInBtnActive = false;

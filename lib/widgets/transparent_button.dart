@@ -1,6 +1,10 @@
+library TransparentButton;
+
 import 'package:flutter/material.dart';
 import '../widgets/google_icon.dart';
 
+/// {@category Widgets}
+///
 class TransparentButton extends StatelessWidget {
   final int id;
   final String text;

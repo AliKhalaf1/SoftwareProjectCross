@@ -1,9 +1,13 @@
+library EventCollection;
+
 import '../../screens/tab_bar.dart';
 import '../../widgets/title_text_1.dart';
 import 'package:flutter/material.dart';
 import '../widgets/event_card.dart';
 import '../models/event.dart';
 
+/// {@category Widgets}
+///
 class EventCollections extends StatelessWidget {
   //Data needed to render the categoryscreen and taken from home screen
   final String collectionTitle;

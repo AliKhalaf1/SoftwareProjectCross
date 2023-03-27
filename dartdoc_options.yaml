@@ -14,10 +14,19 @@ dartdoc:
   
   categories:
     "Screens":
-      markdown: mkdown/first.md
-      name: Awesome
-      description: "This is a description of the category."
-  # include: ['lib',]
+      markdown: mkdown/screens.md
+
+    "Widgets":
+      markdown: mkdown/widgets.md
+
+    "Models":
+      markdown: mkdown/models.md
+
+    "Helper Functions":
+      markdown: mkdown/hfn.md
+
+  categoryOrder: [  "Models", "Widgets","Screens" , "Helper Functions" ]
+  exclude: ['lib/models/db_mock.dart',]
   # categoryOrder: ["Screens", "Widgets"]
   # examplePathPrefix: 'subdir/with/examples'
   #D:\flutter\third_project\eventbrite_replica\lib\screens\guest

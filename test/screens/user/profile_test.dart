@@ -2,7 +2,7 @@ import '../../../lib/screens/user/profile.dart';
 import '../../../lib/widgets/button_find_things.dart';
 import '../../../lib/widgets/button_link.dart';
 import '../../../lib/widgets/button_notificatin.dart';
-import '../../../lib/widgets/counterbutton.dart';
+import '../../../lib/widgets/counter_button.dart';
 import '../../../lib/widgets/grey_area.dart';
 import '../../../lib/widgets/profile_layer.dart';
 import '../../../lib/widgets/round_profile_image.dart';

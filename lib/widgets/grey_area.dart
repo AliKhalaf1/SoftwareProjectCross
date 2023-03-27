@@ -1,5 +1,9 @@
+library GreyArea;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
 class GreyArea extends StatelessWidget {
   const GreyArea({super.key});
 

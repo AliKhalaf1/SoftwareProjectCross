@@ -1,3 +1,5 @@
+library EventCard;
+
 import '../../screens/event_page.dart';
 import 'package:flutter/material.dart';
 import '../helper_functions/log_in.dart';
@@ -6,6 +8,8 @@ import 'package:intl/intl.dart';
 
 import '../screens/sign_up/sign_up_or_log_in.dart';
 
+/// {@category Widgets}
+///
 class EventCard extends StatefulWidget {
   //event to be shown in the card
   Event event;

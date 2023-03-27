@@ -1,7 +1,11 @@
+library LogInHelperFunctions;
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/sign_up/sign_up_or_log_in.dart';
 
+/// {@category Helper Functions}
+///
 void loggingIn(BuildContext ctx) {
   ///
   /// This function is called when the user logs in.
@@ -13,14 +17,18 @@ void loggingIn(BuildContext ctx) {
   }));
 }
 
+/// {@category Helper Functions}
+///
 Future<void> setLoggedIn(email) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool("isLoggedIn", true);
   prefs.setString("email", email);
 }
 
-
-  Future<bool> checkLoggedUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var status = prefs.getBool('isLoggedIn') ?? false;
-    return status;}
+/// {@category Helper Functions}
+///
+Future<bool> checkLoggedUser() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var status = prefs.getBool('isLoggedIn') ?? false;
+  return status;
+}

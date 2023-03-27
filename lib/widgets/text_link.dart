@@ -1,5 +1,9 @@
+library LinkButton;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
 class TextLink extends StatelessWidget {
   final String text;
   final Function onPressed;

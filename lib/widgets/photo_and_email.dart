@@ -1,7 +1,11 @@
+library PasswordCheckPhoto;
+
 import '../widgets/text_link.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// {@category Widgets}
+///
 class PhotoAndEmail extends StatelessWidget {
   final String imageurl;
   final String email;

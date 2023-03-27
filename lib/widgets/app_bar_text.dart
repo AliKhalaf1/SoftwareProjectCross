@@ -1,5 +1,9 @@
+library AppBarText;
+
 import 'package:flutter/material.dart';
 
+/// {@name AppBarText}
+/// {@category Widgets}
 /// This Widget is used to set the title of the AppBar of all the screens in the app.
 
 class AppBarText extends StatelessWidget {

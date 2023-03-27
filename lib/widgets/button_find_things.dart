@@ -1,5 +1,10 @@
+/// for documentation
+library GreyButton;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
 class GreyButtonLogout extends StatelessWidget {
   final Function onPressed;
   final String text;

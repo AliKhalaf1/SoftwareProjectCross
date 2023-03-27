@@ -1,7 +1,11 @@
+library LogInBtn;
+
 // import 'package:eventbrite_replica/widgets/google_icon.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
+/// {@category Widgets}
+///
 class LogInBtn extends StatelessWidget {
   final String text;
   final Function onPressed;
@@ -16,7 +20,7 @@ class LogInBtn extends StatelessWidget {
         height: 70,
         width: double.infinity,
         child: Container(
-          padding: const EdgeInsets.only(top: 10,bottom: 10,right: 10),
+          padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
           // height: 60,
           child: TextButton(
             style: ButtonStyle(
