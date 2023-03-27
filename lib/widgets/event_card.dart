@@ -1,4 +1,4 @@
-import 'package:eventbrite_replica/screens/event_page.dart';
+import '../../screens/event_page.dart';
 import 'package:flutter/material.dart';
 import '../helper_functions/log_in.dart';
 import '../models/event.dart';
@@ -60,13 +60,15 @@ class _EventCardState extends State<EventCard> {
                 SizedBox(
                     width: 130,
                     height: 130,
-                    child: widget.event.eventImg.startsWith('http')? Image.network(
-                      widget.event.eventImg,
-                      fit: BoxFit.cover,
-                    ): Image.asset(
-                      widget.event.eventImg,
-                      fit: BoxFit.cover,
-                    )),
+                    child: widget.event.eventImg.startsWith('http')
+                        ? Image.network(
+                            widget.event.eventImg,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            widget.event.eventImg,
+                            fit: BoxFit.cover,
+                          )),
                 Container(
                   height: 130,
                   padding: const EdgeInsets.only(left: 10, top: 5),

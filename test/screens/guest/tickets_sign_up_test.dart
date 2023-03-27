@@ -1,8 +1,8 @@
-import 'package:eventbrite_replica/screens/guest/tickets_sign_up.dart';
-import 'package:eventbrite_replica/screens/sign_up/sign_up_or_log_in.dart';
-import 'package:eventbrite_replica/screens/tab_bar.dart';
-import 'package:eventbrite_replica/widgets/button_find_things.dart';
-import 'package:eventbrite_replica/widgets/log_in_btn.dart';
+import '../../../lib/screens/guest/tickets_sign_up.dart';
+import '../../../lib/screens/sign_up/sign_up_or_log_in.dart';
+import '../../../lib/screens/tab_bar.dart';
+import '../../../lib/widgets/button_find_things.dart';
+import '../../../lib/widgets/log_in_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

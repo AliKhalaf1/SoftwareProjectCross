@@ -1,11 +1,11 @@
-import 'package:eventbrite_replica/screens/user/profile.dart';
-import 'package:eventbrite_replica/widgets/button_find_things.dart';
-import 'package:eventbrite_replica/widgets/button_link.dart';
-import 'package:eventbrite_replica/widgets/button_notificatin.dart';
-import 'package:eventbrite_replica/widgets/counterbutton.dart';
-import 'package:eventbrite_replica/widgets/grey_area.dart';
-import 'package:eventbrite_replica/widgets/profile_layer.dart';
-import 'package:eventbrite_replica/widgets/round_profile_image.dart';
+import '../../../lib/screens/user/profile.dart';
+import '../../../lib/widgets/button_find_things.dart';
+import '../../../lib/widgets/button_link.dart';
+import '../../../lib/widgets/button_notificatin.dart';
+import '../../../lib/widgets/counterbutton.dart';
+import '../../../lib/widgets/grey_area.dart';
+import '../../../lib/widgets/profile_layer.dart';
+import '../../../lib/widgets/round_profile_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

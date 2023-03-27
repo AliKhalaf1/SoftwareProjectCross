@@ -1,6 +1,6 @@
-import 'package:eventbrite_replica/screens/guest/favourites_sign_up.dart';
-import 'package:eventbrite_replica/screens/sign_up/sign_up_or_log_in.dart';
-import 'package:eventbrite_replica/widgets/log_in_btn.dart';
+import '../../../lib/../lib/screens/guest/favourites_sign_up.dart';
+import '../../../lib/screens/sign_up/sign_up_or_log_in.dart';
+import '../../../lib/widgets/log_in_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

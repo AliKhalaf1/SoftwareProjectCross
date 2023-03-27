@@ -1,7 +1,7 @@
-// import 'package:eventbrite_replica/helper_functions/log_in.dart';
-import 'package:eventbrite_replica/models/event.dart';
-// import 'package:eventbrite_replica/screens/sign_up/sign_up_or_log_in.dart';
-import 'package:eventbrite_replica/widgets/event_card.dart';
+// import '../../../lib/helper_functions/log_in.dart';
+import '../../lib/models/event.dart';
+// import '../../../lib/screens/sign_up/sign_up_or_log_in.dart';
+import '../../lib/widgets/event_card.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

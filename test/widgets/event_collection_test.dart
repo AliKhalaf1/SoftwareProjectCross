@@ -1,15 +1,14 @@
-import 'package:eventbrite_replica/models/event.dart';
-import 'package:eventbrite_replica/screens/tab_bar.dart';
-import 'package:eventbrite_replica/widgets/event_card.dart';
-import 'package:eventbrite_replica/widgets/event_collection.dart';
-import 'package:eventbrite_replica/widgets/title_text_1.dart';
+import '../../lib/models/event.dart';
+import '../../lib/screens/tab_bar.dart';
+import '../../lib/widgets/event_card.dart';
+import '../../lib/widgets/event_collection.dart';
+import '../../lib/widgets/title_text_1.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-
   //========================================================================================================================================
-  //                                              6 events with view more 
+  //                                              6 events with view more
   //========================================================================================================================================
   testWidgets('event collection', (WidgetTester tester) async {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,26 +43,27 @@ void main() {
 
     //-----------------  View more button ---------------------
     expect(find.text('View more events'), findsOneWidget);
-    final viewMoreBtn = find.widgetWithText(TextButton,'View more events');
+    final viewMoreBtn = find.widgetWithText(TextButton, 'View more events');
     expect(viewMoreBtn, findsOneWidget);
   });
 
   //========================================================================================================================================
-  //                                              2 events without view more 
+  //                                              2 events without view more
   //========================================================================================================================================
   testWidgets('event collection', (tester) async {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///------------------------------------------------------- DUMMY DATA -----------------------------------------------------------------
     /// I want from DB cateory titles and each category list of events
 
-  final List<Event> test2 = List<Event>.generate(
-      2,
-      (index) => Event(
-          123,
-          DateTime.now(),
-          'We The Medicine- Healing Our Inner Child 2023.Guid...',
-          'assets/images/no_user_found.jfif',
-          EventState.online,false));
+    final List<Event> test2 = List<Event>.generate(
+        2,
+        (index) => Event(
+            123,
+            DateTime.now(),
+            'We The Medicine- Healing Our Inner Child 2023.Guid...',
+            'assets/images/no_user_found.jfif',
+            EventState.online,
+            false));
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///-------------------------------------------------------END OF DUMMY DATA -----------------------------------------------------------
     await tester.pumpWidget(
