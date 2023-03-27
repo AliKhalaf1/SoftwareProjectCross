@@ -7,12 +7,19 @@ import '../widgets/event_card.dart';
 import '../models/event.dart';
 
 /// {@category Widgets}
-///
+/// Collection of events with similar categorey.
+/// 
 class EventCollections extends StatelessWidget {
   //Data needed to render the categoryscreen and taken from home screen
   final String collectionTitle;
   final List<Event> collecionListOfEvents;
 
+/// It takes: 
+///
+///   • Collection title
+/// 
+///   • List of events
+/// 
   const EventCollections(this.collectionTitle, this.collecionListOfEvents,
       {super.key});
 
