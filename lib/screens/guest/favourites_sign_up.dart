@@ -10,8 +10,6 @@ import '../../helper_functions/log_in.dart';
 /// {@category Guest}
 /// {@category Screens}
 /// ========================= FavouritesSignUp ========================
-///  {@image <image alt='asdadsa' src='../../../assets/doc/Screens/favPage/favPage.png'>}
-/// 
 ///    • It is surrounded by scafold to be rendered as a screen because it is screen widget 
 ///    • Extends StatelessWidget as there is no change in any state in screen that could change rendered page content 
 /// 
