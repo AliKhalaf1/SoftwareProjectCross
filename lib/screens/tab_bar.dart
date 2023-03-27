@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/user/profile.dart';
 import '../models/db_mock.dart';
 import '../models/user.dart';
+import 'search_screen.dart';
 
 /// {@category User}
 /// {@category Screens}
@@ -44,10 +45,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
         widget.tabBarIndex = 4;
         pages = [
           Home(10),
-          Container(
-            alignment: Alignment.center,
-            child: const Text('Search'),
-          ),
+          const Search(),
           const FavouritesSignUp(),
           const TicketsSignUp(),
           Profile(
@@ -66,10 +64,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
       setState(() {
         pages = [
           Home(10),
-          Container(
-            alignment: Alignment.center,
-            child: const Text('Search'),
-          ),
+          const Search(),
           const FavouritesSignUp(),
           const TicketsSignUp(),
           const ProfileSignUp(),
@@ -88,10 +83,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
 
   List<Widget> pages = [
     Home(10),
-    Container(
-      alignment: Alignment.center,
-      child: const Text('Search'),
-    ),
+    const Search(),
     const FavouritesSignUp(),
     const TicketsSignUp(),
     const ProfileSignUp(),
