@@ -1,5 +1,5 @@
-import 'package:eventbrite_replica/screens/guest/favourites_sign_up.dart';
-import 'package:eventbrite_replica/screens/guest/tickets_sign_up.dart';
+import '../../screens/guest/favourites_sign_up.dart';
+import '../../screens/guest/tickets_sign_up.dart';
 import 'package:flutter/material.dart';
 import 'sign_in/profile_sign_up.dart';
 import 'guest/home.dart';

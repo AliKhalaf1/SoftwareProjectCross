@@ -1,7 +1,7 @@
-import 'package:eventbrite_replica/widgets/grey_area.dart';
-import 'package:eventbrite_replica/widgets/profile_layer.dart';
-import 'package:eventbrite_replica/widgets/round_profile_image.dart';
-import 'package:eventbrite_replica/widgets/verticaldivider.dart';
+import '../../widgets/grey_area.dart';
+import '../../widgets/profile_layer.dart';
+import '../../widgets/round_profile_image.dart';
+import '../../widgets/verticaldivider.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/button_find_things.dart';
 import '../../widgets/button_link.dart';

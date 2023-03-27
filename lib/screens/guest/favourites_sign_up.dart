@@ -1,9 +1,14 @@
-import 'package:eventbrite_replica/widgets/title_text_1.dart';
+import '../../widgets/title_text_1.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/title_text_2.dart';
 import '../../widgets/text_link.dart';
 import '../../widgets/log_in_btn.dart';
 import '../../helper_functions/log_in.dart';
+
+/// {@category Guest}
+/// {@category Screens}
+///
+/// {@image <image alt='asdadsa' src='https://www.filepicker.io/api/file/dkUArNqpS32PMzaFfEKS'>}
 
 class FavouritesSignUp extends StatelessWidget {
   const FavouritesSignUp({super.key});

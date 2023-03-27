@@ -1,7 +1,9 @@
-import 'package:eventbrite_replica/widgets/event_collection.dart';
+import '../../widgets/event_collection.dart';
 import 'package:flutter/material.dart';
 import '../../models/event.dart';
 
+/// {@category Guest}
+/// {@category Screens}
 class Home extends StatelessWidget {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///------------------------------------------------------- DUMMY DATA -----------------------------------------------------------------

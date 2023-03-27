@@ -1,7 +1,11 @@
+/// @nodoc
 enum EventState { online, offline }
 
+/// {@category Basics}
+/// parameters of the EventCard Widget ya megzoooooooo
 class Event {
   //parameters of the EventCard Widget
+
   final String eventRoute; /*route path of the event screen*/
   final String eventImg; /*event card image */
   final DateTime date; /*event date*/

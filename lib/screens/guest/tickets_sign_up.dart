@@ -7,6 +7,8 @@ import '../../widgets/log_in_btn.dart';
 import '../../helper_functions/log_in.dart';
 import '../tab_bar.dart';
 
+/// {@category Guest}
+/// {@category Screens}
 class TicketsSignUp extends StatelessWidget {
   const TicketsSignUp({super.key});
 

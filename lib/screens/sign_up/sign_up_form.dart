@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:eventbrite_replica/models/db_mock.dart';
+import '../../models/db_mock.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../helper_functions/log_in.dart';

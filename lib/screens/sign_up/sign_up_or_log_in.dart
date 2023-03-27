@@ -1,5 +1,5 @@
-import 'package:eventbrite_replica/widgets/title_text_1.dart';
-import 'package:eventbrite_replica/widgets/title_text_2.dart';
+import '../../widgets/title_text_1.dart';
+import '../../widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/log_in_btn.dart';
 import '../sign_in/email_check.dart';

@@ -1,7 +1,7 @@
-import 'package:eventbrite_replica/screens/sign_in/email_check.dart';
-import 'package:eventbrite_replica/widgets/app_bar_text.dart';
-import 'package:eventbrite_replica/widgets/photo_and_email.dart';
-import 'package:eventbrite_replica/widgets/text_link.dart';
+import '../../screens/sign_in/email_check.dart';
+import '../../widgets/app_bar_text.dart';
+import '../../widgets/photo_and_email.dart';
+import '../../widgets/text_link.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

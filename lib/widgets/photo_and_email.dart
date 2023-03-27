@@ -1,4 +1,4 @@
-import 'package:eventbrite_replica/widgets/text_link.dart';
+import '../widgets/text_link.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

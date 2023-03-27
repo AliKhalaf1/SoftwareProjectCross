@@ -1,5 +1,5 @@
-import 'package:eventbrite_replica/models/db_mock.dart';
-import 'package:eventbrite_replica/screens/sign_in/password_check.dart';
+import '../../models/db_mock.dart';
+import '../../screens/sign_in/password_check.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../widgets/sign_in_hint.dart';
