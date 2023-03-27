@@ -33,37 +33,64 @@ void main() {
     );
 
     //----------------- Image ---------------------
-    expect(find.byType(Image), findsOneWidget);
+    expect(
+      find.byType(Image),
+      findsOneWidget,
+      reason: 'Image not found',
+    );
 
     //----------------- Descreption ---------------------
-    expect(find.text(event.description), findsOneWidget);
+    expect(
+      find.text(event.description),
+      findsOneWidget,
+      reason: 'Description doesn\'t match ',
+    );
 
     //----------------- Date ---------------------
     expect(
-        find.text(
-            '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.date)} EET'),
-        findsOneWidget,
-        reason: 'Date is not correct');
+      find.text(
+        '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.date)} EET',
+      ),
+      findsOneWidget,
+      reason: 'Date is not correct',
+    );
 
     //----------------- status(online/offline) ---------------------
-    expect(find.text((event.state == EventState.online) ? 'Online' : 'Offline'),
-        findsOneWidget);
+    expect(
+      find.text((event.state == EventState.online) ? 'Online' : 'Offline'),
+      findsOneWidget,
+      reason: 'Status is not correct',
+    );
 
     //----------------- followers ---------------------
     expect(
-        find.text(event.creatorFollowers < 10000
-            ? '${event.creatorFollowers} creator followers'
-            : '${event.creatorFollowers} creator follow...'),
-        findsOneWidget);
+      find.text(event.creatorFollowers < 10000
+          ? '${event.creatorFollowers} creator followers'
+          : '${event.creatorFollowers} creator follow...'),
+      findsOneWidget,
+      reason: 'Followers text is not correct',
+    );
 
     //----------------- Person Icon ---------------------
-    expect(find.byKey(const Key("person")), findsOneWidget);
+    expect(
+      find.byKey(const Key("person")),
+      findsOneWidget,
+      reason: 'Person Icon not found',
+    );
 
     //----------------- Share Icon ---------------------
-    expect(find.byKey(const Key("share")), findsOneWidget);
+    expect(
+      find.byKey(const Key("share")),
+      findsOneWidget,
+      reason: 'Share Icon not found',
+    );
 
     //----------------- Button ---------------------
     final iconBtn = find.byType(IconButton);
-    expect(iconBtn, findsOneWidget);
+    expect(
+      iconBtn,
+      findsOneWidget,
+      reason: 'Button not found',
+    );
   });
 }
