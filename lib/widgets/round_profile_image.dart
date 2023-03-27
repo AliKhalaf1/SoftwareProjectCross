@@ -23,12 +23,23 @@ class ProfileImage extends StatelessWidget {
         child: ClipOval(
           child: Material(
             color: Colors.transparent,
-            child: Ink.image(
-              image: Image.network(link).image,
-              fit: BoxFit.cover,
-              width: 92,
-              height: 92,
+            child: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            radius: 40,
+            backgroundImage:
+                const AssetImage("assets/images/no_user_found.jfif"),
+            child: CircleAvatar(
+              radius: 40,
+              backgroundColor: Colors.transparent,
+              backgroundImage: NetworkImage(link),
             ),
+          ),
+            // child: Ink.image(
+            //   image: Image.asset(link).image,
+            //   fit: BoxFit.cover,
+            //   width: 92,
+            //   height: 92,
+            // ),
           ),
         ),
       ),

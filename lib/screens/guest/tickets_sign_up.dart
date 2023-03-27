@@ -23,6 +23,7 @@ class TicketsSignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        key: const Key('myContainerKey'),
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -54,7 +55,7 @@ class TicketsSignUp extends StatelessWidget {
                   padding: EdgeInsets.only(left: 15, right: 6, top: 0),
                   child: LogInBtn('Log In', loggingIn),
                 ),
-                GreyButton(findThingsToDoHandler, 'Find things to do'),
+                GreyButtonLogout(findThingsToDoHandler, 'Find things to do'),
               ],
             ),
           ],

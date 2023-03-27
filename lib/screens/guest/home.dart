@@ -13,8 +13,7 @@ class Home extends StatelessWidget {
       DateTime.now(),
       'We The Medicine- Healing Our Inner Child 2023.Guid...',
       'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
-      'eventRoute',
-      EventState.online);
+      EventState.online,false);
 
   final List<String> categoryTitles = [
     "Title 1",
@@ -41,8 +40,7 @@ class Home extends StatelessWidget {
           DateTime.now(),
           'We The Medicine- Healing Our Inner Child 2023.Guid...',
           'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
-          'eventRoute',
-          EventState.online));
+          EventState.online,false));
   final List<Event> test2 = List<Event>.generate(
       2,
       (index) => Event(
@@ -50,8 +48,7 @@ class Home extends StatelessWidget {
           DateTime.now(),
           'We The Medicine- Healing Our Inner Child 2023.Guid...',
           'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
-          'eventRoute',
-          EventState.online));
+          EventState.online,false));
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///-------------------------------------------------------END OF DUMMY DATA -----------------------------------------------------------
 

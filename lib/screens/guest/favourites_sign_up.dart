@@ -17,6 +17,7 @@ class FavouritesSignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        key: const Key('myContainerKey'),
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
           image: DecorationImage(
