@@ -6,12 +6,11 @@ import '../screens/sign_up/sign_up_or_log_in.dart';
 
 /// {@category Helper Functions}
 ///
+/// This function is called when the user logs in.
+/// It pushes the SignUpOrLogIn screen to the Navigator stack.
+/// The user can only go back to the LogIn screen when he/she logs out.
+///
 void loggingIn(BuildContext ctx) {
-  ///
-  /// This function is called when the user logs in.
-  /// It pushes the SignUpOrLogIn screen to the Navigator stack.
-  /// The user can only go back to the LogIn screen when he/she logs out.
-  ///
   Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
     return const SignUpOrLogIn();
   }));
