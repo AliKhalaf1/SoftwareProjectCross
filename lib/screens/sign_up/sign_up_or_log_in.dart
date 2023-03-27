@@ -11,6 +11,12 @@ import '../../widgets/transparent_button.dart';
 /// {@category Sign Up}
 /// {@category Screens}
 ///
+/// It is surrounded by scafold to be rendered as a screen because it is screen widget. 
+/// 
+/// Extends StatelessWidget as there is no change in any state in screen that could change rendered page content. 
+/// 
+/// 
+/// 
 class SignUpOrLogIn extends StatelessWidget {
   const SignUpOrLogIn({super.key});
 

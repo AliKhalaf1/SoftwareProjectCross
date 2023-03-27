@@ -9,22 +9,22 @@ import '../../helper_functions/log_in.dart';
 
 /// {@category Guest}
 /// {@category Screens}
-///   
+/// 
 ///    It is surrounded by scafold to be rendered as a screen because it is screen widget. 
 /// 
 ///    Extends StatelessWidget as there is no change in any state in screen that could change rendered page content.
 ///  
-///     ###Login Button
+///### Login Button
 /// 
-///    Handler for button to navigate to SignUpOrLogIn screen when pressing on to it.
+///     Handler for button to navigate to SignUpOrLogIn screen when pressing on to it.
 /// 
-///    The user can signIn or signUp from navigated page.
+///     The user can signIn or signUp from navigated page.
 /// 
-///     ###itleText1 • TitleText2 • LogInBtn
+///### TitleText1 • TitleText2 • LogInBtn
 /// 
-///    Widgets with certain styling and not built in widgets (i.e. Text)
+///     Widgets with certain styling and not built in widgets (i.e. Text)
 /// 
-///    You can find them in folder  under the name widgets. 
+///     You can find them in folder  under the name widgets. 
 ///  
 
 
