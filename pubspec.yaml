@@ -1,5 +1,5 @@
-name: eventbrite_replica
-description: A new Flutter project.
+name: Eventbrite
+description: Sodtware Cross-Platform Team.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -40,19 +40,24 @@ dependencies:
   google_fonts: ^4.0.3
   community_material_icon: ^5.9.55
   email_validator: ^2.1.17
+  shared_preferences: ^2.0.20
+  mockito: ^5.0.0
   
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  # integration_test_helper:  
+  #   sdk: flutter
+    
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  mocktail: ^0.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -71,6 +76,16 @@ flutter:
     - assets/images/images1.jfif
     - assets/images/no_user_found.jfif
     - assets/images/yla.png
+    - assets/doc/Screens/homePage/homeScreen.png
+    - assets/doc/Screens/homePage/eventCollection.png
+    - assets/doc/Screens/homePage/viewMoreButton.png
+    - assets/doc/Screens/favPage/favPage.png
+    - assets/doc/Screens/favPage/logInBtn.png
+    - assets/doc/Screens/favPage/titles.png
+    - assets/doc/Screens/ticketsPage/ticketsPage.png
+    - assets/doc/Screens/ticketsPage/buttons.png
+    - assets/doc/Screens/ticketsPage/titles.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

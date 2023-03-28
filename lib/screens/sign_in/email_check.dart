@@ -1,5 +1,7 @@
-import 'package:eventbrite_replica/helper_functions/get_users_data.dart';
-import 'package:eventbrite_replica/screens/sign_in/password_check.dart';
+library EmailCheckScreen;
+
+import '../../models/db_mock.dart';
+import '../../screens/sign_in/password_check.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../widgets/sign_in_hint.dart';
@@ -7,11 +9,24 @@ import '../../widgets/app_bar_text.dart';
 import 'package:email_validator/email_validator.dart';
 import '../sign_up/sign_up_form.dart';
 import '../../models/user.dart';
-import '../../helper_functions/get_auths.dart';
+import '../sign_up/sign_up_or_log_in.dart';
+
+/// {@category Sign In}
+/// {@category Screens}
+///
+/// this screen is used to check if the email is valid or not
+///
+/// if the email is valid, it navigates to the [PasswordCheck] screen
+///
+/// if the email is not valid, it navigates to the [SignUpForm] screen
+///
+/// it's used in the [SignUpOrLogIn] screen
+///
 
 class EmailCheck extends StatefulWidget {
   //Next_btn_active is a boolean variable that is used to determine whether the next button is active or not. If the email is valid, the next button is active, otherwise it is not active.
   var emailText = TextEditingController();
+
   bool _nextBtnActive = false;
   EmailCheck({super.key});
   static const emailCheckRoute = '/Email-Check';
@@ -21,8 +36,8 @@ class EmailCheck extends StatefulWidget {
 }
 
 void emailCheck(BuildContext ctx, String email) {
-  if (checkEmail(email)) {
-    User user1 = getUserData(email);
+  if (DBMock.checkEmail(email)) {
+    User user1 = DBMock.getUserData(email);
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return PasswordCheck(email, user1.imageUrl);
     }));

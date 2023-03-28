@@ -1,5 +1,13 @@
+library RoundProfileImage;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///# This widget used to display a circular profile image with a shadow effect.
+///
+///The widget uses a combination of Flutter's built-in CircleAvatar and ClipOval widgets to achieve the circular shape.
+///
+///BoxDecoration and BoxShadow widgets adds a shadow effect to the image.
 class ProfileImage extends StatelessWidget {
   final String link;
   const ProfileImage(this.link, {super.key});
@@ -23,11 +31,16 @@ class ProfileImage extends StatelessWidget {
         child: ClipOval(
           child: Material(
             color: Colors.transparent,
-            child: Ink.image(
-              image: Image.network(link).image,
-              fit: BoxFit.cover,
-              width: 92,
-              height: 92,
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              radius: 40,
+              backgroundImage:
+                  const AssetImage("assets/images/no_user_found.jfif"),
+              child: CircleAvatar(
+                radius: 40,
+                backgroundColor: Colors.transparent,
+                backgroundImage: link.isNotEmpty ? NetworkImage(link) : null,
+              ),
             ),
           ),
         ),

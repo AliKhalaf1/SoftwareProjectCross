@@ -1,7 +1,12 @@
-import 'package:eventbrite_replica/widgets/text_link.dart';
+library PasswordCheckPhoto;
+
+import '../widgets/text_link.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// {@category Widgets}
+///
+/// Used to display the user's photo and email in [PasswordCheck] Screen .
 class PhotoAndEmail extends StatelessWidget {
   final String imageurl;
   final String email;

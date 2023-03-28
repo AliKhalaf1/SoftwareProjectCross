@@ -1,17 +1,41 @@
-import 'package:eventbrite_replica/widgets/title_text_1.dart';
+library GuestFavouritesScreen;
+
+import '../../widgets/title_text_1.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/title_text_2.dart';
 import '../../widgets/text_link.dart';
 import '../../widgets/log_in_btn.dart';
 import '../../helper_functions/log_in.dart';
 
-class Favourites extends StatelessWidget {
-  const Favourites({super.key});
+/// {@category Guest}
+/// {@category Screens}
+/// 
+///    It is surrounded by scafold to be rendered as a screen because it is screen widget. 
+/// 
+///    Extends StatelessWidget as there is no change in any state in screen that could change rendered page content.
+///  
+///<b>Login Button</b>
+/// 
+///     Handler for button to navigate to SignUpOrLogIn screen when pressing on to it.
+/// 
+///     The user can signIn or signUp from navigated page.
+/// 
+///<b>TitleText1 • TitleText2 • LogInBtn</b>
+/// 
+///     Widgets with certain styling and not built in widgets (i.e. Text)
+/// 
+///     You can find them in folder  under the name widgets. 
+///  
+
+
+class FavouritesSignUp extends StatelessWidget {
+  const FavouritesSignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        key: const Key('myContainerKey'),
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
           image: DecorationImage(

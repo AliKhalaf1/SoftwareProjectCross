@@ -1,9 +1,20 @@
+library GreyButton;
+
 import 'package:flutter/material.dart';
 
-class GreyButton extends StatelessWidget {
+/// {@category Widgets}
+///# The GreyButtonLogout widget is a StatelessWidget that displays a grey button with a text label.
+///
+///The widget is designed to be flexible and expand to fill its parent widget.
+///It is wrapped in a Container widget that has a white background color and a fixed height of 65.
+/// The Container widget also has padding on all sides, with extra padding at the bottom.
+///
+///The button itself is a TextButton widget with an onPressed callback function that is passed in through the onPressed property.
+///The button's child widget is a Text widget, which displays the text property as the button label.
+class GreyButtonLogout extends StatelessWidget {
   final Function onPressed;
   final String text;
-  const GreyButton(this.onPressed, this.text, {super.key});
+  const GreyButtonLogout(this.onPressed, this.text, {super.key});
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,35 +1,108 @@
-import 'package:eventbrite_replica/screens/guest/favourites_sign_up.dart';
-import 'package:eventbrite_replica/screens/guest/tickets_sign_up.dart';
+library TabBarScreen;
+
+import '../../screens/guest/favourites_sign_up.dart';
+import '../../screens/guest/tickets_sign_up.dart';
+import '../../screens/user/profile.dart';
 import 'package:flutter/material.dart';
-import 'sign_up/profile_sign_up.dart';
+import 'guest/profile_sign_up.dart';
 import 'guest/home.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../models/db_mock.dart';
+import '../models/user.dart';
+import 'search_screen.dart';
 
+/// {@category User}
+/// {@category Screens}
+///
+/// This is the main screen of the app.
+///
+/// It contains a [BottomNavigationBar] that allows the user to navigate between the app's main screens.
+///
+/// The screens are:
+///
+/// * [Home]
+///
+/// * [TicketsSignUp]
+///
+/// * [FavouritesSignUp]
+///
+/// * [Search]
+///
+/// * [Profile]
+///
+/// The [Home] screen is the default screen.
+///
 class TabBarScreen extends StatefulWidget {
   // const TabBarScreen({super.key});
 
   //Routing value
   static const tabBarScreenRoute = '/';
   final String title;
-  final int tabBarIndex;
-  const TabBarScreen({super.key, required this.title, this.tabBarIndex = 0});
+  int tabBarIndex;
+  TabBarScreen({super.key, required this.title, this.tabBarIndex = 0});
 
   @override
   State<TabBarScreen> createState() => _TabBarScreenState(tabBarIndex);
 }
 
+/// {@category User}
+/// {@category Screens}
+///
 class _TabBarScreenState extends State<TabBarScreen> {
+  Future<void> checkLoggedUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var status = prefs.getBool('isLoggedIn') ?? false;
+    if (status == true) {
+      var email = prefs.getString('email') ?? '';
+      User user = DBMock.getUserData(email);
+
+      setState(() {
+        widget.tabBarIndex = 4;
+        pages = [
+          Home(10),
+          const Search(),
+          const FavouritesSignUp(),
+          const TicketsSignUp(),
+          Profile(
+            user.firstName,
+            user.lastName,
+            user.imageUrl,
+            user.email,
+            0,
+            0,
+            0,
+            checkLoggedUser,
+          ),
+        ];
+      });
+    } else {
+      setState(() {
+        pages = [
+          Home(10),
+          const Search(),
+          const FavouritesSignUp(),
+          const TicketsSignUp(),
+          const ProfileSignUp(),
+        ];
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoggedUser();
+  }
+
   var _currentIndex = 0;
 
   List<Widget> pages = [
     Home(10),
-    Container(
-      alignment: Alignment.center,
-      child: const Text('Search'),
-    ),
-    const Favourites(),
-    const Tickets(),
-    const ProfileLogIn(),
+    const Search(),
+    const FavouritesSignUp(),
+    const TicketsSignUp(),
+    const ProfileSignUp(),
   ];
 
   _TabBarScreenState(this._currentIndex);

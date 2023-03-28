@@ -1,14 +1,24 @@
-import 'package:eventbrite_replica/widgets/app_bar_text.dart';
-import 'package:eventbrite_replica/widgets/photo_and_email.dart';
-import 'package:eventbrite_replica/widgets/text_link.dart';
+library PasswordCheckScreen;
+
+import '../../widgets/app_bar_text.dart';
+import '../../widgets/photo_and_email.dart';
+import '../../widgets/text_link.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../helper_functions/get_auths.dart';
-import '../../helper_functions/get_users_data.dart';
-import '../../models/user.dart';
+import '../../helper_functions/log_in.dart';
+import '../../models/db_mock.dart';
 import '../user/profile.dart';
+import '../tab_bar.dart';
 
+/// {@category Sign In}
+/// {@category Screens}
+///
+/// this screen is used to check if the password is valid or not
+///
+/// if the password is valid, it navigates to the [Profile] screen
+///
+/// if the password is not valid, it shows a snackbar with the message "Wrong password"
 class PasswordCheck extends StatefulWidget {
   bool _passwordVisible = false;
   bool _logInBtnActive = false;
@@ -24,11 +34,11 @@ class PasswordCheck extends StatefulWidget {
 }
 
 void signIn(BuildContext ctx, String password, String email) {
-  if (checkAuth(email, password)) {
-    User user = getUserData(email);
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return Profile(
-          user.firstName, user.lastName, user.imageUrl, user.email, 0, 0, 0);
+  if (DBMock.checkAuth(email, password)) {
+    setLoggedIn(email);
+    Navigator.of(ctx).popUntil((route) => route.isFirst);
+    Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+      return TabBarScreen(title: 'Profile', tabBarIndex: 4);
     }));
   } else {
     ScaffoldMessenger.of(ctx)

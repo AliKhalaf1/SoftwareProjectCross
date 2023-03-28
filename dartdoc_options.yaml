@@ -1,0 +1,38 @@
+dartdoc:
+  title: "My Awesome Library"
+  description: "This is a description of my awesome library."
+  #favicon: "https://www.google.com/favicon.ico"
+  # header: "doc/header.html"
+  # footer: "doc/footer.html"
+  # footerText: "This is a footer."
+  # includeSource: true
+  # showWarnings: true
+  # showPackageWarnings: true
+  # showSdkWarnings: true
+  showUndocumentedCategories: true
+  showUndocumentedMembers: true
+  
+  categories:
+    "Screens":
+      markdown: mkdown/screens.md
+
+    "Widgets":
+      markdown: mkdown/widgets.md
+
+    "Models":
+      markdown: mkdown/models.md
+
+    "Helper Functions":
+      markdown: mkdown/hfn.md
+
+  categoryOrder: [  "Models", "Widgets","Screens" , "Helper Functions" ]
+  exclude: ['lib/models/db_mock.dart',]
+  # categoryOrder: ["Screens", "Widgets"]
+  # examplePathPrefix: 'subdir/with/examples'
+  #D:\flutter\third_project\eventbrite_replica\lib\screens\guest
+  # includeExternal: ['lib\screens\guest\*.dart',]
+  
+  
+  
+  # linkTo:
+  #   url: "https://my.dartdocumentationsite.org/dev/%v%"

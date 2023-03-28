@@ -1,13 +1,42 @@
+library SignUpFormScreen;
+
 import 'dart:ui';
+import '../../models/db_mock.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../helper_functions/log_in.dart';
+import '../../models/auth.dart';
+import '../../models/user.dart';
 import '../../widgets/app_bar_text.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../tab_bar.dart';
+
+import '../sign_up/sign_up_or_log_in.dart';
+
+/// {@category Sign Up}
+/// {@category Screens}
+///
+/// <h1>This screen is used to sign up</h1>
+///
+/// it's used in the [SignUpOrLogIn] screen
+///
+/// it's used to get the user's <b>email</b> , <b>first name</b>, <b>last name</b>, <b>password</b> throught Text Fields
+///
+/// it has a password strength bar that checks if the password is strong or not.
+///
+/// after the user enters all the data, and clicks on the sign up button,
+///
+/// it show a dialog to confirm the user's agrrment to the terms and conditions
+///
+/// if the user agrees, it navigates to the [TabBar] screen
+///
 class SignUpForm extends StatefulWidget {
   bool _signUpBtnActive = false;
   bool _passwordVisible = false;
   final _passwordText = TextEditingController();
+  final _firstNameText = TextEditingController();
+  final _lastNameText = TextEditingController();
   List<bool> checks = [false, false, false, false];
   final String emailText;
   String passText = '';
@@ -20,7 +49,136 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  // regular expression to check if string
+  RegExp passValid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
+  double passwordStrength = 0;
+  // 0: No password
+  // 1/4: Weak
+  // 1/2: Average
+  //   1: Great
+  //A function that validate user entered password
+  bool validatePassword(String pass) {
+    String password = pass.trim();
+    if (password.isEmpty) {
+      setState(() {
+        passwordStrength = 0;
+      });
+    } else if (password.length < 8) {
+      setState(() {
+        passwordStrength = 1 / 4;
+      });
+    } else {
+      if (passValid.hasMatch(password)) {
+        setState(() {
+          passwordStrength = 1;
+        });
+        return true;
+      } else {
+        setState(() {
+          passwordStrength = 1 / 2;
+        });
+        return false;
+      }
+    }
+    return false;
+  }
+
+  void signUp() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Text(
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.roboto(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          'Terms and Conditions'),
+                      const SizedBox(height: 3),
+                      Text(
+                        'By signing up or logging in, you agree to our Terms and Conditions and Privacy Policy',
+                        style: GoogleFonts.roboto(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                FilledButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColor),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ),
+                  ),
+                  child: const Text('Agree'),
+                  onPressed: () {
+                    signUp2();
+                  },
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                      style: TextStyle(
+                        color: Colors.blue[900],
+                      ),
+                      'Cancel'),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  void signUp2() {
+    String userFirstName = widget._firstNameText.text;
+    String userLastName = widget._lastNameText.text;
+    String userPassword = widget._passwordText.text;
+    String userEmail = widget.emailText;
+    bool added = DBMock.addUser(
+      User(
+        userEmail,
+        '',
+        userFirstName,
+        userLastName,
+      ),
+      Auth(userEmail, userPassword),
+    );
+    if (added) {
+      setLoggedIn(userEmail);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      Navigator.of(context)
+          .pushReplacementNamed(TabBarScreen.tabBarScreenRoute, arguments: {
+        'title': 'Eventbrite',
+        'tabBarIndex': 4,
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Email already exists'),
+        ),
+      );
+    }
+  }
+
   void _setCheck(bool check, int i) {
+    validatePassword(widget._passwordText.text);
     if (widget.checks[i] != check) {
       setState(() {
         widget.passText = widget._passwordText.text;
@@ -42,20 +200,24 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
-        title: const AppBarText('Sign up'),
-      ),
+      resizeToAvoidBottomInset: true,
+      appBar: MediaQuery.of(context).orientation == Orientation.landscape
+          ? null
+          : AppBar(
+              backgroundColor: Colors.white,
+              foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
+              title: const AppBarText('Sign up'),
+            ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
+            flex: 5,
             child: ListView(
-              //////////////////////////Email///////////////////////////////////
               children: [
+                //////////////////////////EMAIL///////////////////////////////////
                 DisabledEmailField(widget: widget),
-                ////////////////////////////Confirm Email///////////////////////////////////
+                ////////////////////////////CONFIM EMAIL FIELD///////////////////////////////////
                 Container(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
                   margin: const EdgeInsets.only(top: 10),
@@ -97,6 +259,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     ),
                   ),
                 ),
+                ////////////////////////////FIRST NAME & LAST NAME FIELDS///////////////////////////////////
                 Container(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
                   margin: const EdgeInsets.only(top: 20),
@@ -105,6 +268,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       Flexible(
                         fit: FlexFit.loose,
                         child: TextField(
+                          controller: widget._firstNameText,
                           selectionWidthStyle: BoxWidthStyle.tight,
                           onChanged: (value) => value.isNotEmpty
                               ? _setCheck(true, 1)
@@ -147,6 +311,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       Flexible(
                         fit: FlexFit.loose,
                         child: TextField(
+                          controller: widget._lastNameText,
                           selectionWidthStyle: BoxWidthStyle.tight,
                           onChanged: (value) => value.isNotEmpty
                               ? _setCheck(true, 2)
@@ -186,6 +351,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     ],
                   ),
                 ),
+                ////////////////////////////PASSWORD FIELD///////////////////////////////////
                 Container(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
                   margin: const EdgeInsets.only(top: 15),
@@ -253,13 +419,74 @@ class _SignUpFormState extends State<SignUpForm> {
                     ),
                   ),
                 ),
+                ////////////////////////////PASSWORD STRENGTH BAR///////////////////////////////////
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 10),
+                  child: SizedBox(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          passwordStrength == 0
+                              ? 'Passwords must have at least 8 characters'
+                              : 'Password strength',
+                          style: GoogleFonts.lato(
+                            color: const Color.fromARGB(255, 101, 103, 125),
+                            fontSize: 13.5,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              passwordStrength == 0
+                                  ? ''
+                                  : passwordStrength <= 1 / 4
+                                      ? 'Weak'
+                                      : passwordStrength == 1 / 2
+                                          ? 'Average'
+                                          : 'Great!',
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 101, 103, 125),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                              ),
+                            ),
+                            passwordStrength == 0
+                                ? const Text('')
+                                : Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      height: 4,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: LinearProgressIndicator(
+                                          backgroundColor: Colors.grey[300],
+                                          color: passwordStrength <= 1 / 4
+                                              ? const Color.fromARGB(
+                                                  255, 189, 33, 21)
+                                              : passwordStrength == 1 / 2
+                                                  ? Colors.yellow
+                                                  : Colors.green[700],
+                                          minHeight: 5,
+                                          value: passwordStrength,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-
-          SignUpBtn(widget: widget),
-
-          //////////////////////////First Name///////////////////////////////////
+          SizedBox(child: SignUpBtn(signUpFn: signUp, widget: widget)),
         ],
       ),
     );
@@ -267,7 +494,9 @@ class _SignUpFormState extends State<SignUpForm> {
 }
 
 class SignUpBtn extends StatelessWidget {
-  const SignUpBtn({
+  Function signUpFn;
+  SignUpBtn({
+    required this.signUpFn,
     super.key,
     required this.widget,
   });
@@ -276,51 +505,43 @@ class SignUpBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          color: Colors.white,
-          padding:
-              const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
-          margin: const EdgeInsets.only(top: 20),
-          width: double.infinity,
-          child: TextButton(
-            style: ButtonStyle(
-              overlayColor: widget._signUpBtnActive
-                  ? MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 199, 197, 197))
-                  : MaterialStateProperty.all<Color>(Colors.transparent),
-              textStyle: MaterialStateProperty.all<TextStyle>(
-                GoogleFonts.notoSansSharada(
-                    fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-              fixedSize: MaterialStateProperty.all<Size>(
-                const Size(double.infinity, 50),
-              ),
-              backgroundColor: MaterialStateProperty.all<Color>(
-                widget._signUpBtnActive
-                    ? Theme.of(context).primaryColor
-                    : CupertinoColors.systemGrey6,
-              ),
-              foregroundColor: MaterialStateProperty.all<Color>(
-                widget._signUpBtnActive
-                    ? Colors.white
-                    : const Color.fromARGB(255, 186, 186, 186),
-              ),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
+      margin: const EdgeInsets.only(top: 20),
+      width: double.infinity,
+      child: TextButton(
+        style: ButtonStyle(
+          overlayColor: widget._signUpBtnActive
+              ? MaterialStateProperty.all<Color>(
+                  const Color.fromARGB(255, 199, 197, 197))
+              : MaterialStateProperty.all<Color>(Colors.transparent),
+          textStyle: MaterialStateProperty.all<TextStyle>(
+            GoogleFonts.notoSansSharada(
+                fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          fixedSize: MaterialStateProperty.all<Size>(
+            const Size(double.infinity, 50),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(
+            widget._signUpBtnActive
+                ? Theme.of(context).primaryColor
+                : CupertinoColors.systemGrey6,
+          ),
+          foregroundColor: MaterialStateProperty.all<Color>(
+            widget._signUpBtnActive
+                ? Colors.white
+                : const Color.fromARGB(255, 186, 186, 186),
+          ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
             ),
-            onPressed: widget._signUpBtnActive
-                ? () => print('lets gooooooooooo')
-                : () {},
-            child: const Text('Sign Up'),
           ),
         ),
-      ],
+        onPressed: widget._signUpBtnActive ? () => signUpFn() : () {},
+        child: const Text('Sign Up'),
+      ),
     );
   }
 }

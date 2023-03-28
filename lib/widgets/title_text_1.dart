@@ -1,5 +1,12 @@
+library TextTitle1;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+/// <b> Text() </b> 
+/// Widget with certain styling used for 
+/// <b> Titles</b> 
+/// 
 class TitleText1 extends StatelessWidget {
   final String text;
   const TitleText1(this.text, {super.key});

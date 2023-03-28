@@ -1,5 +1,10 @@
+library FindTicketsScreen;
+
 import 'package:flutter/material.dart';
 
+/// {@category User}
+/// {@category Screens}
+///
 class FindTickets extends StatelessWidget {
   const FindTickets({super.key});
 
@@ -9,7 +14,7 @@ class FindTickets extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(),
+      body: const Center(child: Text('Find Tickets')),
     );
   }
 }

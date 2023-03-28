@@ -1,5 +1,11 @@
+library LinkButtonWidget;
+
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
+/// This widget is a button that has a text and an arrow icon used in most styling.
+///
 class ButtonLink extends StatelessWidget {
   final String text;
   const ButtonLink(this.text, {super.key});
@@ -7,9 +13,6 @@ class ButtonLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // alignment: Alignment.topCenter,
-      // margin: const EdgeInsets.all(10),
-      // //padding: const EdgeInsets.all(8.0),
       foregroundDecoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
