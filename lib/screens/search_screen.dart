@@ -49,82 +49,88 @@ class Search extends StatelessWidget {
             ),
           ],
         ),
-        body: Column(
-          children: [
-            Row(
-              children: const [
-                Padding(
-                  padding: EdgeInsets.only(left: 5, right: 5),
-                  child: TextButton(
-                    onPressed: null,
-                    child: Text(
-                      'Online events',
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(left: 5, right: 5),
+                    child: TextButton(
+                      onPressed: null,
+                      child: Text(
+                        'Online events',
+                        style: TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: Color.fromARGB(229, 41, 41, 41),
+                  ),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 15, right: 15),
+                child: TextField(
+                    cursorWidth: 0.5,
+                    cursorColor: Colors.grey,
+                  style: TextStyle(
+                    
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    hintText: 'Start searching...',
+                    hintStyle:
+                        TextStyle(color: Color.fromARGB(255, 147, 147, 147)),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(229, 41, 41, 41), width: 2.0),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 67, 96, 244), width: 2.0),
                     ),
                   ),
                 ),
-                Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: Color.fromARGB(229, 41, 41, 41),
-                ),
-              ],
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 15, right: 15),
-              child: TextField(
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Start searching...',
-                  hintStyle:
-                      TextStyle(color: Color.fromARGB(255, 147, 147, 147)),
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(229, 41, 41, 41), width: 2.0),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 15, 106, 181), width: 2.0),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 60,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 12,
+                    itemBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        child: Card(
+                          child: Text('Ahmed'),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: double.infinity,
-                height: 60,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 12,
-                  itemBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      child: Card(
-                        child: Text('Ahmed'),
-                      ),
-                    );
-                  },
+              SizedBox(
+                height: 320,
+                child: GlowingOverscrollIndicator(
+                  axisDirection: AxisDirection.down,
+                  color: Colors.orange.shade900,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.only(top: 40),
+                    itemCount: 1, // substitute with collectionCounts
+                    itemBuilder: (ctx, index) {
+                      return EventCollections("${10}K events",false , test1);
+                    },
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 320,
-              child: GlowingOverscrollIndicator(
-                axisDirection: AxisDirection.down,
-                color: Colors.orange.shade900,
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(top: 40),
-                  itemCount: 1, // substitute with collectionCounts
-                  itemBuilder: (ctx, index) {
-                    return EventCollections("${10}K events",false , test1);
-                  },
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }
