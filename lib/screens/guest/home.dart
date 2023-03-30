@@ -108,7 +108,7 @@ class Home extends StatelessWidget {
           itemCount: 2, // substitute with collectionCounts
           itemBuilder: (ctx, index) {
             return EventCollections(
-                categoryTitles[index], categoriesList[index]);
+                categoryTitles[index], true, categoriesList[index]);
           },
         ),
       ),

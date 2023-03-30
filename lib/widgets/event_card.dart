@@ -70,8 +70,8 @@ class _EventCardState extends State<EventCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                    width: 130,
-                    height: 130,
+                    width: 100,
+                    height: 100,
                     child: widget.event.eventImg.startsWith('http')
                         ? Image.network(
                             widget.event.eventImg,
@@ -82,7 +82,7 @@ class _EventCardState extends State<EventCard> {
                             fit: BoxFit.cover,
                           )),
                 Container(
-                  height: 130,
+                  height: 100,
                   padding: const EdgeInsets.only(left: 10, top: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +115,7 @@ class _EventCardState extends State<EventCard> {
                             color: Color.fromRGBO(0, 0, 0, 0.7),
                           ),
                           SizedBox(
-                            width: 95,
+                            width: 130,
                             child: Text(
                                 '${widget.event.creatorFollowers} creator followers',
                                 overflow: TextOverflow.ellipsis,

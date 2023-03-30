@@ -2,8 +2,33 @@ library SearchScreen;
 
 import 'package:flutter/material.dart';
 
+import '../models/event.dart';
+import '../widgets/event_collection.dart';
+
 class Search extends StatelessWidget {
-  const Search({super.key});
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///------------------------------------------------------- DUMMY DATA -----------------------------------------------------------------
+  /// I want from DB cateory titles and each category list of events
+  final Event event = Event(
+      123,
+      DateTime.now(),
+      'We The Medicine- Healing Our Inner Child 2023.Guid...',
+      'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
+      EventState.online,
+      false);
+  final List<Event> test1 = List<Event>.generate(
+      6,
+      (index) => Event(
+          12354,
+          DateTime.now(),
+          'We The Medicine- Healing Our Inner Child 2023.Guid...',
+          'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
+          EventState.online,
+          false));
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///-------------------------------------------------------END OF DUMMY DATA -----------------------------------------------------------
+
+  Search({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +109,21 @@ class Search extends StatelessWidget {
                   },
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: 320,
+              child: GlowingOverscrollIndicator(
+                axisDirection: AxisDirection.down,
+                color: Colors.orange.shade900,
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(top: 40),
+                  itemCount: 1, // substitute with collectionCounts
+                  itemBuilder: (ctx, index) {
+                    return EventCollections("${10}K events",false , test1);
+                  },
+                ),
+              ),
+            ),
           ],
         ));
   }
