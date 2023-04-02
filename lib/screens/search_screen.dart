@@ -1,11 +1,20 @@
 library SearchScreen;
 
+import 'package:Eventbrite/widgets/grey_area.dart';
 import 'package:flutter/material.dart';
 
 import '../models/event.dart';
+import '../models/tags.dart';
 import '../widgets/event_collection.dart';
 
-class Search extends StatelessWidget {
+class Search extends StatefulWidget {
+  const Search({super.key});
+
+  @override
+  State<Search> createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///------------------------------------------------------- DUMMY DATA -----------------------------------------------------------------
   /// I want from DB cateory titles and each category list of events
@@ -16,6 +25,7 @@ class Search extends StatelessWidget {
       'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
       EventState.online,
       false);
+
   final List<Event> test1 = List<Event>.generate(
       6,
       (index) => Event(
@@ -25,13 +35,44 @@ class Search extends StatelessWidget {
           'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
           EventState.online,
           false));
+
+  /**Rendring list only could be used even after remove dummy data */
+  final List<Tag> tags = [
+    Tag('Today', false),
+    Tag('Tomorrow', false),
+    Tag('This weekend', false),
+    Tag('This month', false),
+    Tag('past', false),
+    Tag('Learn', false),
+    Tag('Business', false),
+    Tag('Health & Weellness', false),
+    Tag('Tech', false),
+  ];
+
+  List<Tag> selectedTags = []; /* Selected Tags */
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///-------------------------------------------------------END OF DUMMY DATA -----------------------------------------------------------
 
-  Search({super.key});
-
   @override
   Widget build(BuildContext context) {
+    //------------------------------------- Methods -------------------------------------------------//
+    /// Function that select tags and only render thier new style.
+    /// Tags that is selected rendered first.
+    void selectTag(BuildContext ctx, Tag toggleTag) {
+      setState(() {
+        toggleTag.selected = !toggleTag.selected;
+        if (selectedTags.contains(toggleTag)) {
+          selectedTags.remove(toggleTag);
+          tags.remove(toggleTag);
+          tags.insert(selectedTags.length, toggleTag);
+        } else {
+          selectedTags.add(toggleTag);
+          tags.remove(toggleTag);
+          tags.insert(0, toggleTag);
+        }
+      });
+    }
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white38,
@@ -44,7 +85,7 @@ class Search extends StatelessWidget {
                 color: Colors.black,
               ),
               onPressed: () {
-                // do something
+                // Fillter Page
               },
             ),
           ],
@@ -73,10 +114,9 @@ class Search extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(left: 15, right: 15),
                 child: TextField(
-                    cursorWidth: 0.5,
-                    cursorColor: Colors.grey,
+                  cursorWidth: 0.5,
+                  cursorColor: Colors.grey,
                   style: TextStyle(
-                    
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -98,17 +138,54 @@ class Search extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(15.0),
                 child: SizedBox(
                   width: double.infinity,
-                  height: 60,
+                  height: 30,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 12,
+                    itemCount: tags.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return const SizedBox(
-                        child: Card(
-                          child: Text('Ahmed'),
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(60),
+                            color: tags[index].selected
+                                ? const Color.fromARGB(255, 67, 96, 244)
+                                : const Color.fromARGB(255, 242, 242, 242)),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(60),
+                          splashColor: const Color.fromARGB(255, 67, 96, 244),
+                          onTap: () => selectTag(context,
+                              tags[index]), // Action when button is pressed
+                          child: Container(
+                            height: 10,
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  tags[index].title,
+                                  style: TextStyle(
+                                      color: tags[index].selected
+                                          ? Colors.white
+                                          : const Color.fromARGB(
+                                              255, 160, 159, 159),
+                                      fontSize: 12),
+                                ),
+                                tags[index].selected
+                                    ? const Padding(
+                                        padding: EdgeInsets.only(left: 15),
+                                        child: Icon(
+                                          Icons.close_outlined,
+                                          color: Colors.white,
+                                          size: 16,
+                                        ),
+                                      )
+                                    : const GreyArea()
+                              ],
+                            ),
+                          ),
                         ),
                       );
                     },
@@ -116,7 +193,7 @@ class Search extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 320,
+                height: 370,
                 child: GlowingOverscrollIndicator(
                   axisDirection: AxisDirection.down,
                   color: Colors.orange.shade900,
@@ -124,7 +201,7 @@ class Search extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 40),
                     itemCount: 1, // substitute with collectionCounts
                     itemBuilder: (ctx, index) {
-                      return EventCollections("${10}K events",false , test1);
+                      return EventCollections("${10}K events", false, test1);
                     },
                   ),
                 ),

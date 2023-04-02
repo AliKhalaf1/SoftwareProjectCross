@@ -29,7 +29,7 @@ void main() {
       MaterialApp(
         home: Scaffold(
             body: ListView(children: [
-          EventCollections("Title 1", test1),
+          EventCollections("Title 1", true, test1),
         ])), // Wrap EventCard with a Material widget
       ),
     );
@@ -69,7 +69,7 @@ void main() {
       MaterialApp(
         home: Scaffold(
             body: ListView(children: [
-          EventCollections("Title 2", test2),
+          EventCollections("Title 2", true, test2),
         ])), // Wrap EventCard with a Material widget
       ),
     );
