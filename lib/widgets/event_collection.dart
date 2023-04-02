@@ -54,7 +54,7 @@ class EventCollections extends StatelessWidget {
                       letterSpacing: 1.3,
                       fontFamily: 'Neue Plak Extended',
                       fontWeight: FontWeight.w100,
-                      color: Color.fromRGBO(78, 78, 79, 1)),
+                      color: Colors.black),
                 ),
               ),
             ),
