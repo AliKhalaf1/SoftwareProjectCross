@@ -193,7 +193,7 @@ class _SearchState extends State<Search> {
                 ),
               ),
               SizedBox(
-                height: 370,
+                height: 700,
                 child: GlowingOverscrollIndicator(
                   axisDirection: AxisDirection.down,
                   color: Colors.orange.shade900,
