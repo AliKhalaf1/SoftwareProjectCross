@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../models/event.dart';
 import '../models/tags.dart';
 import '../widgets/event_collection.dart';
+import 'filters.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -57,6 +58,7 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     //------------------------------------- Methods -------------------------------------------------//
     /// Function that select tags and only render thier new style.
+    /// 
     /// Tags that is selected rendered first.
     void selectTag(BuildContext ctx, Tag toggleTag) {
       setState(() {
@@ -73,6 +75,15 @@ class _SearchState extends State<Search> {
       });
     }
 
+    ///View Filters handeler function.
+    ///
+    ///FilterScreen takes selectedTags list to edit it when select an new filter.
+    void viewFilters(BuildContext ctx) {
+      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+        return FilterScreen(selectedTags);
+      }));
+    }
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white38,
@@ -84,9 +95,7 @@ class _SearchState extends State<Search> {
                 Icons.filter_list_sharp,
                 color: Colors.black,
               ),
-              onPressed: () {
-                // Fillter Page
-              },
+              onPressed: () => viewFilters(context),
             ),
           ],
         ),
