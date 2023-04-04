@@ -2,6 +2,7 @@ library FiltersScreen;
 
 import 'package:flutter/material.dart';
 import '../models/tags.dart';
+import '../widgets/filter_categ.dart';
 import '../widgets/title_text_1.dart';
 import '../widgets/transparent_button_no_icon.dart';
 import 'tab_bar.dart';
@@ -58,10 +59,20 @@ class _FilterScreenState extends State<FilterScreen> {
               axisDirection: AxisDirection.down,
               color: Colors.orange.shade900,
               child: ListView.builder(
-                padding: const EdgeInsets.only(top: 40),
+                padding: const EdgeInsets.only(top: 5),
                 itemCount: 1, // substitute with collectionCounts
                 itemBuilder: (ctx, index) {
-                  return Column();
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FilterCateg('Date','Anytime'),
+                        FilterCateg('Location','Online'),
+                        FilterCateg('Category','Anything'),
+                      ],
+                    ),
+                  );
                 },
               ),
             ),

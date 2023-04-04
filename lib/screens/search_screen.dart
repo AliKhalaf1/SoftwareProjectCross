@@ -50,9 +50,13 @@ class _SearchState extends State<Search> {
     Tag('Tech', false),
   ];
 
-  List<Tag> selectedTags = []; /* Selected Tags */
+  
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///-------------------------------------------------------END OF DUMMY DATA -----------------------------------------------------------
+  
+  /*============ Selected Tags =========='*/
+  ///List that conatins selected tags/filters 
+  List<Tag> selectedTags = []; 
 
   @override
   Widget build(BuildContext context) {
