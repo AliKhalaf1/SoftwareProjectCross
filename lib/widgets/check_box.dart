@@ -18,21 +18,22 @@ class CheckBox extends StatefulWidget {
 }
 
 class _CheckBoxState extends State<CheckBox> {
+  /* =========================== Method to render the list ========================*/
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+      MaterialState.selected
+    };
+    if (states.any(interactiveStates.contains)) {
+      return const Color.fromARGB(255, 29, 82, 215);
+    }
+    return const Color.fromARGB(255, 122, 121, 121);
+  }
+
   @override
   Widget build(BuildContext context) {
-    /* =========================== Method to render the list ========================*/
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return const Color.fromARGB(255, 29, 82, 215);
-      }
-      return const Color.fromARGB(255, 122, 121, 121);
-    }
-
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
       child: Column(

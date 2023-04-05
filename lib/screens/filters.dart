@@ -66,14 +66,12 @@ class _FilterScreenState extends State<FilterScreen> {
                 itemCount: 1, // substitute with collectionCounts
                 itemBuilder: (ctx, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
+                    padding: const EdgeInsets.only(left: 8.0,bottom: 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FilterCateg('Date', 'Anytime'),
                         FilterCateg('Location', 'Online'),
-                        FilterCateg('Category', 'Anything'),
-                        FilterCateg('Category', 'Anything'),
                         FilterCateg('Category', 'Anything'),
                         CheckBox(
                             'Price', 'Free stuff only', widget.isCheckedPrice),
