@@ -16,10 +16,9 @@ class FilterScreen extends StatefulWidget {
   List<Tag> selectedTags; /* Selected Tags */
   int selectedValue =
       0; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
-  bool isCheckedPrice =
-      false; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
-  bool isCheckedOrganizer =
-      false; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
+  bool isCheckedPrice = false; /* Checked value #*/
+  bool isCheckedOrganizer = false; /* Checked value #*/
+  bool applyBtnState = false; /* Variable to know activate button or not #*/
 
   //-----------------------------------------------------------//
 
@@ -66,18 +65,19 @@ class _FilterScreenState extends State<FilterScreen> {
                 itemCount: 1, // substitute with collectionCounts
                 itemBuilder: (ctx, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 8.0,bottom: 30),
+                    padding: const EdgeInsets.only(left: 8.0, bottom: 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FilterCateg('Date', 'Anytime'),
-                        FilterCateg('Location', 'Online'),
-                        FilterCateg('Category', 'Anything'),
-                        CheckBox(
-                            'Price', 'Free stuff only', widget.isCheckedPrice),
+                        FilterCateg('Date', 'Anytime', widget.applyBtnState),
+                        FilterCateg('Location', 'Online', widget.applyBtnState),
+                        FilterCateg(
+                            'Category', 'Anything', widget.applyBtnState),
+                        CheckBox('Price', 'Free stuff only',
+                            widget.isCheckedPrice, widget.applyBtnState),
                         CheckBox('Organiser', 'From organizers you follow',
-                            widget.isCheckedOrganizer),
-                        RadioButton(widget.selectedValue),
+                            widget.isCheckedOrganizer, widget.applyBtnState),
+                        RadioButton(widget.selectedValue, widget.applyBtnState),
                       ],
                     ),
                   );
@@ -93,7 +93,8 @@ class _FilterScreenState extends State<FilterScreen> {
               padding: const EdgeInsets.only(bottom: 10),
               child: TransparentButtonNoIcon(
                   'Apply filters (${widget.selectedTags.length})',
-                  applyFilters),
+                  applyFilters,
+                  widget.applyBtnState),
             ),
           )
         ],

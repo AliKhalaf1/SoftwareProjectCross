@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class FilterCateg extends StatelessWidget {
   final String title;
   String selection;
-  FilterCateg(this.title, this.selection, {super.key});
+  bool buttonState;
+  FilterCateg(this.title, this.selection, this.buttonState, {super.key});
 
   @override
   Widget build(BuildContext context) {

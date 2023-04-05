@@ -10,8 +10,10 @@ class CheckBox extends StatefulWidget {
   //-----------------------------------------------------------//
   final String title;
   final String parag;
+  bool buttonState;
 
-  CheckBox(this.title, this.parag, this._isChecked, {super.key});
+  CheckBox(this.title, this.parag, this._isChecked, this.buttonState,
+      {super.key});
 
   @override
   State<CheckBox> createState() => _CheckBoxState();
@@ -64,6 +66,7 @@ class _CheckBoxState extends State<CheckBox> {
                 onChanged: (bool? value) {
                   setState(() {
                     widget._isChecked = value!;
+                    widget.buttonState = true;
                   });
                 },
               ),
