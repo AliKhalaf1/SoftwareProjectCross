@@ -17,7 +17,7 @@ class RadioButton extends StatefulWidget {
 
 class _RadioButtonState extends State<RadioButton> {
 
-  /**They must be here, so that we can change  (_selectedValue) by setstate*/
+  /* They must be here, so that we can change  (_selectedValue) by setstate */
   List<Map<String, dynamic>> radioList = [
     {'id': 0, 'text': 'Relevance'},
     {'id': 1, 'text': 'Date'},
@@ -25,6 +25,8 @@ class _RadioButtonState extends State<RadioButton> {
 
   @override
   Widget build(BuildContext context) {
+
+    /* =========================== Method to render the list ========================*/
     List<Widget> buildRadioList() {
       List<Widget> list = [];
       for (var i = 0; i < radioList.length; i++) {
@@ -44,7 +46,7 @@ class _RadioButtonState extends State<RadioButton> {
             groupValue: widget._selectedValue,
             onChanged: (value) {
               setState(() {
-                widget._selectedValue = value;
+                widget._selectedValue = value!;
               });
             },
           ),

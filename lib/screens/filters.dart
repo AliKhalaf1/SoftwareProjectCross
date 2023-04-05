@@ -2,6 +2,7 @@ library FiltersScreen;
 
 import 'package:flutter/material.dart';
 import '../models/tags.dart';
+import '../widgets/check_box.dart';
 import '../widgets/filter_categ.dart';
 import '../widgets/radio_button.dart';
 import '../widgets/title_text_1.dart';
@@ -10,11 +11,15 @@ import 'tab_bar.dart';
 
 class FilterScreen extends StatefulWidget {
   //-----------------------------------------------------------//
-  //                   status variable                        //
+  //                   status variables                       //
   // to be obtained from local data-base                     //
   List<Tag> selectedTags; /* Selected Tags */
-  int _selectedValue =
+  int selectedValue =
       0; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
+  bool isCheckedPrice =
+      false; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
+  bool isCheckedOrganizer =
+      false; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
 
   //-----------------------------------------------------------//
 
@@ -26,17 +31,6 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> {
   //---------------- Variables ---------------//
-  final List<Tag> tags = [
-    Tag('Today', false),
-    Tag('Tomorrow', false),
-    Tag('This weekend', false),
-    Tag('This month', false),
-    Tag('past', false),
-    Tag('Learn', false),
-    Tag('Business', false),
-    Tag('Health & Weellness', false),
-    Tag('Tech', false),
-  ];
 
   //---------------- Methods -----------------//
   //Apply filters
@@ -79,7 +73,13 @@ class _FilterScreenState extends State<FilterScreen> {
                         FilterCateg('Date', 'Anytime'),
                         FilterCateg('Location', 'Online'),
                         FilterCateg('Category', 'Anything'),
-                        RadioButton(widget._selectedValue),
+                        FilterCateg('Category', 'Anything'),
+                        FilterCateg('Category', 'Anything'),
+                        CheckBox(
+                            'Price', 'Free stuff only', widget.isCheckedPrice),
+                        CheckBox('Organiser', 'From organizers you follow',
+                            widget.isCheckedOrganizer),
+                        RadioButton(widget.selectedValue),
                       ],
                     ),
                   );
