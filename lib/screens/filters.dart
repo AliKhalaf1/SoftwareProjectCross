@@ -14,11 +14,12 @@ class FilterScreen extends StatefulWidget {
   //                   status variables                       //
   // to be obtained from local data-base                     //
   List<Tag> selectedTags; /* Selected Tags */
-  int selectedValue =
+  int selectedSortby =
       0; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
   bool isCheckedPrice = false; /* Checked value #*/
   bool isCheckedOrganizer = false; /* Checked value #*/
   bool applyBtnState = false; /* Variable to know activate button or not #*/
+  
 
   //-----------------------------------------------------------//
 
@@ -69,15 +70,15 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FilterCateg('Date', 'Anytime', widget.applyBtnState),
-                        FilterCateg('Location', 'Online', widget.applyBtnState),
-                        FilterCateg(
+                        FilterCateg(0,'Date', 'Anytime', widget.applyBtnState),
+                        FilterCateg(1,'Location', 'Online', widget.applyBtnState),
+                        FilterCateg(2,
                             'Category', 'Anything', widget.applyBtnState),
                         CheckBox('Price', 'Free stuff only',
                             widget.isCheckedPrice, widget.applyBtnState),
                         CheckBox('Organiser', 'From organizers you follow',
                             widget.isCheckedOrganizer, widget.applyBtnState),
-                        RadioButton(widget.selectedValue, widget.applyBtnState),
+                        RadioButton(widget.selectedSortby, widget.applyBtnState),
                       ],
                     ),
                   );

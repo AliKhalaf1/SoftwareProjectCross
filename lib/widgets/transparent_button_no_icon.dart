@@ -46,7 +46,7 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
       child: SizedBox(
         height: 40,
         width: MediaQuery.of(context).size.width * 0.9,
-        child: !widget.buttonState
+        child: widget.buttonState
             ? TextButton(
                 style: ButtonStyle(
                   side: MaterialStateProperty.all(
