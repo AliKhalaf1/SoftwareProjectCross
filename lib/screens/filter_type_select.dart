@@ -2,15 +2,18 @@ library FilterTypeScreen;
 
 import 'package:flutter/material.dart';
 
+import 'filters.dart';
+
 class FilterType extends StatelessWidget {
   final String title;
   final List<String> selections;
   const FilterType(this.title, this.selections, {super.key});
 
   /* Method to determine selection and navigate back to filters screen*/
-  void selectFilteration(BuildContext ctx,int ind)
-  {
-
+  void selectFilteration(BuildContext ctx, int ind) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return FilterScreen([]);
+    }));
   }
 
   @override
@@ -41,21 +44,46 @@ class FilterType extends StatelessWidget {
           color: Colors.orange.shade900,
           child: ListView.builder(
             padding: const EdgeInsets.only(top: 40),
-            itemCount: selections.length, 
+            itemCount: selections.length,
             itemBuilder: (ctx, index) {
               return InkWell(
-                onTap: ()=>selectFilteration(context,index),
+                onTap: () => selectFilteration(context, index),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 14.0, bottom: 20,top: 20),
-                  child: Text(
-                    selections[index],
-                    style: const TextStyle(
-                        fontSize: 22,
-                        height: 0.9,
-                        letterSpacing: 1.3,
-                        fontFamily: 'Neue Plak Extended',
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromRGBO(17, 3, 59, 1)),
+                  padding:
+                      const EdgeInsets.only(left: 14.0, bottom: 20, top: 20),
+                  child: 
+                  // Text(
+                  //       selections[index],
+                  //       style: const TextStyle(
+                  //           fontSize: 22,
+                  //           height: 0.9,
+                  //           letterSpacing: 1.3,
+                  //           fontFamily: 'Neue Plak Extended',
+                  //           fontWeight: FontWeight.w600,
+                  //           color: Color.fromRGBO(17, 3, 59, 1)),
+                  //     ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        selections[index],
+                        style: const TextStyle(
+                            fontSize: 22,
+                            height: 0.9,
+                            letterSpacing: 1.3,
+                            fontFamily: 'Neue Plak Extended',
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(17, 3, 59, 1)),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 40),
+                        child: Icon(
+                          Icons.check,
+                          color: Color.fromARGB(255, 41, 74, 240),
+                          size: 20,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );
