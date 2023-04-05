@@ -9,8 +9,15 @@ import '../widgets/transparent_button_no_icon.dart';
 import 'tab_bar.dart';
 
 class FilterScreen extends StatefulWidget {
+  //-----------------------------------------------------------//
+  //                   status variable                        //
+  // to be obtained from local data-base                     //
   List<Tag> selectedTags; /* Selected Tags */
-  int _selectedValue = 0; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
+  int _selectedValue =
+      0; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
+
+  //-----------------------------------------------------------//
+
   FilterScreen(this.selectedTags, {super.key});
 
   @override
@@ -69,9 +76,9 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FilterCateg('Date','Anytime'),
-                        FilterCateg('Location','Online'),
-                        FilterCateg('Category','Anything'),
+                        FilterCateg('Date', 'Anytime'),
+                        FilterCateg('Location', 'Online'),
+                        FilterCateg('Category', 'Anything'),
                         RadioButton(widget._selectedValue),
                       ],
                     ),

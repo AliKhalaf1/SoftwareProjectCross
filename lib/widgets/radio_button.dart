@@ -3,7 +3,12 @@ library RadioButton;
 import 'package:flutter/material.dart';
 
 class RadioButton extends StatefulWidget {
+  //-----------------------------------------------------------//
+  //                   status variable                        //
+  // to be obtained from local data-base                     //
   int _selectedValue;
+  //-----------------------------------------------------------//
+
   RadioButton(this._selectedValue,{super.key});
 
   @override
