@@ -10,7 +10,7 @@ import 'tab_bar.dart';
 
 class FilterScreen extends StatefulWidget {
   List<Tag> selectedTags; /* Selected Tags */
-  int _selectedValue = 0; /* selected value of Sort by */
+  int _selectedValue = 0; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
   FilterScreen(this.selectedTags, {super.key});
 
   @override
