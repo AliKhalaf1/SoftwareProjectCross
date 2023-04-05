@@ -3,12 +3,14 @@ library FiltersScreen;
 import 'package:flutter/material.dart';
 import '../models/tags.dart';
 import '../widgets/filter_categ.dart';
+import '../widgets/radio_button.dart';
 import '../widgets/title_text_1.dart';
 import '../widgets/transparent_button_no_icon.dart';
 import 'tab_bar.dart';
 
 class FilterScreen extends StatefulWidget {
   List<Tag> selectedTags; /* Selected Tags */
+  int _selectedValue = 0; /* selected value of Sort by */
   FilterScreen(this.selectedTags, {super.key});
 
   @override
@@ -70,6 +72,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         FilterCateg('Date','Anytime'),
                         FilterCateg('Location','Online'),
                         FilterCateg('Category','Anything'),
+                        RadioButton(widget._selectedValue),
                       ],
                     ),
                   );
