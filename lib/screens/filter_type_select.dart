@@ -10,32 +10,43 @@ class FilterType extends StatelessWidget {
   const FilterType(this.title, this.selections, {super.key});
 
   /// Show calendar in pop up dialog for selecting date range for calendar event.
-  void showDatePicker(BuildContext ctx) {
-    showDateRangePicker(
+  Future<DateTimeRange?> showDatePicker(BuildContext ctx) async {
+    final DateTimeRange? picked = await showDateRangePicker(
       context: ctx,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
-      builder: (context,child) {
-    return Theme(
-      data: ThemeData.light().copyWith(
-        appBarTheme: const AppBarTheme(backgroundColor: Color.fromARGB(255, 215, 67, 21)),
-        primaryColor: Colors.deepOrange[800],
-        badgeTheme: const BadgeThemeData(textColor: Colors.black),
-        buttonTheme:
-            const ButtonThemeData(textTheme: ButtonTextTheme.primary), colorScheme: const ColorScheme.light(primary: Color.fromARGB(255, 215, 67, 21), surface: Color.fromARGB(255, 215, 67, 21)).copyWith(secondary: Colors.deepOrange[800]),
-      ),
-      child: child!,
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            appBarTheme: const AppBarTheme(
+                backgroundColor: Color.fromARGB(255, 215, 67, 21)),
+            primaryColor: Colors.deepOrange[800],
+            badgeTheme: const BadgeThemeData(textColor: Colors.black),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            colorScheme: const ColorScheme.light(
+                    primary: Color.fromARGB(255, 215, 67, 21),
+                    surface: Color.fromARGB(255, 215, 67, 21))
+                .copyWith(secondary: Colors.deepOrange[800]),
+          ),
+          child: child!,
+        );
+      },
     );
-  },
-
-    );
+    if (picked != null && picked.start != null && picked.end != null) {
+      return picked;
+    }
+    return null;
   }
 
   /* Method to determine selection and navigate back to filters screen*/
-  void selectFilteration(BuildContext ctx, int ind) {
+  void selectFilteration(BuildContext ctx, int ind) async {
     // Pick a date handler
     if (selections.length == 7 && ind == 6) {
-      showDatePicker(ctx);
+      final DateTimeRange? picked = await showDatePicker(ctx);
+      if (picked != null && picked.start != null && picked.end != null) {
+        print(picked);
+      }
     } else {
       // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       //   return FilterScreen([]);
