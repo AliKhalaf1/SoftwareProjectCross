@@ -108,13 +108,13 @@ class FilterType extends StatelessWidget {
                             letterSpacing: 1.3,
                             fontFamily: 'Neue Plak Extended',
                             fontWeight: FontWeight.w600,
-                            color: Color.fromRGBO(17, 3, 59, 1)),
+                            color: Color.fromARGB(255, 35, 80, 205)),
                       ),
                       const Padding(
                         padding: EdgeInsets.only(right: 40),
                         child: Icon(
                           Icons.check,
-                          color: Color.fromARGB(255, 41, 74, 240),
+                          color: Color.fromARGB(255, 35, 80, 205),
                           size: 20,
                         ),
                       ),
