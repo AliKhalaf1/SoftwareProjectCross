@@ -186,8 +186,7 @@ class _SearchState extends State<Search> {
                                   style: TextStyle(
                                       color: tags[index].selected
                                           ? Colors.white
-                                          : const Color.fromARGB(
-                                              255, 160, 159, 159),
+                                          : Color.fromARGB(255, 104, 104, 104),
                                       fontSize: 12),
                                 ),
                                 tags[index].selected
