@@ -44,9 +44,6 @@ class FilterType extends StatelessWidget {
     // Pick a date handler
     if (selections.length == 7 && ind == 6) {
       final DateTimeRange? picked = await showDatePicker(ctx);
-      if (picked != null && picked.start != null && picked.end != null) {
-        print(picked);
-      }
     } else {
       // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       //   return FilterScreen([]);
