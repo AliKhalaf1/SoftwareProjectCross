@@ -1,3 +1,6 @@
+import 'package:Eventbrite/screens/user/live_events.dart';
+import 'package:Eventbrite/screens/user/past_events.dart';
+import 'package:Eventbrite/widgets/tab_bar_Events.dart';
 import 'package:flutter/material.dart';
 
 class EventDrawer extends StatefulWidget {
@@ -24,13 +27,21 @@ class _EventDrawerState extends State<EventDrawer> {
 
   void iconHandler(int index) {
     setState(() {
-      iconColors.fillRange(
-        0,
-        6,
-        Color.fromRGBO(124, 120, 155, 1),
-      );
-      if (index != 0) iconColors[index] = Theme.of(context).primaryColor;
+      if (index != 0) {
+        iconColors.fillRange(
+          0,
+          6,
+          Color.fromRGBO(124, 120, 155, 1),
+        );
+        iconColors[index] = Theme.of(context).primaryColor;
+      }
     });
+  }
+
+  void eventNavigate(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(
+      TabBarEvents.route,
+    ); // we use same string in main it’s a key
   }
 
   Widget buildlistview(
@@ -76,7 +87,7 @@ class _EventDrawerState extends State<EventDrawer> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           buildlistview('Ahmed Magdy', Icons.business_center_rounded, 0, () {
@@ -84,6 +95,7 @@ class _EventDrawerState extends State<EventDrawer> {
           }),
           buildlistview('Events', Icons.date_range_rounded, 1, () {
             //code of Navigate
+            eventNavigate(context);
             iconHandler(1);
           }),
           buildlistview('Search Orders', Icons.event_rounded, 2, () {

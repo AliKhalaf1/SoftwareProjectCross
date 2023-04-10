@@ -26,10 +26,15 @@ class _TabBarEventsState extends State<TabBarEvents> {
   }
 
   void _handleTabSelection(int index) {
-    setState(() {
-      _selectedTabIndex = index;
-      _isLoading = true;
-    });
+    if (index != _selectedTabIndex) {
+      setState(
+        () {
+          _selectedTabIndex = index;
+          _isLoading = true;
+        },
+      );
+    }
+    
 
     // Set a delay to simulate loading
     Future.delayed(Duration(seconds: 1), () {
@@ -85,7 +90,7 @@ class _TabBarEventsState extends State<TabBarEvents> {
                   ),
                 ],
                 onTap: _handleTabSelection,
-                indicatorColor: const Color.fromRGBO(31, 10, 61, 1),
+                indicatorColor: Colors.blue[600],
                 labelPadding: EdgeInsets.zero,
               ),
             ),

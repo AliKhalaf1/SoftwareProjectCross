@@ -4,7 +4,7 @@ import '../../widgets/backgroud.dart';
 
 class PastEvents extends StatelessWidget {
   const PastEvents({super.key});
-
+static const route = '/Pastevents';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

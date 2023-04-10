@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class LiveEvents extends StatelessWidget {
   const LiveEvents({super.key});
-
+static const route = '/Liveevents';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
