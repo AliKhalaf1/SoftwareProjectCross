@@ -85,7 +85,7 @@ class _TabBarEventsState extends State<TabBarEvents> {
                   ),
                 ],
                 onTap: _handleTabSelection,
-                indicatorColor: Colors.transparent,
+                indicatorColor: const Color.fromRGBO(31, 10, 61, 1),
                 labelPadding: EdgeInsets.zero,
               ),
             ),
