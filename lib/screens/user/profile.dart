@@ -102,13 +102,13 @@ class Profile extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 15, right: 15),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
+                            children: [
                               ButtonNotification("Notification Centre"),
-                              ButtonLink("Linked Accounts"),
-                              ButtonLink("Following"),
-                              ButtonLink("Ticket Issues"),
-                              ButtonLink("Manage Events"),
-                              ButtonLink("Settings"),
+                              ButtonLink("Linked Accounts", () {}),
+                              ButtonLink("Following", () {}),
+                              ButtonLink("Ticket Issues", () {}),
+                              ButtonLink("Manage Events", () {}),
+                              ButtonLink("Settings", () {}),
                             ],
                           ),
                         )

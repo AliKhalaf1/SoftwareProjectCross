@@ -1,5 +1,8 @@
 library TabBarScreen;
 
+import 'package:Eventbrite/screens/user/live_events.dart';
+import 'package:Eventbrite/screens/user/past_events.dart';
+
 import '../../screens/guest/favourites_sign_up.dart';
 import '../../screens/guest/tickets_sign_up.dart';
 import '../../screens/user/profile.dart';

@@ -43,6 +43,8 @@ dependencies:
   shared_preferences: ^2.0.20
   mockito: ^5.0.0
   cr_calendar:
+  flutter_staggered_animations: ^1.1.1
+  loading_animation_widget:
 
 
 
@@ -86,6 +88,10 @@ flutter:
     - assets/doc/Screens/ticketsPage/ticketsPage.png
     - assets/doc/Screens/ticketsPage/buttons.png
     - assets/doc/Screens/ticketsPage/titles.png
+    - assets/images/live_events.jfif
+    - assets/images/past_events.jfif
+    - assets/images/draft_events.jfif
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

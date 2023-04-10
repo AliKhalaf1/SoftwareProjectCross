@@ -65,7 +65,7 @@ class FavouritesSignUp extends StatelessWidget {
                 ],
               ),
             ),
-            const Padding(
+             Padding(
               padding: EdgeInsets.only(left: 15, right: 6, top: 0),
               child: LogInBtn('Log In', loggingIn),
             ),

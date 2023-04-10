@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 
 /// {@category Widgets}
 ///<b> TextButton() </b>
-/// with certain styling used for 
+/// with certain styling used for
 ///<b>LogIn</b>
 ///.
-/// 
-/// It navigates to 
+///
+/// It navigates to
 ///<strong>sign_up_or_log_in</strong>
 ///screen.
 class LogInBtn extends StatelessWidget {
   final String text;
   final Function onPressed;
-  const LogInBtn(this.text, this.onPressed, {super.key});
+    LogInBtn(this.text, this.onPressed,);
 
   @override
   Widget build(BuildContext context) {
