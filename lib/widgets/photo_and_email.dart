@@ -1,5 +1,8 @@
 library PasswordCheckPhoto;
 
+import 'package:Eventbrite/widgets/profile_picture.dart';
+import 'package:Eventbrite/widgets/round_profile_image.dart';
+
 import '../widgets/text_link.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,20 +24,7 @@ class PhotoAndEmail extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-          child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            radius: 40,
-            backgroundImage:
-                const AssetImage("assets/images/no_user_found.jfif"),
-            child: CircleAvatar(
-              radius: 40,
-              backgroundColor: Colors.transparent,
-              backgroundImage: NetworkImage(imageurl),
-            ),
-          ),
-        ),
+        ProfileImage(imageurl),
         Text(email,
             style: GoogleFonts.lato(
               color: const Color.fromARGB(255, 116, 123, 128),

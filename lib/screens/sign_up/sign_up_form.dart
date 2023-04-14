@@ -12,24 +12,22 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../tab_bar.dart';
 
-import '../sign_up/sign_up_or_log_in.dart';
+import '../../screens/user/profile.dart';
 
 /// {@category Sign Up}
 /// {@category Screens}
 ///
-/// <h1>This screen is used to sign up</h1>
+/// <h1>The Sign Up form Screen</h1>
 ///
-/// it's used in the [SignUpOrLogIn] screen
 ///
 /// it's used to get the user's <b>email</b> , <b>first name</b>, <b>last name</b>, <b>password</b> throught Text Fields
 ///
 /// it has a password strength bar that checks if the password is strong or not.
 ///
 /// after the user enters all the data, and clicks on the sign up button,
-///
 /// it show a dialog to confirm the user's agrrment to the terms and conditions
 ///
-/// if the user agrees, it navigates to the [TabBar] screen
+/// if the user agrees, it navigates to the [Profile] screen
 ///
 class SignUpForm extends StatefulWidget {
   bool _signUpBtnActive = false;
@@ -83,7 +81,9 @@ class _SignUpFormState extends State<SignUpForm> {
     return false;
   }
 
-  void signUp() {
+  ///A function that shows a dialog to confirm the user's agreement to the terms and conditions
+  ///
+  void showTermsAndConditions() {
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -127,7 +127,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   ),
                   child: const Text('Agree'),
                   onPressed: () {
-                    signUp2();
+                    signUp();
                   },
                 ),
                 TextButton(
@@ -146,7 +146,13 @@ class _SignUpFormState extends State<SignUpForm> {
         });
   }
 
-  void signUp2() {
+  /// {@category Helper Functions}
+  ///A function that adds the user to the database
+  ///
+  ///if the user is added successfully, it navigates to the [TabBarScreen] screen
+  ///
+  ///if the user is not added successfully, it shows a snackbar with an error message that user email already exixts
+  void signUp() {
     String userFirstName = widget._firstNameText.text;
     String userLastName = widget._lastNameText.text;
     String userPassword = widget._passwordText.text;
@@ -176,6 +182,12 @@ class _SignUpFormState extends State<SignUpForm> {
       );
     }
   }
+
+  /// {@category Helper Functions}
+  ///A function that checks if the user entered valid data on each change in any of the Fields
+  ///
+  ///It keeps the SignUp button disabled till user enters valid data
+  ///
 
   void _setCheck(bool check, int i) {
     validatePassword(widget._passwordText.text);
@@ -486,7 +498,9 @@ class _SignUpFormState extends State<SignUpForm> {
               ],
             ),
           ),
-          SizedBox(child: SignUpBtn(signUpFn: signUp, widget: widget)),
+          SizedBox(
+              child:
+                  SignUpBtn(signUpFn: showTermsAndConditions, widget: widget)),
         ],
       ),
     );

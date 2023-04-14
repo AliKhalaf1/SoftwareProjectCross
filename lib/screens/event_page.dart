@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 /// {@category User}
 /// {@category Screens}
-///
+/// 
+/// 
+/// 
 class EventPage extends StatelessWidget {
   const EventPage({super.key});
 

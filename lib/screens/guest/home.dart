@@ -7,9 +7,10 @@ import '../../models/event.dart';
 /// {@category Guest}
 /// {@category Screens}
 ///
-///It is surrounded by scafold to be rendered as a screen because it is screen widget.
+/// <h1>Home screen for Guests and Users</h1>
 ///
-///Extends StatelessWidget as there is no change in any state in screen that could change rendered page content.
+/// it contains a list of events in a column
+/// andeach event is in a card
 ///
 ///DUMMY DATA to be substituted after linking with Apis and database.
 ///
@@ -37,11 +38,7 @@ import '../../models/event.dart';
 ///
 ///Search screen index is 1 in tabBaerScreen so we send its index to tabBaerScreen to understands which page to render.
 ///
-
 class Home extends StatelessWidget {
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ///------------------------------------------------------- DUMMY DATA -----------------------------------------------------------------
-  /// I want from DB cateory titles and each category list of events
   final Event event = Event(
       123,
       DateTime.now(),
@@ -86,8 +83,6 @@ class Home extends StatelessWidget {
           'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
           EventState.online,
           false));
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ///-------------------------------------------------------END OF DUMMY DATA -----------------------------------------------------------
 
   //conunt of the categories in home screen
   final int collectionCounts;
@@ -96,9 +91,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //////////////////////////////////////////////////////////////////////
     addDummyData(test1, test2);
-    //////////////////////////////////////////////////////////////////////
 
     return Scaffold(
       body: SizedBox(

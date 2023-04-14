@@ -27,8 +27,8 @@ dartdoc:
 
   categoryOrder: [  "Models", "Widgets","Screens" , "Helper Functions" ]
   exclude: ['lib/models/db_mock.dart',]
-  # categoryOrder: ["Screens", "Widgets"]
-  # examplePathPrefix: 'subdir/with/examples'
+
+  #header: ['doc_styling/header.html',]
   #D:\flutter\third_project\eventbrite_replica\lib\screens\guest
   # includeExternal: ['lib\screens\guest\*.dart',]
   

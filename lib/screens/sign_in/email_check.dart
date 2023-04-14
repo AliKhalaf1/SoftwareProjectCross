@@ -14,15 +14,12 @@ import '../sign_up/sign_up_or_log_in.dart';
 /// {@category Sign In}
 /// {@category Screens}
 ///
-/// this screen is used to check if the email is valid or not
+/// Used to check if the email is valid or not
 ///
 /// if the email is valid, it navigates to the [PasswordCheck] screen
 ///
 /// if the email is not valid, it navigates to the [SignUpForm] screen
 ///
-/// it's used in the [SignUpOrLogIn] screen
-///
-
 class EmailCheck extends StatefulWidget {
   //Next_btn_active is a boolean variable that is used to determine whether the next button is active or not. If the email is valid, the next button is active, otherwise it is not active.
   var emailText = TextEditingController();
@@ -34,6 +31,15 @@ class EmailCheck extends StatefulWidget {
   @override
   State<EmailCheck> createState() => _EmailCheckState();
 }
+
+/// {@category Helper Functions}
+/// Check if the email from user input is in the Database or not
+///
+/// if the email exists, it navigates to the [PasswordCheck] screen
+///
+/// if the email doesn't exist, it navigates to the [SignUpForm] screen
+///
+/// it's used in the [EmailCheck] screen
 
 void emailCheck(BuildContext ctx, String email) {
   if (DBMock.checkEmail(email)) {

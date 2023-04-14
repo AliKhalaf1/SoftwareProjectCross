@@ -14,11 +14,11 @@ import '../tab_bar.dart';
 /// {@category Sign In}
 /// {@category Screens}
 ///
-/// this screen is used to check if the password is valid or not
+/// Used to check if the password  is exist or not in the database
 ///
-/// if the password is valid, it navigates to the [Profile] screen
+/// if the password exists, it navigates to the [Profile] screen
 ///
-/// if the password is not valid, it shows a snackbar with the message "Wrong password"
+/// if the password doesn't exist, it shows a snackbar with the message "<strong>Wrong password</strong>"
 class PasswordCheck extends StatefulWidget {
   bool _passwordVisible = false;
   bool _logInBtnActive = false;
@@ -32,7 +32,10 @@ class PasswordCheck extends StatefulWidget {
   @override
   State<PasswordCheck> createState() => _PasswordCheckState();
 }
-
+/// {@category Helper Functions}
+/// Password check function
+///
+/// it's used in the [PasswordCheck] screen
 void signIn(BuildContext ctx, String password, String email) {
   if (DBMock.checkAuth(email, password)) {
     setLoggedIn(email);
