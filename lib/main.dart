@@ -1,9 +1,11 @@
+import 'package:Eventbrite/screens/user/past_events.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/sign_up/sign_up_or_log_in.dart';
 import 'screens/tab_bar.dart';
 import 'screens/sign_in/email_check.dart';
 import './screens/find_tickets.dart';
+import 'widgets/tab_bar_Events.dart';
 
 void main() {
   runApp(const MainApp());
@@ -38,6 +40,8 @@ class _MainAppState extends State<MainApp> {
         SignUpOrLogIn.signUpRoute: (ctx) => const SignUpOrLogIn(),
         EmailCheck.emailCheckRoute: (ctx) => EmailCheck(),
         FindTickets.findTicketsRoute: (ctx) => const FindTickets(),
+        TabBarEvents.route: (ctx) => TabBarEvents(),
+        PastEvents.route: (context) => PastEvents(),
       },
     );
   }

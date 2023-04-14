@@ -25,7 +25,7 @@ class TitleText1 extends StatelessWidget {
             letterSpacing: 1.3,
             fontFamily: 'Neue Plak Extended',
             fontWeight: FontWeight.w700,
-            color: Color.fromRGBO(10, 5, 19, 1)),
+            color: Color.fromRGBO(17, 3, 59, 1)),
       ),
     );
   }

@@ -1,8 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="com.example.project">
-    <uses-permission android:name="android.permission.INTERNET"/>
+    package="com.example.my_expenses">
    <application
-        android:label="project"
+        android:label="my_expenses"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

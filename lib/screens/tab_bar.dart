@@ -1,5 +1,8 @@
 library TabBarScreen;
 
+import 'package:Eventbrite/screens/user/live_events.dart';
+import 'package:Eventbrite/screens/user/past_events.dart';
+
 import '../../screens/guest/favourites_sign_up.dart';
 import '../../screens/guest/tickets_sign_up.dart';
 import '../../screens/user/profile.dart';
@@ -61,7 +64,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
         widget.tabBarIndex = 4;
         pages = [
           Home(10),
-          const Search(),
+          Search(),
           const FavouritesSignUp(),
           const TicketsSignUp(),
           Profile(
@@ -80,7 +83,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
       setState(() {
         pages = [
           Home(10),
-          const Search(),
+          Search(),
           const FavouritesSignUp(),
           const TicketsSignUp(),
           const ProfileSignUp(),
@@ -99,7 +102,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
 
   List<Widget> pages = [
     Home(10),
-    const Search(),
+    Search(),
     const FavouritesSignUp(),
     const TicketsSignUp(),
     const ProfileSignUp(),

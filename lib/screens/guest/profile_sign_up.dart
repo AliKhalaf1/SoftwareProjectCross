@@ -1,5 +1,6 @@
 library GuestProfileScreen;
 
+import 'package:Eventbrite/widgets/tab_bar_Events.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/button_link.dart';
 import '../../widgets/log_in_btn.dart';
@@ -17,6 +18,11 @@ import '../../helper_functions/log_in.dart';
 ///
 class ProfileSignUp extends StatelessWidget {
   const ProfileSignUp({super.key});
+  void eventNavigate(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(
+      TabBarEvents.route,
+    ); // we use same string in main it’s a key
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +37,12 @@ class ProfileSignUp extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    children: const [
-                      ButtonLink('Ticket Issues'),
-                      ButtonLink('Manage Events'),
-                      ButtonLink('Settings'),
+                    children: [
+                      ButtonLink('Ticket Issues', () {}),
+                      ButtonLink('Manage Events', () {
+                        eventNavigate(context);
+                      }),
+                      ButtonLink('Settings', () {}),
                     ],
                   ),
                 ),
@@ -58,7 +66,7 @@ class ProfileSignUp extends StatelessWidget {
             ),
             child: Container(
               color: Colors.white,
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.only(left: 15.0, right: 5),
                 child: LogInBtn('Log In', loggingIn),
               ),
