@@ -4,7 +4,7 @@ import 'package:Eventbrite/widgets/grey_area.dart';
 import 'package:flutter/material.dart';
 
 import '../providers/events/event.dart';
-import '../providers/tags.dart';
+import '../providers/filters/tags.dart';
 import '../providers/events/fav_events.dart';
 import '../widgets/event_collection.dart';
 import 'filters.dart';
