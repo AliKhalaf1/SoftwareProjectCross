@@ -1,3 +1,4 @@
+import 'package:Eventbrite/providers/fav_events.dart';
 import 'package:Eventbrite/screens/event_page.dart';
 import 'package:Eventbrite/screens/filters.dart';
 import 'package:Eventbrite/screens/guest/home.dart';
@@ -33,6 +34,9 @@ class _MainAppState extends State<MainApp> {
       providers: [
         ChangeNotifierProvider.value(
           value: Events(),
+        ),
+        ChangeNotifierProvider.value(
+          value: FavEvents(),
         ),
       ],
       child: MaterialApp(

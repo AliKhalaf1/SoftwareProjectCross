@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../providers/event.dart';
 import '../models/tags.dart';
+import '../providers/fav_events.dart';
 import '../widgets/event_collection.dart';
 import 'filters.dart';
 import 'package:provider/provider.dart';
@@ -72,6 +73,9 @@ class _SearchState extends State<Search> {
     ///Event list
     final eventsData = Provider.of<Events>(context);
     final events = eventsData.events;
+
+    final favsData = Provider.of<FavEvents>(context);
+    final favourites = favsData.favs;
 
     //------------------------------------- Methods -------------------------------------------------//
     /// Function that select tags and only render thier new style.
@@ -227,7 +231,7 @@ class _SearchState extends State<Search> {
                     itemCount: 1, // substitute with collectionCounts
                     itemBuilder: (ctx, index) {
                       return EventCollections(
-                          "${events.length} events", false, events);
+                          "${events.length} events", false, favourites);
                     },
                   ),
                 ),

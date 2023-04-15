@@ -36,7 +36,7 @@ class Events with ChangeNotifier {
     return [..._events];
   }
 
-  ///Get Fav events
+  ///Get Fav events (Better to use _fav class list)
   List<Event> get favoriteEvents {
     return _events.where((eventItem) => eventItem.isFav).toList();
   }

@@ -1,5 +1,6 @@
 library EventCard;
 
+import 'package:Eventbrite/providers/fav_events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../helper_functions/events_handlers.dart';
@@ -38,6 +39,8 @@ class _EventCardState extends State<EventCard> {
     //----------------------- Event provider ------------------------------
 
     final event = Provider.of<Event>(context, listen: false);
+    final favsData = Provider.of<FavEvents>(context);
+    final favourites = favsData.favs;
 
     //----------------------- Methods ------------------------------
 
@@ -47,7 +50,11 @@ class _EventCardState extends State<EventCard> {
       setState(() {
         if (isLogged) {
           //Call toggleStatus function from event class
-          event.toggleFavoriteStatus();
+          if (event.isFav) {
+            favsData.removeEventFromFav(event);
+          } else {
+            favsData.addEventToFav(event);
+          }
         } else {
           Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
             return const SignUpOrLogIn();
@@ -64,7 +71,7 @@ class _EventCardState extends State<EventCard> {
       fit: StackFit.loose,
       children: [
         InkWell(
-          onTap: () => selectEvent(context,event),
+          onTap: () => selectEvent(context, event),
           child: Padding(
             padding: const EdgeInsets.only(top: 15, left: 15, bottom: 15),
             child: Row(
