@@ -1,10 +1,13 @@
 library GuestHomeScreen;
 
 import '../../widgets/event_collection.dart';
-import '../../models/categories/categories.dart';
+import '../../providers/categories/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/events/events.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../../providers/categories/categorey.dart';
 
 /// {@category Guest}
 /// {@category Screens}
@@ -65,19 +68,55 @@ class _HomeState extends State<Home> {
     "Title 10"
   ];
 
-  late final Categories cats;
+  List<Categorey> _categories = [];
 
   @override
-  void didChangeDependencies() {
+  void initState() {
+    super.initState();
+  }
+
+  // @override
+  // void didChangeDependencies() {
+  //   if (_isInit) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     Provider.of<Categories>(context).fetchCategories().then((_) {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     });
+  //   }
+  //   _isInit = false;
+  //   super.didChangeDependencies();
+  // }
+
+  @override
+  Future<void> didChangeDependencies() async {
     if (_isInit) {
       setState(() {
         _isLoading = true;
       });
-      cats.fetchCategories().then((_) {
+      final url = Uri.https('http://127.0.0.1:8000', '/categories/');
+      try {
+        final response = await http.get(url);
+        final extractedData =
+            json.decode(response.body) as Map<String, List<String>>;
+        if (extractedData == null) {
+          return;
+        }
+        final List<Categorey> loadedcategories = [];
+        extractedData.forEach((catTitle, subCats) {
+          loadedcategories.add(Categorey(catTitle, subCats));
+        });
+        _categories = loadedcategories;
+
         setState(() {
           _isLoading = false;
         });
-      });
+      } catch (error) {
+        throw (error);
+      }
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -88,14 +127,16 @@ class _HomeState extends State<Home> {
     final eventsData = Provider.of<Events>(context);
     final events = eventsData.events;
 
+    // final cats = Provider.of<Categories>(context);
+
     return Scaffold(
       body: SizedBox(
         height: 700,
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 40),
-          itemCount: 2, // substitute with collectionCounts
+          itemCount: 3, // substitute with collectionCounts
           itemBuilder: (ctx, index) {
-            return EventCollections(cats.categories[index].title, true, events);
+            return EventCollections(categoryTitles[index], true, events);
           },
         ),
       ),
