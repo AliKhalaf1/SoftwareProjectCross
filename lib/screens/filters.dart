@@ -8,6 +8,7 @@ import '../widgets/radio_button.dart';
 import '../widgets/title_text_1.dart';
 import '../widgets/transparent_button_no_icon.dart';
 import 'tab_bar.dart';
+import 'package:http/http.dart' as http;
 
 class FilterScreen extends StatefulWidget {
   //-----------------------------------------------------------//
