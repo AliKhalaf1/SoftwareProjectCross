@@ -25,7 +25,7 @@ void main() {
       MaterialApp(
         home: Scaffold(
           appBar: null,
-          body: EventCard(event), // Wrap EventCard with a Material widget
+          body: EventCard(), // Wrap EventCard with a Material widget
         ),
       ),
     );

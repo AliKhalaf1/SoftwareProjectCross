@@ -1,5 +1,7 @@
 library EventCollection;
 
+import 'package:provider/provider.dart';
+
 import '../../screens/tab_bar.dart';
 import '../../widgets/title_text_1.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +62,7 @@ class EventCollections extends StatelessWidget {
             ),
       Column(
         children: collecionListOfEvents.map((e) {
-          return EventCard(e);
+          return ChangeNotifierProvider.value(value: e, child: EventCard());
         }).toList(),
       ),
       (collecionListOfEvents.length > 5 && parent)

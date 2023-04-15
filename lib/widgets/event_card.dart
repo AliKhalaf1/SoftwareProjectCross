@@ -1,6 +1,7 @@
 library EventCard;
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../helper_functions/events_handlers.dart';
 import '../helper_functions/log_in.dart';
 import '../models/event.dart';
@@ -22,10 +23,10 @@ import '../screens/sign_up/sign_up_or_log_in.dart';
 ///
 class EventCard extends StatefulWidget {
   //event to be shown in the card
-  Event event;
+  // Event event;
 
   //constructor
-  EventCard(this.event, {super.key});
+  // EventCard(this.event, {super.key});
 
   @override
   State<EventCard> createState() => _EventCardState();
@@ -34,18 +35,21 @@ class EventCard extends StatefulWidget {
 class _EventCardState extends State<EventCard> {
   @override
   Widget build(BuildContext context) {
+    final event = Provider.of<Event>(context, listen: false);
     //Methods
 
-    bool isFavourite() {
-      return widget.event.isFav;
-    }
+    // bool isFavourite() {
+    //   return widget.event.isFav;
+    // }
 
     Future<void> toggleFav(BuildContext ctx) async {
       //add to favourites list
       bool isLogged = await checkLoggedUser();
       setState(() {
         if (isLogged) {
-          widget.event.isFav = !widget.event.isFav;
+          //Call toggleStatus function from event class
+          event.toggleFavoriteStatus();
+          // event.isFav = event.isFav;
         } else {
           Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
             return const SignUpOrLogIn();
@@ -72,13 +76,13 @@ class _EventCardState extends State<EventCard> {
                 SizedBox(
                     width: 100,
                     height: 100,
-                    child: widget.event.eventImg.startsWith('http')
+                    child: event.eventImg.startsWith('http')
                         ? Image.network(
-                            widget.event.eventImg,
+                            event.eventImg,
                             fit: BoxFit.cover,
                           )
                         : Image.asset(
-                            widget.event.eventImg,
+                            event.eventImg,
                             fit: BoxFit.cover,
                           )),
                 Container(
@@ -89,20 +93,20 @@ class _EventCardState extends State<EventCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.event.date)} EET',
+                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.date)} EET',
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w500,
                               fontSize: 14)),
                       SizedBox(
                           width: 200,
-                          child: Text(widget.event.description,
+                          child: Text(event.description,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 16))),
                       Text(
-                        (widget.event.state == EventState.online)
+                        (event.state == EventState.online)
                             ? 'Online'
                             : 'Offline',
                         style: const TextStyle(color: Colors.grey),
@@ -117,7 +121,7 @@ class _EventCardState extends State<EventCard> {
                           SizedBox(
                             width: 130,
                             child: Text(
-                                '${widget.event.creatorFollowers} creator followers',
+                                '${event.creatorFollowers} creator followers',
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     color: Color.fromRGBO(0, 0, 0, 0.7),
@@ -152,10 +156,10 @@ class _EventCardState extends State<EventCard> {
                   onPressed: () => toggleFav(context),
                   icon: Icon(
                     key: const Key("fav"),
-                    !isFavourite()
+                    !event.isFav
                         ? Icons.favorite_border_rounded
                         : Icons.favorite_sharp,
-                    color: !isFavourite()
+                    color: !event.isFav
                         ? const Color.fromRGBO(0, 0, 0, 0.7)
                         : const Color.fromARGB(255, 209, 65, 12),
                   ),

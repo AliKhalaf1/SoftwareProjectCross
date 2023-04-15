@@ -7,6 +7,9 @@ import '../models/event.dart';
 import '../models/tags.dart';
 import '../widgets/event_collection.dart';
 import 'filters.dart';
+import 'package:provider/provider.dart';
+import '../../providers/events.dart';
+
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -19,23 +22,23 @@ class _SearchState extends State<Search> {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///------------------------------------------------------- DUMMY DATA -----------------------------------------------------------------
   /// I want from DB cateory titles and each category list of events
-  final Event event = Event(
-      123,
-      DateTime.now(),
-      'We The Medicine- Healing Our Inner Child 2023.Guid...',
-      'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
-      EventState.online,
-      false);
+  // final Event event = Event(
+  //     123,
+  //     DateTime.now(),
+  //     'We The Medicine- Healing Our Inner Child 2023.Guid...',
+  //     'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
+  //     EventState.online,
+  //     false);
 
-  final List<Event> test1 = List<Event>.generate(
-      6,
-      (index) => Event(
-          12354,
-          DateTime.now(),
-          'We The Medicine- Healing Our Inner Child 2023.Guid...',
-          'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
-          EventState.online,
-          false));
+  // final List<Event> test1 = List<Event>.generate(
+  //     6,
+  //     (index) => Event(
+  //         12354,
+  //         DateTime.now(),
+  //         'We The Medicine- Healing Our Inner Child 2023.Guid...',
+  //         'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
+  //         EventState.online,
+  //         false));
 
   /**Rendring list only could be used even after remove dummy data */
   final List<Tag> tags = [
@@ -64,6 +67,12 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+    
+    //------------------------------------- Variables -------------------------------------------------//
+    ///Event list
+    final eventsData = Provider.of<Events>(context);
+    final events = eventsData.events;
+    
     //------------------------------------- Methods -------------------------------------------------//
     /// Function that select tags and only render thier new style.
     ///
@@ -217,7 +226,7 @@ class _SearchState extends State<Search> {
                     padding: const EdgeInsets.only(top: 40),
                     itemCount: 1, // substitute with collectionCounts
                     itemBuilder: (ctx, index) {
-                      return EventCollections("${10}K events", false, test1);
+                      return EventCollections("${events.length} events", false, eventsData.favoriteEvents);
                     },
                   ),
                 ),
