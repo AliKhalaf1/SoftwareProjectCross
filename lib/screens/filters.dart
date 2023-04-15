@@ -1,7 +1,7 @@
 library FiltersScreen;
 
 import 'package:flutter/material.dart';
-import '../models/tags.dart';
+import '../providers/filters/tags.dart';
 import '../widgets/check_box.dart';
 import '../widgets/filter_categ.dart';
 import '../widgets/radio_button.dart';
@@ -20,9 +20,10 @@ class FilterScreen extends StatefulWidget {
   bool isCheckedPrice = false; /* Checked value #*/
   bool isCheckedOrganizer = false; /* Checked value #*/
   bool applyBtnState = false; /* Variable to know activate button or not #*/
-  
 
   //-----------------------------------------------------------//
+
+  static const filtersPageRout = '/filters';
 
   FilterScreen(this.selectedTags, {super.key});
 
@@ -71,15 +72,17 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FilterCateg(0,'Date', 'Anytime', widget.applyBtnState),
-                        FilterCateg(1,'Location', 'Online', widget.applyBtnState),
-                        FilterCateg(2,
-                            'Category', 'Anything', widget.applyBtnState),
+                        FilterCateg(0, 'Date', 'Anytime', widget.applyBtnState),
+                        FilterCateg(
+                            1, 'Location', 'Online', widget.applyBtnState),
+                        FilterCateg(
+                            2, 'Category', 'Anything', widget.applyBtnState),
                         CheckBox('Price', 'Free stuff only',
                             widget.isCheckedPrice, widget.applyBtnState),
                         CheckBox('Organiser', 'From organizers you follow',
                             widget.isCheckedOrganizer, widget.applyBtnState),
-                        RadioButton(widget.selectedSortby, widget.applyBtnState),
+                        RadioButton(
+                            widget.selectedSortby, widget.applyBtnState),
                       ],
                     ),
                   );

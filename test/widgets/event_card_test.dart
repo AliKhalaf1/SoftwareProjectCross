@@ -1,4 +1,4 @@
-import 'package:Eventbrite/models/event.dart';
+import 'package:Eventbrite/providers/events/event.dart';
 import 'package:Eventbrite/widgets/event_card.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,9 @@ void main() {
         'We The Medicine- Healing Our Inner Child 2023.Guid...',
         imageUrl,
         EventState.online,
-        false);
+        false,
+        "Tech",
+        ['smart', 'wellness', 'aykalam'],'0');
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///-------------------------------------------------------END OF DUMMY DATA -----------------------------------------------------------
 

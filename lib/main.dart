@@ -1,3 +1,8 @@
+import 'package:Eventbrite/providers/events/fav_events.dart';
+import 'package:Eventbrite/screens/event_page.dart';
+import 'package:Eventbrite/screens/filters.dart';
+import 'package:Eventbrite/screens/guest/home.dart';
+import 'package:Eventbrite/screens/search_screen.dart';
 import 'package:Eventbrite/screens/user/account_settings.dart';
 import 'package:Eventbrite/screens/creator/past_events.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +13,7 @@ import 'screens/tab_bar.dart';
 import 'screens/sign_in/email_check.dart';
 import './screens/find_tickets.dart';
 import 'widgets/tab_bar_Events.dart';
-import './providers/events.dart';
+import 'providers/events/events.dart';
 
 void main() {
   runApp(const MainApp());
@@ -29,6 +34,9 @@ class _MainAppState extends State<MainApp> {
       providers: [
         ChangeNotifierProvider.value(
           value: Events(),
+        ),
+        ChangeNotifierProvider.value(
+          value: FavEvents(),
         ),
       ],
       child: MaterialApp(
@@ -53,6 +61,9 @@ class _MainAppState extends State<MainApp> {
           TabBarEvents.route: (ctx) => TabBarEvents(),
           PastEvents.route: (ctx) => PastEvents(),
           AccountSettings.accountSettingsRoute: (ctx) => AccountSettings(),
+          EventPage.eventPageRoute: (ctx) => const EventPage(),
+          Home.homePageRoute: (ctx) => Home(),
+          Search.searchPageRoute: (ctx) => const Search(),
         },
       ),
     );

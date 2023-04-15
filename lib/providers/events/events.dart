@@ -4,49 +4,74 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/event.dart';
+import 'event.dart';
 
 class Events with ChangeNotifier {
-  List<Event> _events = [
+  final List<Event> _events = [
     Event(
         123,
         DateTime.now(),
         'We The Medicine- Healing Our Inner Child 2023.Guid...',
         'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
         EventState.online,
-        false),
+        false,"Sport",['smart','wellness','aykalam'],'0'),
     Event(
         42976,
         DateTime.now(),
         'We The Medicine- Healing Our Inner Child 2023.Guid...',
         'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F443314829%2F303007241545%2F1%2Foriginal.20230210-003309?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=62411bb8f70beab0809515357bae1186',
         EventState.offline,
-        false),
+        false,"Health",['smart','wellness','aykalam'],'1'),
     Event(
         426,
         DateTime.now(),
         'We The Medicine- Healing Our Inner Child 2023.Guid...',
         'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F472700089%2F456764372736%2F1%2Foriginal.20230319-231940?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C1066%2C533&s=69e30ecc338952ba84e9cb36439a78d9',
         EventState.offline,
-        false),
+        false,"Tech",['smart','wellness','aykalam'],'2'),
   ];
 
   ///Get events
   List<Event> get events {
-    // if (_showFavoritesOnly) {
-    //   return _items.where((prodItem) => prodItem.isFavorite).toList();
-    // }
     return [..._events];
   }
 
-  ///Add event to Fav
+  ///Get Fav events (Better to use _fav class list)
   List<Event> get favoriteEvents {
     return _events.where((eventItem) => eventItem.isFav).toList();
   }
 
-  // Product findById(String id) {
-  //   return _items.firstWhere((prod) => prod.id == id);
-  // }
+  /// Get event By ID
+  Event findById(String id) {
+    return _events.firstWhere((prod) => prod.id == id);
+  }
+
+  ///Fetch Events using API  
+  Future<void> fetchAndSetEvents() async {
+    // final url = Uri.https('flutter-update.firebaseio.com', '/products.json');
+    // try {
+    //   final response = await http.get(url);
+    //   final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    //   if (extractedData == null) {
+    //     return;
+    //   }
+    //   final List<Event> loadedProducts = [];
+    //   extractedData.forEach((prodId, prodData) {
+    //     loadedProducts.add(Event(
+    //       id: prodId,
+    //       title: prodData['title'],
+    //       description: prodData['description'],
+    //       price: prodData['price'],
+    //       isFavorite: prodData['isFavorite'],
+    //       imageUrl: prodData['imageUrl'],
+    //     ));
+    //   });
+    //   _events= loadedProducts;
+    //   notifyListeners();
+    // } catch (error) {
+    //   throw (error);
+    // }
+  }
 
   ///Add event
   void addEvent() {
@@ -54,6 +79,4 @@ class Events with ChangeNotifier {
     //notify application that I add an event
     notifyListeners();
   }
-
-  ///Get Favourites
 }

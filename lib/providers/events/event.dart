@@ -1,14 +1,11 @@
 library EventModel;
 
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import '../helper_functions/log_in.dart';
+import '../filters/tags.dart';
 
-enum EventState { online, offline }
-
-/// {@category Models}
+/// {@category Providers}
 ///## Event class that stores each event information inside following attributes
 ///
 ///   • eventImg: cover image for the event
@@ -23,7 +20,9 @@ enum EventState { online, offline }
 ///
 ///   • isFav: boolean variable check if user mark this event to its favourites or not
 ///
-///
+
+enum EventState { online, offline }
+
 class Event with ChangeNotifier {
   //parameters of the EventCard Widget
   final String eventImg; /*event card image */
@@ -32,13 +31,15 @@ class Event with ChangeNotifier {
   final EventState state; /*event state (online/onsite)*/
   final int creatorFollowers; /*number of followers of the event creator*/
   bool isFav;
-  
+  final String categ;
+  final List<String> tags;
+  final String id;
 
-  //constructor
+  ///Constructor
   Event(this.creatorFollowers, this.date, this.description, this.eventImg,
-      this.state, this.isFav);
+      this.state, this.isFav, this.categ, this.tags, this.id,);
 
-  /// Set isFav Value
+  /// Set isFav Value by true or false
   void _setFavValue(bool newValue) {
     isFav = newValue;
     notifyListeners();

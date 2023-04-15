@@ -3,15 +3,17 @@ library SearchScreen;
 import 'package:Eventbrite/widgets/grey_area.dart';
 import 'package:flutter/material.dart';
 
-import '../models/event.dart';
-import '../models/tags.dart';
+import '../providers/events/event.dart';
+import '../providers/filters/tags.dart';
+import '../providers/events/fav_events.dart';
 import '../widgets/event_collection.dart';
 import 'filters.dart';
 import 'package:provider/provider.dart';
-import '../../providers/events.dart';
-
+import '../providers/events/events.dart';
 
 class Search extends StatefulWidget {
+  static const searchPageRoute = '/search';
+
   const Search({super.key});
 
   @override
@@ -61,18 +63,20 @@ class _SearchState extends State<Search> {
   /*============ Selected Tags =========='*/
   ///List that conatins selected tags/filters
   List<Tag> selectedTags = [];
-  
+
   //=======================================================================================================================================
   //========================================================= filters data ===============================================================
 
   @override
   Widget build(BuildContext context) {
-    
     //------------------------------------- Variables -------------------------------------------------//
     ///Event list
     final eventsData = Provider.of<Events>(context);
     final events = eventsData.events;
-    
+
+    final favsData = Provider.of<FavEvents>(context);
+    final favourites = favsData.favs;
+
     //------------------------------------- Methods -------------------------------------------------//
     /// Function that select tags and only render thier new style.
     ///
@@ -226,7 +230,8 @@ class _SearchState extends State<Search> {
                     padding: const EdgeInsets.only(top: 40),
                     itemCount: 1, // substitute with collectionCounts
                     itemBuilder: (ctx, index) {
-                      return EventCollections("${events.length} events", false, eventsData.favoriteEvents);
+                      return EventCollections(
+                          "${events.length} events", false, favourites);
                     },
                   ),
                 ),
