@@ -13,6 +13,7 @@ class EventDrawer extends StatefulWidget {
 class _EventDrawerState extends State<EventDrawer> {
   late Color mainIconColor;
   late List<Color> iconColors;
+  
 
   @override
   void initState() {
@@ -70,68 +71,71 @@ class _EventDrawerState extends State<EventDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Column(
-        children: [
-          Container(
-            height: 90,
-            width: double.infinity,
-            padding: EdgeInsets.all(20),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              '',
-              style: TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 30,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          buildlistview('Ahmed Magdy', Icons.business_center_rounded, 0, () {
-            iconHandler(0);
-          }),
-          buildlistview('Events', Icons.date_range_rounded, 1, () {
-            //code of Navigate
-            eventNavigate(context);
-            iconHandler(1);
-          }),
-          buildlistview('Search Orders', Icons.event_rounded, 2, () {
-            iconHandler(2);
-          }),
-          buildlistview('Change Organisation', Icons.compare_arrows_rounded, 3,
-              () {
-            iconHandler(3);
-          }),
-          Divider(),
-          buildlistview('Device Settings', Icons.settings, 4, () {
-            iconHandler(4);
-          }),
-          buildlistview('Feedback', Icons.mms, 5, () {
-            iconHandler(5);
-          }),
-          Divider(),
-          Column(
-            children: [
-              ListTile(
-                leading: Text(
-                  "ahmedfec2000@gmail.com",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color.fromRGBO(94, 92, 109, 1),
-                    fontWeight: FontWeight.w500,
+    return 
+         Drawer(
+            child: Column(
+              children: [
+                Container(
+                  height: 90,
+                  width: double.infinity,
+                  padding: EdgeInsets.all(20),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 30,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                 ),
-              ),
-              buildlistview('Log Out', Icons.logout, 6, () {
-                iconHandler(6);
-              }),
-            ],
-          ),
-        ],
-      ),
-    );
+                const SizedBox(
+                  height: 20,
+                ),
+                buildlistview('Ahmed Magdy', Icons.business_center_rounded, 0,
+                    () {
+                  iconHandler(0);
+                }),
+                buildlistview('Events', Icons.date_range_rounded, 1, () {
+                  //code of Navigate
+                  eventNavigate(context);
+                  iconHandler(1);
+                }),
+                buildlistview('Search Orders', Icons.event_rounded, 2, () {
+                  iconHandler(2);
+                }),
+                buildlistview(
+                    'Change Organisation', Icons.compare_arrows_rounded, 3, () {
+                  iconHandler(3);
+                }),
+                Divider(),
+                buildlistview('Device Settings', Icons.settings, 4, () {
+                  iconHandler(4);
+                }),
+                buildlistview('Feedback', Icons.mms, 5, () {
+                  iconHandler(5);
+                }),
+                Divider(),
+                Column(
+                  children: [
+                    ListTile(
+                      leading: Text(
+                        "ahmedfec2000@gmail.com",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color.fromRGBO(94, 92, 109, 1),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    buildlistview('Log Out', Icons.logout, 6, () {
+                      iconHandler(6);
+                    }),
+                  ],
+                ),
+              ],
+            ),
+          );
+      
   }
 }

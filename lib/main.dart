@@ -39,6 +39,7 @@ class _MainAppState extends State<MainApp> {
 
           fontFamily: 'Neue Plack Extended',
           primaryColor: const Color.fromARGB(255, 209, 65, 12),
+          cardColor: Color.fromRGBO(91, 89, 107, 1),
         ),
 
         // home: const TabBarScreen(title: 'Eventbrite'),
