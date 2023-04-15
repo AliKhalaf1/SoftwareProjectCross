@@ -63,7 +63,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
       setState(() {
         widget.tabBarIndex = 4;
         pages = [
-          Home(10),
+          Home(),
           Search(),
           const FavouritesSignUp(),
           const TicketsSignUp(),
@@ -75,7 +75,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
     } else {
       setState(() {
         pages = [
-          Home(10),
+          Home(),
           Search(),
           const FavouritesSignUp(),
           const TicketsSignUp(),
@@ -94,7 +94,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
   var _currentIndex = 0;
 
   List<Widget> pages = [
-    Home(10),
+    Home(),
     Search(),
     const FavouritesSignUp(),
     const TicketsSignUp(),
