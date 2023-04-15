@@ -43,7 +43,7 @@ class Home extends StatelessWidget {
 
   static const homePageRoute = '/home';
 
-
+  //Fecth them from API Categories that gets all categories
   final List<String> categoryTitles = [
     "Title 1",
     "Title 2",

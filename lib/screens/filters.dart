@@ -1,7 +1,7 @@
 library FiltersScreen;
 
 import 'package:flutter/material.dart';
-import '../models/tags.dart';
+import '../providers/tags.dart';
 import '../widgets/check_box.dart';
 import '../widgets/filter_categ.dart';
 import '../widgets/radio_button.dart';

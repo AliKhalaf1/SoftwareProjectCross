@@ -3,9 +3,7 @@ library EventModel;
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import '../models/tags.dart';
-
-enum EventState { online, offline }
+import 'tags.dart';
 
 /// {@category Models}
 ///## Event class that stores each event information inside following attributes
@@ -22,7 +20,9 @@ enum EventState { online, offline }
 ///
 ///   • isFav: boolean variable check if user mark this event to its favourites or not
 ///
-///
+
+enum EventState { online, offline }
+
 class Event with ChangeNotifier {
   //parameters of the EventCard Widget
   final String eventImg; /*event card image */
@@ -35,11 +35,11 @@ class Event with ChangeNotifier {
   final List<String> tags;
   final String id;
 
-  //constructor
+  ///Constructor
   Event(this.creatorFollowers, this.date, this.description, this.eventImg,
       this.state, this.isFav, this.categ, this.tags, this.id,);
 
-  /// Set isFav Value
+  /// Set isFav Value by true or false
   void _setFavValue(bool newValue) {
     isFav = newValue;
     notifyListeners();

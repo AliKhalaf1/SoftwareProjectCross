@@ -46,6 +46,33 @@ class Events with ChangeNotifier {
     return _events.firstWhere((prod) => prod.id == id);
   }
 
+  ///Fetch Events using API  
+  Future<void> fetchAndSetEvents() async {
+    // final url = Uri.https('flutter-update.firebaseio.com', '/products.json');
+    // try {
+    //   final response = await http.get(url);
+    //   final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    //   if (extractedData == null) {
+    //     return;
+    //   }
+    //   final List<Event> loadedProducts = [];
+    //   extractedData.forEach((prodId, prodData) {
+    //     loadedProducts.add(Event(
+    //       id: prodId,
+    //       title: prodData['title'],
+    //       description: prodData['description'],
+    //       price: prodData['price'],
+    //       isFavorite: prodData['isFavorite'],
+    //       imageUrl: prodData['imageUrl'],
+    //     ));
+    //   });
+    //   _events= loadedProducts;
+    //   notifyListeners();
+    // } catch (error) {
+    //   throw (error);
+    // }
+  }
+
   ///Add event
   void addEvent() {
     // _events.add(value);
