@@ -1,5 +1,10 @@
 library UserProfileScreen;
 
+import 'package:Eventbrite/helper_functions/log_in.dart';
+import 'package:Eventbrite/models/db_mock.dart';
+import 'package:Eventbrite/screens/user/account_settings.dart';
+
+import '../../models/user.dart';
 import '../../widgets/button_notificatin.dart';
 import '../../widgets/grey_area.dart';
 import '../../widgets/profile_layer.dart';
@@ -27,20 +32,23 @@ import '../../widgets/counter_button.dart';
 ///
 ///and GreyButtonLogOut.
 
-class Profile extends StatelessWidget {
-  String firstName;
-  String lastName;
-  String email;
-  String imageUrl;
-  int likesCount;
-  int myTicketsCount;
-  int followingCount;
+class Profile extends StatefulWidget {
+  String firstName = '';
+  String lastName = '';
+  String email = '';
+  String imageUrl = '';
+  int likesCount = 0;
+  int myTicketsCount = 0;
+  int followingCount = 0;
   final Function logOut;
-  Profile(this.firstName, this.lastName, this.imageUrl, this.email,
-      this.likesCount, this.myTicketsCount, this.followingCount, this.logOut,
-      {super.key});
+  Profile(this.logOut, {super.key});
   static const emailCheckRoute = '/profile';
 
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   Future<void> setLoggedOut(email) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("isLoggedIn", false);
@@ -48,96 +56,145 @@ class Profile extends StatelessWidget {
   }
 
   void logOutLogic(BuildContext ctx) {
-    setLoggedOut(email);
-    logOut();
+    setLoggedOut(widget.email);
+    widget.logOut();
+  }
+
+  void goToAccountSettings(BuildContext ctx) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return AccountSettings(imageurl: widget.imageUrl);
+    }));
+  }
+
+  void Refresh() {
+    Future<String> s = GetEmail();
+
+    s.then((value) {
+      User currUser = DBMock.getUserData(value);
+
+      setState(() {
+        widget.email = currUser.email;
+        widget.firstName = currUser.firstName;
+        widget.lastName = currUser.lastName;
+        widget.imageUrl = currUser.imageUrl;
+        widget.likesCount = widget.likesCount + 1;
+        widget.myTicketsCount = 1;
+        widget.followingCount = 1;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    Refresh();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              children: [
-                Stack(
-                  children: [
-                    //uppergray
-                    const GreyArea(),
-                    //image
-                    ProfileImage(imageUrl),
-                    Column(
-                      children: [
-                        // two texts with icon&layerfortab
-                        ProfileLayer(firstName, lastName, email),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          Refresh();
+        },
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  Stack(
+                    children: [
+                      //uppergray
+                      const GreyArea(),
+                      //image
+                      InkWell(
+                        onTap: () => goToAccountSettings(context),
+                        // onFocusChange: (value) => goToAccountSettings(context),
 
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 15, bottom: 15),
-                          padding: const EdgeInsets.only(top: 15, bottom: 15),
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [Colors.transparent, Colors.transparent],
+                        child:
+                            IgnorePointer(child: ProfileImage(widget.imageUrl)),
+                      ),
+
+                      Column(
+                        children: [
+                          // two texts with icon&layerfortab
+                          ProfileLayer(widget.firstName, widget.lastName,
+                              widget.email, () => goToAccountSettings(context)),
+
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 15, bottom: 15),
+                            padding: const EdgeInsets.only(top: 15, bottom: 15),
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.transparent
+                                ],
+                              ),
+                            ),
+                            child: IntrinsicHeight(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CounterButton("Likes", widget.likesCount),
+                                  const VDivider(),
+                                  CounterButton(
+                                      "My tickets", widget.myTicketsCount),
+                                  const VDivider(),
+                                  CounterButton(
+                                      "Following", widget.followingCount),
+                                ],
+                              ),
                             ),
                           ),
-                          child: IntrinsicHeight(
-                            child: Row(
+                          Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                CounterButton("Likes", likesCount),
-                                const VDivider(),
-                                CounterButton("My tickets", myTicketsCount),
-                                const VDivider(),
-                                CounterButton("Following", followingCount),
+                                ButtonNotification("Notification Centre"),
+                                ButtonLink("Linked Accounts", () {}),
+                                ButtonLink("Following", () {}),
+                                ButtonLink("Ticket Issues", () {}),
+                                ButtonLink("Manage Events", () {}),
+                                ButtonLink("Settings", () {}),
                               ],
                             ),
-                          ),
-                        ),
-                        Container(
-                          color: Colors.white,
-                          padding: const EdgeInsets.only(left: 15, right: 15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              ButtonNotification("Notification Centre"),
-                              ButtonLink("Linked Accounts", () {}),
-                              ButtonLink("Following", () {}),
-                              ButtonLink("Ticket Issues", () {}),
-                              ButtonLink("Manage Events", () {}),
-                              ButtonLink("Settings", () {}),
-                            ],
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                )
-              ],
+                          )
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-          Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                border: Border(
-                  bottom: BorderSide(
-                    color: Color.fromARGB(255, 226, 225, 225),
-                    width: 1,
-                  ),
-                  top: BorderSide(
-                    color: Color.fromRGBO(246, 246, 248, 1),
-                    width: 1,
+            Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Color.fromARGB(255, 226, 225, 225),
+                      width: 1,
+                    ),
+                    top: BorderSide(
+                      color: Color.fromRGBO(246, 246, 248, 1),
+                      width: 1,
+                    ),
                   ),
                 ),
-              ),
-              height: 80,
-              padding: const EdgeInsetsDirectional.only(top: 15),
-              width: double.infinity,
-              child: GreyButtonLogout(logOutLogic, 'Log out')),
-        ],
+                height: 80,
+                padding: const EdgeInsetsDirectional.only(top: 15),
+                width: double.infinity,
+                child: GreyButtonLogout(logOutLogic, 'Log out')),
+          ],
+        ),
       ),
     );
   }

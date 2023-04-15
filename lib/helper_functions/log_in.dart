@@ -37,3 +37,9 @@ Future<bool> checkLoggedUser() async {
   var status = prefs.getBool('isLoggedIn') ?? false;
   return status;
 }
+
+Future<String> GetEmail() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var status = prefs.getString('email') ?? '';
+  return status;
+}

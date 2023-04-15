@@ -76,6 +76,15 @@ class DBMock {
     }
   }
 
+  static void updateUserImage(String email, String imageurl) {
+    List<User> users = getUsers();
+    for (var u in users) {
+      if (u.email == email) {
+        u.imageurl = imageurl;
+      }
+    }
+  }
+
   static List<Auth> getAuths() {
     return auths;
   }

@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 ///BoxDecoration and BoxShadow widgets adds a shadow effect to the image.
 class ProfileImage extends StatelessWidget {
   final String link;
-  const ProfileImage(this.link, {super.key});
+
+  ProfileImage(this.link, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
-import 'package:Eventbrite/screens/user/live_events.dart';
-import 'package:Eventbrite/screens/user/past_events.dart';
+import 'package:Eventbrite/screens/creator/live_events.dart';
+import 'package:Eventbrite/screens/creator/past_events.dart';
 import 'package:Eventbrite/widgets/tab_bar_Events.dart';
 import 'package:flutter/material.dart';
 

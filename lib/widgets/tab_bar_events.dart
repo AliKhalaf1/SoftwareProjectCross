@@ -1,7 +1,7 @@
 import 'drawer.dart';
-import '../screens/user/draft_events.dart';
-import '../screens/user/live_events.dart';
-import '../screens/user/past_events.dart';
+import '../screens/creator/draft_events.dart';
+import '../screens/creator/live_events.dart';
+import '../screens/creator/past_events.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -34,7 +34,6 @@ class _TabBarEventsState extends State<TabBarEvents> {
         },
       );
     }
-    
 
     // Set a delay to simulate loading
     Future.delayed(Duration(seconds: 1), () {

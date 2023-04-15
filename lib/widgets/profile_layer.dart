@@ -24,8 +24,11 @@ class ProfileLayer extends StatelessWidget {
   final String firstName;
   final String lastName;
   final String email;
+  Function EditAccountSettings;
 
-  const ProfileLayer(this.firstName, this.lastName, this.email, {super.key});
+  ProfileLayer(
+      this.firstName, this.lastName, this.email, this.EditAccountSettings,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +63,17 @@ class ProfileLayer extends StatelessWidget {
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 10),
-                      child: const Icon(
-                        Icons.edit_outlined,
-                        size: 20,
-                        color: Color.fromRGBO(66, 94, 203, 1),
+                      child: IconButton(
+                        // focusColor: Colors.transparent,
+                        // hoverColor: Colors.transparent,
+                        // splashColor: Colors.transparent,
+                        // highlightColor: Colors.transparent,
+                        onPressed: () => EditAccountSettings(),
+                        icon: const Icon(
+                          Icons.edit_outlined,
+                          size: 20,
+                          color: Color.fromRGBO(66, 94, 203, 1),
+                        ),
                       ),
                     ),
                   ],

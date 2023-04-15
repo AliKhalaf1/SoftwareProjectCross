@@ -24,7 +24,10 @@ class PhotoAndEmail extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        ProfileImage(imageurl),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: ProfilePicture(imageurl, 'assets/images/no_user_found.jfif'),
+        ),
         Text(email,
             style: GoogleFonts.lato(
               color: const Color.fromARGB(255, 116, 123, 128),
