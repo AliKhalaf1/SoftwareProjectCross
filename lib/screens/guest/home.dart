@@ -40,13 +40,9 @@ import '../../providers/events.dart';
 ///Search screen index is 1 in tabBaerScreen so we send its index to tabBaerScreen to understands which page to render.
 ///
 class Home extends StatelessWidget {
-  // final Event event = Event(
-  //     123,
-  //     DateTime.now(),
-  //     'We The Medicine- Healing Our Inner Child 2023.Guid...',
-  //     'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
-  //     EventState.online,
-  //     false);
+
+  static const homePageRoute = '/home';
+
 
   final List<String> categoryTitles = [
     "Title 1",

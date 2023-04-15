@@ -1,3 +1,7 @@
+import 'package:Eventbrite/screens/event_page.dart';
+import 'package:Eventbrite/screens/filters.dart';
+import 'package:Eventbrite/screens/guest/home.dart';
+import 'package:Eventbrite/screens/search_screen.dart';
 import 'package:Eventbrite/screens/user/account_settings.dart';
 import 'package:Eventbrite/screens/creator/past_events.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +56,9 @@ class _MainAppState extends State<MainApp> {
           TabBarEvents.route: (ctx) => TabBarEvents(),
           PastEvents.route: (ctx) => PastEvents(),
           AccountSettings.accountSettingsRoute: (ctx) => AccountSettings(),
+          EventPage.eventPageRoute: (ctx) => const EventPage(),
+          Home.homePageRoute: (ctx) => Home(),
+          Search.searchPageRoute: (ctx) => const Search(),
         },
       ),
     );

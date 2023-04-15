@@ -1,4 +1,4 @@
-import 'package:Eventbrite/models/event.dart';
+import 'package:Eventbrite/providers/event.dart';
 import 'package:Eventbrite/widgets/event_card.dart';
 import 'package:Eventbrite/widgets/event_collection.dart';
 import 'package:Eventbrite/widgets/title_text_1.dart';
@@ -22,7 +22,7 @@ void main() {
             'We The Medicine- Healing Our Inner Child 2023.Guid...',
             'assets/images/no_user_found.jfif',
             EventState.online,
-            false));
+            false,"Tech",['smart','wellness','aykalam'],'0'));
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///-------------------------------------------------------END OF DUMMY DATA -----------------------------------------------------------
     await tester.pumpWidget(
@@ -62,7 +62,7 @@ void main() {
             'We The Medicine- Healing Our Inner Child 2023.Guid...',
             'assets/images/no_user_found.jfif',
             EventState.online,
-            false));
+            false,"Tech",['smart','wellness','aykalam'],'1'));
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///-------------------------------------------------------END OF DUMMY DATA -----------------------------------------------------------
     await tester.pumpWidget(

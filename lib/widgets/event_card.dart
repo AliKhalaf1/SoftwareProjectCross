@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../helper_functions/events_handlers.dart';
 import '../helper_functions/log_in.dart';
-import '../models/event.dart';
+import '../providers/event.dart';
 import 'package:intl/intl.dart';
 
 import '../screens/sign_up/sign_up_or_log_in.dart';
@@ -35,12 +35,11 @@ class EventCard extends StatefulWidget {
 class _EventCardState extends State<EventCard> {
   @override
   Widget build(BuildContext context) {
-    final event = Provider.of<Event>(context, listen: false);
-    //Methods
+    //----------------------- Event provider ------------------------------
 
-    // bool isFavourite() {
-    //   return widget.event.isFav;
-    // }
+    final event = Provider.of<Event>(context, listen: false);
+
+    //----------------------- Methods ------------------------------
 
     Future<void> toggleFav(BuildContext ctx) async {
       //add to favourites list
@@ -49,7 +48,6 @@ class _EventCardState extends State<EventCard> {
         if (isLogged) {
           //Call toggleStatus function from event class
           event.toggleFavoriteStatus();
-          // event.isFav = event.isFav;
         } else {
           Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
             return const SignUpOrLogIn();
@@ -66,7 +64,7 @@ class _EventCardState extends State<EventCard> {
       fit: StackFit.loose,
       children: [
         InkWell(
-          onTap: () => selectEvent(context),
+          onTap: () => selectEvent(context,event),
           child: Padding(
             padding: const EdgeInsets.only(top: 15, left: 15, bottom: 15),
             child: Row(

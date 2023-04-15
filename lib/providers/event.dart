@@ -1,10 +1,9 @@
 library EventModel;
 
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import '../helper_functions/log_in.dart';
+import '../models/tags.dart';
 
 enum EventState { online, offline }
 
@@ -32,11 +31,13 @@ class Event with ChangeNotifier {
   final EventState state; /*event state (online/onsite)*/
   final int creatorFollowers; /*number of followers of the event creator*/
   bool isFav;
-  
+  final String categ;
+  final List<String> tags;
+  final String id;
 
   //constructor
   Event(this.creatorFollowers, this.date, this.description, this.eventImg,
-      this.state, this.isFav);
+      this.state, this.isFav, this.categ, this.tags, this.id,);
 
   /// Set isFav Value
   void _setFavValue(bool newValue) {
