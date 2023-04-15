@@ -6,7 +6,7 @@ import '../../screens/tab_bar.dart';
 import '../../widgets/title_text_1.dart';
 import 'package:flutter/material.dart';
 import '../widgets/event_card.dart';
-import '../models/event.dart';
+import '../providers/event.dart';
 
 /// {@category Widgets}
 /// Collection of events with similar categorey.
