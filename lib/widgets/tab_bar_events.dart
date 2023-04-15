@@ -67,7 +67,7 @@ class _TabBarEventsState extends State<TabBarEvents> {
                     child: Text(
                       "Live",
                       style: TextStyle(
-                        color: Color.fromRGBO(91, 89, 107, 1),
+                        color: Theme.of(context).cardColor,
                       ),
                     ),
                   ),
@@ -75,7 +75,7 @@ class _TabBarEventsState extends State<TabBarEvents> {
                     child: Text(
                       "Past",
                       style: TextStyle(
-                        color: Color.fromRGBO(91, 89, 107, 1),
+                        color: Theme.of(context).cardColor,
                       ),
                     ),
                   ),
@@ -83,7 +83,7 @@ class _TabBarEventsState extends State<TabBarEvents> {
                     child: Text(
                       "Draft",
                       style: TextStyle(
-                        color: Color.fromRGBO(91, 89, 107, 1),
+                        color: Theme.of(context).cardColor,
                       ),
                     ),
                   ),
