@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-/// {@category Models}
+/// {@category Providers}
 ///## Tags class that stores each tag info
 ///
 ///   • selected: boolean is true only if the tag is selected

@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../filters/tags.dart';
 
-/// {@category Models}
+/// {@category Providers}
 ///## Event class that stores each event information inside following attributes
 ///
 ///   • eventImg: cover image for the event
