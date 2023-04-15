@@ -222,7 +222,7 @@ class _SearchState extends State<Search> {
                 ),
               ),
               SizedBox(
-                height: 700,
+                height: 350,
                 child: GlowingOverscrollIndicator(
                   axisDirection: AxisDirection.down,
                   color: Colors.orange.shade900,
@@ -231,7 +231,7 @@ class _SearchState extends State<Search> {
                     itemCount: 1, // substitute with collectionCounts
                     itemBuilder: (ctx, index) {
                       return EventCollections(
-                          "${events.length} events", false, favourites);
+                          "${events.length} events", false, events);
                     },
                   ),
                 ),
