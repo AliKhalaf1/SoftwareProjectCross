@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<!-- sdfsdf -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Eventbrite</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Eventbrite</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Eventbrite</string>
+
+<!-- The following keys are used only in iOS 10.0 and later. -->
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
