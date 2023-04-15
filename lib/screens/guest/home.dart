@@ -95,7 +95,7 @@ class _HomeState extends State<Home> {
           padding: const EdgeInsets.only(top: 40),
           itemCount: 2, // substitute with collectionCounts
           itemBuilder: (ctx, index) {
-            return EventCollections(categoryTitles[index], true, events);
+            return EventCollections(cats.categories[index].title, true, events);
           },
         ),
       ),
