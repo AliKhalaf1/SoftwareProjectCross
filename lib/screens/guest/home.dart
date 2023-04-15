@@ -65,13 +65,15 @@ class _HomeState extends State<Home> {
     "Title 10"
   ];
 
+  late final Categories cats;
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
       setState(() {
         _isLoading = true;
       });
-      Categories..then((_) {
+      cats.fetchCategories().then((_) {
         setState(() {
           _isLoading = false;
         });
