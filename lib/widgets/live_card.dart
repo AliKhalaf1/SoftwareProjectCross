@@ -24,44 +24,47 @@ class LiveCard extends StatelessWidget {
         .format(dateTime); // format the DateTime object
     double percentageTickets = ticketsTaken / ticketsNumber;
 
-    return ListTile(
-      leading: CircularPercentIndicator(
-        radius: 50,
-        lineWidth: 3,
-        percent: percentageTickets,
-        progressColor: Colors.deepPurple,
-        backgroundColor: Colors.grey.shade300,
-        circularStrokeCap: CircularStrokeCap.round,
-        center: FittedBox(
-          child: Text('${(percentageTickets * 100).toInt()}%'),
-        ),
-      ),
-      title: Text(
-        liveDescription,
-        style: TextStyle(
-          color: Theme.of(context).cardColor,
-        ),
-      ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            formattedDate,
-            style: TextStyle(
-              color: Theme.of(context).cardColor,
-            ),
+    return Container(
+      margin: EdgeInsets.only(bottom: 10),
+      child: ListTile(
+        leading: CircularPercentIndicator(
+          radius: 55,
+          lineWidth: 3,
+          percent: percentageTickets,
+          progressColor: Colors.deepPurple,
+          backgroundColor: Colors.grey.shade300,
+          circularStrokeCap: CircularStrokeCap.round,
+          center: FittedBox(
+            child: Text('${(percentageTickets * 100).toInt()}%'),
           ),
-          Text(
-            '$ticketsTaken / $ticketsNumber',
-            style: TextStyle(
-              color: Theme.of(context).cardColor,
-            ),
+        ),
+        title: Text(
+          liveDescription,
+          style: TextStyle(
+            color: Theme.of(context).cardColor,
           ),
-        ],
-      ),
-      trailing: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: Text('\$$ticketPrice'),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              formattedDate,
+              style: TextStyle(
+                color: Theme.of(context).cardColor,
+              ),
+            ),
+            Text(
+              '$ticketsTaken / $ticketsNumber',
+              style: TextStyle(
+                color: Theme.of(context).cardColor,
+              ),
+            ),
+          ],
+        ),
+        trailing: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Text('\$$ticketPrice'),
+        ),
       ),
     );
   }
