@@ -1,4 +1,4 @@
-import 'package:Eventbrite/providers/event.dart';
+import 'package:Eventbrite/providers/events/event.dart';
 import 'package:Eventbrite/widgets/event_card.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';

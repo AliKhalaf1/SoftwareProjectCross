@@ -1,11 +1,11 @@
 library EventCard;
 
-import 'package:Eventbrite/providers/fav_events.dart';
+import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../helper_functions/events_handlers.dart';
 import '../helper_functions/log_in.dart';
-import '../providers/event.dart';
+import '../providers/events/event.dart';
 import 'package:intl/intl.dart';
 
 import '../screens/sign_up/sign_up_or_log_in.dart';

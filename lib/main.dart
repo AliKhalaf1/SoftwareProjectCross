@@ -1,4 +1,4 @@
-import 'package:Eventbrite/providers/fav_events.dart';
+import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/screens/event_page.dart';
 import 'package:Eventbrite/screens/filters.dart';
 import 'package:Eventbrite/screens/guest/home.dart';
@@ -13,7 +13,7 @@ import 'screens/tab_bar.dart';
 import 'screens/sign_in/email_check.dart';
 import './screens/find_tickets.dart';
 import 'widgets/tab_bar_Events.dart';
-import './providers/events.dart';
+import 'providers/events/events.dart';
 
 void main() {
   runApp(const MainApp());

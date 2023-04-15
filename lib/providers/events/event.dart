@@ -3,7 +3,7 @@ library EventModel;
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'tags.dart';
+import '../tags.dart';
 
 /// {@category Models}
 ///## Event class that stores each event information inside following attributes

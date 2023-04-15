@@ -1,4 +1,4 @@
-import 'package:Eventbrite/providers/event.dart';
+import 'package:Eventbrite/providers/events/event.dart';
 import 'package:Eventbrite/widgets/event_card.dart';
 import 'package:Eventbrite/widgets/event_collection.dart';
 import 'package:Eventbrite/widgets/title_text_1.dart';

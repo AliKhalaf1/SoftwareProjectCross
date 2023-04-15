@@ -3,13 +3,13 @@ library SearchScreen;
 import 'package:Eventbrite/widgets/grey_area.dart';
 import 'package:flutter/material.dart';
 
-import '../providers/event.dart';
+import '../providers/events/event.dart';
 import '../providers/tags.dart';
-import '../providers/fav_events.dart';
+import '../providers/events/fav_events.dart';
 import '../widgets/event_collection.dart';
 import 'filters.dart';
 import 'package:provider/provider.dart';
-import '../../providers/events.dart';
+import '../providers/events/events.dart';
 
 class Search extends StatefulWidget {
   static const searchPageRoute = '/search';

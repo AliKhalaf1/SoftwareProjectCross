@@ -2,7 +2,7 @@ library EventsHelperFunctions;
 
 import 'package:flutter/material.dart';
 import '../screens/event_page.dart';
-import '../providers/event.dart';
+import '../providers/events/event.dart';
 
 /// {@category Helper Functions}
 /// Navigate to event page and render selected event

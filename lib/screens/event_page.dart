@@ -1,6 +1,6 @@
 library SingleEventScreen;
 
-import '../providers/events.dart';
+import '../providers/events/events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
