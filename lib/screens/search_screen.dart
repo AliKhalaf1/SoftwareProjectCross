@@ -10,6 +10,7 @@ import '../widgets/event_collection.dart';
 import 'filters.dart';
 import 'package:provider/provider.dart';
 import '../providers/events/events.dart';
+import 'nearby_events.dart';
 
 class Search extends StatefulWidget {
   static const searchPageRoute = '/search';
@@ -67,6 +68,13 @@ class _SearchState extends State<Search> {
   //=======================================================================================================================================
   //========================================================= filters data ===============================================================
 
+  ///Vavigate to Nearby events page
+  void applyFilters(BuildContext ctx) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return const NearbyEvents();
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     //------------------------------------- Variables -------------------------------------------------//
@@ -123,23 +131,26 @@ class _SearchState extends State<Search> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(left: 5, right: 5),
-                    child: TextButton(
-                      onPressed: null,
-                      child: Text(
-                        'Online events',
-                        style: TextStyle(color: Colors.black, fontSize: 16),
+              GestureDetector(
+                onTap: () => applyFilters(context),
+                child: Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(left: 5, right: 5),
+                      child: TextButton(
+                        onPressed: null,
+                        child: Text(
+                          'Online events',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
                       ),
                     ),
-                  ),
-                  Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: Color.fromARGB(229, 41, 41, 41),
-                  ),
-                ],
+                    Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: Color.fromARGB(229, 41, 41, 41),
+                    ),
+                  ],
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.only(left: 15, right: 15),
