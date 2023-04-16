@@ -10,6 +10,8 @@ import 'package:Eventbrite/screens/creator/past_events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/filters/filter_selection_values.dart';
+import 'providers/filters/filters_data.dart';
 import 'screens/sign_up/sign_up_or_log_in.dart';
 import 'screens/tab_bar.dart';
 import 'screens/sign_in/email_check.dart';
@@ -42,6 +44,12 @@ class _MainAppState extends State<MainApp> {
         ),
         ChangeNotifierProvider.value(
           value: Tags(),
+        ),
+        ChangeNotifierProvider.value(
+          value: FiltersData(),
+        ),
+        ChangeNotifierProvider.value(
+          value: FilterSelectionValues(),
         ),
         ChangeNotifierProvider.value(
           value: Categories(),

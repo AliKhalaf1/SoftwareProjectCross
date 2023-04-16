@@ -1,19 +1,16 @@
 library CheckBox;
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/filters/filter_selection_values.dart';
 
 class CheckBox extends StatefulWidget {
-  //-----------------------------------------------------------//
-  //                   status variable                        //
-  // to be obtained from local data-base                     //
-  bool _isChecked;
-  //-----------------------------------------------------------//
   final String title;
   final String parag;
   bool buttonState;
 
-  CheckBox(this.title, this.parag, this._isChecked, this.buttonState,
-      {super.key});
+  CheckBox(this.title, this.parag, this.buttonState, {super.key});
 
   @override
   State<CheckBox> createState() => _CheckBoxState();
@@ -36,6 +33,10 @@ class _CheckBoxState extends State<CheckBox> {
 
   @override
   Widget build(BuildContext context) {
+    //---------------- Variables ---------------//
+
+    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
       child: Column(
@@ -62,10 +63,16 @@ class _CheckBoxState extends State<CheckBox> {
                 checkColor: Colors.white,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
                 // activeColor: const Color.fromARGB(255, 29, 82, 215),
-                value: widget._isChecked,
+                value: widget.title == 'Price'? filtersDataValues.price:filtersDataValues.organizer,
                 onChanged: (bool? value) {
                   setState(() {
-                    widget._isChecked = value!;
+                    if(widget.title == 'Price')
+                    {
+                      filtersDataValues.setPrice(!filtersDataValues.price);
+                    }
+                    else{
+                      filtersDataValues.setOrg(!filtersDataValues.organizer);
+                    }
                     widget.buttonState = true;
                   });
                 },

@@ -1,16 +1,14 @@
 library RadioButton;
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/filters/filter_selection_values.dart';
 
 class RadioButton extends StatefulWidget {
-  //-----------------------------------------------------------//
-  //                   status variable                        //
-  // to be obtained from local data-base                     //
-  int _selectedValue;
-  //-----------------------------------------------------------//
   bool buttonState;
 
-  RadioButton(this._selectedValue, this.buttonState, {super.key});
+  RadioButton(this.buttonState, {super.key});
 
   @override
   State<RadioButton> createState() => _RadioButtonState();
@@ -25,6 +23,10 @@ class _RadioButtonState extends State<RadioButton> {
 
   @override
   Widget build(BuildContext context) {
+        //---------------- Variables ---------------//
+
+    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+
     /* =========================== Method to render the list ========================*/
     List<Widget> buildRadioList() {
       List<Widget> list = [];
@@ -42,10 +44,10 @@ class _RadioButtonState extends State<RadioButton> {
                   color: Color.fromRGBO(17, 3, 59, 1)),
             ),
             value: radioList[i]['id'],
-            groupValue: widget._selectedValue,
+            groupValue: filtersDataValues.sortBy,
             onChanged: (value) {
               setState(() {
-                widget._selectedValue = value!;
+                filtersDataValues.setSortingBy(value);
                 widget.buttonState = true;
               });
             },

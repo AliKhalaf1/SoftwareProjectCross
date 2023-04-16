@@ -1,15 +1,15 @@
 library TagsModel;
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
+// import 'package:provider/provider.dart';
+// import 'package:http/http.dart' as http;
 
 import 'tag.dart';
 
 /// {@category Providers}
 ///## Tags class that has tag lists
 ///
-///   • tagIsSelected: count of selected tags
+///   • selectedTagsCount: count of selected tags
 ///
 ///   • _datetags: tags related to date
 ///
@@ -18,17 +18,20 @@ import 'tag.dart';
 ///   • _tagsToShow: tags to show when select tags
 
 class Tags with ChangeNotifier {
-  int tagIsSelected = 0;
+  int selectedTagsCount = 0;
 
   final List<Tag> _datetags = [
+    Tag('Anytime', true, 'date'),
     Tag('Today', false, 'date'),
     Tag('Tomorrow', false, 'date'),
     Tag('This weekend', false, 'date'),
     Tag('This month', false, 'date'),
-    Tag('past', false, 'date')
+    Tag('In the next month', false, 'date'),
+    Tag('Pick a date...', false, 'date')
   ];
 
   final List<Tag> _fieldtags = [
+    Tag('Anything', true, 'field'),
     Tag('Learn', false, 'field'),
     Tag('Business', false, 'field'),
     Tag('Health & Wellness', false, 'field'),
@@ -42,7 +45,7 @@ class Tags with ChangeNotifier {
     Tag('Tomorrow', false, 'date'),
     Tag('This weekend', false, 'date'),
     Tag('This month', false, 'date'),
-    Tag('past', false, 'date'),
+    Tag('In the next month', false, 'date'),
     Tag('Learn', false, 'field'),
     Tag('Business', false, 'field'),
     Tag('Health & Wellness', false, 'field'),
@@ -68,34 +71,61 @@ class Tags with ChangeNotifier {
 
   ///Select a tag function
   void tagSelect(Tag selectedTag) {
-    tagIsSelected++;
+    selectedTagsCount++;
     selectedTag.selected = true;
-    if (tagIsSelected == 1) {
+    if (selectedTagsCount == 1) {
       if (selectedTag.categ == 'date') {
         _tagsToShow.clear();
         _tagsToShow.add(selectedTag);
         _tagsToShow += _fieldtags;
+        _tagsToShow.remove(_fieldtags[0]);
+        _datetags[0].selected = false;
       } else {
         _tagsToShow.clear();
         _tagsToShow.add(selectedTag);
         _tagsToShow += _datetags;
+        _tagsToShow.remove(_datetags[0]);
+        _tagsToShow.remove(_datetags[_datetags.length - 1]);
+        _fieldtags[0].selected = false;
       }
     } else {
       _tagsToShow = [_tagsToShow[0]] + [selectedTag];
+      _tagsToShow.remove(_datetags[0]);
+      _tagsToShow.remove(_datetags[_datetags.length - 1]);
+      _tagsToShow.remove(_fieldtags[0]);
+      _fieldtags[0].selected = false;
+      _datetags[0].selected = false;
     }
+    for (var i = 0; i < _datetags.length; i++) {
+      print(_datetags[i].selected);
+    }
+    notifyListeners();
   }
 
   ///Remove a tag function
   void tagRemove(Tag selectedTag) {
-    tagIsSelected--;
+    selectedTagsCount--;
     _tagsToShow.remove(selectedTag);
-    if (tagIsSelected == 0) {
+    if (selectedTagsCount == 0) {
       _tagsToShow = _datetags + _fieldtags;
+      _tagsToShow.remove(_fieldtags[0]);
+      _tagsToShow.remove(_datetags[0]);
+      _tagsToShow.remove(_datetags[_datetags.length - 1]);
+      _fieldtags[0].selected = true;
+      _datetags[0].selected = true;
     } else if (selectedTag.categ == 'date') {
       _tagsToShow += _datetags;
+      _datetags[0].selected = true;
+      _tagsToShow.remove(_datetags[0]);
+      _tagsToShow.remove(_datetags[_datetags.length - 1]);
     } else {
       _tagsToShow += _fieldtags;
+      _fieldtags[0].selected = true;
+      _tagsToShow.remove(_fieldtags[0]);
     }
     selectedTag.selected = false;
+        for (var i = 0; i < _datetags.length; i++) {
+      print(_datetags[i].selected);}
+    notifyListeners();
   }
 }

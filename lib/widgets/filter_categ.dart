@@ -1,16 +1,15 @@
 library FilterCategWidget;
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/filters/filter_selection_values.dart';
 import '../screens/filter_type_select.dart';
 import '../screens/nearby_events.dart';
 
 class FilterCateg extends StatefulWidget {
   final int id;
   final String title;
-  String selection;
-  bool buttonState;
-  FilterCateg(this.id, this.title, this.selection, this.buttonState,
-      {super.key});
+  const FilterCateg(this.id, this.title, {super.key});
 
   @override
   State<FilterCateg> createState() => _FilterCategState();
@@ -23,26 +22,9 @@ class _FilterCategState extends State<FilterCateg> {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       if (widget.id == 0 || widget.id == 2) {
         if (widget.id == 0) {
-          return const FilterType('When do you want to go?', [
-            'Anytime',
-            'Today',
-            'Tommorrow',
-            'This weekend',
-            'This month',
-            'In the next month',
-            'Pick a date...'
-          ]);
+          return const FilterType(0, 'When do you want to go?');
         } else {
-          return const FilterType('What categories are you interested in?', [
-            'Anything',
-            'Music',
-            'Food & Drink',
-            'Active',
-            'Learn',
-            'Festival',
-            'Party',
-            'Tech'
-          ]);
+          return const FilterType(1, 'What categories are you interested in?');
         }
       } else {
         return const NearbyEvents();
@@ -52,6 +34,10 @@ class _FilterCategState extends State<FilterCateg> {
 
   @override
   Widget build(BuildContext context) {
+    //---------------- Variables ---------------//
+
+    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
@@ -71,7 +57,9 @@ class _FilterCategState extends State<FilterCateg> {
               ),
             ),
             Text(
-              widget.selection,
+              widget.id == 0
+                  ? filtersDataValues.date.title
+                  : (widget.id == 1 ? 'Online' : filtersDataValues.cat.title),
               style: const TextStyle(
                   fontSize: 22,
                   height: 0.9,
