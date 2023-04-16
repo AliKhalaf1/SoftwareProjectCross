@@ -203,20 +203,6 @@ class Tags with ChangeNotifier {
       tagRemove(removedTag);
       tagSelect(selectedTag);
     }
-    print('-------------------- to Add ---------------------------');
-    print(selectedTag.title);
-    print(selectedTag.value);
-    print(selectedTag.selected);
-    print(selectedTagsCount);
-    print('---------------------- to Remove ----------------------------');
-    print(removedTag.title);
-    print(removedTag.value);
-    print(removedTag.selected);
-    print('---------------------- first in list-----------------------------');
-    print(tagsToShow[0].title);
-    print(tagsToShow[0].selected);
-    print(tagsToShow.length);
-    print('------------------------------------------------------');
     notifyListeners();
   }
 }
