@@ -12,5 +12,4 @@ class Categorey with ChangeNotifier {
 
   ///Constructor
   Categorey(this.title, this.subCategories);
-
 }

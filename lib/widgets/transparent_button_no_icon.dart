@@ -2,7 +2,7 @@ library TransparentNoIconButton;
 
 import 'package:flutter/material.dart';
 
-import '../providers/filters/tags.dart';
+import '../providers/filters/tag.dart';
 
 /// {@category Widgets}
 ///<b> TextButton() </b>

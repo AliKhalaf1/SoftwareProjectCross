@@ -1,5 +1,6 @@
 library GuestHomeScreen;
 
+import '../../providers/events/event.dart';
 import '../../widgets/event_collection.dart';
 import '../../providers/categories/categories.dart';
 import 'package:flutter/material.dart';
@@ -52,28 +53,26 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   //Fecth them from API Categories that gets all categories
-  var _isInit = true;
-  var _isLoading = false;
+  // var _isInit = true;
+  // var _isLoading = false;
 
   final List<String> categoryTitles = [
-    "Title 1",
-    "Title 2",
-    "Title 3",
-    "Title 4",
-    "Title 5",
-    "Title 6",
-    "Title 7",
-    "Title 8",
-    "Title 9",
-    "Title 10"
+    "Tech",
+    "Sports",
+    "Health & Wellness",
+    "Art",
+    "Business",
+    "Family & Education",
+    "Science",
+    "Culture"
   ];
 
-  List<Categorey> _categories = [];
+  // List<Categorey> _categories = [];
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   // @override
   // void didChangeDependencies() {
@@ -91,36 +90,36 @@ class _HomeState extends State<Home> {
   //   super.didChangeDependencies();
   // }
 
-  @override
-  Future<void> didChangeDependencies() async {
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-      final url = Uri.https('http://127.0.0.1:8000', '/categories/');
-      try {
-        final response = await http.get(url);
-        final extractedData =
-            json.decode(response.body) as Map<String, List<String>>;
-        if (extractedData == null) {
-          return;
-        }
-        final List<Categorey> loadedcategories = [];
-        extractedData.forEach((catTitle, subCats) {
-          loadedcategories.add(Categorey(catTitle, subCats));
-        });
-        _categories = loadedcategories;
+  // @override
+  // Future<void> didChangeDependencies() async {
+  //   if (_isInit) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     final url = Uri.http('http://127.0.0.1:8000/categories/');
+  //     try {
+  //       final response = await http.get(url);
+  //       final extractedData =
+  //           json.decode(response.body) as Map<String, List<String>>;
+  //       if (extractedData == null) {
+  //         return;
+  //       }
+  //       final List<Categorey> loadedcategories = [];
+  //       extractedData.forEach((catTitle, subCats) {
+  //         loadedcategories.add(Categorey(catTitle, subCats));
+  //       });
+  //       _categories = loadedcategories;
 
-        setState(() {
-          _isLoading = false;
-        });
-      } catch (error) {
-        throw (error);
-      }
-    }
-    _isInit = false;
-    super.didChangeDependencies();
-  }
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     } catch (error) {
+  //       throw (error);
+  //     }
+  //   }
+  //   _isInit = false;
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -134,9 +133,10 @@ class _HomeState extends State<Home> {
         height: 700,
         child: ListView.builder(
           padding: const EdgeInsets.only(top: 40),
-          itemCount: 3, // substitute with collectionCounts
+          itemCount: categoryTitles.length, // substitute with collectionCounts
           itemBuilder: (ctx, index) {
-            return EventCollections(categoryTitles[index], true, events);
+            List<Event> matchedEvents = events.where((eventItem) => eventItem.categ == categoryTitles[index]).toList();
+            return EventCollections(categoryTitles[index], true, matchedEvents);
           },
         ),
       ),

@@ -1,4 +1,4 @@
-library Events;
+library EventsModel;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,23 +12,112 @@ class Events with ChangeNotifier {
         123,
         DateTime.now(),
         'We The Medicine- Healing Our Inner Child 2023.Guid...',
-        'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
+        'https://th.bing.com/th/id/R.1edb438b3f510aa9f4ea42a306507e35?rik=22xbsX8Xr5Z1KQ&pid=ImgRaw&r=0',
         EventState.online,
-        false,"Sport",['smart','wellness','aykalam'],'0'),
+        false,
+        "Arts",
+        ['smart', 'wellness', 'aykalam'],
+        '0'),
     Event(
         42976,
         DateTime.now(),
         'We The Medicine- Healing Our Inner Child 2023.Guid...',
-        'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F443314829%2F303007241545%2F1%2Foriginal.20230210-003309?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=62411bb8f70beab0809515357bae1186',
+        'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
         EventState.offline,
-        false,"Health",['smart','wellness','aykalam'],'1'),
+        false,
+        "Health & Wellness",
+        ['smart', 'wellness', 'aykalam'],
+        '1'),
     Event(
         426,
         DateTime.now(),
         'We The Medicine- Healing Our Inner Child 2023.Guid...',
-        'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F472700089%2F456764372736%2F1%2Foriginal.20230319-231940?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C1066%2C533&s=69e30ecc338952ba84e9cb36439a78d9',
+        'https://th.bing.com/th/id/OIP.we5keYDOBq6j9Dm-pOGIKgHaD1?pid=ImgDet&rs=1',
         EventState.offline,
-        false,"Tech",['smart','wellness','aykalam'],'2'),
+        false,
+        "Tech",
+        ['smart', 'wellness', 'aykalam'],
+        '2'),
+    Event(
+        104824,
+        DateTime.now(),
+        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'https://i1.wp.com/www.skeptical-science.com/wp-content/uploads/2012/02/Egyptian-actor-Adel-Imam-007-1.jpg?resize=300%2C180&ssl=1',
+        EventState.offline,
+        false,
+        "Sports",
+        ['smart', 'wellness', 'aykalam'],
+        '2'),
+    Event(
+        924,
+        DateTime.now(),
+        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'https://th.bing.com/th/id/OIP.anXdkkvjnHH-Fjm_LnX52gHaEK?pid=ImgDet&w=1600&h=900&rs=1',
+        EventState.offline,
+        false,
+        "Business",
+        ['smart', 'wellness', 'aykalam'],
+        '2'),
+    Event(
+        1824,
+        DateTime.now(),
+        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'https://celebrity.tn/wp-content/uploads/2019/03/adel-imam-2-608x608.jpg',
+        EventState.offline,
+        false,
+        "Family & Education",
+        ['smart', 'wellness', 'aykalam'],
+        '2'),
+    Event(
+        666,
+        DateTime.now(),
+        'Bortooan The Medicine- Healing Our Inner Child 2023.Guid...',
+        'https://th.bing.com/th/id/OIP.we5keYDOBq6j9Dm-pOGIKgHaD1?pid=ImgDet&rs=1',
+        EventState.online,
+        false,
+        "Science",
+        ['smart', 'wellness', 'aykalam'],
+        '2'),
+            Event(
+        12323,
+        DateTime.now(),
+        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'https://th.bing.com/th/id/R.1edb438b3f510aa9f4ea42a306507e35?rik=22xbsX8Xr5Z1KQ&pid=ImgRaw&r=0',
+        EventState.online,
+        false,
+        "Culture",
+        ['smart', 'wellness', 'aykalam'],
+        '0'),
+            Event(
+        91224,
+        DateTime.now(),
+        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'https://th.bing.com/th/id/OIP.anXdkkvjnHH-Fjm_LnX52gHaEK?pid=ImgDet&w=1600&h=900&rs=1',
+        EventState.offline,
+        false,
+        "Tech",
+        ['smart', 'wellness', 'aykalam'],
+        '2'),
+            Event(
+        409000,
+        DateTime.now(),
+        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
+        EventState.offline,
+        false,
+        "Sports",
+        ['smart', 'wellness', 'aykalam'],
+        '1'),
+                    Event(
+        47654,
+        DateTime.now(),
+        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
+        EventState.offline,
+        false,
+        "Tech",
+        ['smart', 'wellness', 'aykalam'],
+        '1'),
   ];
 
   ///Get events
@@ -46,7 +135,7 @@ class Events with ChangeNotifier {
     return _events.firstWhere((prod) => prod.id == id);
   }
 
-  ///Fetch Events using API  
+  ///Fetch Events using API
   Future<void> fetchAndSetEvents() async {
     // final url = Uri.https('flutter-update.firebaseio.com', '/products.json');
     // try {
@@ -74,8 +163,8 @@ class Events with ChangeNotifier {
   }
 
   ///Add event
-  void addEvent() {
-    // _events.add(value);
+  void addEvent(Event e) {
+    _events.add(e);
     //notify application that I add an event
     notifyListeners();
   }

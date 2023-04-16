@@ -1,15 +1,18 @@
 library SearchScreen;
 
+import 'package:Eventbrite/providers/filters/tags.dart';
 import 'package:Eventbrite/widgets/grey_area.dart';
 import 'package:flutter/material.dart';
 
 import '../providers/events/event.dart';
+import '../providers/filters/tag.dart';
 import '../providers/filters/tags.dart';
 import '../providers/events/fav_events.dart';
 import '../widgets/event_collection.dart';
 import 'filters.dart';
 import 'package:provider/provider.dart';
 import '../providers/events/events.dart';
+import 'nearby_events.dart';
 
 class Search extends StatefulWidget {
   static const searchPageRoute = '/search';
@@ -43,17 +46,19 @@ class _SearchState extends State<Search> {
   //         false));
 
   /**Rendring list only could be used even after remove dummy data */
-  final List<Tag> tags = [
-    Tag('Today', false),
-    Tag('Tomorrow', false),
-    Tag('This weekend', false),
-    Tag('This month', false),
-    Tag('past', false),
-    Tag('Learn', false),
-    Tag('Business', false),
-    Tag('Health & Weellness', false),
-    Tag('Tech', false),
-  ];
+  // final List<Tag> tags = [
+  //   Tag('Today', false),
+  //   Tag('Tomorrow', false),
+  //   Tag('This weekend', false),
+  //   Tag('This month', false),
+  //   Tag('past', false),
+  //   Tag('Learn', false),
+  //   Tag('Business', false),
+  //   Tag('Health & Wellness', false),
+  //   Tag('Parenting', false),
+  //   Tag('Tech', false),
+  //   Tag('Culture', false),
+  // ];
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///-------------------------------------------------------END OF DUMMY DATA -----------------------------------------------------------
@@ -62,10 +67,17 @@ class _SearchState extends State<Search> {
   //========================================================= filters data ===============================================================
   /*============ Selected Tags =========='*/
   ///List that conatins selected tags/filters
-  List<Tag> selectedTags = [];
+  // List<Tag> selectedTags = [];
 
   //=======================================================================================================================================
   //========================================================= filters data ===============================================================
+
+  ///Vavigate to Nearby events page
+  void applyFilters(BuildContext ctx) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return const NearbyEvents();
+    }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +86,9 @@ class _SearchState extends State<Search> {
     final eventsData = Provider.of<Events>(context);
     final events = eventsData.events;
 
-    final favsData = Provider.of<FavEvents>(context);
-    final favourites = favsData.favs;
+    final tagsData = Provider.of<Tags>(context);
+    final tags = tagsData.tagsToShow;
+
 
     //------------------------------------- Methods -------------------------------------------------//
     /// Function that select tags and only render thier new style.
@@ -83,15 +96,12 @@ class _SearchState extends State<Search> {
     /// Tags that is selected rendered first.
     void selectTag(BuildContext ctx, Tag toggleTag) {
       setState(() {
-        toggleTag.selected = !toggleTag.selected;
-        if (selectedTags.contains(toggleTag)) {
-          selectedTags.remove(toggleTag);
-          tags.remove(toggleTag);
-          tags.insert(selectedTags.length, toggleTag);
-        } else {
-          selectedTags.add(toggleTag);
-          tags.remove(toggleTag);
-          tags.insert(0, toggleTag);
+        if(toggleTag.selected)
+        {
+          tagsData.tagRemove(toggleTag);
+        }
+        else{
+          tagsData.tagSelect(toggleTag);
         }
       });
     }
@@ -101,7 +111,7 @@ class _SearchState extends State<Search> {
     ///FilterScreen takes selectedTags list to edit it when select an new filter.
     void viewFilters(BuildContext ctx) {
       Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-        return FilterScreen(selectedTags);
+        return FilterScreen(tagsData.tagsToShow);
       }));
     }
 
@@ -123,23 +133,26 @@ class _SearchState extends State<Search> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(left: 5, right: 5),
-                    child: TextButton(
-                      onPressed: null,
-                      child: Text(
-                        'Online events',
-                        style: TextStyle(color: Colors.black, fontSize: 16),
+              GestureDetector(
+                onTap: () => applyFilters(context),
+                child: Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(left: 5, right: 5),
+                      child: TextButton(
+                        onPressed: null,
+                        child: Text(
+                          'Online events',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
                       ),
                     ),
-                  ),
-                  Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: Color.fromARGB(229, 41, 41, 41),
-                  ),
-                ],
+                    Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: Color.fromARGB(229, 41, 41, 41),
+                    ),
+                  ],
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.only(left: 15, right: 15),
@@ -176,43 +189,47 @@ class _SearchState extends State<Search> {
                     scrollDirection: Axis.horizontal,
                     itemCount: tags.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
+                      return ChangeNotifierProvider.value(
+                        value: tags[index],
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(60),
+                              color: tags[index].selected
+                                  ? const Color.fromARGB(255, 67, 96, 244)
+                                  : const Color.fromARGB(255, 242, 242, 242)),
+                          child: InkWell(
                             borderRadius: BorderRadius.circular(60),
-                            color: tags[index].selected
-                                ? const Color.fromARGB(255, 67, 96, 244)
-                                : const Color.fromARGB(255, 242, 242, 242)),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(60),
-                          splashColor: const Color.fromARGB(255, 67, 96, 244),
-                          onTap: () => selectTag(context,
-                              tags[index]), // Action when button is pressed
-                          child: Container(
-                            height: 10,
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  tags[index].title,
-                                  style: TextStyle(
-                                      color: tags[index].selected
-                                          ? Colors.white
-                                          : Color.fromARGB(255, 104, 104, 104),
-                                      fontSize: 12),
-                                ),
-                                tags[index].selected
-                                    ? const Padding(
-                                        padding: EdgeInsets.only(left: 15),
-                                        child: Icon(
-                                          Icons.close_outlined,
-                                          color: Colors.white,
-                                          size: 16,
-                                        ),
-                                      )
-                                    : const GreyArea()
-                              ],
+                            splashColor: const Color.fromARGB(255, 67, 96, 244),
+                            onTap: () => selectTag(context,
+                                tags[index]), // Action when button is pressed
+                            child: Container(
+                              height: 10,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    tags[index].title,
+                                    style: TextStyle(
+                                        color: tags[index].selected
+                                            ? Colors.white
+                                            : Color.fromARGB(
+                                                255, 104, 104, 104),
+                                        fontSize: 12),
+                                  ),
+                                  tags[index].selected
+                                      ? const Padding(
+                                          padding: EdgeInsets.only(left: 15),
+                                          child: Icon(
+                                            Icons.close_outlined,
+                                            color: Colors.white,
+                                            size: 16,
+                                          ),
+                                        )
+                                      : const GreyArea()
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -222,7 +239,7 @@ class _SearchState extends State<Search> {
                 ),
               ),
               SizedBox(
-                height: 700,
+                height: 350,
                 child: GlowingOverscrollIndicator(
                   axisDirection: AxisDirection.down,
                   color: Colors.orange.shade900,
@@ -231,7 +248,7 @@ class _SearchState extends State<Search> {
                     itemCount: 1, // substitute with collectionCounts
                     itemBuilder: (ctx, index) {
                       return EventCollections(
-                          "${events.length} events", false, favourites);
+                          "${events.length} events", false, events);
                     },
                   ),
                 ),
