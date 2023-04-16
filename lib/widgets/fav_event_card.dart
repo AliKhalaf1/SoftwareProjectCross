@@ -94,7 +94,7 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                   padding: const EdgeInsets.only(left: 10, top: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                           '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.date)} EET',

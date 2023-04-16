@@ -78,7 +78,7 @@ class Events with ChangeNotifier {
         "Science",
         ['smart', 'wellness', 'aykalam'],
         '2'),
-            Event(
+    Event(
         12323,
         DateTime.now(),
         'We The Medicine- Healing Our Inner Child 2023.Guid...',
@@ -88,7 +88,7 @@ class Events with ChangeNotifier {
         "Culture",
         ['smart', 'wellness', 'aykalam'],
         '0'),
-            Event(
+    Event(
         91224,
         DateTime.now(),
         'We The Medicine- Healing Our Inner Child 2023.Guid...',
@@ -98,7 +98,7 @@ class Events with ChangeNotifier {
         "Tech",
         ['smart', 'wellness', 'aykalam'],
         '2'),
-            Event(
+    Event(
         409000,
         DateTime.now(),
         'We The Medicine- Healing Our Inner Child 2023.Guid...',
@@ -108,7 +108,7 @@ class Events with ChangeNotifier {
         "Sports",
         ['smart', 'wellness', 'aykalam'],
         '1'),
-                    Event(
+    Event(
         47654,
         DateTime.now(),
         'We The Medicine- Healing Our Inner Child 2023.Guid...',
@@ -133,6 +133,13 @@ class Events with ChangeNotifier {
   /// Get event By ID
   Event findById(String id) {
     return _events.firstWhere((prod) => prod.id == id);
+  }
+
+  void unFavouriteAll() {
+    _events.forEach((element) {
+      element.isFav = false;
+    });
+    notifyListeners();
   }
 
   ///Fetch Events using API

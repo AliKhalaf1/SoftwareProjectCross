@@ -89,18 +89,15 @@ class _SearchState extends State<Search> {
     final tagsData = Provider.of<Tags>(context);
     final tags = tagsData.tagsToShow;
 
-
     //------------------------------------- Methods -------------------------------------------------//
     /// Function that select tags and only render thier new style.
     ///
     /// Tags that is selected rendered first.
     void selectTag(BuildContext ctx, Tag toggleTag) {
       setState(() {
-        if(toggleTag.selected)
-        {
+        if (toggleTag.selected) {
           tagsData.tagRemove(toggleTag);
-        }
-        else{
+        } else {
           tagsData.tagSelect(toggleTag);
         }
       });
@@ -239,7 +236,7 @@ class _SearchState extends State<Search> {
                 ),
               ),
               SizedBox(
-                height: 350,
+                height: MediaQuery.of(context).size.height - 300,
                 child: GlowingOverscrollIndicator(
                   axisDirection: AxisDirection.down,
                   color: Colors.orange.shade900,

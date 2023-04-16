@@ -2,9 +2,13 @@ library UserProfileScreen;
 
 import 'package:Eventbrite/helper_functions/log_in.dart';
 import 'package:Eventbrite/models/db_mock.dart';
+import 'package:Eventbrite/providers/events/event.dart';
+import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/screens/user/account_settings.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/user.dart';
+import '../../providers/events/events.dart';
 import '../../widgets/button_notificatin.dart';
 import '../../widgets/grey_area.dart';
 import '../../widgets/profile_layer.dart';
@@ -71,15 +75,16 @@ class _ProfileState extends State<Profile> {
 
     s.then((value) {
       User currUser = DBMock.getUserData(value);
+      var favEventsData = Provider.of<FavEvents>(context, listen: false);
 
       setState(() {
         widget.email = currUser.email;
         widget.firstName = currUser.firstName;
         widget.lastName = currUser.lastName;
         widget.imageUrl = currUser.imageUrl;
-        widget.likesCount = widget.likesCount + 1;
-        widget.myTicketsCount = 1;
-        widget.followingCount = 1;
+        widget.likesCount = favEventsData.favs.length;
+        widget.myTicketsCount = 0;
+        widget.followingCount = 0;
       });
     });
   }
