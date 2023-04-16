@@ -172,7 +172,7 @@ class _SearchState extends State<Search> {
                               child: Row(
                                 children: [
                                   Text(
-                                    tags[index].title,
+                                    tags[index].value,
                                     style: TextStyle(
                                         color: tags[index].selected
                                             ? Colors.white

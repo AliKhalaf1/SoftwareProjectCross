@@ -58,8 +58,8 @@ class _FilterCategState extends State<FilterCateg> {
             ),
             Text(
               widget.id == 0
-                  ? filtersDataValues.date.title
-                  : (widget.id == 1 ? 'Online' : filtersDataValues.cat.title),
+                  ? filtersDataValues.date.value
+                  : (widget.id == 1 ? 'Online' : filtersDataValues.cat.value),
               style: const TextStyle(
                   fontSize: 22,
                   height: 0.9,

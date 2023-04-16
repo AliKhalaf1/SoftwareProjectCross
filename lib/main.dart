@@ -46,9 +46,6 @@ class _MainAppState extends State<MainApp> {
           value: Tags(),
         ),
         ChangeNotifierProvider.value(
-          value: FiltersData(),
-        ),
-        ChangeNotifierProvider.value(
           value: FilterSelectionValues(),
         ),
         ChangeNotifierProvider.value(

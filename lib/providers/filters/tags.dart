@@ -21,37 +21,37 @@ class Tags with ChangeNotifier {
   int selectedTagsCount = 0;
 
   final List<Tag> _datetags = [
-    Tag('Anytime', true, 'date'),
-    Tag('Today', false, 'date'),
-    Tag('Tomorrow', false, 'date'),
-    Tag('This weekend', false, 'date'),
-    Tag('This month', false, 'date'),
-    Tag('In the next month', false, 'date'),
-    Tag('Pick a date...', false, 'date')
+    Tag('Anytime', true, 'date', 'Anytime'),
+    Tag('Today', false, 'date', 'Today'),
+    Tag('Tomorrow', false, 'date', 'Tomorrow'),
+    Tag('This weekend', false, 'date', 'This weekend'),
+    Tag('This month', false, 'date', 'This month'),
+    Tag('In the next month', false, 'date', 'In the next month'),
+    Tag('Pick a date...', false, 'date', 'Pick a date...')
   ];
 
   final List<Tag> _fieldtags = [
-    Tag('Anything', true, 'field'),
-    Tag('Learn', false, 'field'),
-    Tag('Business', false, 'field'),
-    Tag('Health & Wellness', false, 'field'),
-    Tag('Parenting', false, 'field'),
-    Tag('Tech', false, 'field'),
-    Tag('Culture', false, 'field')
+    Tag('Anything', true, 'field', 'Anything'),
+    Tag('Learn', false, 'field', 'Learn'),
+    Tag('Business', false, 'field', 'Business'),
+    Tag('Health & Wellness', false, 'field', 'Health & Wellness'),
+    Tag('Parenting', false, 'field', 'Parenting'),
+    Tag('Tech', false, 'field', 'Tech'),
+    Tag('Culture', false, 'field', 'Culture')
   ];
 
   List<Tag> _tagsToShow = [
-    Tag('Today', false, 'date'),
-    Tag('Tomorrow', false, 'date'),
-    Tag('This weekend', false, 'date'),
-    Tag('This month', false, 'date'),
-    Tag('In the next month', false, 'date'),
-    Tag('Learn', false, 'field'),
-    Tag('Business', false, 'field'),
-    Tag('Health & Wellness', false, 'field'),
-    Tag('Parenting', false, 'field'),
-    Tag('Tech', false, 'field'),
-    Tag('Culture', false, 'field')
+    Tag('Today', false, 'date', 'Today'),
+    Tag('Tomorrow', false, 'date', 'Tomorrow'),
+    Tag('This weekend', false, 'date', 'This weekend'),
+    Tag('This month', false, 'date', 'This month'),
+    Tag('In the next month', false, 'date', 'In the next month'),
+    Tag('Learn', false, 'field', 'Learn'),
+    Tag('Business', false, 'field', 'Business'),
+    Tag('Health & Wellness', false, 'field', 'Health & Wellness'),
+    Tag('Parenting', false, 'field', 'Parenting'),
+    Tag('Tech', false, 'field', 'Tech'),
+    Tag('Culture', false, 'field', 'Culture')
   ];
 
   ///Get tags to show when select tags
@@ -177,20 +177,65 @@ class Tags with ChangeNotifier {
   ///
   ///   • Used with Filter_type_select screen.
   void tagSelectFilter(Tag selectedTag, Tag removedTag) {
-    // if (Date and select anytime / pick a date) or (cat and select anything) => remove only
+    // if (Date and select anytime) or (cat and select anything) => remove only
     if ((selectedTag.categ == 'date' &&
-            (selectedTag.title == _datetags[0].title ||
-                selectedTag.title == _datetags[_datetags.length - 1].title)) ||
+            selectedTag.title == _datetags[0].title) ||
         (selectedTag.categ == 'field' &&
             selectedTag.title == _fieldtags[0].title)) {
       tagRemove(removedTag);
-    } else if ((removedTag.categ == 'date' &&
-            (removedTag.title == _datetags[0].title ||
-                removedTag.title == _datetags[_datetags.length - 1].title)) ||
+    }
+    // if (Date and remove anytime) or (cat and remove anything)
+    else if ((removedTag.categ == 'date' &&
+            removedTag.title == _datetags[0].title) ||
         (removedTag.categ == 'field' &&
             removedTag.title == _fieldtags[0].title)) {
       tagSelect(selectedTag);
-    } else {
+    }
+    //if select pickup date
+    else if (selectedTag.title == _datetags[_datetags.length - 1].title) {
+      tagRemove(removedTag);
+      selectedTagsCount++;
+      // if (selectedTagsCount == 1) {
+      //   _tagsToShow.clear();
+      //   _tagsToShow.add(selectedTag);
+      //   _tagsToShow += _fieldtags;
+      //   _tagsToShow.remove(_fieldtags[0]);
+      //   _datetags[0].selected = false;
+      //   for (var i = 0; i < _datetags.length; i++) {
+      //     if (_datetags[i].title == selectedTag.title) {
+      //       _datetags[i].selected = true;
+      //     }
+      //   }
+      // } else {
+      //   if (_tagsToShow[0].categ == 'field') {
+      //     _tagsToShow = [_tagsToShow[0]] + [selectedTag];
+      //   } else {
+      //     _tagsToShow.clear();
+      //     _tagsToShow.add(selectedTag);
+      //     _tagsToShow += _fieldtags;
+      //   }
+      //   _tagsToShow.remove(_datetags[0]);
+      //   _tagsToShow.remove(_fieldtags[0]);
+      //   _fieldtags[0].selected = false;
+      //   _datetags[0].selected = false;
+      //   for (var i = 0; i < _fieldtags.length; i++) {
+      //     if (_fieldtags[i].title == selectedTag.title) {
+      //       _fieldtags[i].selected = true;
+      //     }
+      //   }
+      //   for (var i = 0; i < _datetags.length; i++) {
+      //     if (_datetags[i].title == selectedTag.title) {
+      //       _datetags[i].selected = true;
+      //     }
+      //   }
+      // }
+      // selectedTag.selected = true;
+      notifyListeners();
+    }
+    //if remove pickup date
+    // else if (removedTag.title == _datetags[_datetags.length - 1].title) {
+    // }
+    else {
       tagRemove(removedTag);
       tagSelect(selectedTag);
     }

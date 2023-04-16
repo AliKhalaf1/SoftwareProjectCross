@@ -3,6 +3,7 @@
 library FilterTypeScreen;
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/filters/filter_selection_values.dart';
@@ -80,7 +81,25 @@ class FilterType extends StatelessWidget {
       // Pick a date handler
       if (id == 0 && ind == 6) {
         final DateTimeRange? picked = await showDatePicker(ctx);
-        print(picked);
+        DateFormat dateFormat = DateFormat('EEEE, MMMM d');
+        DateFormat dayOnlydateFormat = DateFormat('dd');
+
+        String dateRange = picked!.start.month == picked.end.month
+            ? '${dateFormat.format(picked.start)} - ${dayOnlydateFormat.format(picked.end)}'
+            : '${dateFormat.format(picked.start)} - ${dateFormat.format(picked.end)}';
+
+        //Select tag value in filters screen
+        toggleTag.value = dateRange;
+        filtersDataValues.setDate(toggleTag);
+        //select tag value for search screen (tags)
+        dynamic rem = filtersDataValues.date;
+        for (var i = 0; i < tagsData.datetags.length; i++) {
+          if (tagsData.datetags[i].title == filtersDataValues.date.title) {
+            rem = tagsData.datetags[i];
+          }
+        }
+        tagsData.tagSelectFilter(toggleTag, rem);
+
         Navigator.pop(context, picked);
       } else {
         // Apply selected tag to applicaton state provider

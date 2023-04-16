@@ -21,8 +21,8 @@ import 'tag.dart';
 ///
 
 class FilterSelectionValues with ChangeNotifier {
-  Tag _date = Tag('Anytime', true, 'date');
-  Tag _cat = Tag('Anything', true, 'field');
+  Tag _date = Tag('Anytime', true, 'date','Anytime');
+  Tag _cat = Tag('Anything', true, 'field','Anything');
   String _location = "Online events";
   bool _price = false;
   bool _organizer = false;

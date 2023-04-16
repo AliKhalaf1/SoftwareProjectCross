@@ -16,9 +16,10 @@ class Tag with ChangeNotifier {
   final String title;
   bool selected;
   final String categ;
+  String value;
 
   ///Constructor
-  Tag(this.title, this.selected, this.categ);
+  Tag(this.title, this.selected, this.categ, this.value);
 
   /// Get is the event favourited or not
   bool isSelected() {
