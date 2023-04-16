@@ -7,6 +7,7 @@ import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/screens/user/account_settings.dart';
 import 'package:provider/provider.dart';
 
+import '../../helper_functions/organizer_view.dart';
 import '../../models/user.dart';
 import '../../providers/events/events.dart';
 import '../../widgets/button_notificatin.dart';
@@ -168,7 +169,8 @@ class _ProfileState extends State<Profile> {
                                 ButtonLink("Linked Accounts", () {}),
                                 ButtonLink("Following", () {}),
                                 ButtonLink("Ticket Issues", () {}),
-                                ButtonLink("Manage Events", () {}),
+                                ButtonLink("Manage Events",
+                                    () => eventNavigate(context)),
                                 ButtonLink("Settings", () {}),
                               ],
                             ),

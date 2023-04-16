@@ -5,29 +5,29 @@ import 'auth.dart';
 
 class DBMock {
   static List<Auth> auths = [
-    Auth('Eng_Remonda@gmail.com', '12345678'),
-    Auth('Gilany@gmail.com', '12345678'),
-    Auth('Ali@gmail.com', '12345678'),
-    Auth('Amin@gmail.com', '12345678'),
+    Auth('eng_Remonda@gmail.com', '12345678'),
+    Auth('gilany@gmail.com', '12345678'),
+    Auth('ali@gmail.com', '12345678'),
+    Auth('amin@gmail.com', '12345678'),
   ];
   static List<User> users = [
     User(
-        'Eng_Remonda@gmail.com',
+        'eng_Remonda@gmail.com',
         'https://i.ibb.co/0J6w62R/Whats-App-Image-2023-03-15-at-03-27-06.jpg',
         'Remonda',
         'Talaat'),
     User(
-        'Gilany@gmail.com',
+        'gilany@gmail.com',
         'https://i.ibb.co/syYKPfV/Screenshot-2023-03-15-033213.png',
         'Youssef',
         'Gilany'),
     User(
-        'Ali@gmail.com',
+        'ali@gmail.com',
         'https://i.ibb.co/VmFXyyk/Whats-App-Image-2023-03-15-at-03-27-07-2.jpg',
         'Ali',
         'Khalaf'),
     User(
-        'Amin@gmail.com',
+        'amin@gmail.com',
         'https://i.ibb.co/0mv1cS5/Whats-App-Image-2023-03-15-at-03-27-dd07-2.jpg',
         'Ahmed',
         'Amin'),

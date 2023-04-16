@@ -18,11 +18,6 @@ import '../../helper_functions/log_in.dart';
 ///
 class ProfileSignUp extends StatelessWidget {
   const ProfileSignUp({super.key});
-  void eventNavigate(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(
-      TabBarEvents.route,
-    ); // we use same string in main it’s a key
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +35,7 @@ class ProfileSignUp extends StatelessWidget {
                     children: [
                       ButtonLink('Ticket Issues', () {}),
                       ButtonLink('Manage Events', () {
-                        eventNavigate(context);
+                        loggingIn(context);
                       }),
                       ButtonLink('Settings', () {}),
                     ],

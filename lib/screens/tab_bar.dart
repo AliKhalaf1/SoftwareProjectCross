@@ -48,13 +48,13 @@ class TabBarScreen extends StatefulWidget {
   TabBarScreen({super.key, required this.title, this.tabBarIndex = 0});
 
   @override
-  State<TabBarScreen> createState() => _TabBarScreenState(tabBarIndex);
+  State<TabBarScreen> createState() => TabBarScreenState(tabBarIndex);
 }
 
 /// {@category User}
 /// {@category Screens}
 ///
-class _TabBarScreenState extends State<TabBarScreen> {
+class TabBarScreenState extends State<TabBarScreen> {
   Future<void> checkLoggedUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var status = prefs.getBool('isLoggedIn') ?? false;
@@ -103,7 +103,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
     const ProfileSignUp(),
   ];
 
-  _TabBarScreenState(this._currentIndex);
+  TabBarScreenState(this._currentIndex);
 
   @override
   Widget build(BuildContext context) {
