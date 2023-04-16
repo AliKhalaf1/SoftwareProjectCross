@@ -1,6 +1,8 @@
 library FiltersScreen;
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/filters/filter_selection_values.dart';
 import '../providers/filters/tag.dart';
 import '../widgets/check_box.dart';
 import '../widgets/filter_categ.dart';
@@ -14,7 +16,7 @@ class FilterScreen extends StatefulWidget {
   //-----------------------------------------------------------//
   //                   status variables                       //
   // to be obtained from local data-base                     //
-  List<Tag> selectedTags; /* Selected Tags */
+  // List<Tag> selectedTags; /* Selected Tags */
   int selectedSortby =
       0; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
   bool isCheckedPrice = false; /* Checked value #*/
@@ -25,7 +27,7 @@ class FilterScreen extends StatefulWidget {
 
   static const filtersPageRout = '/filters';
 
-  FilterScreen(this.selectedTags, {super.key});
+  // FilterScreen(this.selectedTags, {super.key});
 
   @override
   State<FilterScreen> createState() => _FilterScreenState();
@@ -72,17 +74,17 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FilterCateg(0, 'Date', 'Anytime', widget.applyBtnState),
+                        FilterCateg(0, 'Date'),
                         FilterCateg(
-                            1, 'Location', 'Online', widget.applyBtnState),
+                            1, 'Location'),
                         FilterCateg(
-                            2, 'Category', 'Anything', widget.applyBtnState),
+                            2, 'Category'),
                         CheckBox('Price', 'Free stuff only',
-                            widget.isCheckedPrice, widget.applyBtnState),
+                            widget.applyBtnState),
                         CheckBox('Organiser', 'From organizers you follow',
-                            widget.isCheckedOrganizer, widget.applyBtnState),
+                            widget.applyBtnState),
                         RadioButton(
-                            widget.selectedSortby, widget.applyBtnState),
+                            widget.applyBtnState),
                       ],
                     ),
                   );
@@ -97,9 +99,7 @@ class _FilterScreenState extends State<FilterScreen> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: TransparentButtonNoIcon(
-                  'Apply filters (${widget.selectedTags.length})',
-                  applyFilters,
-                  widget.applyBtnState),
+                  'Apply filters (${8})', applyFilters, widget.applyBtnState),
             ),
           )
         ],

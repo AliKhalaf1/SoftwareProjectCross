@@ -1,13 +1,18 @@
 library FilterTypeScreen;
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/filters/filter_selection_values.dart';
+import '../providers/filters/tag.dart';
+import '../providers/filters/tags.dart';
 import 'filters.dart';
 
 class FilterType extends StatelessWidget {
   final String title;
-  final List<String> selections;
-  const FilterType(this.title, this.selections, {super.key});
+  final int id;
+  // final List<String> selections;
+  const FilterType(this.id, this.title, {super.key});
 
   /// Show calendar in pop up dialog for selecting date range for calendar event.
   Future<DateTimeRange?> showDatePicker(BuildContext ctx) async {
@@ -42,7 +47,7 @@ class FilterType extends StatelessWidget {
   /* Method to determine selection and navigate back to filters screen*/
   void selectFilteration(BuildContext ctx, int ind) async {
     // Pick a date handler
-    if (selections.length == 7 && ind == 6) {
+    if (id == 0 && ind == 6) {
       final DateTimeRange? picked = await showDatePicker(ctx);
     } else {
       // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
@@ -53,6 +58,13 @@ class FilterType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //---------------- Variables ---------------//
+    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+    final tagsData = Provider.of<Tags>(context,listen: false);
+
+    final dateDataValues = tagsData.datetags;
+    final catDataValues = tagsData.fieldtags;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(206, 255, 255, 255),
@@ -79,47 +91,82 @@ class FilterType extends StatelessWidget {
           color: Colors.orange.shade900,
           child: ListView.builder(
             padding: const EdgeInsets.only(top: 40),
-            itemCount: selections.length,
+            itemCount: id == 0 ? dateDataValues.length : catDataValues.length,
             itemBuilder: (ctx, index) {
               return InkWell(
                 onTap: () => selectFilteration(context, index),
                 child: Padding(
                   padding:
                       const EdgeInsets.only(left: 14.0, bottom: 20, top: 20),
-                  child:
-                      // Text(
-                      //       selections[index],
-                      //       style: const TextStyle(
-                      //           fontSize: 22,
-                      //           height: 0.9,
-                      //           letterSpacing: 1.3,
-                      //           fontFamily: 'Neue Plak Extended',
-                      //           fontWeight: FontWeight.w600,
-                      //           color: Color.fromRGBO(17, 3, 59, 1)),
-                      //     ),
-                      Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        selections[index],
-                        style: const TextStyle(
-                            fontSize: 22,
-                            height: 0.9,
-                            letterSpacing: 1.3,
-                            fontFamily: 'Neue Plak Extended',
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 35, 80, 205)),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(right: 40),
-                        child: Icon(
-                          Icons.check,
-                          color: Color.fromARGB(255, 35, 80, 205),
-                          size: 20,
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: id == 0
+                      ? !dateDataValues[index].selected
+                          ? Text(
+                              dateDataValues[index].title,
+                              style: const TextStyle(
+                                  fontSize: 22,
+                                  height: 0.9,
+                                  letterSpacing: 1.3,
+                                  fontFamily: 'Neue Plak Extended',
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromRGBO(17, 3, 59, 1)),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  dateDataValues[index].title,
+                                  style: const TextStyle(
+                                      fontSize: 22,
+                                      height: 0.9,
+                                      letterSpacing: 1.3,
+                                      fontFamily: 'Neue Plak Extended',
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromARGB(255, 35, 80, 205)),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(right: 40),
+                                  child: Icon(
+                                    Icons.check,
+                                    color: Color.fromARGB(255, 35, 80, 205),
+                                    size: 20,
+                                  ),
+                                ),
+                              ],
+                            )
+                      : !catDataValues[index].selected
+                          ? Text(
+                              catDataValues[index].title,
+                              style: const TextStyle(
+                                  fontSize: 22,
+                                  height: 0.9,
+                                  letterSpacing: 1.3,
+                                  fontFamily: 'Neue Plak Extended',
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromRGBO(17, 3, 59, 1)),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  catDataValues[index].title,
+                                  style: const TextStyle(
+                                      fontSize: 22,
+                                      height: 0.9,
+                                      letterSpacing: 1.3,
+                                      fontFamily: 'Neue Plak Extended',
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromARGB(255, 35, 80, 205)),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(right: 40),
+                                  child: Icon(
+                                    Icons.check,
+                                    color: Color.fromARGB(255, 35, 80, 205),
+                                    size: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
                 ),
               );
             },

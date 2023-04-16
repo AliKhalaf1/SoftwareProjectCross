@@ -5,6 +5,8 @@ import 'package:Eventbrite/widgets/grey_area.dart';
 import 'package:flutter/material.dart';
 
 import '../providers/events/event.dart';
+import '../providers/filters/filter_selection_values.dart';
+import '../providers/filters/filters_data.dart';
 import '../providers/filters/tag.dart';
 import '../providers/filters/tags.dart';
 import '../providers/events/fav_events.dart';
@@ -89,6 +91,8 @@ class _SearchState extends State<Search> {
     final tagsData = Provider.of<Tags>(context);
     final tags = tagsData.tagsToShow;
 
+    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+
     //------------------------------------- Methods -------------------------------------------------//
     /// Function that select tags and only render thier new style.
     ///
@@ -97,8 +101,18 @@ class _SearchState extends State<Search> {
       setState(() {
         if (toggleTag.selected) {
           tagsData.tagRemove(toggleTag);
+          if (toggleTag.categ == 'date') {
+            filtersDataValues.setDate(tagsData.datetags[0]);  //set it by ---Anytime---
+          } else {
+            filtersDataValues.setCat(tagsData.fieldtags[0]);  //set it by ---Anything---
+          }
         } else {
           tagsData.tagSelect(toggleTag);
+          if (toggleTag.categ == 'date') {
+            filtersDataValues.setDate(toggleTag);
+          } else {
+            filtersDataValues.setCat(toggleTag);
+          }
         }
       });
     }
@@ -108,7 +122,7 @@ class _SearchState extends State<Search> {
     ///FilterScreen takes selectedTags list to edit it when select an new filter.
     void viewFilters(BuildContext ctx) {
       Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-        return FilterScreen(tagsData.tagsToShow);
+        return FilterScreen();
       }));
     }
 
@@ -135,12 +149,15 @@ class _SearchState extends State<Search> {
                 child: Row(
                   children: const [
                     Padding(
-                      padding: EdgeInsets.only(left: 5, right: 5),
+                      padding: EdgeInsets.only(left: 5),
                       child: TextButton(
                         onPressed: null,
                         child: Text(
                           'Online events',
-                          style: TextStyle(color: Colors.black, fontSize: 16),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
                         ),
                       ),
                     ),
@@ -236,7 +253,7 @@ class _SearchState extends State<Search> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height - 300,
+                height: 350,
                 child: GlowingOverscrollIndicator(
                   axisDirection: AxisDirection.down,
                   color: Colors.orange.shade900,
