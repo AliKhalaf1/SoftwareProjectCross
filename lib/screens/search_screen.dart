@@ -100,6 +100,7 @@ class _SearchState extends State<Search> {
     void selectTag(BuildContext ctx, Tag toggleTag) {
       setState(() {
         if (toggleTag.selected) {
+        if (toggleTag.selected) {
           tagsData.tagRemove(toggleTag);
           if (toggleTag.categ == 'date') {
             filtersDataValues.setDate(tagsData.datetags[0]);  //set it by ---Anytime---

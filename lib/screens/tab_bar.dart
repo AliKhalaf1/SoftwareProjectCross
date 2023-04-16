@@ -2,6 +2,8 @@ library TabBarScreen;
 
 import 'package:Eventbrite/screens/creator/live_events.dart';
 import 'package:Eventbrite/screens/creator/past_events.dart';
+import 'package:Eventbrite/screens/user/favourites.dart';
+import 'package:Eventbrite/screens/user/tickets.dart';
 
 import '../../screens/guest/favourites_sign_up.dart';
 import '../../screens/guest/tickets_sign_up.dart';
@@ -65,8 +67,8 @@ class _TabBarScreenState extends State<TabBarScreen> {
         pages = [
           Home(),
           Search(),
-          const FavouritesSignUp(),
-          const TicketsSignUp(),
+          Favourites(),
+          const Tickets(),
           Profile(
             checkLoggedUser,
           ),

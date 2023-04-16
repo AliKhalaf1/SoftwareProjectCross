@@ -1,5 +1,6 @@
 library GuestHomeScreen;
 
+import '../../helper_functions/log_in.dart';
 import '../../providers/events/event.dart';
 import '../../widgets/event_collection.dart';
 import '../../providers/categories/categories.dart';
@@ -126,6 +127,10 @@ class _HomeState extends State<Home> {
     final eventsData = Provider.of<Events>(context);
     final events = eventsData.events;
 
+    if (checkLoggedUser() == false) {
+      eventsData.unFavouriteAll();
+    }
+
     // final cats = Provider.of<Categories>(context);
 
     return Scaffold(
@@ -135,7 +140,9 @@ class _HomeState extends State<Home> {
           padding: const EdgeInsets.only(top: 40),
           itemCount: categoryTitles.length, // substitute with collectionCounts
           itemBuilder: (ctx, index) {
-            List<Event> matchedEvents = events.where((eventItem) => eventItem.categ == categoryTitles[index]).toList();
+            List<Event> matchedEvents = events
+                .where((eventItem) => eventItem.categ == categoryTitles[index])
+                .toList();
             return EventCollections(categoryTitles[index], true, matchedEvents);
           },
         ),
