@@ -80,7 +80,7 @@ class FilterType extends StatelessWidget {
         final DateTimeRange? picked = await showDatePicker(ctx);
       } else {
         // Apply selected tag to applicaton state provider
-        var rem;
+        dynamic rem;
         if (toggleTag.categ == 'date') {
           rem = filtersDataValues.date;
           for (var i = 0; i < tagsData.datetags.length; i++) {
