@@ -8,10 +8,22 @@ import '../providers/filters/tag.dart';
 import '../providers/filters/tags.dart';
 import 'filters.dart';
 
+/// {@category Screens}
+///## FilterType screen that has date_tags list / categorey_tags list
+///
+///   • tagsData: Provider state for tags
+///
+///   • dateDataValues: tags related to date
+///
+///   • catDataValues: tags related to categorey
+///
+///   • filtersDataValues: Selected filters values
+
 class FilterType extends StatelessWidget {
   final String title;
   final int id;
-  // final List<String> selections;
+
+  // Constructor
   const FilterType(this.id, this.title, {super.key});
 
   /// Show calendar in pop up dialog for selecting date range for calendar event.
@@ -44,26 +56,53 @@ class FilterType extends StatelessWidget {
     return null;
   }
 
-  /* Method to determine selection and navigate back to filters screen*/
-  void selectFilteration(BuildContext ctx, int ind) async {
-    // Pick a date handler
-    if (id == 0 && ind == 6) {
-      final DateTimeRange? picked = await showDatePicker(ctx);
-    } else {
-      // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      //   return FilterScreen([]);
-      // }));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     //---------------- Variables ---------------//
-    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
     final tagsData = Provider.of<Tags>(context);
-
     final dateDataValues = tagsData.datetags;
     final catDataValues = tagsData.fieldtags;
+    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+
+    //------------------ Methods -----------------//
+
+    /// Determine selection and navigate back to filters screen.
+    ///
+    /// When a tag is selected this function apply it to filters throghout the program.
+    ///
+    ///   • select a tag from provider state tags
+    ///
+    ///   • update value of Selected filters values with selected new value
+    ///
+    void selectFilteration(BuildContext ctx, Tag toggleTag, int ind) async {
+      // Pick a date handler
+      if (id == 0 && ind == 6) {
+        final DateTimeRange? picked = await showDatePicker(ctx);
+      } else {
+        // Apply selected tag to applicaton state provider
+        var rem;
+        if (toggleTag.categ == 'date') {
+          rem = filtersDataValues.date;
+          for (var i = 0; i < tagsData.datetags.length; i++) {
+            if (tagsData.datetags[i].title == filtersDataValues.date.title) {
+              rem = tagsData.datetags[i];
+            }
+          }
+          filtersDataValues.setDate(toggleTag);
+        } else {
+          rem = filtersDataValues.cat;
+          for (var i = 0; i < tagsData.fieldtags.length; i++) {
+            if (tagsData.fieldtags[i].title == filtersDataValues.cat.title) {
+              rem = tagsData.fieldtags[i];
+            }
+          }
+          filtersDataValues.setCat(toggleTag);
+        }
+        tagsData.tagSelectFilter(toggleTag, rem);
+        // Pop back to filters screen
+        Navigator.pop(ctx);
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -94,7 +133,9 @@ class FilterType extends StatelessWidget {
             itemCount: id == 0 ? dateDataValues.length : catDataValues.length,
             itemBuilder: (ctx, index) {
               return InkWell(
-                onTap: () => selectFilteration(context, index),
+                onTap: () => id == 0
+                    ? selectFilteration(context, dateDataValues[index], index)
+                    : selectFilteration(context, catDataValues[index], index),
                 child: Padding(
                   padding:
                       const EdgeInsets.only(left: 14.0, bottom: 20, top: 20),

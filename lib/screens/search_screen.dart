@@ -4,12 +4,8 @@ import 'package:Eventbrite/providers/filters/tags.dart';
 import 'package:Eventbrite/widgets/grey_area.dart';
 import 'package:flutter/material.dart';
 
-import '../providers/events/event.dart';
 import '../providers/filters/filter_selection_values.dart';
-import '../providers/filters/filters_data.dart';
 import '../providers/filters/tag.dart';
-import '../providers/filters/tags.dart';
-import '../providers/events/fav_events.dart';
 import '../widgets/event_collection.dart';
 import 'filters.dart';
 import 'package:provider/provider.dart';
@@ -26,56 +22,8 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ///------------------------------------------------------- DUMMY DATA -----------------------------------------------------------------
-  /// I want from DB cateory titles and each category list of events
-  // final Event event = Event(
-  //     123,
-  //     DateTime.now(),
-  //     'We The Medicine- Healing Our Inner Child 2023.Guid...',
-  //     'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
-  //     EventState.online,
-  //     false);
-
-  // final List<Event> test1 = List<Event>.generate(
-  //     6,
-  //     (index) => Event(
-  //         12354,
-  //         DateTime.now(),
-  //         'We The Medicine- Healing Our Inner Child 2023.Guid...',
-  //         'https://cdn.evbstatic.com/s3-build/fe/build/images/7240401618ed7526be7cec3b43684583-2_tablet_1067x470.jpg',
-  //         EventState.online,
-  //         false));
-
-  /**Rendring list only could be used even after remove dummy data */
-  // final List<Tag> tags = [
-  //   Tag('Today', false),
-  //   Tag('Tomorrow', false),
-  //   Tag('This weekend', false),
-  //   Tag('This month', false),
-  //   Tag('past', false),
-  //   Tag('Learn', false),
-  //   Tag('Business', false),
-  //   Tag('Health & Wellness', false),
-  //   Tag('Parenting', false),
-  //   Tag('Tech', false),
-  //   Tag('Culture', false),
-  // ];
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ///-------------------------------------------------------END OF DUMMY DATA -----------------------------------------------------------
-
-  //=======================================================================================================================================
-  //========================================================= filters data ===============================================================
-  /*============ Selected Tags =========='*/
-  ///List that conatins selected tags/filters
-  // List<Tag> selectedTags = [];
-
-  //=======================================================================================================================================
-  //========================================================= filters data ===============================================================
-
-  ///Vavigate to Nearby events page
-  void applyFilters(BuildContext ctx) {
+  ///Navigate to Nearby events page
+  void goToBearby(BuildContext ctx) {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return const NearbyEvents();
     }));
@@ -94,9 +42,9 @@ class _SearchState extends State<Search> {
     final filtersDataValues = Provider.of<FilterSelectionValues>(context);
 
     //------------------------------------- Methods -------------------------------------------------//
-    /// Function that select tags and only render thier new style.
+    /// Function that select tags and render thier new style.
     ///
-    /// Tags that is selected rendered first.
+    /// When a tag is selected this function apply it to filters throghout the program.
     void selectTag(BuildContext ctx, Tag toggleTag) {
       setState(() {
         if (toggleTag.selected) {
@@ -119,7 +67,7 @@ class _SearchState extends State<Search> {
 
     ///View Filters handeler function.
     ///
-    ///FilterScreen takes selectedTags list to edit it when select an new filter.
+    ///Naviagtes only to silters screen.
     void viewFilters(BuildContext ctx) {
       Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
         return FilterScreen();
@@ -145,7 +93,7 @@ class _SearchState extends State<Search> {
           child: Column(
             children: [
               GestureDetector(
-                onTap: () => applyFilters(context),
+                onTap: () => goToBearby(context),
                 child: Row(
                   children: const [
                     Padding(
@@ -228,7 +176,7 @@ class _SearchState extends State<Search> {
                                     style: TextStyle(
                                         color: tags[index].selected
                                             ? Colors.white
-                                            : Color.fromARGB(
+                                            : const Color.fromARGB(
                                                 255, 104, 104, 104),
                                         fontSize: 12),
                                   ),

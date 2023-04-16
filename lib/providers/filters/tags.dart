@@ -70,6 +70,10 @@ class Tags with ChangeNotifier {
   }
 
   ///Select a tag function
+  ///
+  ///   • Add to _tagsToShow and reflect in _datetags / _fieldtags.
+  ///
+  ///   • Used with Search screen.
   void tagSelect(Tag selectedTag) {
     selectedTagsCount++;
     if (selectedTagsCount == 1) {
@@ -120,6 +124,9 @@ class Tags with ChangeNotifier {
   }
 
   ///Remove a tag function
+  ///   • Remove from _tagsToShow and reflect in _datetags / _fieldtags.
+  ///
+  ///   • Used with Search screen.
   void tagRemove(Tag selectedTag) {
     selectedTagsCount--;
     _tagsToShow.remove(selectedTag);
@@ -161,6 +168,32 @@ class Tags with ChangeNotifier {
       }
     }
     selectedTag.selected = false;
+    notifyListeners();
+  }
+
+  ///Select a tag function
+  ///
+  ///   • Select a filter tag by using tagSelect / tagRemove functions
+  ///
+  ///   • Used with Filter_type_select screen.
+  void tagSelectFilter(Tag selectedTag, Tag removedTag) {
+    // if (Date and select anytime / pick a date) or (cat and select anything) => remove only
+    if ((selectedTag.categ == 'date' &&
+            (selectedTag.title == _datetags[0].title ||
+                selectedTag.title == _datetags[_datetags.length - 1].title)) ||
+        (selectedTag.categ == 'field' &&
+            selectedTag.title == _fieldtags[0].title)) {
+      tagRemove(removedTag);
+    } else if ((removedTag.categ == 'date' &&
+            (removedTag.title == _datetags[0].title ||
+                removedTag.title == _datetags[_datetags.length - 1].title)) ||
+        (removedTag.categ == 'field' &&
+            removedTag.title == _fieldtags[0].title)) {
+      tagSelect(selectedTag);
+    } else {
+      tagRemove(removedTag);
+      tagSelect(selectedTag);
+    }
     notifyListeners();
   }
 }
