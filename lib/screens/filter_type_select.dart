@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 library FilterTypeScreen;
 
 import 'package:flutter/material.dart';
@@ -78,6 +80,8 @@ class FilterType extends StatelessWidget {
       // Pick a date handler
       if (id == 0 && ind == 6) {
         final DateTimeRange? picked = await showDatePicker(ctx);
+        print(picked);
+        Navigator.pop(context, picked);
       } else {
         // Apply selected tag to applicaton state provider
         dynamic rem;
