@@ -76,6 +76,7 @@ class Tags with ChangeNotifier {
   ///   • Used with Search screen.
   void tagSelect(Tag selectedTag) {
     selectedTagsCount++;
+    print('inc Count : $selectedTagsCount');
     if (selectedTagsCount == 1) {
       if (selectedTag.categ == 'date') {
         _tagsToShow.clear();
@@ -93,7 +94,9 @@ class Tags with ChangeNotifier {
         _tagsToShow.add(selectedTag);
         _tagsToShow += _datetags;
         _tagsToShow.remove(_datetags[0]);
-        _tagsToShow.remove(_datetags[_datetags.length - 1]);
+        if (!_datetags[_datetags.length - 1].selected) {
+          _tagsToShow.remove(_datetags[_datetags.length - 1]);
+        }
         _fieldtags[0].selected = false;
         for (var i = 0; i < _fieldtags.length; i++) {
           if (_fieldtags[i].title == selectedTag.title) {
@@ -103,8 +106,11 @@ class Tags with ChangeNotifier {
       }
     } else {
       _tagsToShow = [_tagsToShow[0]] + [selectedTag];
+      //if selected tag is anytime / anything so remove
       _tagsToShow.remove(_datetags[0]);
-      _tagsToShow.remove(_datetags[_datetags.length - 1]);
+      if (!_datetags[_datetags.length - 1].selected) {
+        _tagsToShow.remove(_datetags[_datetags.length - 1]);
+      }
       _tagsToShow.remove(_fieldtags[0]);
       _fieldtags[0].selected = false;
       _datetags[0].selected = false;
@@ -129,12 +135,15 @@ class Tags with ChangeNotifier {
   ///   • Used with Search screen.
   void tagRemove(Tag selectedTag) {
     selectedTagsCount--;
+    print('dec Count : $selectedTagsCount');
     _tagsToShow.remove(selectedTag);
     if (selectedTagsCount == 0) {
       _tagsToShow = _datetags + _fieldtags;
       _tagsToShow.remove(_fieldtags[0]);
       _tagsToShow.remove(_datetags[0]);
-      _tagsToShow.remove(_datetags[_datetags.length - 1]);
+      if (!_datetags[_datetags.length - 1].selected) {
+        _tagsToShow.remove(_datetags[_datetags.length - 1]);
+      }
       _fieldtags[0].selected = true;
       _datetags[0].selected = true;
       for (var i = 0; i < _fieldtags.length; i++) {
@@ -190,55 +199,24 @@ class Tags with ChangeNotifier {
         (removedTag.categ == 'field' &&
             removedTag.title == _fieldtags[0].title)) {
       tagSelect(selectedTag);
-    }
-    //if select pickup date
-    else if (selectedTag.title == _datetags[_datetags.length - 1].title) {
-      tagRemove(removedTag);
-      selectedTagsCount++;
-      // if (selectedTagsCount == 1) {
-      //   _tagsToShow.clear();
-      //   _tagsToShow.add(selectedTag);
-      //   _tagsToShow += _fieldtags;
-      //   _tagsToShow.remove(_fieldtags[0]);
-      //   _datetags[0].selected = false;
-      //   for (var i = 0; i < _datetags.length; i++) {
-      //     if (_datetags[i].title == selectedTag.title) {
-      //       _datetags[i].selected = true;
-      //     }
-      //   }
-      // } else {
-      //   if (_tagsToShow[0].categ == 'field') {
-      //     _tagsToShow = [_tagsToShow[0]] + [selectedTag];
-      //   } else {
-      //     _tagsToShow.clear();
-      //     _tagsToShow.add(selectedTag);
-      //     _tagsToShow += _fieldtags;
-      //   }
-      //   _tagsToShow.remove(_datetags[0]);
-      //   _tagsToShow.remove(_fieldtags[0]);
-      //   _fieldtags[0].selected = false;
-      //   _datetags[0].selected = false;
-      //   for (var i = 0; i < _fieldtags.length; i++) {
-      //     if (_fieldtags[i].title == selectedTag.title) {
-      //       _fieldtags[i].selected = true;
-      //     }
-      //   }
-      //   for (var i = 0; i < _datetags.length; i++) {
-      //     if (_datetags[i].title == selectedTag.title) {
-      //       _datetags[i].selected = true;
-      //     }
-      //   }
-      // }
-      // selectedTag.selected = true;
-      notifyListeners();
-    }
-    //if remove pickup date
-    // else if (removedTag.title == _datetags[_datetags.length - 1].title) {
-    // }
-    else {
+    } else {
       tagRemove(removedTag);
       tagSelect(selectedTag);
     }
+    print('-------------------- to Add ---------------------------');
+    print(selectedTag.title);
+    print(selectedTag.value);
+    print(selectedTag.selected);
+    print(selectedTagsCount);
+    print('---------------------- to Remove ----------------------------');
+    print(removedTag.title);
+    print(removedTag.value);
+    print(removedTag.selected);
+    print('---------------------- first in list-----------------------------');
+    print(tagsToShow[0].title);
+    print(tagsToShow[0].selected);
+    print(tagsToShow.length);
+    print('------------------------------------------------------');
     notifyListeners();
   }
 }

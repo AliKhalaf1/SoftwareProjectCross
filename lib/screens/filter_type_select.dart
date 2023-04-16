@@ -78,6 +78,7 @@ class FilterType extends StatelessWidget {
     ///   • update value of Selected filters values with selected new value
     ///
     void selectFilteration(BuildContext ctx, Tag toggleTag, int ind) async {
+      toggleTag.selected = true;
       // Pick a date handler
       if (id == 0 && ind == 6) {
         final DateTimeRange? picked = await showDatePicker(ctx);
@@ -90,14 +91,15 @@ class FilterType extends StatelessWidget {
 
         //Select tag value in filters screen
         toggleTag.value = dateRange;
-        filtersDataValues.setDate(toggleTag);
         //select tag value for search screen (tags)
+        filtersDataValues.date.selected = false;
         dynamic rem = filtersDataValues.date;
         for (var i = 0; i < tagsData.datetags.length; i++) {
           if (tagsData.datetags[i].title == filtersDataValues.date.title) {
             rem = tagsData.datetags[i];
           }
         }
+        filtersDataValues.setDate(toggleTag);
         tagsData.tagSelectFilter(toggleTag, rem);
 
         Navigator.pop(context, picked);
