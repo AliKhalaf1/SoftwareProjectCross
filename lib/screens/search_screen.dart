@@ -88,7 +88,7 @@ class _SearchState extends State<Search> {
     final eventsData = Provider.of<Events>(context);
     final events = eventsData.events;
 
-    final tagsData = Provider.of<Tags>(context,listen: false);
+    final tagsData = Provider.of<Tags>(context);
     final tags = tagsData.tagsToShow;
 
     final filtersDataValues = Provider.of<FilterSelectionValues>(context);
@@ -99,7 +99,6 @@ class _SearchState extends State<Search> {
     /// Tags that is selected rendered first.
     void selectTag(BuildContext ctx, Tag toggleTag) {
       setState(() {
-        if (toggleTag.selected) {
         if (toggleTag.selected) {
           tagsData.tagRemove(toggleTag);
           if (toggleTag.categ == 'date') {
