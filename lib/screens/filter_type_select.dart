@@ -60,7 +60,7 @@ class FilterType extends StatelessWidget {
   Widget build(BuildContext context) {
     //---------------- Variables ---------------//
     final filtersDataValues = Provider.of<FilterSelectionValues>(context);
-    final tagsData = Provider.of<Tags>(context,listen: false);
+    final tagsData = Provider.of<Tags>(context);
 
     final dateDataValues = tagsData.datetags;
     final catDataValues = tagsData.fieldtags;

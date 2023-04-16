@@ -72,7 +72,6 @@ class Tags with ChangeNotifier {
   ///Select a tag function
   void tagSelect(Tag selectedTag) {
     selectedTagsCount++;
-    selectedTag.selected = true;
     if (selectedTagsCount == 1) {
       if (selectedTag.categ == 'date') {
         _tagsToShow.clear();
@@ -80,6 +79,11 @@ class Tags with ChangeNotifier {
         _tagsToShow += _fieldtags;
         _tagsToShow.remove(_fieldtags[0]);
         _datetags[0].selected = false;
+        for (var i = 0; i < _datetags.length; i++) {
+          if (_datetags[i].title == selectedTag.title) {
+            _datetags[i].selected = true;
+          }
+        }
       } else {
         _tagsToShow.clear();
         _tagsToShow.add(selectedTag);
@@ -87,6 +91,11 @@ class Tags with ChangeNotifier {
         _tagsToShow.remove(_datetags[0]);
         _tagsToShow.remove(_datetags[_datetags.length - 1]);
         _fieldtags[0].selected = false;
+        for (var i = 0; i < _fieldtags.length; i++) {
+          if (_fieldtags[i].title == selectedTag.title) {
+            _fieldtags[i].selected = true;
+          }
+        }
       }
     } else {
       _tagsToShow = [_tagsToShow[0]] + [selectedTag];
@@ -95,10 +104,18 @@ class Tags with ChangeNotifier {
       _tagsToShow.remove(_fieldtags[0]);
       _fieldtags[0].selected = false;
       _datetags[0].selected = false;
+      for (var i = 0; i < _fieldtags.length; i++) {
+        if (_fieldtags[i].title == selectedTag.title) {
+          _fieldtags[i].selected = true;
+        }
+      }
+      for (var i = 0; i < _datetags.length; i++) {
+        if (_datetags[i].title == selectedTag.title) {
+          _datetags[i].selected = true;
+        }
+      }
     }
-    for (var i = 0; i < _datetags.length; i++) {
-      print(_datetags[i].selected);
-    }
+    selectedTag.selected = true;
     notifyListeners();
   }
 
@@ -113,19 +130,37 @@ class Tags with ChangeNotifier {
       _tagsToShow.remove(_datetags[_datetags.length - 1]);
       _fieldtags[0].selected = true;
       _datetags[0].selected = true;
+      for (var i = 0; i < _fieldtags.length; i++) {
+        if (_fieldtags[i].title == selectedTag.title) {
+          _fieldtags[i].selected = false;
+        }
+      }
+      for (var i = 0; i < _datetags.length; i++) {
+        if (_datetags[i].title == selectedTag.title) {
+          _datetags[i].selected = false;
+        }
+      }
     } else if (selectedTag.categ == 'date') {
       _tagsToShow += _datetags;
       _datetags[0].selected = true;
       _tagsToShow.remove(_datetags[0]);
       _tagsToShow.remove(_datetags[_datetags.length - 1]);
+      for (var i = 0; i < _datetags.length; i++) {
+        if (_datetags[i].title == selectedTag.title) {
+          _datetags[i].selected = false;
+        }
+      }
     } else {
       _tagsToShow += _fieldtags;
       _fieldtags[0].selected = true;
       _tagsToShow.remove(_fieldtags[0]);
+      for (var i = 0; i < _fieldtags.length; i++) {
+        if (_fieldtags[i].title == selectedTag.title) {
+          _fieldtags[i].selected = false;
+        }
+      }
     }
     selectedTag.selected = false;
-        for (var i = 0; i < _datetags.length; i++) {
-      print(_datetags[i].selected);}
     notifyListeners();
   }
 }
