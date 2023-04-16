@@ -85,12 +85,15 @@ class FilterType extends StatelessWidget {
         DateFormat dateFormat = DateFormat('EEEE, MMMM d');
         DateFormat dayOnlydateFormat = DateFormat('dd');
 
-        String dateRange = picked!.start.month == picked.end.month
-            ? '${dateFormat.format(picked.start)} - ${dayOnlydateFormat.format(picked.end)}'
-            : '${dateFormat.format(picked.start)} - ${dateFormat.format(picked.end)}';
-
         //Select tag value in filters screen
-        toggleTag.value = dateRange;
+        if (picked!.start == picked.end) {
+          toggleTag.value = dateFormat.format(picked.start);
+        } else {
+          toggleTag.value = picked.start.month == picked.end.month
+              ? '${dateFormat.format(picked.start)} - ${dayOnlydateFormat.format(picked.end)}'
+              : '${dateFormat.format(picked.start)} - ${dateFormat.format(picked.end)}';
+        }
+
         //select tag value for search screen (tags)
         filtersDataValues.date.selected = false;
         dynamic rem = filtersDataValues.date;
