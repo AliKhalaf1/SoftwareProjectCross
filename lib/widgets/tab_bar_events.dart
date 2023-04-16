@@ -7,6 +7,9 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class TabBarEvents extends StatefulWidget {
   static const route = '/Tabbarevents';
+
+  TabBarEvents({super.key});
+
   @override
   State<TabBarEvents> createState() => _TabBarEventsState();
 }
