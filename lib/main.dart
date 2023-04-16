@@ -1,4 +1,6 @@
+import 'package:Eventbrite/providers/categories/categories.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
+import 'package:Eventbrite/providers/filters/tags.dart';
 import 'package:Eventbrite/screens/event_page.dart';
 import 'package:Eventbrite/screens/filters.dart';
 import 'package:Eventbrite/screens/guest/home.dart';
@@ -37,6 +39,12 @@ class _MainAppState extends State<MainApp> {
         ),
         ChangeNotifierProvider.value(
           value: FavEvents(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Tags(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Categories(),
         ),
       ],
       child: MaterialApp(

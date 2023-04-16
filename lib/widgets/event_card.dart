@@ -40,8 +40,7 @@ class _EventCardState extends State<EventCard> {
 
     final event = Provider.of<Event>(context, listen: false);
     final favsData = Provider.of<FavEvents>(context);
-    final favourites = favsData.favs;
-
+    
     //----------------------- Methods ------------------------------
 
     Future<void> toggleFav(BuildContext ctx) async {

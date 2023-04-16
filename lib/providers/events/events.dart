@@ -1,4 +1,4 @@
-library Events;
+library EventsModel;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
