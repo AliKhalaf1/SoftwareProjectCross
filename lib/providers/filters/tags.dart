@@ -105,14 +105,6 @@ class Tags with ChangeNotifier {
       }
     } else {
       _tagsToShow = [_tagsToShow[0]] + [selectedTag];
-      //if selected tag is anytime / anything so remove
-      _tagsToShow.remove(_datetags[0]);
-      if (!_datetags[_datetags.length - 1].selected) {
-        _tagsToShow.remove(_datetags[_datetags.length - 1]);
-      }
-      _tagsToShow.remove(_fieldtags[0]);
-      _fieldtags[0].selected = false;
-      _datetags[0].selected = false;
       for (var i = 0; i < _fieldtags.length; i++) {
         if (_fieldtags[i].title == selectedTag.title) {
           _fieldtags[i].selected = true;
@@ -123,6 +115,14 @@ class Tags with ChangeNotifier {
           _datetags[i].selected = true;
         }
       }
+      //if selected tag is anytime / anything so remove
+      _tagsToShow.remove(_datetags[0]);
+      if (!_datetags[_datetags.length - 1].selected) {
+        _tagsToShow.remove(_datetags[_datetags.length - 1]);
+      }
+      _tagsToShow.remove(_fieldtags[0]);
+      _fieldtags[0].selected = false;
+      _datetags[0].selected = false;
     }
     selectedTag.selected = true;
     notifyListeners();
@@ -134,7 +134,12 @@ class Tags with ChangeNotifier {
   ///   • Used with Search screen.
   void tagRemove(Tag selectedTag) {
     selectedTagsCount--;
-    _tagsToShow.remove(selectedTag);
+
+    for (var i = 0; i < tagsToShow.length; i++) {
+      if (selectedTag.title == _tagsToShow[i].title) {
+        _tagsToShow.remove(_tagsToShow[i]);
+      }
+    }
     if (selectedTagsCount == 0) {
       _tagsToShow = _datetags + _fieldtags;
       _tagsToShow.remove(_fieldtags[0]);
@@ -174,26 +179,23 @@ class Tags with ChangeNotifier {
         }
       }
     }
+
     selectedTag.selected = false;
     notifyListeners();
   }
 
-  ///Select a tag function
+  ///##Select a tag function
   ///
   ///   • Select a filter tag by using tagSelect / tagRemove functions
   ///
   ///   • Used with Filter_type_select screen.
-  void tagSelectFilter(
-      Tag selectedTag, Tag removedTag) {
+  void tagSelectFilter(Tag selectedTag, Tag removedTag) {
     // if (Date and select anytime) or (cat and select anything) => remove only
     if ((selectedTag.categ == 'date' &&
             selectedTag.title == _datetags[0].title) ||
         (selectedTag.categ == 'field' &&
             selectedTag.title == _fieldtags[0].title)) {
       tagRemove(removedTag);
-      if ((removedTag.title != _datetags[0].title) ||
-          (removedTag.title != _fieldtags[0].title)) {
-      }
     }
     // if (Date and remove anytime) or (cat and remove anything)
     else if ((removedTag.categ == 'date' &&
@@ -203,8 +205,10 @@ class Tags with ChangeNotifier {
       tagSelect(selectedTag);
     } else {
       tagRemove(removedTag);
+
       tagSelect(selectedTag);
     }
+
     notifyListeners();
   }
 }

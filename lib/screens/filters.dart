@@ -75,9 +75,9 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FilterCateg(0, 'Date'),
-                        FilterCateg(1, 'Location'),
-                        FilterCateg(2, 'Category'),
+                        const FilterCateg(0, 'Date'),
+                        const FilterCateg(1, 'Location'),
+                        const FilterCateg(2, 'Category'),
                         CheckBox(
                             'Price', 'Free stuff only', widget.applyBtnState),
                         CheckBox('Organiser', 'From organizers you follow',
