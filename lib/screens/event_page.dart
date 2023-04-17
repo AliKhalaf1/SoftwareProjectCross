@@ -23,6 +23,7 @@ class EventPage extends StatelessWidget {
       listen: false,
     ).findById(eventId);
     return Scaffold(
+      key: const Key('EventPage'),
       //Edit app-bar to be as application
       appBar: AppBar(
         backgroundColor: Colors.white38,

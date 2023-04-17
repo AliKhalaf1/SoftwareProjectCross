@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 class LogInBtn extends StatelessWidget {
   final String text;
   final Function onPressed;
-  LogInBtn(this.text, this.onPressed, {super.key});
+  const LogInBtn(this.text, this.onPressed, {super.key});
 
   @override
   Widget build(BuildContext context) {

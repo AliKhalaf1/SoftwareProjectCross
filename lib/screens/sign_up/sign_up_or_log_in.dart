@@ -71,6 +71,7 @@ class SignUpOrLogIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const Key("SignupOrLoginScreen"),
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white38,
@@ -111,32 +112,32 @@ class SignUpOrLogIn extends StatelessWidget {
                 children: <Widget>[
                   //First child
                   LogInBtn(
+                    key: const Key('LogInWithEmailBtn'),
                     'Continue with email address',
                     emailLogIn,
-                    key: const Key('log_in_with_email_btn'),
                   ),
 
                   //Second child
                   TransparentButton(
                     0,
+                    key: const Key('LogInWithFacebookBtn'),
                     'Continue With Facebook',
                     signWithFacebook,
                     facebook,
-                    key: const Key('log_in_with_facebook_btn'),
                   ),
 
                   //Third child
                   TransparentButton(
+                    key: const Key('LogInWithGoogleBtn'),
                     1,
                     'Continue With Google',
                     signWithGoogle,
                     facebook,
-                    key: const Key('log_in_with_google_btn'),
                   ),
 
                   //Fourth child
                   TextButton(
-                    key: const Key('find_ticket_btn'),
+                    key: const Key('FindTicketsBtn'),
                     onPressed: () => findTicket(context),
                     child: const Text(
                       'I bought tickets, but I don\'t have an account.',

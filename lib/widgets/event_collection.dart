@@ -69,6 +69,7 @@ class EventCollections extends StatelessWidget {
             ),
       collecionListOfEvents.isEmpty
           ? const Center(
+            key:  Key("NoCurrentEvent"),
               child: Text('There is no current events',
                   style: TextStyle(color: Colors.grey)),
             )
@@ -83,6 +84,7 @@ class EventCollections extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 15, bottom: 15),
                 child: TextButton(
+                  key: const Key("ViewMoreEventBtn"),
                   onPressed: () => viewMoreEvents(context),
                   child: const Text(
                     'View more events',

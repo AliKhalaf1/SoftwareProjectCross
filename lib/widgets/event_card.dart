@@ -40,7 +40,7 @@ class _EventCardState extends State<EventCard> {
 
     final event = Provider.of<Event>(context, listen: false);
     final favsData = Provider.of<FavEvents>(context);
-    
+
     //----------------------- Methods ------------------------------
 
     Future<void> toggleFav(BuildContext ctx) async {
@@ -70,6 +70,7 @@ class _EventCardState extends State<EventCard> {
       fit: StackFit.loose,
       children: [
         InkWell(
+          key: const Key("EventsCard"),
           onTap: () => selectEvent(context, event),
           child: Padding(
             padding: const EdgeInsets.only(top: 15, left: 15, bottom: 15),
@@ -148,18 +149,20 @@ class _EventCardState extends State<EventCard> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
+                  key: const Key("ShareBtn"),
                   onPressed: share,
                   icon: const Icon(
-                    key: Key("share"),
+                    key: Key("shareIcon"),
                     Icons.share,
                     size: 20,
                     color: Color.fromRGBO(0, 0, 0, 0.7),
                   ),
                 ),
                 IconButton(
+                  key: const Key("AddToFavBtn"),
                   onPressed: () => toggleFav(context),
                   icon: Icon(
-                    key: const Key("fav"),
+                    key: const Key("favIcon"),
                     !event.isFav
                         ? Icons.favorite_border_rounded
                         : Icons.favorite_sharp,

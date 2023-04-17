@@ -134,6 +134,7 @@ class _HomeState extends State<Home> {
     // final cats = Provider.of<Categories>(context);
 
     return Scaffold(
+      key: const Key("HomeScreen"),
       body: SizedBox(
         height: 700,
         child: ListView.builder(
