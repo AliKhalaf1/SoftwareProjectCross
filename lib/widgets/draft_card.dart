@@ -14,6 +14,8 @@ class DraftCard extends StatelessWidget {
         .format(dateTime); // format the DateTime object
 
     return ListTile(
+      key: key,
+      onTap: () {},
       leading: DottedBorder(
         borderType: BorderType.RRect,
         radius: Radius.circular(30),
@@ -23,7 +25,7 @@ class DraftCard extends StatelessWidget {
         child: Container(
           width: 50,
           height: 50,
-          child: Icon(
+          child: const Icon(
             Icons.edit,
             color: Colors.grey,
             size: 30.0,

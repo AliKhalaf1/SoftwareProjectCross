@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 class LogInBtn extends StatelessWidget {
   final String text;
   final Function onPressed;
-    LogInBtn(this.text, this.onPressed,);
+  LogInBtn(this.text, this.onPressed, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,7 @@ class LogInBtn extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
           // height: 60,
           child: TextButton(
+            key: key,
             style: ButtonStyle(
               backgroundColor:
                   MaterialStateProperty.all(Theme.of(context).primaryColor),

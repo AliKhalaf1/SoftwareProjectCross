@@ -91,9 +91,17 @@ class TicketsSignUp extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 15, right: 6, top: 0),
-                  child: LogInBtn('Log In', loggingIn),
+                  child: LogInBtn(
+                    'Log In',
+                    loggingIn,
+                    key: Key('LogInBtn'),
+                  ),
                 ),
-                GreyButtonLogout(findThingsToDoHandler, 'Find things to do'),
+                GreyButtonLogout(
+                  findThingsToDoHandler,
+                  'Find things to do',
+                  key: Key('Find things btn'),
+                ),
               ],
             ),
           ],

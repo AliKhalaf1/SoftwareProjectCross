@@ -14,7 +14,7 @@ class LiveCard extends StatelessWidget {
     this.liveDescription,
     this.ticketsNumber,
     this.ticketsTaken,
-    this.ticketPrice,
+    this.ticketPrice, {required Key key}
   );
 
   @override
@@ -25,8 +25,10 @@ class LiveCard extends StatelessWidget {
     double percentageTickets = ticketsTaken / ticketsNumber;
 
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       child: ListTile(
+        key: key,
+        onTap: () {},
         leading: CircularPercentIndicator(
           radius: 55,
           lineWidth: 3,

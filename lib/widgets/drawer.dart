@@ -1,10 +1,7 @@
 import 'package:Eventbrite/helper_functions/log_in.dart';
 import 'package:Eventbrite/models/db_mock.dart';
-import 'package:Eventbrite/screens/creator/live_events.dart';
-import 'package:Eventbrite/screens/creator/past_events.dart';
 import 'package:Eventbrite/widgets/tab_bar_Events.dart';
 import 'package:flutter/material.dart';
-
 import '../helper_functions/log_out.dart';
 import '../models/user.dart';
 import '../screens/tab_bar.dart';
@@ -70,10 +67,11 @@ class _EventDrawerState extends State<EventDrawer> {
     ); // we use same string in main it’s a key
   }
 
-  Widget buildlistview(
-      String title, IconData icon, int index, Function handler) {
+  Widget buildlistview(String title, IconData icon, int index, Function handler,
+      {required Key key}) {
     Color splashColor = index != 0 ? Colors.grey : Colors.transparent;
     return InkWell(
+      key: key,
       onTap: handler as void Function(),
       splashColor: splashColor,
       highlightColor: splashColor,
@@ -85,7 +83,7 @@ class _EventDrawerState extends State<EventDrawer> {
         ),
         title: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 15,
             color: Color.fromRGBO(94, 92, 109, 1),
           ),
@@ -97,7 +95,7 @@ class _EventDrawerState extends State<EventDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
+      child: ListView(
         children: [
           Container(
             height: 90,
@@ -116,35 +114,35 @@ class _EventDrawerState extends State<EventDrawer> {
           const SizedBox(
             height: 20,
           ),
-          buildlistview('${widget.Name}', Icons.business_center_rounded, 0, () {
+          buildlistview(widget.Name, Icons.business_center_rounded, 0, () {
             iconHandler(0);
-          }),
+          }, key: const Key("UserName")),
           buildlistview('Events', Icons.date_range_rounded, 1, () {
             //code of Navigate
             eventNavigate(context);
             iconHandler(1);
-          }),
+          }, key: const Key("Events")),
           buildlistview('Search Orders', Icons.event_rounded, 2, () {
             iconHandler(2);
-          }),
+          }, key: const Key("SearchOrders")),
           buildlistview('Change Organisation', Icons.compare_arrows_rounded, 3,
               () {
             iconHandler(3);
-          }),
-          Divider(),
+          }, key: const Key("Change Organisation")),
+          const Divider(),
           buildlistview('Device Settings', Icons.settings, 4, () {
             iconHandler(4);
-          }),
+          }, key: const Key("Device Settings")),
           buildlistview('Feedback', Icons.mms, 5, () {
             iconHandler(5);
-          }),
-          Divider(),
+          }, key: const Key("Feedback")),
+          const Divider(),
           Column(
             children: [
               ListTile(
                 leading: Text(
                   widget.email,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     color: Color.fromRGBO(94, 92, 109, 1),
                     fontWeight: FontWeight.w500,
@@ -154,7 +152,7 @@ class _EventDrawerState extends State<EventDrawer> {
               buildlistview('Log Out', Icons.logout, 6, () {
                 logOutLogic(context);
                 iconHandler(6);
-              }),
+              }, key: const Key("Log Out")),
             ],
           ),
         ],

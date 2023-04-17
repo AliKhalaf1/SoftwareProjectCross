@@ -63,7 +63,7 @@ class ProfileSignUp extends StatelessWidget {
               color: Colors.white,
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, right: 5),
-                child: LogInBtn('Log In', loggingIn),
+                child: LogInBtn('Log In', loggingIn,key: Key('LogInBtn')),
               ),
             ),
           ),
