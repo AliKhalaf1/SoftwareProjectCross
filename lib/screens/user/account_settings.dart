@@ -50,7 +50,7 @@ class _AccountSettingsState extends State<AccountSettings> {
                 widget.imageurl = url;
               });
               String email = await getEmail();
-              print(email);
+
               DBMock.updateUserImage(email, url);
             },
             key: const Key('update_Picture'),

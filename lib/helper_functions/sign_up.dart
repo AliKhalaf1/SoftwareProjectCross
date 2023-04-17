@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 Future<int> signUpApi(
     String firstname, String lastname, String email, String password) async {
   var uri = Uri.parse('${Constants.host}/auth/signup');
-  print(uri);
+
   // create multipart request
 
   Map reqData = {
@@ -23,7 +23,6 @@ Future<int> signUpApi(
       headers: {"Content-Type": "application/json"}, body: reqBody);
 
   int resCode = response.statusCode;
-  print(resCode);
   return resCode;
   //Check Response
 }

@@ -36,8 +36,6 @@ List<List<Event>> sortAndSplitByDate(List<Event> list) {
     count++;
   }
 
-  print('------------------------length = ');
-  //print(sortedByDateListSplit.length);
   return [];
 }
 
