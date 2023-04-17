@@ -49,13 +49,17 @@ class _SearchState extends State<Search> {
       setState(() {
         if (toggleTag.selected) {
           tagsData.tagRemove(toggleTag);
+          --filtersDataValues.selectedFilterCount;
           if (toggleTag.categ == 'date') {
-            filtersDataValues.setDate(tagsData.datetags[0]);  //set it by ---Anytime---
+            filtersDataValues
+                .setDate(tagsData.datetags[0]); //set it by ---Anytime---
           } else {
-            filtersDataValues.setCat(tagsData.fieldtags[0]);  //set it by ---Anything---
+            filtersDataValues
+                .setCat(tagsData.fieldtags[0]); //set it by ---Anything---
           }
         } else {
           tagsData.tagSelect(toggleTag);
+          ++filtersDataValues.selectedFilterCount;
           if (toggleTag.categ == 'date') {
             filtersDataValues.setDate(toggleTag);
           } else {

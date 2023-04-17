@@ -96,7 +96,7 @@ class FilterType extends StatelessWidget {
 
         //select tag value for search screen (tags)
         filtersDataValues.date.selected = false;
-        dynamic rem = filtersDataValues.date;
+        Tag rem = filtersDataValues.date;
         for (var i = 0; i < tagsData.datetags.length; i++) {
           if (tagsData.datetags[i].title == filtersDataValues.date.title) {
             rem = tagsData.datetags[i];
@@ -105,10 +105,14 @@ class FilterType extends StatelessWidget {
         filtersDataValues.setDate(toggleTag);
         tagsData.tagSelectFilter(toggleTag, rem);
 
-        Navigator.pop(context, picked);
+        ///Update selected filters count
+        if ((rem.title == tagsData.datetags[0].title)) {
+          filtersDataValues.selectedFilterCount++;
+        }
+        Navigator.pop(ctx, picked);
       } else {
         // Apply selected tag to applicaton state provider
-        dynamic rem;
+        Tag rem;
         if (toggleTag.categ == 'date') {
           rem = filtersDataValues.date;
           for (var i = 0; i < tagsData.datetags.length; i++) {
@@ -127,6 +131,17 @@ class FilterType extends StatelessWidget {
           filtersDataValues.setCat(toggleTag);
         }
         tagsData.tagSelectFilter(toggleTag, rem);
+
+        ///Update selected filters count
+        if ((toggleTag.title == tagsData.datetags[0].title) ||
+            (toggleTag.title == tagsData.fieldtags[0].title)) {
+          if (toggleTag.title != rem.title) {
+            filtersDataValues.selectedFilterCount--;
+          }
+        } else if ((rem.title == tagsData.datetags[0].title) ||
+            (rem.title == tagsData.fieldtags[0].title)) {
+          filtersDataValues.selectedFilterCount++;
+        }
         // Pop back to filters screen
         Navigator.pop(ctx);
       }

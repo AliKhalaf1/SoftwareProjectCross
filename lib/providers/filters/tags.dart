@@ -76,7 +76,6 @@ class Tags with ChangeNotifier {
   ///   • Used with Search screen.
   void tagSelect(Tag selectedTag) {
     selectedTagsCount++;
-    print('inc Count : $selectedTagsCount');
     if (selectedTagsCount == 1) {
       if (selectedTag.categ == 'date') {
         _tagsToShow.clear();
@@ -135,7 +134,6 @@ class Tags with ChangeNotifier {
   ///   • Used with Search screen.
   void tagRemove(Tag selectedTag) {
     selectedTagsCount--;
-    print('dec Count : $selectedTagsCount');
     _tagsToShow.remove(selectedTag);
     if (selectedTagsCount == 0) {
       _tagsToShow = _datetags + _fieldtags;
@@ -185,13 +183,17 @@ class Tags with ChangeNotifier {
   ///   • Select a filter tag by using tagSelect / tagRemove functions
   ///
   ///   • Used with Filter_type_select screen.
-  void tagSelectFilter(Tag selectedTag, Tag removedTag) {
+  void tagSelectFilter(
+      Tag selectedTag, Tag removedTag) {
     // if (Date and select anytime) or (cat and select anything) => remove only
     if ((selectedTag.categ == 'date' &&
             selectedTag.title == _datetags[0].title) ||
         (selectedTag.categ == 'field' &&
             selectedTag.title == _fieldtags[0].title)) {
       tagRemove(removedTag);
+      if ((removedTag.title != _datetags[0].title) ||
+          (removedTag.title != _fieldtags[0].title)) {
+      }
     }
     // if (Date and remove anytime) or (cat and remove anything)
     else if ((removedTag.categ == 'date' &&

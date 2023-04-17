@@ -18,15 +18,18 @@ import 'tag.dart';
 ///
 ///   • Sort by: int (0: Relevance / 1: Date)
 ///
+///   • selectedFilterCount: integer represtents the count of selected filters
+///
 ///
 
 class FilterSelectionValues with ChangeNotifier {
-  Tag _date = Tag('Anytime', true, 'date','Anytime');
-  Tag _cat = Tag('Anything', true, 'field','Anything');
+  Tag _date = Tag('Anytime', true, 'date', 'Anytime');
+  Tag _cat = Tag('Anything', true, 'field', 'Anything');
   String _location = "Online events";
   bool _price = false;
   bool _organizer = false;
   int _sortBy = 0;
+  int selectedFilterCount = 0;
 
   ///Get data value
   Tag get date {
@@ -92,5 +95,15 @@ class FilterSelectionValues with ChangeNotifier {
   void setSortingBy(int sb) {
     _sortBy = sb;
     notifyListeners();
+  }
+
+  ///Increment filter count
+  void incSelecFiltersCount() {
+    selectedFilterCount++;
+  }
+
+  ///Decrement filter count
+  void decSelecFiltersCount() {
+    selectedFilterCount--;
   }
 }

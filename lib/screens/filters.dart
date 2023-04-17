@@ -34,8 +34,6 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  //---------------- Variables ---------------//
-
   //---------------- Methods -----------------//
   //Apply filters
   void applyFilters(BuildContext ctx) {
@@ -46,6 +44,9 @@ class _FilterScreenState extends State<FilterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //---------------- Variables ---------------//
+    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white38,
@@ -75,16 +76,13 @@ class _FilterScreenState extends State<FilterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FilterCateg(0, 'Date'),
-                        FilterCateg(
-                            1, 'Location'),
-                        FilterCateg(
-                            2, 'Category'),
-                        CheckBox('Price', 'Free stuff only',
-                            widget.applyBtnState),
+                        FilterCateg(1, 'Location'),
+                        FilterCateg(2, 'Category'),
+                        CheckBox(
+                            'Price', 'Free stuff only', widget.applyBtnState),
                         CheckBox('Organiser', 'From organizers you follow',
                             widget.applyBtnState),
-                        RadioButton(
-                            widget.applyBtnState),
+                        RadioButton(widget.applyBtnState),
                       ],
                     ),
                   );
@@ -99,7 +97,7 @@ class _FilterScreenState extends State<FilterScreen> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: TransparentButtonNoIcon(
-                  'Apply filters (${8})', applyFilters, widget.applyBtnState),
+                  'Apply filters (${filtersDataValues.selectedFilterCount})', applyFilters, widget.applyBtnState),
             ),
           )
         ],
