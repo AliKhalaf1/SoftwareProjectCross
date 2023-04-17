@@ -1,8 +1,8 @@
 import 'package:Eventbrite/providers/categories/categories.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/providers/filters/tags.dart';
+import 'package:Eventbrite/providers/filters/temp_tags.dart';
 import 'package:Eventbrite/screens/event_page.dart';
-import 'package:Eventbrite/screens/filters.dart';
 import 'package:Eventbrite/screens/guest/home.dart';
 import 'package:Eventbrite/screens/search_screen.dart';
 import 'package:Eventbrite/screens/user/account_settings.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/filters/filter_selection_values.dart';
-import 'providers/filters/filters_data.dart';
+import 'providers/filters/temp_selected_filter_values.dart';
 import 'screens/sign_up/sign_up_or_log_in.dart';
 import 'screens/tab_bar.dart';
 import 'screens/sign_in/email_check.dart';
@@ -46,10 +46,13 @@ class _MainAppState extends State<MainApp> {
           value: Tags(),
         ),
         ChangeNotifierProvider.value(
-          value: FiltersData(),
+          value: TemporaryTags(),
         ),
         ChangeNotifierProvider.value(
           value: FilterSelectionValues(),
+        ),
+        ChangeNotifierProvider.value(
+          value: TempFilterSelectionValues(),
         ),
         ChangeNotifierProvider.value(
           value: Categories(),
@@ -63,7 +66,7 @@ class _MainAppState extends State<MainApp> {
 
           fontFamily: 'Neue Plack Extended',
           primaryColor: const Color.fromARGB(255, 209, 65, 12),
-          cardColor: Color.fromRGBO(91, 89, 107, 1),
+          cardColor: const Color.fromRGBO(91, 89, 107, 1),
         ),
 
         // home: const TabBarScreen(title: 'Eventbrite'),
@@ -75,7 +78,7 @@ class _MainAppState extends State<MainApp> {
           EmailCheck.emailCheckRoute: (ctx) => EmailCheck(),
           FindTickets.findTicketsRoute: (ctx) => const FindTickets(),
           TabBarEvents.route: (ctx) => TabBarEvents(),
-          PastEvents.route: (ctx) => PastEvents(),
+          PastEvents.route: (ctx) => const PastEvents(),
           AccountSettings.accountSettingsRoute: (ctx) => AccountSettings(),
           EventPage.eventPageRoute: (ctx) => const EventPage(),
           Home.homePageRoute: (ctx) => Home(),

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/filters/filter_selection_values.dart';
 import '../providers/filters/tag.dart';
+import '../providers/filters/tags.dart';
+import '../providers/filters/temp_selected_filter_values.dart';
+import '../providers/filters/temp_tags.dart';
 import '../widgets/check_box.dart';
 import '../widgets/filter_categ.dart';
 import '../widgets/radio_button.dart';
@@ -14,28 +17,20 @@ import 'package:http/http.dart' as http;
 
 class FilterScreen extends StatefulWidget {
   //-----------------------------------------------------------//
-  //                   status variables                       //
-  // to be obtained from local data-base                     //
-  // List<Tag> selectedTags; /* Selected Tags */
-  int selectedSortby =
-      0; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
-  bool isCheckedPrice = false; /* Checked value #*/
-  bool isCheckedOrganizer = false; /* Checked value #*/
+  //                        Button satatus                   //
   bool applyBtnState = false; /* Variable to know activate button or not #*/
 
   //-----------------------------------------------------------//
 
   static const filtersPageRout = '/filters';
 
-  // FilterScreen(this.selectedTags, {super.key});
+  FilterScreen({super.key});
 
   @override
   State<FilterScreen> createState() => _FilterScreenState();
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  //---------------- Variables ---------------//
-
   //---------------- Methods -----------------//
   //Apply filters
   void applyFilters(BuildContext ctx) {
@@ -46,8 +41,24 @@ class _FilterScreenState extends State<FilterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //---------------- Variables ---------------//
+    final tagsData = Provider.of<Tags>(context);
+    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+
+    final tempTagsData = Provider.of<TemporaryTags>(context);
+    final tempFiltersDataValues =
+        Provider.of<TempFilterSelectionValues>(context);
+
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            tagsData.setAll(tempTagsData);
+            filtersDataValues.setAll(tempFiltersDataValues);
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: Colors.white38,
         foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
         elevation: 0,
@@ -74,17 +85,14 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FilterCateg(0, 'Date'),
-                        FilterCateg(
-                            1, 'Location'),
-                        FilterCateg(
-                            2, 'Category'),
-                        CheckBox('Price', 'Free stuff only',
-                            widget.applyBtnState),
+                        const FilterCateg(0, 'Date'),
+                        const FilterCateg(1, 'Location'),
+                        const FilterCateg(2, 'Category'),
+                        CheckBox(
+                            'Price', 'Free stuff only', widget.applyBtnState),
                         CheckBox('Organiser', 'From organizers you follow',
                             widget.applyBtnState),
-                        RadioButton(
-                            widget.applyBtnState),
+                        RadioButton(widget.applyBtnState),
                       ],
                     ),
                   );
@@ -99,7 +107,9 @@ class _FilterScreenState extends State<FilterScreen> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: TransparentButtonNoIcon(
-                  'Apply filters (${8})', applyFilters, widget.applyBtnState),
+                  'Apply filters (${filtersDataValues.selectedFilterCount})',
+                  applyFilters,
+                  widget.applyBtnState),
             ),
           )
         ],

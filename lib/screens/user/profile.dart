@@ -118,9 +118,14 @@ class _ProfileState extends State<Profile> {
 
                       Column(
                         children: [
-                          // two texts with icon&layerfortab
-                          ProfileLayer(widget.firstName, widget.lastName,
-                              widget.email, () => goToAccountSettings(context)),
+                          // two texts with icon & layerfortab
+                          ProfileLayer(
+                            widget.firstName,
+                            widget.lastName,
+                            widget.email,
+                            () => goToAccountSettings(context),
+                            key: Key('Profile Layer'),
+                          ),
 
                           const SizedBox(
                             height: 5,
@@ -143,13 +148,19 @@ class _ProfileState extends State<Profile> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  CounterButton("Likes", widget.likesCount),
+                                  CounterButton(
+                                    "Likes",
+                                    widget.likesCount,
+                                    key: const Key('Likes'),
+                                  ),
                                   const VDivider(),
                                   CounterButton(
-                                      "My tickets", widget.myTicketsCount),
+                                      "My tickets", widget.myTicketsCount,
+                                      key: const Key('Mytickets')),
                                   const VDivider(),
                                   CounterButton(
-                                      "Following", widget.followingCount),
+                                      "Following", widget.followingCount,
+                                      key: const Key('Following')),
                                 ],
                               ),
                             ),
@@ -160,13 +171,21 @@ class _ProfileState extends State<Profile> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                ButtonNotification("Notification Centre"),
-                                ButtonLink("Linked Accounts", () {}),
-                                ButtonLink("Following", () {}),
-                                ButtonLink("Ticket Issues", () {}),
+                                const ButtonNotification(
+                                  "Notification Centre",
+                                  key: Key('Notification'),
+                                ),
+                                ButtonLink("Linked Accounts", () {},
+                                    key: const Key('Linked')),
+                                ButtonLink("Following", () {},
+                                    key: const Key('Following')),
+                                ButtonLink("Ticket Issues", () {},
+                                    key: const Key('Issues')),
                                 ButtonLink("Manage Events",
-                                    () => eventNavigate(context)),
-                                ButtonLink("Settings", () {}),
+                                    () => eventNavigate(context),
+                                    key: const Key('Manage Events')),
+                                ButtonLink("Settings", () {},
+                                    key: const Key('Settings')),
                               ],
                             ),
                           )
@@ -178,23 +197,25 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Color.fromARGB(255, 226, 225, 225),
-                      width: 1,
-                    ),
-                    top: BorderSide(
-                      color: Color.fromRGBO(246, 246, 248, 1),
-                      width: 1,
-                    ),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  bottom: BorderSide(
+                    color: Color.fromARGB(255, 226, 225, 225),
+                    width: 1,
+                  ),
+                  top: BorderSide(
+                    color: Color.fromRGBO(246, 246, 248, 1),
+                    width: 1,
                   ),
                 ),
-                height: 80,
-                padding: const EdgeInsetsDirectional.only(top: 15),
-                width: double.infinity,
-                child: GreyButtonLogout(logOutLogic, 'Log out')),
+              ),
+              height: 80,
+              padding: const EdgeInsetsDirectional.only(top: 15),
+              width: double.infinity,
+              child: GreyButtonLogout(logOutLogic, 'Log out'),
+              key: const Key("LogOut"),
+            ),
           ],
         ),
       ),

@@ -29,6 +29,7 @@ class ButtonNotification extends StatelessWidget {
           Flexible(
             fit: FlexFit.tight,
             child: TextButton(
+              key: key,
               onPressed: () {},
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(

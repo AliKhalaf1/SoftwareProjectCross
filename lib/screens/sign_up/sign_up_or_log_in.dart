@@ -11,27 +11,27 @@ import '../../widgets/transparent_button.dart';
 /// {@category Sign Up}
 /// {@category Screens}
 ///
-/// It is surrounded by scafold to be rendered as a screen because it is screen widget. 
-/// 
-/// Extends StatelessWidget as there is no change in any state in screen that could change rendered page content. 
-/// 
+/// It is surrounded by scafold to be rendered as a screen because it is screen widget.
+///
+/// Extends StatelessWidget as there is no change in any state in screen that could change rendered page content.
+///
 ///###  Login Button
-/// 
+///
 ///   Handler for button navigate to SignUpOrLogIn screen when pressing on to it.
-/// 
+///
 ///   The user can signIn or signUp from navigated page.
-/// 
-///###  TitleText1 • LogInBtn • TransparentButton 
-/// 
+///
+///###  TitleText1 • LogInBtn • TransparentButton
+///
 ///    Widgets with certain styling and not built in widgets like (i.e. Text)
-/// 
-///    You can find them in folder  under the name widgets. 
+///
+///    You can find them in folder  under the name widgets.
 ///###  FindTicket Button
 ///
 ///    Handler for button navigate to FindTickets screen whare user can find its tickets if he doesnt have an account.
-///    
+///
 ///    User also can create an account from navigated page
-/// 
+///
 
 class SignUpOrLogIn extends StatelessWidget {
   const SignUpOrLogIn({super.key});
@@ -110,7 +110,8 @@ class SignUpOrLogIn extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   //First child
-                  LogInBtn('Continue with email address', emailLogIn),
+                  LogInBtn('Continue with email address', emailLogIn,
+                      key: Key('LogInBtn')),
 
                   //Second child
                   TransparentButton(

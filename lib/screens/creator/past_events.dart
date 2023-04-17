@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 
 import '../../widgets/backgroud.dart';
 
 class PastEvents extends StatelessWidget {
   const PastEvents({super.key});
-static const route = '/Pastevents';
+  static const route = '/Pastevents';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +12,10 @@ static const route = '/Pastevents';
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          key: Key("AddPastEvent"),
+        ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );

@@ -49,6 +49,13 @@ class _RadioButtonState extends State<RadioButton> {
               setState(() {
                 filtersDataValues.setSortingBy(value);
                 widget.buttonState = true;
+                if(value == 0)
+                {
+                  filtersDataValues.selectedFilterCount -- ;
+                }
+                else{
+                  filtersDataValues.selectedFilterCount ++ ;
+                }
               });
             },
           ),

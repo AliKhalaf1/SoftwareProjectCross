@@ -17,7 +17,7 @@ class _NearbyEventsState extends State<NearbyEvents> {
     /* Method handler to return back after select browsing in what */
     void selectLocation(BuildContext ctx) {
       // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      //   return FilterScreen([]);
+      //   return FilterScreen();
       // }));
     }
 

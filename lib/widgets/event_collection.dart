@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import '../../screens/tab_bar.dart';
 import '../../widgets/title_text_1.dart';
 import 'package:flutter/material.dart';
+import '../providers/filters/filter_selection_values.dart';
+import '../providers/filters/tags.dart';
 import '../widgets/event_card.dart';
 import '../providers/events/event.dart';
 
@@ -29,6 +31,11 @@ class EventCollections extends StatelessWidget {
 
   //View more on click handler
   void viewMoreEvents(BuildContext ctx) {
+    final tagsData = Provider.of<Tags>(ctx);
+    final filtersDataValues = Provider.of<FilterSelectionValues>(ctx);
+    tagsData.resetTags();
+    filtersDataValues.resetSelectionValues();
+
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return TabBarScreen(title: 'Search', tabBarIndex: 1);
     }));

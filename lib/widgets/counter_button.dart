@@ -29,6 +29,7 @@ class CounterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: MaterialButton(
+        key: key,
         onPressed: () {},
         child: Column(
           mainAxisSize: MainAxisSize.min,
