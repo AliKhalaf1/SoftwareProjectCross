@@ -4,7 +4,6 @@ import 'package:Eventbrite/screens/creator/live_events.dart';
 import 'package:Eventbrite/screens/creator/past_events.dart';
 import 'package:Eventbrite/screens/user/favourites.dart';
 import 'package:Eventbrite/screens/user/tickets.dart';
-
 import '../../screens/guest/favourites_sign_up.dart';
 import '../../screens/guest/tickets_sign_up.dart';
 import '../../screens/user/profile.dart';
@@ -57,8 +56,9 @@ class TabBarScreen extends StatefulWidget {
 class TabBarScreenState extends State<TabBarScreen> {
   Future<void> checkLoggedUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var status = prefs.getBool('isLoggedIn') ?? false;
-    if (status == true) {
+    var token = prefs.getString('token') ?? '';
+    print(token);
+    if (token.isNotEmpty) {
       var email = prefs.getString('email') ?? '';
       User user = DBMock.getUserData(email);
 

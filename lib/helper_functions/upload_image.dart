@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 
-class UploadImage {
-  static const API_KEY = '3bfd1f546459d54f37a8f6880343c080';
+import 'constants.dart';
 
+class UploadImage {
   static Future<String> uploadImage(File imageFile) async {
     // open a bytestream
     var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
@@ -25,7 +25,8 @@ class UploadImage {
         filename: basename(imageFile.path));
 
     // add file to multipart
-    request.fields['key'] = API_KEY;
+
+    request.fields['key'] = Constants.imgUploadApiKey;
 
     request.files.add(multipartFile);
 

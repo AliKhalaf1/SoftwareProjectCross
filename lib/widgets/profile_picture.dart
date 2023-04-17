@@ -16,7 +16,7 @@ class ProfilePicture extends StatelessWidget {
         child: CircleAvatar(
           radius: 40,
           backgroundColor: Colors.transparent,
-          backgroundImage: NetworkImage(imageurl),
+          backgroundImage: imageurl.isNotEmpty ? NetworkImage(imageurl) : null,
         ),
       ),
     );

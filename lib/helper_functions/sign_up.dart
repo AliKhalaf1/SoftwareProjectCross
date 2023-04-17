@@ -3,17 +3,27 @@ import 'dart:convert';
 import 'package:Eventbrite/helper_functions/constants.dart';
 import 'package:http/http.dart' as http;
 
-Future<String> signUpApi(
+Future<int> signUpApi(
     String firstname, String lastname, String email, String password) async {
   var uri = Uri.parse('${Constants.host}/auth/signup');
-  var request = http.MultipartRequest("POST", uri);
-  request.fields['firstname'] = firstname;
-  request.fields['lastname'] = lastname;
-  request.fields['email'] = email;
-  request.fields['password'] = password;
-  request.fields['is_verified'] = "false";
-  var response = await request.send();
-  var res = await response.stream.bytesToString();
-  var data = jsonDecode(res);
-  return data['message'];
+  print(uri);
+  // create multipart request
+
+  Map reqData = {
+    "firstname": firstname,
+    "lastname": lastname,
+    "email": email,
+    "password": password,
+    "is_verified": false
+  };
+  //encode Map to JSON
+  var reqBody = json.encode(reqData);
+
+  var response = await http.post(uri,
+      headers: {"Content-Type": "application/json"}, body: reqBody);
+
+  int resCode = response.statusCode;
+  print(resCode);
+  return resCode;
+  //Check Response
 }

@@ -24,7 +24,7 @@ class _EventDrawerState extends State<EventDrawer> {
 
   @override
   void initState() {
-    Future<String> email = GetEmail();
+    Future<String> email = getEmail();
     User currUser;
     email.then((value) {
       currUser = DBMock.getUserData(value);

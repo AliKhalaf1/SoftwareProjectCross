@@ -49,7 +49,7 @@ class _AccountSettingsState extends State<AccountSettings> {
               setState(() {
                 widget.imageurl = url;
               });
-              String email = await GetEmail();
+              String email = await getEmail();
               print(email);
               DBMock.updateUserImage(email, url);
             },

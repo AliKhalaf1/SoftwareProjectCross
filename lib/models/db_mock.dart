@@ -31,6 +31,8 @@ class DBMock {
         'https://i.ibb.co/0mv1cS5/Whats-App-Image-2023-03-15-at-03-27-dd07-2.jpg',
         'Ahmed',
         'Amin'),
+    User('ahmedsaad_2009@live.com',
+        'https://i.ibb.co/RjYFPKB/IMG-20230412-WA0014.jpg', 'Ahmed', 'Saad'),
   ];
 
   static List<User> getUsers() {

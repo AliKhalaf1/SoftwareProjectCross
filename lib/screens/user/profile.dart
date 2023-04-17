@@ -7,6 +7,7 @@ import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/screens/user/account_settings.dart';
 import 'package:provider/provider.dart';
 
+import '../../helper_functions/log_out.dart';
 import '../../helper_functions/organizer_view.dart';
 import '../../models/user.dart';
 import '../../providers/events/events.dart';
@@ -54,12 +55,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Future<void> setLoggedOut(email) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("isLoggedIn", false);
-    prefs.setString("email", '');
-  }
-
   void logOutLogic(BuildContext ctx) {
     setLoggedOut(widget.email);
     widget.logOut();
@@ -72,7 +67,7 @@ class _ProfileState extends State<Profile> {
   }
 
   void Refresh() {
-    Future<String> s = GetEmail();
+    Future<String> s = getEmail();
 
     s.then((value) {
       User currUser = DBMock.getUserData(value);
