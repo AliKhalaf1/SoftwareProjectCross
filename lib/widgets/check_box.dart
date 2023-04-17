@@ -60,6 +60,7 @@ class _CheckBoxState extends State<CheckBox> {
                     color: Color.fromRGBO(17, 3, 59, 1)),
               ),
               Checkbox(
+                key: Key("${widget.key}"),
                 checkColor: Colors.white,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
                 // activeColor: const Color.fromARGB(255, 29, 82, 215),

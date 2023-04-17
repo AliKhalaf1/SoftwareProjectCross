@@ -23,7 +23,7 @@ class _RadioButtonState extends State<RadioButton> {
 
   @override
   Widget build(BuildContext context) {
-        //---------------- Variables ---------------//
+    //---------------- Variables ---------------//
 
     final filtersDataValues = Provider.of<FilterSelectionValues>(context);
 
@@ -33,6 +33,7 @@ class _RadioButtonState extends State<RadioButton> {
       for (var i = 0; i < radioList.length; i++) {
         list.add(
           RadioListTile(
+            key: Key("${radioList[i]['text']}RadioBtn"),
             activeColor: const Color.fromARGB(255, 29, 82, 215),
             controlAffinity: ListTileControlAffinity.trailing,
             contentPadding: EdgeInsets.zero,
@@ -49,12 +50,10 @@ class _RadioButtonState extends State<RadioButton> {
               setState(() {
                 filtersDataValues.setSortingBy(value);
                 widget.buttonState = true;
-                if(value == 0)
-                {
-                  filtersDataValues.selectedFilterCount -- ;
-                }
-                else{
-                  filtersDataValues.selectedFilterCount ++ ;
+                if (value == 0) {
+                  filtersDataValues.selectedFilterCount--;
+                } else {
+                  filtersDataValues.selectedFilterCount++;
                 }
               });
             },

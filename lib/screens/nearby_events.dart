@@ -22,6 +22,7 @@ class _NearbyEventsState extends State<NearbyEvents> {
     }
 
     return Scaffold(
+      key: const Key("NearByScreen"),
       appBar: AppBar(
         backgroundColor: Colors.white38,
         foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
@@ -34,6 +35,7 @@ class _NearbyEventsState extends State<NearbyEvents> {
             children: <Widget>[
               //-------- 1st child ---------
               const TextField(
+                key: Key("FindNearbyEventsTextField"),
                 cursorWidth: 0.5,
                 cursorColor: Colors.grey,
                 style: TextStyle(
@@ -61,6 +63,7 @@ class _NearbyEventsState extends State<NearbyEvents> {
               Padding(
                 padding: const EdgeInsets.only(top: 25.0),
                 child: InkWell(
+                  key: const Key("GoToSelectLocation"),
                   onTap: () {},
                   child: Row(
                     children: [
@@ -121,6 +124,7 @@ class _NearbyEventsState extends State<NearbyEvents> {
                       ),
                     ),
                     InkWell(
+                      key: const Key("SelectBrowsingIn"),
                       onTap: () => selectLocation(context),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

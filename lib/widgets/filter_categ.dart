@@ -42,6 +42,7 @@ class _FilterCategState extends State<FilterCateg> {
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
       child: InkWell(
+        key: Key("${widget.key}"),
         onTap: () => applyFilters(context),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

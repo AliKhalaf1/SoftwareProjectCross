@@ -50,8 +50,10 @@ class _FilterScreenState extends State<FilterScreen> {
         Provider.of<TempFilterSelectionValues>(context);
 
     return Scaffold(
+      key: const Key("FitersScreen"),
       appBar: AppBar(
         leading: IconButton(
+          key: const Key("GoBackBtn"),
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             tagsData.setAll(tempTagsData);
@@ -85,14 +87,24 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const FilterCateg(0, 'Date'),
-                        const FilterCateg(1, 'Location'),
-                        const FilterCateg(2, 'Category'),
+                        const FilterCateg(key: Key("DateFilter"), 0, 'Date'),
+                        const FilterCateg(
+                            key: Key("LocationFilter"), 1, 'Location'),
+                        const FilterCateg(
+                            key: Key("CategoreyFilter"), 2, 'Category'),
                         CheckBox(
-                            'Price', 'Free stuff only', widget.applyBtnState),
-                        CheckBox('Organiser', 'From organizers you follow',
+                            key: const Key("PriceCheckBox"),
+                            'Price',
+                            'Free stuff only',
                             widget.applyBtnState),
-                        RadioButton(widget.applyBtnState),
+                        CheckBox(
+                            key: const Key("OragnizerCheckBox"),
+                            'Organiser',
+                            'From organizers you follow',
+                            widget.applyBtnState),
+                        RadioButton(
+                            key: const Key("SortByRadioBtns"),
+                            widget.applyBtnState),
                       ],
                     ),
                   );
@@ -107,6 +119,7 @@ class _FilterScreenState extends State<FilterScreen> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: TransparentButtonNoIcon(
+                  key: const Key("ApplyFiltersBtn"),
                   'Apply filters (${filtersDataValues.selectedFilterCount})',
                   applyFilters,
                   widget.applyBtnState),

@@ -44,7 +44,8 @@ class _SearchState extends State<Search> {
     final filtersDataValues = Provider.of<FilterSelectionValues>(context);
 
     final tempTagsData = Provider.of<TemporaryTags>(context);
-    final tempFiltersDataValues = Provider.of<TempFilterSelectionValues>(context);
+    final tempFiltersDataValues =
+        Provider.of<TempFilterSelectionValues>(context);
 
     //------------------------------------- Methods -------------------------------------------------//
     /// Function that select tags and render thier new style.
@@ -86,12 +87,14 @@ class _SearchState extends State<Search> {
     }
 
     return Scaffold(
+        key: const Key("SearchScreen"),
         appBar: AppBar(
           backgroundColor: Colors.white38,
           foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
           elevation: 0,
           actions: <Widget>[
             IconButton(
+              key: const Key("GoToFiltersBtn"),
               icon: const Icon(
                 Icons.filter_list_sharp,
                 color: Colors.black,
@@ -104,6 +107,7 @@ class _SearchState extends State<Search> {
           child: Column(
             children: [
               GestureDetector(
+                key: const Key("GoToNearbyEvents"),
                 onTap: () => goToBearby(context),
                 child: Row(
                   children: const [
@@ -130,6 +134,7 @@ class _SearchState extends State<Search> {
               const Padding(
                 padding: EdgeInsets.only(left: 15, right: 15),
                 child: TextField(
+                  key: Key("TextFieldInput"),
                   cursorWidth: 0.5,
                   cursorColor: Colors.grey,
                   style: TextStyle(
@@ -172,6 +177,7 @@ class _SearchState extends State<Search> {
                                   ? const Color.fromARGB(255, 67, 96, 244)
                                   : const Color.fromARGB(255, 242, 242, 242)),
                           child: InkWell(
+                            key: const Key("TagSelectionGesture"),
                             borderRadius: BorderRadius.circular(60),
                             splashColor: const Color.fromARGB(255, 67, 96, 244),
                             onTap: () => selectTag(context,

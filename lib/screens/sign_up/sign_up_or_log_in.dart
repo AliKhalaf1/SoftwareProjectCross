@@ -92,8 +92,7 @@ class SignUpOrLogIn extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const <Widget>[
                     // child one
-                    TitleText1('Let\'s get started'),
-
+                    TitleText1(key: Key("LetsGetStartedTitle"),'Let\'s get started'),
                     // child two
                     SizedBox(
                       width: 250,
@@ -119,8 +118,8 @@ class SignUpOrLogIn extends StatelessWidget {
 
                   //Second child
                   TransparentButton(
-                    0,
                     key: const Key('LogInWithFacebookBtn'),
+                    0,
                     'Continue With Facebook',
                     signWithFacebook,
                     facebook,

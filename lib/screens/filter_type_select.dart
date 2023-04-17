@@ -37,6 +37,7 @@ class FilterType extends StatelessWidget {
       lastDate: DateTime.now().add(const Duration(days: 365)),
       builder: (context, child) {
         return Theme(
+          key: const Key("ShowDateRangePicker"),
           data: ThemeData.light().copyWith(
             appBarTheme: const AppBarTheme(
                 backgroundColor: Color.fromARGB(255, 215, 67, 21)),
@@ -176,6 +177,7 @@ class FilterType extends StatelessWidget {
             itemCount: id == 0 ? dateDataValues.length : catDataValues.length,
             itemBuilder: (ctx, index) {
               return InkWell(
+                key: Key("${dateDataValues[index].title}Selection"),
                 onTap: () => id == 0
                     ? selectFilteration(context, dateDataValues[index], index)
                     : selectFilteration(context, catDataValues[index], index),
