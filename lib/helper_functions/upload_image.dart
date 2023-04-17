@@ -32,7 +32,6 @@ class UploadImage {
 
     // send
     var response = await request.send();
-    print(response.statusCode);
 
     // listen for response
 

@@ -55,7 +55,7 @@ Future<String> getEmail() async {
 Future<void> emailCheck(BuildContext ctx, String email) async {
   // string to uri
   var uri = Uri.parse('${Constants.host}/auth/login');
-  print(uri);
+
   // create multipart request
 
   Map reqData = {
@@ -70,9 +70,7 @@ Future<void> emailCheck(BuildContext ctx, String email) async {
 
   var res = response.body;
   var resData = jsonDecode(res);
-  print(resData);
-  print(resData['message']);
-  print(response.statusCode);
+
   //Check Response
   if (resData['message'] == 'wrong password') {
     // user is already registered
@@ -113,7 +111,7 @@ Future<void> emailCheck(BuildContext ctx, String email) async {
 
 Future<void> passCheck(BuildContext ctx, String password, String email) async {
   var uri = Uri.parse('${Constants.host}/auth/login');
-  print(uri);
+
   // create multipart request
 
   Map reqData = {
@@ -128,14 +126,11 @@ Future<void> passCheck(BuildContext ctx, String password, String email) async {
 
   var res = response.body;
   var resData = jsonDecode(res);
-  print(resData);
-  print(resData['message']);
-  print(response.statusCode);
+
   //Check Response
   if (response.statusCode == 200) {
     // user is already registered
     String token = resData['token'];
-    print(token);
     setLoggedIn(email, token);
     Navigator.of(ctx).popUntil((route) => route.isFirst);
     Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {

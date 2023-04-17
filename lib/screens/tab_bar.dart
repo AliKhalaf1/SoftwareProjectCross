@@ -61,7 +61,7 @@ class TabBarScreenState extends State<TabBarScreen> {
   Future<void> checkLoggedUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token') ?? '';
-    print(token);
+
     if (token.isNotEmpty) {
       var email = prefs.getString('email') ?? '';
       User user = DBMock.getUserData(email);
