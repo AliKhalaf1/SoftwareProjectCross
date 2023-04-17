@@ -1,5 +1,7 @@
 library FilterSelectionValues;
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'tag.dart';
 
@@ -40,6 +42,28 @@ class FilterSelectionValues with ChangeNotifier {
     _organizer = false;
     _sortBy = 0;
     selectedFilterCount = 0;
+  }
+
+  ///Set All Values by values of passed FilterSelectionValues temp
+  void setAll(FilterSelectionValues temp) {
+    _date = temp.date;
+    _cat = temp.cat;
+    _location = temp.location;
+    _price = temp.price;
+    _organizer = temp.organizer;
+    _sortBy = temp.sortBy;
+    selectedFilterCount = temp.selectedFilterCount;
+  }
+
+  ///retrieve All Values and put on values of passed FilterSelectionValues temp
+  void retrieveAll(FilterSelectionValues temp) {
+    temp._date = _date;
+    temp._cat = _cat;
+    temp._location = _location;
+    temp._price = _price;
+    temp._organizer = _organizer;
+    temp._sortBy = _sortBy;
+    temp.selectedFilterCount = selectedFilterCount;
   }
 
   ///Get data value

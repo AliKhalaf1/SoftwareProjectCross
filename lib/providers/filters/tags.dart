@@ -214,9 +214,7 @@ class Tags with ChangeNotifier {
 
   ///##Reset all selected tags
   ///
-  ///   • Select a filter tag by using tagSelect / tagRemove functions
-  ///
-  ///   • Used with Filter_type_select screen.
+  ///   • Reset all values to thier default
   void resetTags() {
     selectedTagsCount = 0;
     _fieldtags[0].selected = true;
@@ -231,5 +229,31 @@ class Tags with ChangeNotifier {
     _tagsToShow.remove(_fieldtags[0]);
     _tagsToShow.remove(_datetags[0]);
     _tagsToShow.remove(_datetags[_datetags.length - 1]);
+  }
+
+  ///Set all values by passed Tags temp
+  void setAll(Tags temp) {
+    selectedTagsCount = temp.selectedTagsCount;
+    _tagsToShow = temp._tagsToShow;
+    for (var i = 0; i < _fieldtags.length; i++) {
+      _fieldtags[i].selected = temp._fieldtags[i].selected;
+    }
+    for (var i = 0; i < _datetags.length; i++) {
+      _datetags[i].selected = temp._datetags[i].selected;
+      _datetags[i].value = temp._datetags[i].value;
+    }
+  }
+
+  ///Retrieve all and put in values of passed Tags temp
+  void retrieveAll(Tags temp) {
+    temp.selectedTagsCount = selectedTagsCount;
+    temp._tagsToShow = _tagsToShow;
+    for (var i = 0; i < _fieldtags.length; i++) {
+      temp._fieldtags[i].selected = _fieldtags[i].selected;
+    }
+    for (var i = 0; i < _datetags.length; i++) {
+      temp._datetags[i].selected = _datetags[i].selected;
+      temp._datetags[i].value = _datetags[i].value;
+    }
   }
 }
