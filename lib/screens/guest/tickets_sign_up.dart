@@ -2,7 +2,10 @@ library ProfileSignUpScreen;
 
 import 'package:Eventbrite/widgets/tab_bar_Events.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/filters/filter_selection_values.dart';
+import '../../providers/filters/tags.dart';
 import '../../widgets/button_find_things.dart';
 import '../../widgets/title_text_1.dart';
 import '../../widgets/title_text_2.dart';
@@ -41,8 +44,16 @@ class TicketsSignUp extends StatelessWidget {
 
   // on click handler Routing
   void findThingsToDoHandler(BuildContext ctx) {
+    final tagsData = Provider.of<Tags>(ctx);
+    final filtersDataValues = Provider.of<FilterSelectionValues>(ctx);
+
+    tagsData.resetTags();
+    filtersDataValues.resetSelectionValues();
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return TabBarScreen(title: 'Search', tabBarIndex: 1);
+      return TabBarScreen(
+        title: 'Search',
+        tabBarIndex: 1,
+      );
     }));
   }
 

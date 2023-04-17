@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/filters/filter_selection_values.dart';
 import '../providers/filters/tag.dart';
+import '../providers/filters/tags.dart';
 import '../widgets/check_box.dart';
 import '../widgets/filter_categ.dart';
 import '../widgets/radio_button.dart';
@@ -45,10 +46,19 @@ class _FilterScreenState extends State<FilterScreen> {
   @override
   Widget build(BuildContext context) {
     //---------------- Variables ---------------//
+    // final tagsData = Provider.of<Tags>(context);
     final filtersDataValues = Provider.of<FilterSelectionValues>(context);
 
     return Scaffold(
       appBar: AppBar(
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     tagsData.resetTags();
+        //     filtersDataValues.resetSelectionValues();
+        //     Navigator.pop(context);
+        //   },
+        // ),
         backgroundColor: Colors.white38,
         foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
         elevation: 0,
@@ -97,7 +107,9 @@ class _FilterScreenState extends State<FilterScreen> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: TransparentButtonNoIcon(
-                  'Apply filters (${filtersDataValues.selectedFilterCount})', applyFilters, widget.applyBtnState),
+                  'Apply filters (${filtersDataValues.selectedFilterCount})',
+                  applyFilters,
+                  widget.applyBtnState),
             ),
           )
         ],

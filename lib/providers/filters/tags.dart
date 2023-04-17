@@ -211,4 +211,25 @@ class Tags with ChangeNotifier {
 
     notifyListeners();
   }
+
+  ///##Reset all selected tags
+  ///
+  ///   • Select a filter tag by using tagSelect / tagRemove functions
+  ///
+  ///   • Used with Filter_type_select screen.
+  void resetTags() {
+    selectedTagsCount = 0;
+    _fieldtags[0].selected = true;
+    _datetags[0].selected = true;
+    for (var i = 1; i < _fieldtags.length; i++) {
+      _fieldtags[i].selected = false;
+    }
+    for (var i = 1; i < _datetags.length; i++) {
+      _datetags[i].selected = false;
+    }
+    _tagsToShow = _datetags + _fieldtags;
+    _tagsToShow.remove(_fieldtags[0]);
+    _tagsToShow.remove(_datetags[0]);
+    _tagsToShow.remove(_datetags[_datetags.length - 1]);
+  }
 }

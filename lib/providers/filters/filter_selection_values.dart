@@ -31,6 +31,17 @@ class FilterSelectionValues with ChangeNotifier {
   int _sortBy = 0;
   int selectedFilterCount = 0;
 
+  ///Reset values to default
+  void resetSelectionValues() {
+    _date = Tag('Anytime', true, 'date', 'Anytime');
+    _cat = Tag('Anything', true, 'field', 'Anything');
+    _location = "Online events";
+    _price = false;
+    _organizer = false;
+    _sortBy = 0;
+    selectedFilterCount = 0;
+  }
+
   ///Get data value
   Tag get date {
     return _date;

@@ -4,11 +4,14 @@ import 'package:Eventbrite/screens/creator/live_events.dart';
 import 'package:Eventbrite/screens/creator/past_events.dart';
 import 'package:Eventbrite/screens/user/favourites.dart';
 import 'package:Eventbrite/screens/user/tickets.dart';
+import 'package:provider/provider.dart';
 
 import '../../screens/guest/favourites_sign_up.dart';
 import '../../screens/guest/tickets_sign_up.dart';
 import '../../screens/user/profile.dart';
 import 'package:flutter/material.dart';
+import '../providers/filters/filter_selection_values.dart';
+import '../providers/filters/tags.dart';
 import 'guest/profile_sign_up.dart';
 import 'guest/home.dart';
 import 'package:community_material_icon/community_material_icon.dart';
@@ -66,8 +69,8 @@ class TabBarScreenState extends State<TabBarScreen> {
         widget.tabBarIndex = 4;
         pages = [
           Home(),
-          Search(),
-          Favourites(),
+          const Search(),
+          const Favourites(),
           const Tickets(),
           Profile(
             checkLoggedUser,
@@ -78,7 +81,7 @@ class TabBarScreenState extends State<TabBarScreen> {
       setState(() {
         pages = [
           Home(),
-          Search(),
+          const Search(),
           const FavouritesSignUp(),
           const TicketsSignUp(),
           const ProfileSignUp(),
@@ -97,7 +100,7 @@ class TabBarScreenState extends State<TabBarScreen> {
 
   List<Widget> pages = [
     Home(),
-    Search(),
+    const Search(),
     const FavouritesSignUp(),
     const TicketsSignUp(),
     const ProfileSignUp(),
@@ -107,6 +110,9 @@ class TabBarScreenState extends State<TabBarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final tagsData = Provider.of<Tags>(context);
+    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
@@ -123,6 +129,10 @@ class TabBarScreenState extends State<TabBarScreen> {
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
+              if (index == 1) {
+                tagsData.resetTags();
+                filtersDataValues.resetSelectionValues();
+              }
               _currentIndex = index;
             });
           },
