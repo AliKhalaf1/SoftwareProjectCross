@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import '../providers/filters/filter_selection_values.dart';
 import '../providers/filters/tag.dart';
 import '../providers/filters/tags.dart';
+import '../providers/filters/temp_selected_filter_values.dart';
+import '../providers/filters/temp_tags.dart';
 import '../widgets/check_box.dart';
 import '../widgets/filter_categ.dart';
 import '../widgets/radio_button.dart';
@@ -15,20 +17,14 @@ import 'package:http/http.dart' as http;
 
 class FilterScreen extends StatefulWidget {
   //-----------------------------------------------------------//
-  //                   status variables                       //
-  // to be obtained from local data-base                     //
-  // List<Tag> selectedTags; /* Selected Tags */
-  int selectedSortby =
-      0; /* selected value of Sort by #(to be substituted by local variable from the local data base)#*/
-  bool isCheckedPrice = false; /* Checked value #*/
-  bool isCheckedOrganizer = false; /* Checked value #*/
+  //                        Button satatus                   //
   bool applyBtnState = false; /* Variable to know activate button or not #*/
 
   //-----------------------------------------------------------//
 
   static const filtersPageRout = '/filters';
 
-  // FilterScreen(this.selectedTags, {super.key});
+  FilterScreen({super.key});
 
   @override
   State<FilterScreen> createState() => _FilterScreenState();
@@ -46,19 +42,23 @@ class _FilterScreenState extends State<FilterScreen> {
   @override
   Widget build(BuildContext context) {
     //---------------- Variables ---------------//
-    // final tagsData = Provider.of<Tags>(context);
+    final tagsData = Provider.of<Tags>(context);
     final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+
+    final tempTagsData = Provider.of<TemporaryTags>(context);
+    final tempFiltersDataValues =
+        Provider.of<TempFilterSelectionValues>(context);
 
     return Scaffold(
       appBar: AppBar(
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back),
-        //   onPressed: () {
-        //     tagsData.resetTags();
-        //     filtersDataValues.resetSelectionValues();
-        //     Navigator.pop(context);
-        //   },
-        // ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            tagsData.setAll(tempTagsData);
+            filtersDataValues.setAll(tempFiltersDataValues);
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: Colors.white38,
         foregroundColor: const Color.fromRGBO(0, 0, 0, 0.7),
         elevation: 0,

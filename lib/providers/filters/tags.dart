@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
 
 import 'tag.dart';
+import 'temp_tags.dart';
 
 /// {@category Providers}
 ///## Tags class that has tag lists
@@ -229,31 +230,20 @@ class Tags with ChangeNotifier {
     _tagsToShow.remove(_fieldtags[0]);
     _tagsToShow.remove(_datetags[0]);
     _tagsToShow.remove(_datetags[_datetags.length - 1]);
+    notifyListeners();
   }
 
   ///Set all values by passed Tags temp
-  void setAll(Tags temp) {
+  void setAll(TemporaryTags temp) {
     selectedTagsCount = temp.selectedTagsCount;
-    _tagsToShow = temp._tagsToShow;
+    _tagsToShow = temp.tagsToShow;
     for (var i = 0; i < _fieldtags.length; i++) {
-      _fieldtags[i].selected = temp._fieldtags[i].selected;
+      _fieldtags[i].selected = temp.fieldtags[i].selected;
     }
     for (var i = 0; i < _datetags.length; i++) {
-      _datetags[i].selected = temp._datetags[i].selected;
-      _datetags[i].value = temp._datetags[i].value;
+      _datetags[i].selected = temp.datetags[i].selected;
+      _datetags[i].value = temp.datetags[i].value;
     }
-  }
-
-  ///Retrieve all and put in values of passed Tags temp
-  void retrieveAll(Tags temp) {
-    temp.selectedTagsCount = selectedTagsCount;
-    temp._tagsToShow = _tagsToShow;
-    for (var i = 0; i < _fieldtags.length; i++) {
-      temp._fieldtags[i].selected = _fieldtags[i].selected;
-    }
-    for (var i = 0; i < _datetags.length; i++) {
-      temp._datetags[i].selected = _datetags[i].selected;
-      temp._datetags[i].value = _datetags[i].value;
-    }
+    notifyListeners();
   }
 }

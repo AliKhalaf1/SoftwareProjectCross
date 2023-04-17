@@ -4,6 +4,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'tag.dart';
+import 'temp_selected_filter_values.dart';
 
 /// {@category Providers}
 ///## FiltersData class that save selected tags along the app
@@ -42,10 +43,11 @@ class FilterSelectionValues with ChangeNotifier {
     _organizer = false;
     _sortBy = 0;
     selectedFilterCount = 0;
+    notifyListeners();
   }
 
   ///Set All Values by values of passed FilterSelectionValues temp
-  void setAll(FilterSelectionValues temp) {
+  void setAll(TempFilterSelectionValues temp) {
     _date = temp.date;
     _cat = temp.cat;
     _location = temp.location;
@@ -53,17 +55,7 @@ class FilterSelectionValues with ChangeNotifier {
     _organizer = temp.organizer;
     _sortBy = temp.sortBy;
     selectedFilterCount = temp.selectedFilterCount;
-  }
-
-  ///retrieve All Values and put on values of passed FilterSelectionValues temp
-  void retrieveAll(FilterSelectionValues temp) {
-    temp._date = _date;
-    temp._cat = _cat;
-    temp._location = _location;
-    temp._price = _price;
-    temp._organizer = _organizer;
-    temp._sortBy = _sortBy;
-    temp.selectedFilterCount = selectedFilterCount;
+    notifyListeners();
   }
 
   ///Get data value
@@ -135,10 +127,12 @@ class FilterSelectionValues with ChangeNotifier {
   ///Increment filter count
   void incSelecFiltersCount() {
     selectedFilterCount++;
+    notifyListeners();
   }
 
   ///Decrement filter count
   void decSelecFiltersCount() {
     selectedFilterCount--;
+    notifyListeners();
   }
 }

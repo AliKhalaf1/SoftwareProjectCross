@@ -1,11 +1,13 @@
 library SearchScreen;
 
 import 'package:Eventbrite/providers/filters/tags.dart';
+import 'package:Eventbrite/providers/filters/temp_tags.dart';
 import 'package:Eventbrite/widgets/grey_area.dart';
 import 'package:flutter/material.dart';
 
 import '../providers/filters/filter_selection_values.dart';
 import '../providers/filters/tag.dart';
+import '../providers/filters/temp_selected_filter_values.dart';
 import '../widgets/event_collection.dart';
 import 'filters.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +43,9 @@ class _SearchState extends State<Search> {
 
     final filtersDataValues = Provider.of<FilterSelectionValues>(context);
 
+    final tempTagsData = Provider.of<TemporaryTags>(context);
+    final tempFiltersDataValues = Provider.of<TempFilterSelectionValues>(context);
+
     //------------------------------------- Methods -------------------------------------------------//
     /// Function that select tags and render thier new style.
     ///
@@ -73,6 +78,8 @@ class _SearchState extends State<Search> {
     ///
     ///Naviagtes only to silters screen.
     void viewFilters(BuildContext ctx) {
+      tempTagsData.setAll(tagsData);
+      tempFiltersDataValues.setAll(filtersDataValues);
       Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
         return FilterScreen();
       }));
