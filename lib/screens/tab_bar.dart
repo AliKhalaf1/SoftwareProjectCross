@@ -137,6 +137,7 @@ class TabBarScreenState extends State<TabBarScreen> {
               _currentIndex = index;
             });
           },
+          key: const Key('bottom_nav_bar'),
           items: const [
             BottomNavigationBarItem(
               backgroundColor: Colors.white,

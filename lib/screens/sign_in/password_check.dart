@@ -96,6 +96,7 @@ class _PasswordCheckState extends State<PasswordCheck> {
                                 children: [
                                   PhotoAndEmail(widget.email, widget.imageURL),
                                   TextField(
+                                    key: const Key('password_text_field'),
                                     controller: widget._passwordText,
                                     obscureText: !widget._passwordVisible,
                                     onChanged: (value) => value.isNotEmpty
@@ -185,7 +186,7 @@ class _PasswordCheckState extends State<PasswordCheck> {
                         margin: const EdgeInsets.only(top: 20),
                         width: double.infinity,
                         child: TextButton(
-                          key: const Key('pass_check_log_in_btn'),
+                          key: const Key('log_in_btn'),
                           style: ButtonStyle(
                             overlayColor: widget._logInBtnActive
                                 ? MaterialStateProperty.all<Color>(

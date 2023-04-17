@@ -94,7 +94,10 @@ class _FavouritesState extends State<Favourites> {
                 itemCount: 1, // substitute with collectionCounts
                 itemBuilder: (ctx, index) {
                   return FavEventCollection(
-                      DateFormat.yMEd().format(favourites[0].date), favourites);
+                    DateFormat.yMEd().format(favourites[0].date),
+                    favourites,
+                    key: Key('fav_event_${index}'),
+                  );
                 },
               ),
       ),

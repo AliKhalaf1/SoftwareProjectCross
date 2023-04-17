@@ -96,6 +96,7 @@ class _EmailCheckState extends State<EmailCheck> {
                           const EdgeInsets.only(left: 15, right: 15, top: 10),
                       margin: const EdgeInsets.only(top: 20),
                       child: TextField(
+                        key: const Key("email_text_field"),
                         controller: widget.emailText,
                         onChanged: (value) => value.isNotEmpty
                             ? _setNextBtnActive(EmailValidator.validate(value))
@@ -145,7 +146,7 @@ class _EmailCheckState extends State<EmailCheck> {
                       margin: const EdgeInsets.only(top: 20),
                       width: double.infinity,
                       child: TextButton(
-                        key: const Key('email_check_log_in_btn'),
+                        key: const Key('next_btn'),
                         style: ButtonStyle(
                           overlayColor: widget._nextBtnActive
                               ? MaterialStateProperty.all<Color>(

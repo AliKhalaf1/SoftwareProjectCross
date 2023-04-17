@@ -53,6 +53,7 @@ class _AccountSettingsState extends State<AccountSettings> {
               print(email);
               DBMock.updateUserImage(email, url);
             },
+            key: const Key('update_Picture'),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.05,

@@ -110,19 +110,33 @@ class SignUpOrLogIn extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   //First child
-                  LogInBtn('Continue with email address', emailLogIn,
-                      key: Key('LogInBtn')),
+                  LogInBtn(
+                    'Continue with email address',
+                    emailLogIn,
+                    key: const Key('log_in_with_email_btn'),
+                  ),
 
                   //Second child
                   TransparentButton(
-                      0, 'Continue With Facebook', signWithFacebook, facebook),
+                    0,
+                    'Continue With Facebook',
+                    signWithFacebook,
+                    facebook,
+                    key: const Key('log_in_with_facebook_btn'),
+                  ),
 
                   //Third child
                   TransparentButton(
-                      1, 'Continue With Google', signWithGoogle, facebook),
+                    1,
+                    'Continue With Google',
+                    signWithGoogle,
+                    facebook,
+                    key: const Key('log_in_with_google_btn'),
+                  ),
 
                   //Fourth child
                   TextButton(
+                    key: const Key('find_ticket_btn'),
                     onPressed: () => findTicket(context),
                     child: const Text(
                       'I bought tickets, but I don\'t have an account.',

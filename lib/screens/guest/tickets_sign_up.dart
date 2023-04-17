@@ -100,7 +100,7 @@ class TicketsSignUp extends StatelessWidget {
                 GreyButtonLogout(
                   findThingsToDoHandler,
                   'Find things to do',
-                  key: Key('Find things btn'),
+                  key: Key('FindThingsToDoBtn'),
                 ),
               ],
             ),

@@ -124,7 +124,7 @@ class _ProfileState extends State<Profile> {
                             widget.lastName,
                             widget.email,
                             () => goToAccountSettings(context),
-                            key: Key('Profile Layer'),
+                            key: const Key('Profile Layer'),
                           ),
 
                           const SizedBox(

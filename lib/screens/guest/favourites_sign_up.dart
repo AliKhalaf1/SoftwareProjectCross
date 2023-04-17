@@ -55,7 +55,9 @@ class FavouritesSignUp extends StatelessWidget {
                   const TitleText1('See your favourite in one place'),
                   const Padding(
                     padding: EdgeInsets.only(top: 8.0),
-                    child: TitleText2('Log in to see your favourites'),
+                    child: TitleText2(
+                      'Log in to see your favourites',
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
@@ -63,15 +65,15 @@ class FavouritesSignUp extends StatelessWidget {
                       'Explore events',
                       0,
                       () {},
-                      key: Key('btnExplore'),
+                      key: const Key('btnExplore'),
                     ),
                   ),
                 ],
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 15, right: 6, top: 0),
-              child: LogInBtn('Log In', loggingIn, key: Key('LogInBtn')),
+              padding: const EdgeInsets.only(left: 15, right: 6, top: 0),
+              child: LogInBtn('Log In', loggingIn, key: const Key('LogInBtn')),
             ),
           ],
         ),

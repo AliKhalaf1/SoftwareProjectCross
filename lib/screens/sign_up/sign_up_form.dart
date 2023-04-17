@@ -267,13 +267,17 @@ class _SignUpFormState extends State<SignUpForm> {
                   child: ListView(
                     children: [
                       //////////////////////////EMAIL///////////////////////////////////
-                      DisabledEmailField(widget: widget),
+                      DisabledEmailField(
+                        widget: widget,
+                        key: const Key('email_field'),
+                      ),
                       ////////////////////////////CONFIM EMAIL FIELD///////////////////////////////////
                       Container(
                         padding:
                             const EdgeInsets.only(left: 15, right: 15, top: 10),
                         margin: const EdgeInsets.only(top: 10),
                         child: TextField(
+                          key: const Key('confirm_email_field'),
                           onChanged: (value) => value.isNotEmpty
                               ? value == widget.emailText
                                   ? _setCheck(true, 0)
@@ -321,6 +325,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             Flexible(
                               fit: FlexFit.loose,
                               child: TextField(
+                                key: const Key('first_name_field'),
                                 controller: widget._firstNameText,
                                 selectionWidthStyle: BoxWidthStyle.tight,
                                 onChanged: (value) => value.isNotEmpty
@@ -365,6 +370,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             Flexible(
                               fit: FlexFit.loose,
                               child: TextField(
+                                key: const Key('last_name_field'),
                                 controller: widget._lastNameText,
                                 selectionWidthStyle: BoxWidthStyle.tight,
                                 onChanged: (value) => value.isNotEmpty
@@ -412,6 +418,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             const EdgeInsets.only(left: 15, right: 15, top: 15),
                         margin: const EdgeInsets.only(top: 15),
                         child: TextField(
+                          key: const Key('password_field'),
                           controller: widget._passwordText,
                           obscureText: !widget._passwordVisible,
                           onChanged: (value) => value.isNotEmpty
@@ -550,7 +557,10 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 SizedBox(
                     child: SignUpBtn(
-                        signUpFn: showTermsAndConditions, widget: widget)),
+                  signUpFn: showTermsAndConditions,
+                  widget: widget,
+                  key: const Key('sign_up_btn'),
+                )),
               ],
             ),
     );

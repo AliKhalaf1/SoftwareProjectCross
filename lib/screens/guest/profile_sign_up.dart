@@ -33,11 +33,13 @@ class ProfileSignUp extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      ButtonLink('Ticket Issues', () {}),
+                      ButtonLink('Ticket Issues', () {},
+                          key: const Key('ticket_issues_btn')),
                       ButtonLink('Manage Events', () {
                         loggingIn(context);
-                      }),
-                      ButtonLink('Settings', () {}),
+                      }, key: const Key('manage_events_btn')),
+                      ButtonLink('Settings', () {},
+                          key: const Key('settings_btn')),
                     ],
                   ),
                 ),
@@ -63,7 +65,7 @@ class ProfileSignUp extends StatelessWidget {
               color: Colors.white,
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, right: 5),
-                child: LogInBtn('Log In', loggingIn,key: Key('LogInBtn')),
+                child: LogInBtn('Log In', loggingIn, key: Key('LogInBtn')),
               ),
             ),
           ),
