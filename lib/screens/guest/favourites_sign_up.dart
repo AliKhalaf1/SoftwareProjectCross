@@ -60,20 +60,20 @@ class FavouritesSignUp extends StatelessWidget {
                     ),
                   ),
                   Padding(
+                    key: const Key('btnExplore'),
                     padding: const EdgeInsets.only(top: 8.0),
                     child: TextLink(
                       'Explore events',
                       0,
                       () {},
-                      key: const Key('btnExplore'),
                     ),
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15, right: 6, top: 0),
-              child: LogInBtn('Log In', loggingIn, key: const Key('LogInBtn')),
+            const Padding(
+              padding: EdgeInsets.only(left: 15, right: 6, top: 0),
+              child: LogInBtn('Log In', loggingIn, key: Key('LogInBtn')),
             ),
           ],
         ),
