@@ -140,24 +140,32 @@ class TabBarScreenState extends State<TabBarScreen> {
           key: const Key('bottom_nav_bar'),
           items: const [
             BottomNavigationBarItem(
+              tooltip: 'Home',
               backgroundColor: Colors.white,
-              icon: Icon(Icons.home_outlined),
+              icon: Icon(Icons.home_outlined, key: Key('home')),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
+              tooltip: 'Search',
+              icon: Icon(Icons.search, key: Key('search')),
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border),
+              tooltip: 'Favourites',
+              icon: Icon(Icons.favorite_border, key: Key('favourites')),
               label: 'Likes',
             ),
             BottomNavigationBarItem(
-              icon: Icon(CommunityMaterialIcons.ticket_confirmation_outline),
+              tooltip: 'Tickets',
+              icon: Icon(
+                CommunityMaterialIcons.ticket_confirmation_outline,
+                key: Key('tickets'),
+              ),
               label: 'Tickets',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline_rounded),
+              tooltip: 'Profile',
+              icon: Icon(Icons.person_outline_rounded, key: Key('profile')),
               label: 'Profile',
             ),
           ]),
