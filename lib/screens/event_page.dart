@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 /// {@category Screens}
 ///
 ///
+/// This Page is used to display a single event data.
 ///
 class EventPage extends StatelessWidget {
   const EventPage({super.key});

@@ -3,6 +3,7 @@ library PasswordCheckScreen;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../widgets/app_bar_text.dart';
+import '../../widgets/loading_spinner.dart';
 import '../../widgets/photo_and_email.dart';
 import '../../widgets/text_link.dart';
 import 'package:flutter/cupertino.dart';
@@ -62,22 +63,7 @@ class _PasswordCheckState extends State<PasswordCheck> {
         title: const AppBarText('Log in'),
       ),
       body: isLoading
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  LoadingAnimationWidget.discreteCircle(
-                      secondRingColor: Colors.grey,
-                      thirdRingColor: Colors.grey,
-                      color: Colors.grey,
-                      size: 60),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  const Text("Loading"),
-                ],
-              ),
-            )
+          ? const LoadingSpinner()
           : Column(
               children: [
                 Expanded(

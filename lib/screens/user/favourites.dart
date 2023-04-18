@@ -1,3 +1,5 @@
+library FavouritesPage;
+
 import 'package:Eventbrite/widgets/app_bar_text.dart';
 import 'package:Eventbrite/widgets/fav_event_collection.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,12 @@ import 'package:provider/provider.dart';
 import '../../providers/events/event.dart';
 import '../../providers/events/fav_events.dart';
 
+/// {@category user}
+/// {@category Screens}
+///
+/// This Page is used to display the user's favourite events.
+///
+/// It uses the [FavEventCollection] widget to display the events.
 class Favourites extends StatefulWidget {
   const Favourites({super.key});
 

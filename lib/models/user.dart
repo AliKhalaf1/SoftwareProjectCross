@@ -19,8 +19,8 @@ class User {
   //parameters
   final String email;
   String imageUrl;
-  final String firstName;
-  final String lastName;
+  String firstName;
+  String lastName;
   //constructor
   User(this.email, this.imageUrl, this.firstName, this.lastName);
 

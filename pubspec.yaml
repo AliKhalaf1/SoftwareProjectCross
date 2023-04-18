@@ -97,6 +97,7 @@ flutter:
     - assets/images/live_events.jfif
     - assets/images/past_events.jfif
     - assets/images/draft_events.jfif
+    - assets/images/TicketShape.png
 
 
 

@@ -9,6 +9,7 @@ class DBMock {
     Auth('gilany@gmail.com', '12345678'),
     Auth('ali@gmail.com', '12345678'),
     Auth('amin@gmail.com', '12345678'),
+    Auth('ahmedsaad_2009@live.com', '123456789'),
   ];
   static List<User> users = [
     User(
@@ -83,6 +84,16 @@ class DBMock {
     for (var u in users) {
       if (u.email == email) {
         u.imageurl = imageurl;
+      }
+    }
+  }
+
+  static void updateUserName(String email, String firstname, String lastname) {
+    List<User> users = getUsers();
+    for (var u in users) {
+      if (u.email == email) {
+        u.firstName = firstname;
+        u.lastName = lastname;
       }
     }
   }

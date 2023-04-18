@@ -14,7 +14,8 @@ Future<int> signUpApi(
     "lastname": lastname,
     "email": email,
     "password": password,
-    "is_verified": false
+    "is_verified": false,
+    "avatar_url": ""
   };
   //encode Map to JSON
   var reqBody = json.encode(reqData);
