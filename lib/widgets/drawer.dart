@@ -10,6 +10,7 @@ class EventDrawer extends StatefulWidget {
   EventDrawer({super.key});
   var email = '';
   var Name = '';
+
   bool isLoading = false;
   @override
   State<EventDrawer> createState() => _EventDrawerState();
@@ -32,6 +33,7 @@ class _EventDrawerState extends State<EventDrawer> {
     });
 
     super.initState();
+    // enable icon if page opened relate to the icon
     mainIconColor = Color.fromRGBO(124, 120, 155, 1);
     iconColors = List.filled(
       7,
@@ -48,6 +50,7 @@ class _EventDrawerState extends State<EventDrawer> {
     }));
   }
 
+// to enable icon and disable
   void iconHandler(int index) {
     setState(() {
       if (index != 0) {
@@ -61,12 +64,14 @@ class _EventDrawerState extends State<EventDrawer> {
     });
   }
 
+// navigate to events page
   void eventNavigate(BuildContext ctx) {
     Navigator.of(ctx).pushNamed(
       TabBarEvents.route,
     ); // we use same string in main it’s a key
   }
 
+// Function return the main widget in the Drawer
   Widget buildlistview(String title, IconData icon, int index, Function handler,
       {required Key key}) {
     Color splashColor = index != 0 ? Colors.grey : Colors.transparent;
