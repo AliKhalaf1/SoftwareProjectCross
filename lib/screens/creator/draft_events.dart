@@ -2,6 +2,9 @@ import 'package:Eventbrite/widgets/draft_card.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/backgroud.dart';
 
+/// {@category Creator}
+/// {@category Screens}
+/// 
 class DraftEvents extends StatelessWidget {
   bool tester = true;
   String EventDesc = "event1";
