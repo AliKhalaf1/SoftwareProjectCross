@@ -1,10 +1,13 @@
+library DraftEventsScreen;
+
 import 'package:Eventbrite/widgets/draft_card.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/backgroud.dart';
 
 /// {@category Creator}
 /// {@category Screens}
-/// 
+///
+/// This Page is used to display the creator's draft events.
 class DraftEvents extends StatelessWidget {
   bool tester = true;
   String EventDesc = "event1";

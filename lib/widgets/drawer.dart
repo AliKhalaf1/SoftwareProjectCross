@@ -1,3 +1,5 @@
+library CreatorViewSideDrawer;
+
 import 'package:Eventbrite/helper_functions/log_in.dart';
 import 'package:Eventbrite/models/db_mock.dart';
 import 'package:Eventbrite/widgets/tab_bar_Events.dart';
@@ -5,6 +7,12 @@ import 'package:flutter/material.dart';
 import '../helper_functions/log_out.dart';
 import '../models/user.dart';
 import '../screens/tab_bar.dart';
+
+/// {@category Creator}
+/// {@category Widgets}
+///
+/// This Widget is used to display the creator's side drawer.
+///
 
 class EventDrawer extends StatefulWidget {
   EventDrawer({super.key});

@@ -1,5 +1,5 @@
-library EventModel;
-
+/// {@nodoc}
+/// nodoc
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -36,8 +36,17 @@ class Event with ChangeNotifier {
   final String id;
 
   ///Constructor
-  Event(this.creatorFollowers, this.date, this.description, this.eventImg,
-      this.state, this.isFav, this.categ, this.tags, this.id,);
+  Event(
+    this.creatorFollowers,
+    this.date,
+    this.description,
+    this.eventImg,
+    this.state,
+    this.isFav,
+    this.categ,
+    this.tags,
+    this.id,
+  );
 
   /// Set isFav Value by true or false
   void _setFavValue(bool newValue) {

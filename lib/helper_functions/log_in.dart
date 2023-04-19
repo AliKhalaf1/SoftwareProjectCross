@@ -48,12 +48,19 @@ Future<bool> checkLoggedUser() async {
   return token.isNotEmpty;
 }
 
+/// {@category Helper Functions}
+/// <h1>This function is used to get the email of the user from Cache Memory.</h1>
 Future<String> getEmail() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var status = prefs.getString('email') ?? '';
   return status;
 }
 
+/// {@category Helper Functions}
+/// <h1>This function is used to check whether an email exists using api's.</h1>
+///
+/// It takes the email of the user as a parameter.
+///
 Future<void> emailCheck(BuildContext ctx, String email) async {
   // string to uri
   // var uri = Uri.parse('${Constants.host}/auth/login');

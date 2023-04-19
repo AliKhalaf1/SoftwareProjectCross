@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 /// {@category User}
 /// {@category Screens}
 ///
+/// This Page is used to display the user's tickets.
+///
 class FindTickets extends StatelessWidget {
   const FindTickets({super.key});
 

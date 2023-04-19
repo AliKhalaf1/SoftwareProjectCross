@@ -1,4 +1,6 @@
-library EventCollection;
+/// Library of Favourite events.
+
+library FavouriteEventsCollection;
 
 import 'package:Eventbrite/widgets/fav_event_card.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +13,7 @@ import '../widgets/event_card.dart';
 import '../providers/events/event.dart';
 
 /// {@category Widgets}
-/// Collection of Favourite events with similar categorey.
+/// Collection of Favourite events.
 ///
 class FavEventCollection extends StatelessWidget {
   //Data needed to render the categoryscreen and taken from home screen

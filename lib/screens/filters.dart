@@ -15,6 +15,12 @@ import '../widgets/transparent_button_no_icon.dart';
 import 'tab_bar.dart';
 import 'package:http/http.dart' as http;
 
+/// {@category user}
+/// {@category Screens}
+///
+/// This Page is used to display the diffrent filters when searching for an event.
+///
+
 class FilterScreen extends StatefulWidget {
   //-----------------------------------------------------------//
   //                        Button satatus                   //

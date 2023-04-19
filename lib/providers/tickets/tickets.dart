@@ -1,5 +1,5 @@
-library TicketsModel;
-
+/// {@nodoc}
+/// nodoc
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,7 +1,14 @@
+library past_events;
+
 import 'package:flutter/material.dart';
 
 import '../../widgets/backgroud.dart';
 
+/// {@category Creator}
+/// {@category Screens}
+///
+/// This Page is used to display the creator's past events.
+///
 class PastEvents extends StatelessWidget {
   const PastEvents({super.key});
   static const route = '/Pastevents';

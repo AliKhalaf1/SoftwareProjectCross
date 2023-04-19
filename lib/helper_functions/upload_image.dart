@@ -7,6 +7,15 @@ import 'package:async/async.dart';
 
 import 'constants.dart';
 
+/// {@category Helper Functions}
+/// <h1>This function is used to upload the image to the imgbb api.</h1>
+///
+/// It takes the image file as a parameter.
+///
+/// It then sends a post request to the api with the image file.
+///
+/// then, it returns the url of the image.
+///
 class UploadImage {
   static Future<String> uploadImage(File imageFile) async {
     // open a bytestream

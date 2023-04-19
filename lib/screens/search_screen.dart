@@ -14,6 +14,11 @@ import 'package:provider/provider.dart';
 import '../providers/events/events.dart';
 import 'nearby_events.dart';
 
+/// {@category user}
+/// {@category Screens}
+///
+/// This Page is used to display the search results.
+///
 class Search extends StatefulWidget {
   static const searchPageRoute = '/search';
 

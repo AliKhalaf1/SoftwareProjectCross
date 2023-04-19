@@ -5,6 +5,10 @@ import 'package:provider/provider.dart';
 
 import '../providers/filters/filter_selection_values.dart';
 
+/// {@category User}
+/// {@category Widgets}
+///
+/// This widget is used to display a checkbox with a title and a paragraph.
 class CheckBox extends StatefulWidget {
   final String title;
   final String parag;

@@ -1,8 +1,18 @@
+library live_events;
+
 import 'package:Eventbrite/widgets/backgroud.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/live_card.dart';
 
+/// {@category Creator}
+/// {@category Screens}
+///
+/// This Page is used to display the creator's live events.
+///
+/// It takes the context of the page as a parameter.
+///
+/// It then pushes the TabBarEvents page to the Navigator.
 class LiveEvents extends StatelessWidget {
   const LiveEvents({super.key});
   static const route = '/Liveevents';

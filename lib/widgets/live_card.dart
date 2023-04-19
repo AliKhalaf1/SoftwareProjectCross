@@ -1,7 +1,19 @@
+library liveCard;
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+
+import '../screens/creator/live_events.dart';
+
+/// {@category Creator}
+/// {@category Widgets}
+///
+/// This widget is used to display the live events in the creator's home page.
+///
+/// It is used in [LiveEvents].
+///
 
 class LiveCard extends StatelessWidget {
   final String liveDescription;
@@ -9,13 +21,9 @@ class LiveCard extends StatelessWidget {
   final int ticketsNumber;
   final int ticketsTaken;
   final int ticketPrice;
-  LiveCard(
-    this.dateString,
-    this.liveDescription,
-    this.ticketsNumber,
-    this.ticketsTaken,
-    this.ticketPrice, {required Key key}
-  );
+  LiveCard(this.dateString, this.liveDescription, this.ticketsNumber,
+      this.ticketsTaken, this.ticketPrice,
+      {required Key key});
 
   @override
   Widget build(BuildContext context) {

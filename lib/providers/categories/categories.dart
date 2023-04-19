@@ -1,4 +1,5 @@
-library Categories;
+/// {@nodoc}
+/// nodoc
 
 import 'dart:convert';
 import 'package:flutter/foundation.dart';

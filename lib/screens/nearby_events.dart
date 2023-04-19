@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 
 import 'filters.dart';
 
+/// {@category user}
+///
+/// {@category Screens}
+///
+/// This Page is used to display the nearby events.
+
 class NearbyEvents extends StatefulWidget {
   const NearbyEvents({super.key});
 

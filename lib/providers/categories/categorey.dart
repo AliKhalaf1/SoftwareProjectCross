@@ -1,4 +1,5 @@
-library CategoreyModel;
+/// {@nodoc}
+/// nodoc
 
 import 'package:flutter/material.dart';
 

@@ -6,6 +6,11 @@ import '../providers/filters/filter_selection_values.dart';
 import '../screens/filter_type_select.dart';
 import '../screens/nearby_events.dart';
 
+/// {@category User}
+/// {@category Widgets}
+///
+/// This widget is used to display the filter categories.
+///
 class FilterCateg extends StatefulWidget {
   final int id;
   final String title;
