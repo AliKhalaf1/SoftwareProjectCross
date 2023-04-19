@@ -1,9 +1,17 @@
 library TabBarScreen;
 
+import 'package:Eventbrite/screens/creator/live_events.dart';
+import 'package:Eventbrite/screens/creator/past_events.dart';
+import 'package:Eventbrite/screens/user/favourites.dart';
+import 'package:Eventbrite/screens/user/tickets_page.dart';
+import 'package:provider/provider.dart';
+
 import '../../screens/guest/favourites_sign_up.dart';
 import '../../screens/guest/tickets_sign_up.dart';
 import '../../screens/user/profile.dart';
 import 'package:flutter/material.dart';
+import '../providers/filters/filter_selection_values.dart';
+import '../providers/filters/tags.dart';
 import 'guest/profile_sign_up.dart';
 import 'guest/home.dart';
 import 'package:community_material_icon/community_material_icon.dart';
@@ -43,35 +51,29 @@ class TabBarScreen extends StatefulWidget {
   TabBarScreen({super.key, required this.title, this.tabBarIndex = 0});
 
   @override
-  State<TabBarScreen> createState() => _TabBarScreenState(tabBarIndex);
+  State<TabBarScreen> createState() => TabBarScreenState(tabBarIndex);
 }
 
 /// {@category User}
 /// {@category Screens}
 ///
-class _TabBarScreenState extends State<TabBarScreen> {
+class TabBarScreenState extends State<TabBarScreen> {
   Future<void> checkLoggedUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var status = prefs.getBool('isLoggedIn') ?? false;
-    if (status == true) {
+    var token = prefs.getString('token') ?? '';
+
+    if (token.isNotEmpty) {
       var email = prefs.getString('email') ?? '';
       User user = DBMock.getUserData(email);
 
       setState(() {
         widget.tabBarIndex = 4;
         pages = [
-          Home(10),
+          Home(),
           const Search(),
-          const FavouritesSignUp(),
-          const TicketsSignUp(),
+          const Favourites(),
+          const TicketsPage(),
           Profile(
-            user.firstName,
-            user.lastName,
-            user.imageUrl,
-            user.email,
-            0,
-            0,
-            0,
             checkLoggedUser,
           ),
         ];
@@ -79,7 +81,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
     } else {
       setState(() {
         pages = [
-          Home(10),
+          Home(),
           const Search(),
           const FavouritesSignUp(),
           const TicketsSignUp(),
@@ -98,17 +100,20 @@ class _TabBarScreenState extends State<TabBarScreen> {
   var _currentIndex = 0;
 
   List<Widget> pages = [
-    Home(10),
+    Home(),
     const Search(),
     const FavouritesSignUp(),
     const TicketsSignUp(),
     const ProfileSignUp(),
   ];
 
-  _TabBarScreenState(this._currentIndex);
+  TabBarScreenState(this._currentIndex);
 
   @override
   Widget build(BuildContext context) {
+    final tagsData = Provider.of<Tags>(context);
+    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
@@ -125,29 +130,42 @@ class _TabBarScreenState extends State<TabBarScreen> {
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
+              if (index == 1) {
+                tagsData.resetTags();
+                filtersDataValues.resetSelectionValues();
+              }
               _currentIndex = index;
             });
           },
+          key: const Key('bottom_nav_bar'),
           items: const [
             BottomNavigationBarItem(
+              tooltip: 'Home',
               backgroundColor: Colors.white,
-              icon: Icon(Icons.home_outlined),
+              icon: Icon(Icons.home_outlined, key: Key('home')),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
+              tooltip: 'Search',
+              icon: Icon(Icons.search, key: Key('search')),
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border),
+              tooltip: 'Favourites',
+              icon: Icon(Icons.favorite_border, key: Key('favourites')),
               label: 'Likes',
             ),
             BottomNavigationBarItem(
-              icon: Icon(CommunityMaterialIcons.ticket_confirmation_outline),
+              tooltip: 'Tickets',
+              icon: Icon(
+                CommunityMaterialIcons.ticket_confirmation_outline,
+                key: Key('tickets'),
+              ),
               label: 'Tickets',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline_rounded),
+              tooltip: 'Profile',
+              icon: Icon(Icons.person_outline_rounded, key: Key('profile')),
               label: 'Profile',
             ),
           ]),

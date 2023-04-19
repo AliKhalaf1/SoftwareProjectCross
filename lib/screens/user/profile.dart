@@ -1,5 +1,16 @@
 library UserProfileScreen;
 
+import 'package:Eventbrite/helper_functions/log_in.dart';
+import 'package:Eventbrite/models/db_mock.dart';
+import 'package:Eventbrite/providers/events/event.dart';
+import 'package:Eventbrite/providers/events/fav_events.dart';
+import 'package:Eventbrite/screens/user/account_settings.dart';
+import 'package:provider/provider.dart';
+
+import '../../helper_functions/log_out.dart';
+import '../../helper_functions/organizer_view.dart';
+import '../../models/user.dart';
+import '../../providers/events/events.dart';
 import '../../widgets/button_notificatin.dart';
 import '../../widgets/grey_area.dart';
 import '../../widgets/profile_layer.dart';
@@ -27,99 +38,165 @@ import '../../widgets/counter_button.dart';
 ///
 ///and GreyButtonLogOut.
 
-class Profile extends StatelessWidget {
-  String firstName;
-  String lastName;
-  String email;
-  String imageUrl;
-  int likesCount;
-  int myTicketsCount;
-  int followingCount;
+class Profile extends StatefulWidget {
+  String firstName = '';
+  String lastName = '';
+  String email = '';
+  String imageUrl = '';
+  int likesCount = 0;
+  int myTicketsCount = 0;
+  int followingCount = 0;
   final Function logOut;
-  Profile(this.firstName, this.lastName, this.imageUrl, this.email,
-      this.likesCount, this.myTicketsCount, this.followingCount, this.logOut,
-      {super.key});
+  Profile(this.logOut, {super.key});
   static const emailCheckRoute = '/profile';
 
-  Future<void> setLoggedOut(email) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("isLoggedIn", false);
-    prefs.setString("email", '');
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  void logOutLogic(BuildContext ctx) {
+    setLoggedOut(widget.email);
+    widget.logOut();
   }
 
-  void logOutLogic(BuildContext ctx) {
-    setLoggedOut(email);
-    logOut();
+  void goToAccountSettings(BuildContext ctx) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return AccountSettings(imageurl: widget.imageUrl);
+    }));
+  }
+
+  void Refresh() {
+    Future<String> s = getEmail();
+
+    s.then((value) {
+      User currUser = DBMock.getUserData(value);
+      var favEventsData = Provider.of<FavEvents>(context, listen: false);
+
+      setState(() {
+        widget.email = currUser.email;
+        widget.firstName = currUser.firstName;
+        widget.lastName = currUser.lastName;
+        widget.imageUrl = currUser.imageUrl;
+        widget.likesCount = favEventsData.favs.length;
+        widget.myTicketsCount = 0;
+        widget.followingCount = 0;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    Refresh();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              children: [
-                Stack(
-                  children: [
-                    //uppergray
-                    const GreyArea(),
-                    //image
-                    ProfileImage(imageUrl),
-                    Column(
-                      children: [
-                        // two texts with icon&layerfortab
-                        ProfileLayer(firstName, lastName, email),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          Refresh();
+        },
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  Stack(
+                    children: [
+                      //uppergray
+                      const GreyArea(),
+                      //image
+                      InkWell(
+                        onTap: () => goToAccountSettings(context),
+                        // onFocusChange: (value) => goToAccountSettings(context),
 
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 15, bottom: 15),
-                          padding: const EdgeInsets.only(top: 15, bottom: 15),
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [Colors.transparent, Colors.transparent],
+                        child:
+                            IgnorePointer(child: ProfileImage(widget.imageUrl)),
+                      ),
+
+                      Column(
+                        children: [
+                          // two texts with icon & layerfortab
+                          ProfileLayer(
+                            widget.firstName,
+                            widget.lastName,
+                            widget.email,
+                            () => goToAccountSettings(context),
+                            key: const Key('Profile Layer'),
+                          ),
+
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 15, bottom: 15),
+                            padding: const EdgeInsets.only(top: 15, bottom: 15),
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.transparent
+                                ],
+                              ),
+                            ),
+                            child: IntrinsicHeight(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CounterButton(
+                                    "Likes",
+                                    widget.likesCount,
+                                    key: const Key('Likes'),
+                                  ),
+                                  const VDivider(),
+                                  CounterButton(
+                                      "My tickets", widget.myTicketsCount,
+                                      key: const Key('Mytickets')),
+                                  const VDivider(),
+                                  CounterButton(
+                                      "Following", widget.followingCount,
+                                      key: const Key('Following')),
+                                ],
+                              ),
                             ),
                           ),
-                          child: IntrinsicHeight(
-                            child: Row(
+                          Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                CounterButton("Likes", likesCount),
-                                const VDivider(),
-                                CounterButton("My tickets", myTicketsCount),
-                                const VDivider(),
-                                CounterButton("Following", followingCount),
+                                const ButtonNotification(
+                                  "Notification Centre",
+                                  key: Key('Notification'),
+                                ),
+                                ButtonLink("Linked Accounts", () {},
+                                    key: const Key('Linked')),
+                                ButtonLink("Following", () {},
+                                    key: const Key('Following')),
+                                ButtonLink("Ticket Issues", () {},
+                                    key: const Key('Issues')),
+                                ButtonLink("Manage Events",
+                                    () => eventNavigate(context),
+                                    key: const Key('Manage Events')),
+                                ButtonLink("Settings", () {},
+                                    key: const Key('Settings')),
                               ],
                             ),
-                          ),
-                        ),
-                        Container(
-                          color: Colors.white,
-                          padding: const EdgeInsets.only(left: 15, right: 15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              ButtonNotification("Notification Centre"),
-                              ButtonLink("Linked Accounts"),
-                              ButtonLink("Following"),
-                              ButtonLink("Ticket Issues"),
-                              ButtonLink("Manage Events"),
-                              ButtonLink("Settings"),
-                            ],
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                )
-              ],
+                          )
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-          Container(
+            Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
                 border: Border(
@@ -136,8 +213,11 @@ class Profile extends StatelessWidget {
               height: 80,
               padding: const EdgeInsetsDirectional.only(top: 15),
               width: double.infinity,
-              child: GreyButtonLogout(logOutLogic, 'Log out')),
-        ],
+              child: GreyButtonLogout(logOutLogic, 'Log out'),
+              key: const Key("LogOut"),
+            ),
+          ],
+        ),
       ),
     );
   }

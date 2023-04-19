@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 ///BoxDecoration and BoxShadow widgets adds a shadow effect to the image.
 class ProfileImage extends StatelessWidget {
   final String link;
-  const ProfileImage(this.link, {super.key});
+
+  ProfileImage(this.link, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +34,11 @@ class ProfileImage extends StatelessWidget {
             color: Colors.transparent,
             child: CircleAvatar(
               backgroundColor: Colors.transparent,
-              radius: 40,
+              radius: 50,
               backgroundImage:
                   const AssetImage("assets/images/no_user_found.jfif"),
               child: CircleAvatar(
-                radius: 40,
+                radius: 50,
                 backgroundColor: Colors.transparent,
                 backgroundImage: link.isNotEmpty ? NetworkImage(link) : null,
               ),

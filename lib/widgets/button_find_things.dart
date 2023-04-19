@@ -22,6 +22,7 @@ class GreyButtonLogout extends StatelessWidget {
       height: 65,
       padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 0),
       child: TextButton(
+        key: key,
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(Colors.black12),
           side: MaterialStateProperty.all<BorderSide>(

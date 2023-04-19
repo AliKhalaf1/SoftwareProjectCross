@@ -11,27 +11,27 @@ import '../../widgets/transparent_button.dart';
 /// {@category Sign Up}
 /// {@category Screens}
 ///
-/// It is surrounded by scafold to be rendered as a screen because it is screen widget. 
-/// 
-/// Extends StatelessWidget as there is no change in any state in screen that could change rendered page content. 
-/// 
+/// It is surrounded by scafold to be rendered as a screen because it is screen widget.
+///
+/// Extends StatelessWidget as there is no change in any state in screen that could change rendered page content.
+///
 ///###  Login Button
-/// 
+///
 ///   Handler for button navigate to SignUpOrLogIn screen when pressing on to it.
-/// 
+///
 ///   The user can signIn or signUp from navigated page.
-/// 
-///###  TitleText1 • LogInBtn • TransparentButton 
-/// 
+///
+///###  TitleText1 • LogInBtn • TransparentButton
+///
 ///    Widgets with certain styling and not built in widgets like (i.e. Text)
-/// 
-///    You can find them in folder  under the name widgets. 
+///
+///    You can find them in folder  under the name widgets.
 ///###  FindTicket Button
 ///
 ///    Handler for button navigate to FindTickets screen whare user can find its tickets if he doesnt have an account.
-///    
+///
 ///    User also can create an account from navigated page
-/// 
+///
 
 class SignUpOrLogIn extends StatelessWidget {
   const SignUpOrLogIn({super.key});
@@ -71,6 +71,7 @@ class SignUpOrLogIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const Key("SignupOrLoginScreen"),
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white38,
@@ -91,8 +92,7 @@ class SignUpOrLogIn extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const <Widget>[
                     // child one
-                    TitleText1('Let\'s get started'),
-
+                    TitleText1(key: Key("LetsGetStartedTitle"),'Let\'s get started'),
                     // child two
                     SizedBox(
                       width: 250,
@@ -110,18 +110,33 @@ class SignUpOrLogIn extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   //First child
-                  LogInBtn('Continue with email address', emailLogIn),
+                  LogInBtn(
+                    key: const Key('LogInWithEmailBtn'),
+                    'Continue with email address',
+                    emailLogIn,
+                  ),
 
                   //Second child
                   TransparentButton(
-                      0, 'Continue With Facebook', signWithFacebook, facebook),
+                    key: const Key('LogInWithFacebookBtn'),
+                    0,
+                    'Continue With Facebook',
+                    signWithFacebook,
+                    facebook,
+                  ),
 
                   //Third child
                   TransparentButton(
-                      1, 'Continue With Google', signWithGoogle, facebook),
+                    key: const Key('LogInWithGoogleBtn'),
+                    1,
+                    'Continue With Google',
+                    signWithGoogle,
+                    facebook,
+                  ),
 
                   //Fourth child
                   TextButton(
+                    key: const Key('FindTicketsBtn'),
                     onPressed: () => findTicket(context),
                     child: const Text(
                       'I bought tickets, but I don\'t have an account.',

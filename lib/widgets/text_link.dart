@@ -26,7 +26,7 @@ class TextLink extends StatelessWidget {
       style: ButtonStyle(
         overlayColor: MaterialStateProperty.all(Colors.transparent),
       ),
-      onPressed: () => onPressed,
+      onPressed: () => onPressed(),
       child: SizedBox(
         height: 25,
         width: double.infinity,

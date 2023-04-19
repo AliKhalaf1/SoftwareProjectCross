@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 ///
 class ButtonLink extends StatelessWidget {
   final String text;
-  const ButtonLink(this.text, {super.key});
+  final Function Navigate;
+  const ButtonLink(this.text, this.Navigate, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class ButtonLink extends StatelessWidget {
           Flexible(
             fit: FlexFit.tight,
             child: TextButton(
-              onPressed: () {},
+              onPressed: Navigate as void Function(),
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(
                   const Size(double.infinity, 65),

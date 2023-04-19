@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 
 /// {@category Widgets}
 ///<b> TextButton() </b>
-/// with certain styling used for 
+/// with certain styling used for
 ///<b>LogIn</b>
 ///.
-/// 
-/// It navigates to 
+///
+/// It navigates to
 ///<strong>sign_up_or_log_in</strong>
 ///screen.
 class LogInBtn extends StatelessWidget {
@@ -30,6 +30,7 @@ class LogInBtn extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
           // height: 60,
           child: TextButton(
+            key: key,
             style: ButtonStyle(
               backgroundColor:
                   MaterialStateProperty.all(Theme.of(context).primaryColor),

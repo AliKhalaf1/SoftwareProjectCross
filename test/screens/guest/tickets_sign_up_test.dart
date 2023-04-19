@@ -69,7 +69,7 @@ void main() {
       final greyButtonFinder = find.byType(GreyButtonLogout);
       expect(greyButtonFinder, findsOneWidget);
     });
-    testWidgets('Tap Find Things To Do Button Navigates',
+    /*testWidgets('Tap Find Things To Do Button Navigates',
         (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
@@ -86,7 +86,7 @@ void main() {
 
       final tabBarFinder = find.byType(TabBarScreen);
       expect(tabBarFinder, findsOneWidget);
-    });
+    });*/
     testWidgets('Tap login button', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(

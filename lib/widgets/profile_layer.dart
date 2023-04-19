@@ -24,15 +24,17 @@ class ProfileLayer extends StatelessWidget {
   final String firstName;
   final String lastName;
   final String email;
+  Function EditAccountSettings;
 
-  const ProfileLayer(this.firstName, this.lastName, this.email, {super.key});
+  ProfileLayer(
+      this.firstName, this.lastName, this.email, this.EditAccountSettings,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        //should add link to page to edit user's data.
-      },
+      key: key,
+      onTap: () => EditAccountSettings(),
       child: Container(
         margin: const EdgeInsetsDirectional.only(top: 40),
         width: double.infinity,
@@ -60,10 +62,15 @@ class ProfileLayer extends StatelessWidget {
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 10),
-                      child: const Icon(
-                        Icons.edit_outlined,
-                        size: 20,
-                        color: Color.fromRGBO(66, 94, 203, 1),
+                      child: IconButton(
+                        key: const Key('ProfileIconbtn'),
+                        splashColor: Colors.transparent,
+                        onPressed: () => EditAccountSettings(),
+                        icon: const Icon(
+                          Icons.edit_outlined,
+                          size: 20,
+                          color: Color.fromRGBO(66, 94, 203, 1),
+                        ),
                       ),
                     ),
                   ],
