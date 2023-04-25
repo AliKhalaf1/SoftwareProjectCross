@@ -72,7 +72,7 @@ class TabBarScreenState extends State<TabBarScreen> {
           Home(),
           const Search(),
           const Favourites(),
-          const TicketsPage(),
+          const TicketsSignUp(),
           Profile(
             checkLoggedUser,
           ),
@@ -84,7 +84,7 @@ class TabBarScreenState extends State<TabBarScreen> {
           Home(),
           const Search(),
           const FavouritesSignUp(),
-          const TicketsSignUp(),
+          const TicketsPage(),
           const ProfileSignUp(),
         ];
       });

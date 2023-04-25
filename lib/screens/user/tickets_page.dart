@@ -1,6 +1,7 @@
 library TicketsPage;
 
 import 'package:Eventbrite/widgets/app_bar_text.dart';
+import 'package:Eventbrite/widgets/ticket_card.dart';
 import 'package:flutter/material.dart';
 
 /// {@category user}
@@ -24,8 +25,17 @@ class _TicketsPageState extends State<TicketsPage> {
         foregroundColor: Colors.black,
         title: const AppBarText('Tickets'),
       ),
-      body: const Center(
-        child: Text('Tickets Page'),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                const TicketCard(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

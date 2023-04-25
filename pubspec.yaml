@@ -98,7 +98,7 @@ flutter:
     - assets/images/past_events.jfif
     - assets/images/draft_events.jfif
     - assets/images/TicketShape.png
-
+    - assets/images/TicketShape2.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
