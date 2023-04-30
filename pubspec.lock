@@ -869,6 +869,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  splash_route:
+    dependency: "direct main"
+    description:
+      name: splash_route
+      sha256: "504d71dc2e298bdb63e41329967616db1a52946c1dba7f6ede4c41dc6866cec3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   stack_trace:
     dependency: transitive
     description:
