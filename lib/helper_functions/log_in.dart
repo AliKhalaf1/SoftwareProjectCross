@@ -67,114 +67,114 @@ Future<void> emailCheck(BuildContext ctx, String email) async {
 
   // create multipart request
 
-  Map reqData = {
-    'email': email,
-    'password': 'dummy',
-  };
-  //encode Map to JSON
-  var reqBody = json.encode(reqData);
+  // Map reqData = {
+  //   'email': email,
+  //   'password': 'dummy',
+  // };
+  // //encode Map to JSON
+  // var reqBody = json.encode(reqData);
 
-  var response = await http.post(uri,
-      headers: {"Content-Type": "application/json"}, body: reqBody);
+  // var response = await http.post(uri,
+  //     headers: {"Content-Type": "application/json"}, body: reqBody);
 
-  var res = response.body;
-  var resData = jsonDecode(res);
+  // var res = response.body;
+  // var resData = jsonDecode(res);
 
-  //Check Response
-  if (resData['message'] == 'wrong password') {
-    // user is already registered
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return PasswordCheck(email, "");
-    }));
-  } else if (resData['message'] == 'email is not registered') {
-    // user is not registered
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return SignUpForm(email);
-    }));
-  } else if (resData['message'] == 'email is not verified') {
-    // user is not verified
-    ScaffoldMessenger.of(ctx).showSnackBar(
-      const SnackBar(
-        content: Text('Email needs to be verified'),
-      ),
-    );
-  } else {
-    ScaffoldMessenger.of(ctx).showSnackBar(
-      const SnackBar(
-        content: Text('Something went wrong'),
-      ),
-    );
-  }
-
-  // if (DBMock.checkEmail(email)) {
-  //   User user1 = DBMock.getUserData(email);
+  // //Check Response
+  // if (resData['message'] == 'wrong password') {
+  //   // user is already registered
   //   Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-  //     return PasswordCheck(email, user1.imageUrl);
+  //     return PasswordCheck(email, "");
   //   }));
-  // } else {
+  // } else if (resData['message'] == 'email is not registered') {
+  //   // user is not registered
   //   Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
   //     return SignUpForm(email);
   //   }));
+  // } else if (resData['message'] == 'email is not verified') {
+  //   // user is not verified
+  //   ScaffoldMessenger.of(ctx).showSnackBar(
+  //     const SnackBar(
+  //       content: Text('Email needs to be verified'),
+  //     ),
+  //   );
+  // } else {
+  //   ScaffoldMessenger.of(ctx).showSnackBar(
+  //     const SnackBar(
+  //       content: Text('Something went wrong'),
+  //     ),
+  //   );
   // }
+
+  if (DBMock.checkEmail(email)) {
+    User user1 = DBMock.getUserData(email);
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return PasswordCheck(email, user1.imageUrl);
+    }));
+  } else {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return SignUpForm(email);
+    }));
+  }
 }
 
 Future<void> passCheck(BuildContext ctx, String password, String email) async {
-  var uri = Uri.parse('${Constants.host}/auth/login');
+  // var uri = Uri.parse('${Constants.host}/auth/login');
 
-  // create multipart request
+  // // create multipart request
 
-  Map reqData = {
-    'email': email,
-    'password': password,
-  };
-  //encode Map to JSON
-  var reqBody = json.encode(reqData);
+  // Map reqData = {
+  //   'email': email,
+  //   'password': password,
+  // };
+  // //encode Map to JSON
+  // var reqBody = json.encode(reqData);
 
-  var response = await http.post(uri,
-      headers: {"Content-Type": "application/json"}, body: reqBody);
+  // var response = await http.post(uri,
+  //     headers: {"Content-Type": "application/json"}, body: reqBody);
 
-  var res = response.body;
-  var resData = jsonDecode(res);
+  // var res = response.body;
+  // var resData = jsonDecode(res);
 
-  // Check Response
-  if (response.statusCode == 200) {
-    // user is already registered
-    String token = resData['token'];
-    setLoggedIn(email, token);
-    Navigator.of(ctx).popUntil((route) => route.isFirst);
-    Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
-      return TabBarScreen(title: 'Profile', tabBarIndex: 4);
-    }));
-  } else if (resData['message'] == 'wrong password') {
-    // user is already registered
-    ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
-      content: Text('Wrong password'),
-    ));
-  } else if (resData['message'] == 'email is not verified') {
-    // user is already registered
-    setLoggedIn(email, 'Dummy Token');
-    Navigator.of(ctx).popUntil((route) => route.isFirst);
-    Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
-      return TabBarScreen(title: 'Profile', tabBarIndex: 4);
-    }));
-
-    ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
-      content: Text('Email needs to be verified'),
-    ));
-  } else {
-    ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
-      content: Text('Something went wrong'),
-    ));
-  }
-
-  // if (DBMock.checkAuth(email, password)) {
+  // // Check Response
+  // if (response.statusCode == 200) {
+  //   // user is already registered
+  //   String token = resData['token'];
+  //   setLoggedIn(email, token);
+  //   Navigator.of(ctx).popUntil((route) => route.isFirst);
+  //   Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+  //     return TabBarScreen(title: 'Profile', tabBarIndex: 4);
+  //   }));
+  // } else if (resData['message'] == 'wrong password') {
+  //   // user is already registered
+  //   ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
+  //     content: Text('Wrong password'),
+  //   ));
+  // } else if (resData['message'] == 'email is not verified') {
+  //   // user is already registered
   //   setLoggedIn(email, 'Dummy Token');
   //   Navigator.of(ctx).popUntil((route) => route.isFirst);
   //   Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
   //     return TabBarScreen(title: 'Profile', tabBarIndex: 4);
   //   }));
+
+  //   ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
+  //     content: Text('Email needs to be verified'),
+  //   ));
   // } else {
-  //   ScaffoldMessenger.of(ctx)
-  //       .showSnackBar(const SnackBar(content: Text('Wrong password')));
+  //   ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
+  //     content: Text('Something went wrong'),
+  //   ));
   // }
+
+  if (DBMock.checkAuth(email, password)) {
+    setLoggedIn(email, 'Dummy Token');
+    Navigator.of(ctx).popUntil((route) => route.isFirst);
+    Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+      return TabBarScreen(title: 'Profile', tabBarIndex: 4);
+    }));
+  } else {
+    ScaffoldMessenger.of(ctx)
+        .showSnackBar(const SnackBar(content: Text('Wrong password')));
+  }
 }
