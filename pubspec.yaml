@@ -50,6 +50,8 @@ dependencies:
   provider: ^6.0.5
   dotted_border: ^2.0.0
   percent_indicator: ^3.4.0
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
 
 
 
@@ -66,6 +68,17 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   mocktail: ^0.2.0
+  flutter_launcher_icons: "^0.13.1"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+    
+
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -84,6 +97,7 @@ flutter:
     - assets/images/images1.jfif
     - assets/images/camera.jfif
     - assets/images/no_user_found.jfif
+    - assets/images/no_image_found.png
     - assets/images/yla.png
     - assets/doc/Screens/homePage/homeScreen.png
     - assets/doc/Screens/homePage/eventCollection.png
@@ -99,6 +113,7 @@ flutter:
     - assets/images/draft_events.jfif
     - assets/images/TicketShape.png
     - assets/images/TicketShape2.png
+    - assets/images/icon.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

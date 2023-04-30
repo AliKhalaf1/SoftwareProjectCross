@@ -9,7 +9,13 @@
 	<string>Eventbrite</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Eventbrite</string>
-
+	
+	
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Eventbrite needs access to location when open.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Eventbrite needs access to location when in the background.</string>
+	
 <!-- The following keys are used only in iOS 10.0 and later. -->
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

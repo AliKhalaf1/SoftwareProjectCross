@@ -6,27 +6,44 @@ import 'package:provider/provider.dart';
 import 'ticket.dart';
 
 class Tickets with ChangeNotifier {
-  final List<Ticket> _tickets = [
+  final List<Ticket> _upcomingTickets = [
     Ticket(
       'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
       DateTime.parse('2023-09-15 05:00:00'),
-      'EVENT FOR A NEW TICKET',
+      'EVENT 1 FOR A NEW TICKET',
     ),
     Ticket(
-      'https://th.bing.com/th/id/R.1edb438b3f510aa9f4ea42a306507e35?rik=22xbsX8Xr5Z1KQ&pid=ImgRaw&r=0',
-      DateTime.parse('2021-09-15 19:00:00'),
-      'We The Medicine- Healing Our Inner Child 2023.Guid...',
-    )
+      'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
+      DateTime.parse('2023-09-05 10:15:00'),
+      'EVENT 2 FOR A NEW TICKET',
+    ),
+  ];
+  final List<Ticket> _pastTickets = [
+    Ticket(
+      'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
+      DateTime.parse('2021-10-29 16:15:00'),
+      'EVENT FOR A PAST TICKET',
+    ),
+    Ticket(
+      'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
+      DateTime.parse('2022-11-15 19:45:00'),
+      'EVENT FOR A PAST TICKET',
+    ),
+    Ticket(
+      'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
+      DateTime.parse('2020-12-20 10:00:00'),
+      'EVENT FOR A PAST TICKET',
+    ),
   ];
 
-  ///Get events
-  List<Ticket> get tickets {
-    return [..._tickets];
+  ///Get upcoming tickets
+  List<Ticket> get upcomingTickets {
+    return [..._upcomingTickets];
   }
 
-  /// Get event By ID
-  Ticket findBytitle(String giventitle) {
-    return _tickets.firstWhere((prod) => prod.title == giventitle);
+  ///Get past tickets
+  List<Ticket> get pastTickets {
+    return [..._pastTickets];
   }
 
   ///Fetch Events using API

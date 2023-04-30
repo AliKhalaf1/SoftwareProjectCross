@@ -1,11 +1,15 @@
 library GuestFavouritesScreen;
 
+import 'package:Eventbrite/helper_functions/location_services.dart';
+
 import '../../widgets/title_text_1.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/title_text_2.dart';
 import '../../widgets/text_link.dart';
 import '../../widgets/log_in_btn.dart';
 import '../../helper_functions/log_in.dart';
+
+import 'package:geocoding/geocoding.dart';
 
 /// {@category Guest}
 /// {@category Screens}

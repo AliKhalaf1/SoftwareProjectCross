@@ -1,152 +1,356 @@
-import 'dart:typed_data';
-import 'dart:ui' as ui;
+import 'dart:ui';
 
-import 'package:Eventbrite/widgets/loading_spinner.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'dart:ui';
 
-class TicketCard extends StatefulWidget {
-  const TicketCard({super.key});
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
-  @override
-  State<TicketCard> createState() => _TicketCardState();
-}
+import '../providers/tickets/ticket.dart';
 
-class _TicketCardState extends State<TicketCard> {
-  late ui.Image mask;
-  late ui.Image image;
-  List<bool> ready = [false, false];
+class TicketCard extends StatelessWidget {
+  Ticket ticket;
+  bool old = false;
+  TicketCard(this.ticket, this.old, {super.key});
 
-  @override
-  void initState() {
-    super.initState();
-    load('assets/images/TicketShape.png').then((i) {
-      setState(() {
-        mask = i;
-        ready[0] = true;
-      });
-    });
-    load('assets/images/yla.png').then((i) {
-      setState(() {
-        image = i;
-        ready[1] = true;
-      });
-    });
-  }
+  Color col = Colors.transparent;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SizedBox(
-        child: ((ready[0] == true) && ready[1] == true)
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+    return Container(
+      margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.height * 0.01,
+          top: MediaQuery.of(context).size.height * 0.01),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
                 children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width - 166,
-                    child: Stack(
-                      children: [
-                        Container(
-                          child: Image.asset(
-                            'assets/images/TicketShape2.png',
-                            cacheHeight: 160,
-                            cacheWidth:
-                                (MediaQuery.of(context).size.width - 150)
-                                    .toInt(),
+                  ClipPath(
+                      clipper: CardTicketClipper(),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.9 * 0.6,
+                        color: col,
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Container(
+                            width:
+                                MediaQuery.of(context).size.width * 0.9 * 0.5,
+                            height: MediaQuery.of(context).size.height *
+                                0.15 *
+                                0.75,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        DateFormat.MMM().format(ticket.date),
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 15,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        DateFormat.d().format(ticket.date),
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 30,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        DateFormat.y().format(ticket.date),
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 15,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9 *
+                                          0.5 *
+                                          0.6,
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        ticket.title,
+                                        softWrap: true,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.1 *
+                                              0.1,
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9 *
+                                          0.5 *
+                                          0.6,
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        ' ${DateFormat.E().format(ticket.date)} at ${DateFormat.jm().format(ticket.date)}',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: 12,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.all(15),
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'MAR \n\n 21',
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(8),
-                          alignment: Alignment.topCenter,
-                          child: Text(
-                            'Eventbrite',
-                          ),
-                        ),
-                      ],
-                    ),
+                      )),
+                  CustomPaint(
+                    painter: CardTicketBorder(),
+                    size: Size(MediaQuery.of(context).size.width * 0.6 * 0.9,
+                        MediaQuery.of(context).size.height * 0.15),
                   ),
-                  SizedBox(
-                      width: 150,
-                      height: 160,
-                      child: CustomPaint(painter: ImagePainter(mask, image))),
                 ],
-              )
-            : const LoadingSpinner(),
+              ),
+              Stack(
+                children: [
+                  ClipPath(
+                      clipper: ImageTicketClipper(),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        color: col,
+                        child: Container(
+                          foregroundDecoration: old
+                              ? const BoxDecoration(
+                                  color: Colors.grey,
+                                  backgroundBlendMode: BlendMode.saturation,
+                                )
+                              : null,
+                          child: Image(
+                            image: ticket.eventImgUrl.isEmpty
+                                ? AssetImage('assets/images/no_image_found.png')
+                                    as ImageProvider
+                                : NetworkImage(ticket.eventImgUrl),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )),
+                  CustomPaint(
+                    painter: ImageTicketBorder(),
+                    size: Size(MediaQuery.of(context).size.width * 0.4,
+                        MediaQuery.of(context).size.height * 0.15),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
+}
 
-  Future<ui.Image> load(String asset) async {
-    ByteData data = await rootBundle.load(asset);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return fi.image;
+//concave shape in the middle
+
+class ImageTicketClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path
+      ..moveTo(0, size.height * 0.05)
+      ..lineTo(0, size.height * 0.95)
+      ..quadraticBezierTo(
+          size.width * 0.05, size.height * 0.95, size.width * 0.05, size.height)
+      ..lineTo(size.width * 0.95, size.height)
+      ..arcToPoint(Offset(size.width, size.height * 0.95),
+          radius: Radius.circular(size.width * 0.05), clockwise: false)
+      ..lineTo(size.width, size.height * 0.05)
+      ..arcToPoint(Offset(size.width * 0.95, 0),
+          radius: Radius.circular(size.width * 0.05), clockwise: false)
+      ..lineTo(size.width * 0.05, 0)
+      ..quadraticBezierTo(
+          size.width * 0.05, size.height * 0.05, 0, size.height * 0.05)
+      ..close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper old) => false;
+}
+
+class CardTicketClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path
+      ..moveTo(size.width, size.height * 0.1)
+      ..lineTo(size.width, size.height * 0.95)
+      ..quadraticBezierTo(
+          size.width * 0.97, size.height * 0.95, size.width * 0.97, size.height)
+      ..lineTo(size.width * 0.05, size.height)
+      ..arcToPoint(Offset(0, size.height * 0.95),
+          radius: Radius.circular(size.width * 0.05), clockwise: true)
+      ..lineTo(0, size.height * 0.05)
+      ..arcToPoint(Offset(size.width * 0.05, 0),
+          radius: Radius.circular(size.width * 0.05), clockwise: true)
+      ..lineTo(size.width * 0.97, 0)
+      ..quadraticBezierTo(
+          size.width * 0.97, size.height * 0.05, size.width, size.height * 0.05)
+      ..close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper old) => false;
+}
+
+class ImageTicketBorder extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Path path = Path();
+    path
+      ..moveTo(0, size.height * 0.95)
+      ..quadraticBezierTo(
+          size.width * 0.05, size.height * 0.95, size.width * 0.05, size.height)
+      ..lineTo(size.width * 0.95, size.height)
+      ..arcToPoint(Offset(size.width, size.height * 0.95),
+          radius: Radius.circular(size.width * 0.05), clockwise: false)
+      ..lineTo(size.width, size.height * 0.05)
+      ..arcToPoint(Offset(size.width * 0.95, 0),
+          radius: Radius.circular(size.width * 0.05), clockwise: false)
+      ..lineTo(size.width * 0.05, 0)
+      ..quadraticBezierTo(
+          size.width * 0.05, size.height * 0.05, 0, size.height * 0.05)
+      ..moveTo(0, size.height * 0.05)
+      ..lineTo(0, size.height * 0.15)
+      ..moveTo(0, size.height * 0.2)
+      ..lineTo(0, size.height * 0.25)
+      ..moveTo(0, size.height * 0.3)
+      ..lineTo(0, size.height * 0.35)
+      ..moveTo(0, size.height * 0.4)
+      ..lineTo(0, size.height * 0.45)
+      ..moveTo(0, size.height * 0.5)
+      ..lineTo(0, size.height * 0.55)
+      ..moveTo(0, size.height * 0.6)
+      ..lineTo(0, size.height * 0.65)
+      ..moveTo(0, size.height * 0.7)
+      ..lineTo(0, size.height * 0.75)
+      ..moveTo(0, size.height * 0.8)
+      ..lineTo(0, size.height * 0.85)
+      ..moveTo(0, size.height * 0.95)
+      ..close();
+
+    Paint paint = Paint();
+
+    paint
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..color = Color.fromARGB(255, 187, 187, 187);
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(ImageTicketBorder oldDelegate) {
+    return false;
   }
 }
 
-class ImagePainter extends CustomPainter {
-  ui.Image mask;
-  ui.Image image;
-
-  ImagePainter(this.mask, this.image);
-
+class CardTicketBorder extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    if (image != null && mask != null) {
-      var rect = Rect.fromLTRB(0, 0, 150, 150);
-      Size outputSize = rect.size;
-      Paint paint = new Paint();
+    Path path = Path();
+    path
+      ..moveTo(size.width, size.height * 0.95)
+      ..quadraticBezierTo(
+          size.width * 0.97, size.height * 0.95, size.width * 0.97, size.height)
+      ..lineTo(size.width * 0.05, size.height)
+      ..arcToPoint(Offset(0, size.height * 0.95),
+          radius: Radius.circular(size.width * 0.05), clockwise: true)
+      ..lineTo(0, size.height * 0.05)
+      ..arcToPoint(Offset(size.width * 0.05, 0),
+          radius: Radius.circular(size.width * 0.05), clockwise: true)
+      ..lineTo(size.width * 0.97, 0)
+      ..quadraticBezierTo(
+          size.width * 0.97, size.height * 0.05, size.width, size.height * 0.05)
+      ..moveTo(0, size.height * 0.1)
+      ..lineTo(0, size.height * 0.15)
+      ..moveTo(0, size.height * 0.2)
+      ..lineTo(0, size.height * 0.25)
+      ..moveTo(0, size.height * 0.3)
+      ..lineTo(0, size.height * 0.35)
+      ..moveTo(0, size.height * 0.4)
+      ..lineTo(0, size.height * 0.45)
+      ..moveTo(0, size.height * 0.5)
+      ..lineTo(0, size.height * 0.55)
+      ..moveTo(0, size.height * 0.6)
+      ..lineTo(0, size.height * 0.65)
+      ..moveTo(0, size.height * 0.7)
+      ..lineTo(0, size.height * 0.75)
+      ..moveTo(0, size.height * 0.8)
+      ..lineTo(0, size.height * 0.85)
+      ..moveTo(0, size.height * 0.9)
+      ..close();
 
-      //Mask
-      Size maskInputSize = Size(mask.width.toDouble(), mask.height.toDouble());
-      final FittedSizes maskFittedSizes =
-          applyBoxFit(BoxFit.fill, maskInputSize, outputSize);
-      final Size maskSourceSize = maskFittedSizes.source;
+    Paint paint = Paint();
 
-      final Rect maskSourceRect = Alignment.center
-          .inscribe(maskSourceSize, Offset.zero & maskInputSize);
+    paint
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..color = Color.fromARGB(255, 187, 187, 187);
 
-      canvas.saveLayer(rect, paint);
-      canvas.drawImageRect(mask, maskSourceRect, rect, paint);
-
-      //Image
-      Size inputSize = Size(image.width.toDouble(), image.height.toDouble());
-      final FittedSizes fittedSizes =
-          applyBoxFit(BoxFit.cover, inputSize, outputSize);
-      final Size sourceSize = fittedSizes.source;
-      final Rect sourceRect =
-          Alignment.center.inscribe(sourceSize, Offset.zero & inputSize);
-
-      canvas.drawImageRect(
-          image, sourceRect, rect, paint..blendMode = BlendMode.srcIn);
-
-      // ui.ParagraphBuilder paragraph = ui.ParagraphBuilder(
-      //   ui.ParagraphStyle(
-      //     textAlign: TextAlign.center,
-      //     fontSize: 20,
-      //     fontWeight: FontWeight.bold,
-      //   ),
-      // )
-      //   ..pushStyle(ui.TextStyle(color: Colors.black))
-      //   ..addText('Hello World');
-
-      // canvas.drawParagraph(paragraph as ui.Paragraph, Offset.zero);
-      //canvas.drawParagraph('asd' as ui.Paragraph, Offset.zero);
-
-      canvas.restore();
-    }
+    canvas.drawPath(path, paint);
   }
 
   @override
-  bool shouldRepaint(ImagePainter oldDelegate) {
-    return mask != oldDelegate.mask || image != oldDelegate.image;
+  bool shouldRepaint(CardTicketBorder oldDelegate) {
+    return false;
   }
+}
+
+class ArcClipperR extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    //Arranca desde la punta topLeft
+    Path path = Path();
+
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width * .0, size.height);
+    //concave deepness, side (middle curved or at the sides), side deepness, curve start point
+    path.quadraticBezierTo(size.width * 0.2, size.height, 0, size.height - 50);
+
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper old) => false;
 }

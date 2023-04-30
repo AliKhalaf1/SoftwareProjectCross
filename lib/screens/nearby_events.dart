@@ -1,6 +1,8 @@
 library NearbyEventsScreen;
 
+import 'package:Eventbrite/helper_functions/location_services.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 
 import 'filters.dart';
 
@@ -21,10 +23,32 @@ class _NearbyEventsState extends State<NearbyEvents> {
   @override
   Widget build(BuildContext context) {
     /* Method handler to return back after select browsing in what */
-    void selectLocation(BuildContext ctx) {
+    void selectLocation(BuildContext ctx) {}
+
+    void getLocation(BuildContext ctx) {
       // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       //   return FilterScreen();
       // }));
+
+      determinePosition().then((value) {
+        placemarkFromCoordinates(value.latitude, value.longitude).then((loc) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  "Your location is ${loc[0].locality}, ${loc[0].subAdministrativeArea}, ${loc[0].administrativeArea}, ${loc[0].country} ")));
+        });
+      }).catchError((error) {
+        String error_text = error.toString();
+
+        showAboutDialog(context: context, children: [
+          Text(
+            error_text,
+            style: const TextStyle(
+              color: Colors.red,
+              fontSize: 20,
+            ),
+          ),
+        ]);
+      });
     }
 
     return Scaffold(
@@ -70,7 +94,7 @@ class _NearbyEventsState extends State<NearbyEvents> {
                 padding: const EdgeInsets.only(top: 25.0),
                 child: InkWell(
                   key: const Key("GoToSelectLocation"),
-                  onTap: () {},
+                  onTap: () => getLocation(context),
                   child: Row(
                     children: [
                       Container(
