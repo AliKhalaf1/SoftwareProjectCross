@@ -14,11 +14,10 @@ class ObjectBox {
   /// This is used to store the user's data.
   static late Box<User> userBox;
   static late Box<Auth> authBox;
-  static late Box<User, Auth> userlikesBox;
+
   ObjectBox._create(this.store) {
     userBox = store.box<User>();
     authBox = store.box<Auth>();
-    userlikesBox = store.box<User, Auth>();
 
     if (userBox.isEmpty()) {
       userBox.putMany(DBMock.users);
