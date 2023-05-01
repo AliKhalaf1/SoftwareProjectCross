@@ -1,6 +1,7 @@
 library AuthModel;
 
 import '../screens/sign_in/email_check.dart';
+import 'package:objectbox/objectbox.dart';
 
 /// {@category Models}
 /// <h1>This model represents the authentication of the user</h1>
@@ -10,10 +11,16 @@ import '../screens/sign_in/email_check.dart';
 /// it's used in the [EmailCheck] screen
 /// to get the email and password of the user
 /// and send it to the DBMock to check if the user is valid.
+@Entity()
 class Auth {
   //parameters of the EventCard Widget
-  final String email;
-  final String password;
+  @Id()
+  int id = 0;
+
+  @Unique()
+  String email;
+
+  String password;
 
   //constructor
   Auth(this.email, this.password);

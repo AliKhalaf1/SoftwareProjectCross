@@ -10,6 +10,7 @@ import 'package:Eventbrite/screens/creator/past_events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'objectbox.dart';
 import 'providers/filters/filter_selection_values.dart';
 import 'providers/filters/temp_selected_filter_values.dart';
 import 'providers/tickets/tickets.dart';
@@ -20,7 +21,13 @@ import './screens/find_tickets.dart';
 import 'widgets/tab_bar_Events.dart';
 import 'providers/events/events.dart';
 
+late ObjectBox objectbox;
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  ObjectBox.create().then((value) => objectbox = value);
+
   runApp(const MainApp());
 }
 

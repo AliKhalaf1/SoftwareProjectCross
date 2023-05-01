@@ -3,6 +3,7 @@ library UserModel;
 import '../screens/user/profile.dart';
 
 import '../screens/sign_up/sign_up_form.dart';
+import 'package:objectbox/objectbox.dart';
 
 /// {@category Models}
 ///
@@ -15,16 +16,23 @@ import '../screens/sign_up/sign_up_form.dart';
 ///
 /// it's also used in the [SignUpForm] screen
 /// to get the user's data from the user and send it to the DBMock to create a new user.
+@Entity()
 class User {
+  @Id()
+  int id = 0;
   //parameters
-  final String email;
+  @Unique()
+  String email;
   String imageUrl;
+
   String firstName;
+
   String lastName;
   //constructor
-  User(this.email, this.imageUrl, this.firstName, this.lastName);
-
-  set imageurl(String imageurl) {
-    imageUrl = imageurl;
-  }
+  User(
+    this.email,
+    this.imageUrl,
+    this.firstName,
+    this.lastName,
+  );
 }

@@ -5,8 +5,11 @@ import 'dart:convert';
 import 'package:Eventbrite/screens/sign_in/password_check.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/auth.dart';
 import '../models/db_mock.dart';
 import '../models/user.dart';
+import '../objectbox.dart';
+import '../objectbox.g.dart';
 import '../screens/sign_up/sign_up_form.dart';
 import '../screens/sign_up/sign_up_or_log_in.dart';
 import 'package:http/http.dart' as http;
@@ -106,10 +109,29 @@ Future<void> emailCheck(BuildContext ctx, String email) async {
   //   );
   // }
 
-  if (DBMock.checkEmail(email)) {
-    User user1 = DBMock.getUserData(email);
+  // if (DBMock.checkEmail(email)) {
+  //   User user1 = DBMock.getUserData(email);
+  //   Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+  //     return PasswordCheck(email, user1.imageUrl);
+  //   }));
+  // } else {
+  //   Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+  //     return SignUpForm(email);
+  //   }));
+  // }
+
+  var authbox = ObjectBox.authBox;
+  var userbox = ObjectBox.userBox;
+
+  var authQuery = authbox.query(Auth_.email.equals(email)).build().findFirst();
+  if (authQuery != null) {
+    var userQuery =
+        userbox.query(User_.email.equals(email)).build().findFirst();
+
+    User user = userQuery!;
+
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return PasswordCheck(email, user1.imageUrl);
+      return PasswordCheck(email, user.imageUrl);
     }));
   } else {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
@@ -167,14 +189,30 @@ Future<void> passCheck(BuildContext ctx, String password, String email) async {
   //   ));
   // }
 
-  if (DBMock.checkAuth(email, password)) {
-    setLoggedIn(email, 'Dummy Token');
-    Navigator.of(ctx).popUntil((route) => route.isFirst);
-    Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
-      return TabBarScreen(title: 'Profile', tabBarIndex: 4);
-    }));
-  } else {
-    ScaffoldMessenger.of(ctx)
-        .showSnackBar(const SnackBar(content: Text('Wrong password')));
+  // if (DBMock.checkAuth(email, password)) {
+  //   setLoggedIn(email, 'Dummy Token');
+  //   Navigator.of(ctx).popUntil((route) => route.isFirst);
+  //   Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+  //     return TabBarScreen(title: 'Profile', tabBarIndex: 4);
+  //   }));
+  // } else {
+  //   ScaffoldMessenger.of(ctx)
+  //       .showSnackBar(const SnackBar(content: Text('Wrong password')));
+  // }
+
+  var authbox = ObjectBox.authBox;
+
+  var authQuery = authbox.query(Auth_.email.equals(email)).build().findFirst();
+  if (authQuery != null) {
+    if (authQuery.password == password) {
+      setLoggedIn(email, 'Dummy Token');
+      Navigator.of(ctx).popUntil((route) => route.isFirst);
+      Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+        return TabBarScreen(title: 'Profile', tabBarIndex: 4);
+      }));
+    } else {
+      ScaffoldMessenger.of(ctx)
+          .showSnackBar(const SnackBar(content: Text('Wrong password')));
+    }
   }
 }
