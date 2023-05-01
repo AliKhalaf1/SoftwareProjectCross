@@ -45,3 +45,6 @@ app.*.map.json
 android/gradle.properties
 macos/Flutter/GeneratedPluginRegistrant.swift
 macos/Flutter/GeneratedPluginRegistrant.swift
+macos/Flutter/GeneratedPluginRegistrant.swift
+.gitignore
+windows/flutter/generated_plugins.cmake
