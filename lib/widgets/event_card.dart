@@ -61,11 +61,7 @@ class _EventCardState extends State<EventCard> {
         }
       });
     }
-
-    void share() {
-      return;
-    }
-
+    
     return Stack(
       fit: StackFit.loose,
       children: [
@@ -143,36 +139,22 @@ class _EventCardState extends State<EventCard> {
           ),
         ),
         Positioned(
-            bottom: 2,
-            right: 10,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  key: const Key("ShareBtn"),
-                  onPressed: share,
-                  icon: const Icon(
-                    key: Key("shareIcon"),
-                    Icons.share,
-                    size: 20,
-                    color: Color.fromRGBO(0, 0, 0, 0.7),
-                  ),
-                ),
-                IconButton(
-                  key: const Key("AddToFavBtn"),
-                  onPressed: () => toggleFav(context),
-                  icon: Icon(
-                    key: const Key("favIcon"),
-                    !event.isFav
-                        ? Icons.favorite_border_rounded
-                        : Icons.favorite_sharp,
-                    color: !event.isFav
-                        ? const Color.fromRGBO(0, 0, 0, 0.7)
-                        : const Color.fromARGB(255, 209, 65, 12),
-                  ),
-                ),
-              ],
-            )),
+          bottom: 2,
+          right: 10,
+          child: IconButton(
+            key: const Key("AddToFavBtn"),
+            onPressed: () => toggleFav(context),
+            icon: Icon(
+              key: const Key("favIcon"),
+              !event.isFav
+                  ? Icons.favorite_border_rounded
+                  : Icons.favorite_sharp,
+              color: !event.isFav
+                  ? const Color.fromRGBO(0, 0, 0, 0.7)
+                  : const Color.fromARGB(255, 209, 65, 12),
+            ),
+          ),
+        ),
       ],
     );
   }
