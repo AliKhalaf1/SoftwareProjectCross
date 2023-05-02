@@ -1,9 +1,12 @@
+import 'package:Eventbrite/screens/creator/event_title.dart';
+import 'package:Eventbrite/screens/creator/main_event_form.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_for_flutter/google_places_for_flutter.dart';
 
 import '../../widgets/arc_painter.dart';
+import '../../widgets/tab_bar_Events.dart';
 
 enum eventPlace {
   Venue,
@@ -37,6 +40,7 @@ class _EventLocationState extends State<EventLocation> {
 
   eventPlace thePlace = eventPlace.Venue;
   String? address;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,6 +97,12 @@ class _EventLocationState extends State<EventLocation> {
                   onSelected: (place) {
                     address = place.description;
                     //you must navigate
+                    int count = 0;
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      EventForm.route,
+                      (route) => count++ == 4 || route.isFirst,
+                    );
                   },
                   onSearch: (Place place) {},
                 ),
@@ -124,6 +134,12 @@ class _EventLocationState extends State<EventLocation> {
           } else {
             //navigate bs theplace is online
             //address=null
+            int count = 0;
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              EventForm.route,
+              (route) => count++ == 4 || route.isFirst,
+            );
           }
         },
         child: Stack(

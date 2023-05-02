@@ -6,6 +6,7 @@ import 'package:Eventbrite/screens/creator/description_title.dart';
 import 'package:Eventbrite/screens/creator/event_location.dart';
 import 'package:Eventbrite/screens/creator/event_start_end_date.dart';
 import 'package:Eventbrite/screens/creator/event_title.dart';
+import 'package:Eventbrite/screens/creator/main_event_form.dart';
 import 'package:Eventbrite/screens/event_page.dart';
 import 'package:Eventbrite/screens/guest/home.dart';
 import 'package:Eventbrite/screens/search_screen.dart';
@@ -94,6 +95,7 @@ class _MainAppState extends State<MainApp> {
           EventPage.eventPageRoute: (ctx) => const EventPage(),
           EventLocation.route: (ctx) => EventLocation(),
           Home.homePageRoute: (ctx) => Home(),
+          EventForm.route: (ctx) => EventForm(),
           Search.searchPageRoute: (ctx) => const Search(),
         },
       ),

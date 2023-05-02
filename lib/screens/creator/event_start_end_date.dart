@@ -44,8 +44,18 @@ class _EventDateState extends State<EventDate> {
   }
 
   void _showTimePickerFrom() {
-    showTimePicker(context: context, initialTime: TimeOfDay.now())
-        .then((value) {
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            backgroundColor: Colors.grey,
+          ),
+          child: child!,
+        );
+      },
+    ).then((value) {
       setState(() {
         _timeFrom = value!;
       });
@@ -53,8 +63,20 @@ class _EventDateState extends State<EventDate> {
   }
 
   void _showTimePickerTo() {
-    showTimePicker(context: context, initialTime: TimeOfDay.now())
-        .then((value) {
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            backgroundColor: Colors.grey,
+            // Change the background color
+            // Add other properties as needed to change other colors
+          ),
+          child: child!,
+        );
+      },
+    ).then((value) {
       setState(() {
         _timeTo = value!;
       });
