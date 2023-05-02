@@ -163,6 +163,7 @@ class _SignUpFormState extends State<SignUpForm> {
     String userLastName = widget._lastNameText.text;
     String userPassword = widget._passwordText.text;
     String userEmail = widget.emailText;
+    int res = 200;
     bool added = DBMock.addUser(
       User(
         userEmail,
@@ -176,33 +177,39 @@ class _SignUpFormState extends State<SignUpForm> {
     setState(() {
       isLoading = true;
     });
-    signUpApi(userFirstName, userLastName, userEmail, userPassword).then((res) {
-      setState(() {
-        isLoading = false;
-      });
-      if (res == 200) {
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
-          return TabBarScreen(title: 'Profile', tabBarIndex: 4);
-        }));
+    // signUpApi(userFirstName, userLastName, userEmail, userPassword).then((res) {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
 
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Please verify your email then login')));
-      } else if (res == 400) {
-        Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Email already exists'),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Something went wrong'),
-          ),
-        );
-      }
-    });
+    if (added) {
+      res = 200;
+    } else {
+      res = 400;
+    }
+
+    if (res == 200) {
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
+        return TabBarScreen(title: 'Profile', tabBarIndex: 4);
+      }));
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please verify your email then login')));
+    } else if (res == 400) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Email already exists'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Something went wrong'),
+        ),
+      );
+    }
   }
 
   /// {@category Helper Functions}

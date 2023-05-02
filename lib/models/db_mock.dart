@@ -22,7 +22,7 @@ class DBMock {
   ];
   static List<User> users = [
     User(
-        'eng_Remonda@gmail.com',
+        'eng_remonda@gmail.com',
         'https://i.ibb.co/0J6w62R/Whats-App-Image-2023-03-15-at-03-27-06.jpg',
         'Remonda',
         'Talaat'),
