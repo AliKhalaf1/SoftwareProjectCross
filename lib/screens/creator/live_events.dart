@@ -51,9 +51,14 @@ class LiveEvents extends StatelessWidget {
           : Background("assets/images/live_events.jfif"),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(SplashRoute(
-            targetPage: EventTitle(),
-          ));
+          Navigator.of(context).push(
+            SplashRoute(
+              targetPage: EventTitle(),
+              splashColor: const Color.fromRGBO(209, 65, 12, 1),
+              startFractionalOffset: const FractionalOffset(1.0, 1.0),
+              transitionDuration: const Duration(milliseconds: 800),
+            ),
+          );
         },
         tooltip: 'Increment',
         backgroundColor: Theme.of(context).primaryColor,

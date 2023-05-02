@@ -2,7 +2,9 @@ library DraftEventsScreen;
 
 import 'package:Eventbrite/widgets/draft_card.dart';
 import 'package:flutter/material.dart';
+import 'package:splash_route/splash_route.dart';
 import '../../widgets/backgroud.dart';
+import 'event_title.dart';
 
 /// {@category Creator}
 /// {@category Screens}
@@ -35,7 +37,16 @@ class DraftEvents extends StatelessWidget {
             )
           : Background("assets/images/draft_events.jfif"),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            SplashRoute(
+              targetPage: EventTitle(),
+              splashColor: const Color.fromRGBO(209, 65, 12, 1),
+              startFractionalOffset: const FractionalOffset(1.0, 1.0),
+              transitionDuration: const Duration(milliseconds: 800),
+            ),
+          );
+        },
         tooltip: 'Increment',
         backgroundColor: Theme.of(context).primaryColor,
         child: const Icon(Icons.add, key: Key("AddDraftEvent")),

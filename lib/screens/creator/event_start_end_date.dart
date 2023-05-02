@@ -1,0 +1,183 @@
+import 'package:Eventbrite/screens/creator/event_location.dart';
+import 'package:Eventbrite/widgets/from_to_date.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import '../../widgets/arc_painter.dart';
+
+class EventDate extends StatefulWidget {
+  const EventDate({Key? key});
+  static const route = '/eventDate';
+  @override
+  State<EventDate> createState() => _EventDateState();
+}
+
+class _EventDateState extends State<EventDate> {
+  DateTime? _dateFrom = null;
+  DateTime? _dateTo = null;
+  TimeOfDay? _timeFrom = null;
+  TimeOfDay? _timeTo = null;
+  final DateFormat formatter = DateFormat('d-MMM');
+  void _showDatePickerfrom() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2035),
+    ).then((value) {
+      setState(() {
+        _dateFrom = value!;
+      });
+    });
+  }
+
+  void _showDatePickerto() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2035),
+    ).then((value) {
+      setState(() {
+        _dateTo = value!;
+      });
+    });
+  }
+
+  void _showTimePickerFrom() {
+    showTimePicker(context: context, initialTime: TimeOfDay.now())
+        .then((value) {
+      setState(() {
+        _timeFrom = value!;
+      });
+    });
+  }
+
+  void _showTimePickerTo() {
+    showTimePicker(context: context, initialTime: TimeOfDay.now())
+        .then((value) {
+      setState(() {
+        _timeTo = value!;
+      });
+    });
+  }
+
+  bool _handleSubmit() {
+    DateTime dateTime1 = DateTime.now();
+    DateTime dateTime2 = DateTime.now();
+    if (_timeFrom != null && _timeTo != null) {
+      dateTime1 = DateTime(0, 0, 0, _timeFrom!.hour, _timeFrom!.minute);
+      dateTime2 = DateTime(0, 0, 0, _timeTo!.hour, _timeTo!.minute);
+    }
+    if (_dateFrom == null ||
+        _dateTo == null ||
+        _timeFrom == null ||
+        _timeTo == null) {
+      // Display an error message if any of the values are null
+      // ...
+      return false;
+    } else if ((_dateFrom!.isAfter(_dateTo!) || (_dateFrom == _dateTo)) &&
+        ((dateTime1.isAfter(dateTime2)) ||
+            (dateTime1.isAtSameMomentAs(dateTime2)))) {
+      // Display an error message if the from date and time are greater than the to date and time
+
+      return false;
+    } else {
+      // All values are valid, submit
+      // ...
+      return true;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 65, left: 15, right: 15),
+        child: Container(
+          width: 320,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Set the date of your event.",
+                style: TextStyle(
+                  fontFamily: 'Neue Plak Extended',
+                  fontSize: 32,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              DateColumn(
+                _showDatePickerfrom,
+                _showDatePickerto,
+                (_dateFrom == null ? "Day" : formatter.format(_dateFrom!)),
+                (_dateTo == null ? "Day" : formatter.format(_dateTo!)),
+                _showTimePickerFrom,
+                _showTimePickerTo,
+                (_timeFrom == null
+                    ? "Day"
+                    : _timeFrom!.format(context).toString()),
+                (_timeTo == null ? "Day" : _timeTo!.format(context).toString()),
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          bool check = _handleSubmit();
+          if (check) {
+            Navigator.of(context).pushNamed(
+              EventLocation.route,
+            );
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Error'),
+                  content: const Text(
+                      'The Start date must be earlier than the End date'),
+                  actions: [
+                    TextButton(
+                      child: const Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: Colors.white,
+              child: const Icon(
+                Icons.arrow_circle_right_outlined,
+                color: Colors.black,
+              ),
+            ),
+            CustomPaint(
+              painter: ArcPainter(
+                startAngle: -90,
+                sweepAngle: 180,
+                color: Colors.lightGreen,
+                strokeWidth: 4,
+              ),
+              child: const SizedBox(
+                height: 65,
+                width: 65,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
