@@ -54,6 +54,9 @@ dependencies:
   geocoding: ^2.1.0
   objectbox: ^2.0.0
   objectbox_flutter_libs: any
+  splash_route: ^0.0.2
+  google_places_for_flutter: ^1.0.1
+  google_maps_flutter: ^2.2.6
 
 
 
