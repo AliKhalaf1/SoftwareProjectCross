@@ -11,6 +11,7 @@ import '../screens/sign_in/email_check.dart';
 /// to get the email and password of the user
 /// and send it to the DBMock to check if the user is valid.
 class Auth {
+  //new comment
   //parameters of the EventCard Widget
   final String email;
   final String password;

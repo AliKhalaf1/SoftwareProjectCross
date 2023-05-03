@@ -2,6 +2,11 @@ import 'package:Eventbrite/providers/categories/categories.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/providers/filters/tags.dart';
 import 'package:Eventbrite/providers/filters/temp_tags.dart';
+import 'package:Eventbrite/screens/creator/description_title.dart';
+import 'package:Eventbrite/screens/creator/event_location.dart';
+import 'package:Eventbrite/screens/creator/event_start_end_date.dart';
+import 'package:Eventbrite/screens/creator/event_title.dart';
+import 'package:Eventbrite/screens/creator/main_event_form.dart';
 import 'package:Eventbrite/screens/event_page.dart';
 import 'package:Eventbrite/screens/guest/home.dart';
 import 'package:Eventbrite/screens/search_screen.dart';
@@ -82,10 +87,15 @@ class _MainAppState extends State<MainApp> {
           EmailCheck.emailCheckRoute: (ctx) => EmailCheck(),
           FindTickets.findTicketsRoute: (ctx) => const FindTickets(),
           TabBarEvents.route: (ctx) => TabBarEvents(),
-          PastEvents.route: (ctx) => const PastEvents(),
+          PastEvents.route: (ctx) => PastEvents(),
+          EventTitle.route: (ctx) => EventTitle(),
+          Event_Description.route: (ctx) => Event_Description(),
           AccountSettings.accountSettingsRoute: (ctx) => AccountSettings(),
+          EventDate.route: (ctx) => EventDate(),
           EventPage.eventPageRoute: (ctx) => const EventPage(),
+          EventLocation.route: (ctx) => EventLocation(),
           Home.homePageRoute: (ctx) => Home(),
+          EventForm.route: (ctx) => EventForm(),
           Search.searchPageRoute: (ctx) => const Search(),
         },
       ),

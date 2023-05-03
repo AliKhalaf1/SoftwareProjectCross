@@ -1,8 +1,10 @@
 library past_events;
 
 import 'package:flutter/material.dart';
+import 'package:splash_route/splash_route.dart';
 
 import '../../widgets/backgroud.dart';
+import 'event_title.dart';
 
 /// {@category Creator}
 /// {@category Screens}
@@ -17,7 +19,16 @@ class PastEvents extends StatelessWidget {
     return Scaffold(
       body: Background("assets/images/past_events.jfif"),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            SplashRoute(
+              targetPage: EventTitle(),
+              splashColor: const Color.fromRGBO(209, 65, 12, 1),
+              startFractionalOffset: const FractionalOffset(1.0, 1.0),
+              transitionDuration: const Duration(milliseconds: 800),
+            ),
+          );
+        },
         tooltip: 'Increment',
         child: Icon(
           Icons.add,

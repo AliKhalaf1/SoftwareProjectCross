@@ -1,7 +1,9 @@
 library live_events;
 
+import 'package:Eventbrite/screens/creator/event_title.dart';
 import 'package:Eventbrite/widgets/backgroud.dart';
 import 'package:flutter/material.dart';
+import 'package:splash_route/splash_route.dart';
 
 import '../../widgets/live_card.dart';
 
@@ -48,7 +50,16 @@ class LiveEvents extends StatelessWidget {
             )
           : Background("assets/images/live_events.jfif"),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            SplashRoute(
+              targetPage: EventTitle(),
+              splashColor: const Color.fromRGBO(209, 65, 12, 1),
+              startFractionalOffset: const FractionalOffset(1.0, 1.0),
+              transitionDuration: const Duration(milliseconds: 800),
+            ),
+          );
+        },
         tooltip: 'Increment',
         backgroundColor: Theme.of(context).primaryColor,
         child: const Icon(Icons.add, key: Key("AddLiveEvent")),
