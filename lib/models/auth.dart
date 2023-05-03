@@ -13,6 +13,7 @@ import 'package:objectbox/objectbox.dart';
 /// and send it to the DBMock to check if the user is valid.
 @Entity()
 class Auth {
+  //new comment
   //parameters of the EventCard Widget
   @Id()
   int id = 0;
