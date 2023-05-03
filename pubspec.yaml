@@ -52,9 +52,11 @@ dependencies:
   percent_indicator: ^3.4.0
   geolocator: ^9.0.2
   geocoding: ^2.1.0
+  objectbox: ^2.0.0
+  objectbox_flutter_libs: any
   splash_route: ^0.0.2
-  search_map_location: ^0.0.6
   google_places_for_flutter: ^1.0.1
+  google_maps_flutter: ^2.2.6
 
 
 
@@ -72,14 +74,14 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   mocktail: ^0.2.0
   flutter_launcher_icons: "^0.13.1"
+  build_runner: ^2.3.3
+  objectbox_generator: any
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/icon.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
-
- 
     
 
 

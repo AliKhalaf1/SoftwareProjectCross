@@ -96,7 +96,7 @@ class DBMock {
     List<User> users = getUsers();
     for (var u in users) {
       if (u.email == email) {
-        u.imageurl = imageurl;
+        u.imageUrl = imageurl;
       }
     }
   }

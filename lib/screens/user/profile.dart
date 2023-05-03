@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 import '../../helper_functions/log_out.dart';
 import '../../helper_functions/organizer_view.dart';
 import '../../models/user.dart';
+import '../../objectbox.dart';
+import '../../objectbox.g.dart';
 import '../../providers/events/events.dart';
 import '../../widgets/button_notificatin.dart';
 import '../../widgets/grey_area.dart';
@@ -70,7 +72,11 @@ class _ProfileState extends State<Profile> {
     Future<String> s = getEmail();
 
     s.then((value) {
-      User currUser = DBMock.getUserData(value);
+      var userbox = ObjectBox.userBox;
+      User currUser =
+          userbox.query(User_.email.equals(value)).build().findFirst()!;
+
+      // User currUser = DBMock.getUserData(value);
       var favEventsData = Provider.of<FavEvents>(context, listen: false);
 
       setState(() {
