@@ -45,7 +45,7 @@ class _EventPageState extends State<EventPage> {
 
   //Get duration
   String getDuration(Duration d) {
-    int month, weeks, days;
+    int month, weeks, days, minutes;
     if (d.inDays != 0) {
       if (d.inDays >= 30) {
         month = (d.inDays / 30).floor();
@@ -56,7 +56,7 @@ class _EventPageState extends State<EventPage> {
       }
       if (d.inDays >= 7) {
         weeks = (d.inDays / 7).floor();
-        days = (d.inDays % 7);
+        days = ((d.inDays - (7 * weeks)));
         return days == 0
             ? '${weeks.toString()} weeks '
             : '${weeks.toString()} weeks ${days.toString()} days';
@@ -65,8 +65,9 @@ class _EventPageState extends State<EventPage> {
           ? '${d.inDays.toString()} day'
           : '${d.inDays.toString()} days';
     } else if (d.inHours != 0) {
-      if (d.inMinutes != 0) {
-        return '${d.inHours.toString()}h ${d.inMinutes.toString()}m';
+      minutes = (d.inMinutes % 60);
+      if (minutes != 0) {
+        return '${d.inHours.toString()}h ${minutes}m';
       }
       return d.inHours == 1
           ? '${d.inHours.toString()} hour'
