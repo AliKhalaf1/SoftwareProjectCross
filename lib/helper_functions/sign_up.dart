@@ -1,7 +1,14 @@
 import 'dart:convert';
 
 import 'package:Eventbrite/helper_functions/constants.dart';
+import 'package:Eventbrite/models/auth.dart';
 import 'package:http/http.dart' as http;
+import 'package:objectbox/objectbox.dart';
+
+import '../objectbox.dart';
+
+import '../models/user.dart';
+import '../objectbox.g.dart';
 
 /// {@category Helper Functions}
 /// <h1>This function is used to sign up the user using api's.</h1>
@@ -15,25 +22,40 @@ import 'package:http/http.dart' as http;
 ///
 Future<int> signUpApi(
     String firstname, String lastname, String email, String password) async {
-  var uri = Uri.parse('${Constants.host}/auth/signup');
+  // var uri = Uri.parse('${Constants.host}/auth/signup');
 
-  // create multipart request
+  // // create multipart request
 
-  Map reqData = {
-    "firstname": firstname,
-    "lastname": lastname,
-    "email": email,
-    "password": password,
-    "is_verified": false,
-    "avatar_url": ""
-  };
-  //encode Map to JSON
-  var reqBody = json.encode(reqData);
+  // Map reqData = {
+  //   "firstname": firstname,
+  //   "lastname": lastname,
+  //   "email": email,
+  //   "password": password,
+  //   "is_verified": false,
+  //   "avatar_url": ""
+  // };
+  // //encode Map to JSON
+  // var reqBody = json.encode(reqData);
 
-  var response = await http.post(uri,
-      headers: {"Content-Type": "application/json"}, body: reqBody);
+  // var response = await http.post(uri,
+  //     headers: {"Content-Type": "application/json"}, body: reqBody);
 
-  int resCode = response.statusCode;
-  return resCode;
+  // int resCode = response.statusCode;
+  // return resCode;
+
   //Check Response
+
+  Auth auth = Auth(email, password);
+  User user1 = User(email, "", firstname, lastname);
+  var authbox = ObjectBox.authBox;
+  var userbox = ObjectBox.userBox;
+
+  var authQuery = authbox.query(Auth_.email.equals(email)).build();
+  if (authQuery.count() == 0) {
+    authbox.put(auth);
+    userbox.put(user1);
+    return 200;
+  } else {
+    return 400;
+  }
 }

@@ -15,6 +15,7 @@ import 'package:Eventbrite/screens/creator/past_events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'objectbox.dart';
 import 'providers/filters/filter_selection_values.dart';
 import 'providers/filters/temp_selected_filter_values.dart';
 import 'providers/tickets/tickets.dart';
@@ -25,7 +26,13 @@ import './screens/find_tickets.dart';
 import 'widgets/tab_bar_Events.dart';
 import 'providers/events/events.dart';
 
+late ObjectBox objectbox;
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  ObjectBox.create().then((value) => objectbox = value);
+
   runApp(const MainApp());
 }
 
@@ -87,15 +94,15 @@ class _MainAppState extends State<MainApp> {
           EmailCheck.emailCheckRoute: (ctx) => EmailCheck(),
           FindTickets.findTicketsRoute: (ctx) => const FindTickets(),
           TabBarEvents.route: (ctx) => TabBarEvents(),
-          PastEvents.route: (ctx) => PastEvents(),
-          EventTitle.route: (ctx) => EventTitle(),
-          Event_Description.route: (ctx) => Event_Description(),
+          PastEvents.route: (ctx) => const PastEvents(),
+          EventTitle.route: (ctx) => const EventTitle(),
+          Event_Description.route: (ctx) => const Event_Description(),
           AccountSettings.accountSettingsRoute: (ctx) => AccountSettings(),
-          EventDate.route: (ctx) => EventDate(),
+          EventDate.route: (ctx) => const EventDate(),
           EventPage.eventPageRoute: (ctx) => const EventPage(),
-          EventLocation.route: (ctx) => EventLocation(),
+          EventLocation.route: (ctx) => const EventLocation(),
           Home.homePageRoute: (ctx) => Home(),
-          EventForm.route: (ctx) => EventForm(),
+          EventForm.route: (ctx) => const EventForm(),
           Search.searchPageRoute: (ctx) => const Search(),
         },
       ),

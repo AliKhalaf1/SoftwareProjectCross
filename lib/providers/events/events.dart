@@ -11,7 +11,7 @@ class Events with ChangeNotifier {
     Event(
         123,
         DateTime.now(),
-        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/R.1edb438b3f510aa9f4ea42a306507e35?rik=22xbsX8Xr5Z1KQ&pid=ImgRaw&r=0',
         EventState.online,
         false,
@@ -21,7 +21,7 @@ class Events with ChangeNotifier {
     Event(
         42976,
         DateTime.now(),
-        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
         EventState.offline,
         false,
@@ -31,7 +31,7 @@ class Events with ChangeNotifier {
     Event(
         426,
         DateTime.now(),
-        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/OIP.we5keYDOBq6j9Dm-pOGIKgHaD1?pid=ImgDet&rs=1',
         EventState.offline,
         false,
@@ -41,7 +41,7 @@ class Events with ChangeNotifier {
     Event(
         104824,
         DateTime.now(),
-        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://i1.wp.com/www.skeptical-science.com/wp-content/uploads/2012/02/Egyptian-actor-Adel-Imam-007-1.jpg?resize=300%2C180&ssl=1',
         EventState.offline,
         false,
@@ -51,7 +51,7 @@ class Events with ChangeNotifier {
     Event(
         924,
         DateTime.now(),
-        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/OIP.anXdkkvjnHH-Fjm_LnX52gHaEK?pid=ImgDet&w=1600&h=900&rs=1',
         EventState.offline,
         false,
@@ -61,7 +61,7 @@ class Events with ChangeNotifier {
     Event(
         1824,
         DateTime.now(),
-        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://celebrity.tn/wp-content/uploads/2019/03/adel-imam-2-608x608.jpg',
         EventState.offline,
         false,
@@ -71,7 +71,7 @@ class Events with ChangeNotifier {
     Event(
         666,
         DateTime.now(),
-        'Bortooan The Medicine- Healing Our Inner Child 2023.Guid...',
+        'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/OIP.we5keYDOBq6j9Dm-pOGIKgHaD1?pid=ImgDet&rs=1',
         EventState.online,
         false,
@@ -81,7 +81,7 @@ class Events with ChangeNotifier {
     Event(
         12323,
         DateTime.now(),
-        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/R.1edb438b3f510aa9f4ea42a306507e35?rik=22xbsX8Xr5Z1KQ&pid=ImgRaw&r=0',
         EventState.online,
         false,
@@ -91,7 +91,7 @@ class Events with ChangeNotifier {
     Event(
         91224,
         DateTime.now(),
-        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/OIP.anXdkkvjnHH-Fjm_LnX52gHaEK?pid=ImgDet&w=1600&h=900&rs=1',
         EventState.offline,
         false,
@@ -101,7 +101,7 @@ class Events with ChangeNotifier {
     Event(
         409000,
         DateTime.now(),
-        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
         EventState.offline,
         false,
@@ -111,7 +111,7 @@ class Events with ChangeNotifier {
     Event(
         47654,
         DateTime.now(),
-        'We The Medicine- Healing Our Inner Child 2023.Guid...',
+        'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
         EventState.offline,
         false,
