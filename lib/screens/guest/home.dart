@@ -58,13 +58,11 @@ class _HomeState extends State<Home> {
   // var _isLoading = false;
 
   final List<String> categoryTitles = [
+    "Learn",
+    "Business",
+    "Health & Wellness",
     "Tech",
     "Sports",
-    "Health & Wellness",
-    "Art",
-    "Business",
-    "Family & Education",
-    "Science",
     "Culture"
   ];
 

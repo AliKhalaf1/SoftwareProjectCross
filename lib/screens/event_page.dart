@@ -223,6 +223,8 @@ class _EventPageState extends State<EventPage> {
                     title: Text(
                         'Duration: ${getDuration(loadedEvent.endDate.difference(loadedEvent.startDate))}'),
                   ),
+
+                  //About
                 ],
               ),
             ),
