@@ -1,7 +1,7 @@
 library SingleEventScreen;
 
 import '../helper_functions/log_in.dart';
-import '../providers/events/event.dart';
+// import '../providers/events/event.dart';
 import '../providers/events/events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +30,7 @@ class _EventPageState extends State<EventPage> {
     //----------------------- Event provider ------------------------------
 
     // final event = Provider.of<Event>(context, listen: false);
-    // final favsData = Provider.of<FavEvents>(context);
+    final favsData = Provider.of<FavEvents>(context);
 
     //----------------------- Event id ------------------------------------
     final eventId =
@@ -42,24 +42,24 @@ class _EventPageState extends State<EventPage> {
 
     //----------------------- Methods ------------------------------
 
-    // Future<void> toggleFav(BuildContext ctx) async {
-    //   //add to favourites list
-    //   bool isLogged = await checkLoggedUser();
-    //   setState(() {
-    //     if (isLogged) {
-    //       //Call toggleStatus function from event class
-    //       if (event.isFav) {
-    //         favsData.removeEventFromFav(event);
-    //       } else {
-    //         favsData.addEventToFav(event);
-    //       }
-    //     } else {
-    //       Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-    //         return const SignUpOrLogIn();
-    //       }));
-    //     }
-    //   });
-    // }
+    Future<void> toggleFav(BuildContext ctx) async {
+      //add to favourites list
+      bool isLogged = await checkLoggedUser();
+      setState(() {
+        if (isLogged) {
+          //Call toggleStatus function from event class
+          if (loadedProduct.isFav) {
+            favsData.removeEventFromFav(loadedProduct);
+          } else {
+            favsData.addEventToFav(loadedProduct);
+          }
+        } else {
+          Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+            return const SignUpOrLogIn();
+          }));
+        }
+      });
+    }
 
     return Scaffold(
       key: const Key('EventPage'),
@@ -75,19 +75,19 @@ class _EventPageState extends State<EventPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // IconButton(
-                  //   key: const Key("AddToFavBtn"),
-                  //   onPressed: () => toggleFav(context),
-                  //   icon: Icon(
-                  //     key: const Key("favIcon"),
-                  //     !event.isFav
-                  //         ? Icons.favorite_border_rounded
-                  //         : Icons.favorite_sharp,
-                  //     color: !event.isFav
-                  //         ? const Color.fromRGBO(0, 0, 0, 0.7)
-                  //         : const Color.fromARGB(255, 209, 65, 12),
-                  //   ),
-                  // ),
+                  IconButton(
+                    key: const Key("AddToFavBtn"),
+                    onPressed: () => toggleFav(context),
+                    icon: Icon(
+                      key: const Key("favIcon"),
+                      !loadedProduct.isFav
+                          ? Icons.favorite_border_rounded
+                          : Icons.favorite_sharp,
+                      color: !loadedProduct.isFav
+                          ? const Color.fromRGBO(0, 0, 0, 0.7)
+                          : const Color.fromARGB(255, 209, 65, 12),
+                    ),
+                  ),
                 ],
               )),
         ],

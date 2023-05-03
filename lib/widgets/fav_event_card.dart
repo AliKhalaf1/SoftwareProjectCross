@@ -62,10 +62,6 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
       });
     }
 
-    void share() {
-      return;
-    }
-
     return Stack(
       fit: StackFit.loose,
       children: [
@@ -117,34 +113,21 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
           ),
         ),
         Positioned(
-            bottom: 2,
-            right: 10,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  onPressed: share,
-                  icon: const Icon(
-                    key: Key("share"),
-                    Icons.share,
-                    size: 20,
-                    color: Color.fromRGBO(0, 0, 0, 0.7),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () => toggleFav(context),
-                  icon: Icon(
-                    key: const Key("fav"),
-                    !event.isFav
-                        ? Icons.favorite_border_rounded
-                        : Icons.favorite_sharp,
-                    color: !event.isFav
-                        ? const Color.fromRGBO(0, 0, 0, 0.7)
-                        : const Color.fromARGB(255, 209, 65, 12),
-                  ),
-                ),
-              ],
-            )),
+          bottom: 2,
+          right: 10,
+          child: IconButton(
+            onPressed: () => toggleFav(context),
+            icon: Icon(
+              key: const Key("fav"),
+              !event.isFav
+                  ? Icons.favorite_border_rounded
+                  : Icons.favorite_sharp,
+              color: !event.isFav
+                  ? const Color.fromRGBO(0, 0, 0, 0.7)
+                  : const Color.fromARGB(255, 209, 65, 12),
+            ),
+          ),
+        ),
       ],
     );
   }
