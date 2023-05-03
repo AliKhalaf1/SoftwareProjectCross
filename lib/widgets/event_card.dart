@@ -94,14 +94,14 @@ class _EventCardState extends State<EventCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.date)} EET',
+                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.startDate)} EET',
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w500,
                               fontSize: 14)),
                       SizedBox(
                           width: 200,
-                          child: Text(event.description,
+                          child: Text(event.title,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(

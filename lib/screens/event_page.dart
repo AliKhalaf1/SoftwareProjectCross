@@ -3,14 +3,17 @@ library SingleEventScreen;
 import 'dart:ui';
 
 import 'package:Eventbrite/widgets/title_text_1.dart';
+import 'package:intl/intl.dart';
 
 import '../helper_functions/log_in.dart';
 // import '../providers/events/event.dart';
+import '../providers/events/event.dart';
 import '../providers/events/events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/events/fav_events.dart';
+import '../widgets/transparent_button_no_icon.dart';
 import 'sign_up/sign_up_or_log_in.dart';
 
 /// {@category User}
@@ -32,6 +35,47 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
+  //---------------- Methods -----------------//
+  // To Be: Navigate to buy a ticket
+  void buyTickets(BuildContext ctx) {
+    // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+    //   return TabBarScreen(title: 'Search', tabBarIndex: 1);
+    // }));
+  }
+
+  //Get duration
+  String getDuration(Duration d) {
+    int month, weeks, days;
+    if (d.inDays != 0) {
+      if (d.inDays >= 30) {
+        month = (d.inDays / 30).floor();
+        weeks = ((d.inDays - (month * 30)) / 7).floor();
+        return weeks == 0
+            ? '${month.toString()} month '
+            : '${month.toString()} month ${weeks.toString()} weeks';
+      }
+      if (d.inDays >= 7) {
+        weeks = (d.inDays / 7).floor();
+        days = (d.inDays % 7);
+        return days == 0
+            ? '${weeks.toString()} weeks '
+            : '${weeks.toString()} weeks ${days.toString()} days';
+      }
+      return d.inDays == 1
+          ? '${d.inDays.toString()} day'
+          : '${d.inDays.toString()} days';
+    } else if (d.inHours != 0) {
+      if (d.inMinutes != 0) {
+        return '${d.inHours.toString()}h ${d.inMinutes.toString()}m';
+      }
+      return d.inHours == 1
+          ? '${d.inHours.toString()} hour'
+          : '${d.inHours.toString()} hours';
+    } else {
+      return '${d.inMinutes.toString()} minutes';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     //----------------------- Event provider ------------------------------
@@ -122,33 +166,80 @@ class _EventPageState extends State<EventPage> {
               ),
             ),
           ]),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: SizedBox(
-                  height: 200,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Image.network(
-                    loadedEvent.eventImg,
-                    fit: BoxFit.cover,
+      body: Stack(
+        fit: StackFit.loose,
+        children: [
+          //Stack 1st child
+          SingleChildScrollView(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  // -------------------- Event image --------------------
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15.0),
+                    child: SizedBox(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Image.network(
+                        loadedEvent.eventImg,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
+
+                  // -------------------- Event Name --------------------
+                  const SizedBox(height: 30),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: TitleText1(
+                      loadedEvent.title,
+                    ),
+                  ),
+
+                  // -------------------- Event time/location --------------------
+                  ListTile(
+                    leading: const Icon(Icons.calendar_today, size: 15),
+                    title: Text(DateFormat('EEEE, MMMM d')
+                        .format(loadedEvent.startDate)),
+                    subtitle: Text(
+                        'Starts at: ${DateFormat('hh:mmaaa').format(loadedEvent.startDate)}'),
+                  ),
+
+                  ListTile(
+                    leading:
+                        const Icon(Icons.ondemand_video_outlined, size: 15),
+                    title: Text(
+                      (loadedEvent.state == EventState.online)
+                          ? 'Online event'
+                          : 'Offline event',
+                    ),
+                  ),
+
+                  ListTile(
+                    leading: const Icon(Icons.access_time_rounded, size: 15),
+                    title: Text(
+                        'Duration: ${getDuration(loadedEvent.endDate.difference(loadedEvent.startDate))}'),
+                  ),
+                ],
               ),
-              const SizedBox(height: 30),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: TitleText1(
-                  loadedEvent.description,
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+
+          //Stack 2nd child
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: TransparentButtonNoIcon(
+                  key: const Key("BuyTicketsBtn"),
+                  'Tickets',
+                  buyTickets,
+                  false),
+            ),
+          )
+        ],
       ),
     );
   }

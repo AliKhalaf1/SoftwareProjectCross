@@ -18,10 +18,11 @@ class TitleText1 extends StatelessWidget {
       padding: const EdgeInsets.only(right: 15, bottom: 10),
       child: Text(
         text,
+        
         textAlign: TextAlign.left,
         style: const TextStyle(
             fontSize: 30,
-            height: 0.9,
+            height: 1.2,
             letterSpacing: 1.3,
             fontFamily: 'Neue Plak Extended',
             fontWeight: FontWeight.w700,

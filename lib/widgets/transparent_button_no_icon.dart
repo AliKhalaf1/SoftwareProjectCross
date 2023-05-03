@@ -20,7 +20,7 @@ class TransparentButtonNoIcon extends StatefulWidget {
   ///   • Text to display inside button
   ///
   ///   • Function handler
-  /// 
+  ///
   ///   • Button state (Activate or not)
   ///
   TransparentButtonNoIcon(this.text, this.onPressed, this.buttonState,
@@ -73,18 +73,32 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
                 ),
               )
             : TextButton(
-                style: ButtonStyle(
-                  side: MaterialStateProperty.all(
-                    const BorderSide(width: 2, color: Colors.grey),
-                  ),
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
-                  foregroundColor: MaterialStateProperty.all(Colors.black87),
-                  shape: MaterialStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(3),
-                    ),
-                  ),
-                ),
+                style: widget.text == 'Tickets'
+                    ? ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            Theme.of(context).primaryColor),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        shape: MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
+                      )
+                    : ButtonStyle(
+                        side: MaterialStateProperty.all(
+                          const BorderSide(width: 2, color: Colors.grey),
+                        ),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.black87),
+                        shape: MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
+                      ),
                 onPressed: () => widget.onPressed(context),
                 child: Align(
                   alignment: Alignment.center,

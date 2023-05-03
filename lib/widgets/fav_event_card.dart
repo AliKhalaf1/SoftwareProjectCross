@@ -93,7 +93,7 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.date)} EET',
+                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.startDate)} EET',
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w500,
