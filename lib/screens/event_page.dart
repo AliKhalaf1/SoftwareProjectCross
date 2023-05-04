@@ -3,6 +3,7 @@ library SingleEventScreen;
 import 'dart:ui';
 
 import 'package:Eventbrite/widgets/title_text_1.dart';
+import 'package:Eventbrite/widgets/title_text_2.dart';
 import 'package:intl/intl.dart';
 
 import '../helper_functions/log_in.dart';
@@ -13,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/events/fav_events.dart';
+import '../widgets/event_card.dart';
+import '../widgets/more_like_events_card.dart';
 import '../widgets/transparent_button_no_icon.dart';
 import 'sign_up/sign_up_or_log_in.dart';
 
@@ -58,8 +61,12 @@ class _EventPageState extends State<EventPage> {
         weeks = (d.inDays / 7).floor();
         days = ((d.inDays - (7 * weeks)));
         return days == 0
-            ? '${weeks.toString()} weeks '
-            : '${weeks.toString()} weeks ${days.toString()} days';
+            ? (weeks == 1
+                ? '${weeks.toString()} week '
+                : '${weeks.toString()} weeks ')
+            : (weeks == 1
+                ? '${weeks.toString()} week ${(days.toString())} days'
+                : '${weeks.toString()} weeks ${days.toString()} days');
       }
       return d.inDays == 1
           ? '${d.inDays.toString()} day'
@@ -200,31 +207,138 @@ class _EventPageState extends State<EventPage> {
                   ),
 
                   // -------------------- Event time/location --------------------
-                  ListTile(
-                    leading: const Icon(Icons.calendar_today, size: 15),
-                    title: Text(DateFormat('EEEE, MMMM d')
-                        .format(loadedEvent.startDate)),
-                    subtitle: Text(
-                        'Starts at: ${DateFormat('hh:mmaaa').format(loadedEvent.startDate)}'),
-                  ),
-
-                  ListTile(
-                    leading:
-                        const Icon(Icons.ondemand_video_outlined, size: 15),
-                    title: Text(
-                      (loadedEvent.state == EventState.online)
-                          ? 'Online event'
-                          : 'Offline event',
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(bottom: 10, top: 0),
+                      child: const Text(
+                        'Times are displayed in your local timezone',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 15.5,
+                            color: Color.fromRGBO(121, 121, 121, 0.875)),
+                      ),
                     ),
                   ),
 
-                  ListTile(
-                    leading: const Icon(Icons.access_time_rounded, size: 15),
-                    title: Text(
-                        'Duration: ${getDuration(loadedEvent.endDate.difference(loadedEvent.startDate))}'),
+                  Container(
+                    padding: const EdgeInsets.all(0),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.calendar_today, size: 15),
+                      title: Text(DateFormat('EEEE, MMMM d')
+                          .format(loadedEvent.startDate.toLocal())),
+                      subtitle: Text(
+                          'Starts at: ${DateFormat('hh:mmaaa').format(loadedEvent.startDate.toLocal())}'),
+                    ),
                   ),
 
-                  //About
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading:
+                          const Icon(Icons.ondemand_video_outlined, size: 15),
+                      title: Text(
+                        (loadedEvent.state == EventState.online)
+                            ? 'Online event'
+                            : 'Offline event',
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.access_time_rounded, size: 15),
+                      title: Text(
+                          'Duration: ${getDuration(loadedEvent.endDate.difference(loadedEvent.startDate))}'),
+                    ),
+                  ),
+
+                  // ---------------------- About ----------------
+                  const SizedBox(height: 30),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(right: 15, bottom: 10),
+                      child: const Text(
+                        'About',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 20,
+                            height: 1.2,
+                            letterSpacing: 1.3,
+                            fontFamily: 'Neue Plak Extended',
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromRGBO(17, 3, 59, 1)),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: TitleText2(loadedEvent.description),
+                  ),
+                  const SizedBox(height: 30),
+
+                  // ------------- More like evnets -----------
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(right: 15, bottom: 10),
+                      child: const Text(
+                        'More like this',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 20,
+                            height: 1.2,
+                            letterSpacing: 1.3,
+                            fontFamily: 'Neue Plak Extended',
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromRGBO(17, 3, 59, 1)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+
+                  SizedBox(
+                    height: 250,
+                    width: double.infinity,
+                    child: GlowingOverscrollIndicator(
+                      axisDirection: AxisDirection.right,
+                      color: const Color.fromARGB(255, 255, 72, 0),
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount:
+                            7, // To Be: substitute with number of events in collection
+                        itemBuilder: (ctx, index) {
+                          return ChangeNotifierProvider.value(
+                              // To Be: get event from events of the collection by get events by collection API
+                              value: Event(
+                                  DateTime.now(),
+                                  DateTime.now().add(
+                                      const Duration(minutes: 30, hours: 5)),
+                                  'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
+                                  'https://th.bing.com/th/id/OIP.we5keYDOBq6j9Dm-pOGIKgHaD1?pid=ImgDet&rs=1',
+                                  EventState.online,
+                                  false,
+                                  "Science",
+                                  ['smart', 'wellness', 'aykalam'],
+                                  '2',
+                                  'Ancara messi ancara messi'),
+                              child: const MoreLikeEventCard());
+                        },
+                      ),
+                    ),
+                  ),
+
+                  //------------ End of Page -------------
+                  const SizedBox(height: 90),
                 ],
               ),
             ),

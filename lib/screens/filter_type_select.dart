@@ -171,7 +171,7 @@ class FilterType extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         child: GlowingOverscrollIndicator(
           axisDirection: AxisDirection.down,
-          color: Colors.orange.shade900,
+          color: const Color.fromARGB(255, 255, 72, 0),
           child: ListView.builder(
             padding: const EdgeInsets.only(top: 40),
             itemCount: id == 0 ? dateDataValues.length : catDataValues.length,

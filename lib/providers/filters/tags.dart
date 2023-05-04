@@ -33,10 +33,10 @@ class Tags with ChangeNotifier {
 
   final List<Tag> _fieldtags = [
     Tag('Anything', true, 'field', 'Anything'),
-    Tag('Sports', true, 'field', 'Sports'),
+    Tag('Sports & Fitness', true, 'field', 'Sports & Fitness'),
     Tag('Learn', false, 'field', 'Learn'),
     Tag('Business', false, 'field', 'Business'),
-    Tag('Health & Wellness', false, 'field', 'Health & Wellness'),
+    Tag('Health', false, 'field', 'Health'),
     Tag('Tech', false, 'field', 'Tech'),
     Tag('Culture', false, 'field', 'Culture')
   ];
@@ -47,10 +47,10 @@ class Tags with ChangeNotifier {
     Tag('This weekend', false, 'date', 'This weekend'),
     Tag('This month', false, 'date', 'This month'),
     Tag('In the next month', false, 'date', 'In the next month'),
-    Tag('Sports', true, 'field', 'Sports'),
+    Tag('Sports & Fitness', true, 'field', 'Sports'),
     Tag('Learn', false, 'field', 'Learn'),
     Tag('Business', false, 'field', 'Business'),
-    Tag('Health & Wellness', false, 'field', 'Health & Wellness'),
+    Tag('Health', false, 'field', 'Health'),
     Tag('Tech', false, 'field', 'Tech'),
     Tag('Culture', false, 'field', 'Culture')
   ];
