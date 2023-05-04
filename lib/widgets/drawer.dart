@@ -51,7 +51,7 @@ class _EventDrawerState extends State<EventDrawer> {
   }
 
   void logOutLogic(BuildContext ctx) {
-    setLoggedOut(widget.email);
+    setLoggedOut();
     Navigator.of(ctx).popUntil((route) => route.isFirst);
     Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
       return TabBarScreen(title: 'Profile', tabBarIndex: 4);

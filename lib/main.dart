@@ -97,7 +97,8 @@ class _MainAppState extends State<MainApp> {
           PastEvents.route: (ctx) => PastEvents(),
           EventTitle.route: (ctx) => EventTitle(),
           Event_Description.route: (ctx) => Event_Description(),
-          AccountSettings.accountSettingsRoute: (ctx) => AccountSettings(),
+          AccountSettings.accountSettingsRoute: (ctx) =>
+              AccountSettings("", "", "", ""),
           EventDate.route: (ctx) => EventDate(),
           EventPage.eventPageRoute: (ctx) => const EventPage(),
           EventLocation.route: (ctx) => EventLocation(),

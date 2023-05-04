@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 ///
 /// It removes the value of the key "token" and the value of the key "email" from the cache.
 ///
-Future<void> setLoggedOut(email) async {
+Future<void> setLoggedOut() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove('token');
   prefs.remove('email');
@@ -22,6 +22,6 @@ Future<void> setLoggedOut(email) async {
 ///
 /// then,  It then calls the logOut function to navigate to the login page.
 void logOutLogic(BuildContext ctx, String email, Function logOut) {
-  setLoggedOut(email);
+  setLoggedOut();
   logOut();
 }
