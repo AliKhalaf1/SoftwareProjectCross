@@ -2,8 +2,10 @@ import 'package:Eventbrite/providers/categories/categories.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/providers/filters/tags.dart';
 import 'package:Eventbrite/providers/filters/temp_tags.dart';
+import 'package:Eventbrite/screens/creator/all_coupons.dart';
 import 'package:Eventbrite/screens/creator/all_tickets.dart';
 import 'package:Eventbrite/screens/creator/bar_location.dart';
+import 'package:Eventbrite/screens/creator/coupons_form.dart';
 import 'package:Eventbrite/screens/creator/description_event.dart';
 import 'package:Eventbrite/screens/creator/event_location.dart';
 import 'package:Eventbrite/screens/creator/event_start_end_date.dart';
@@ -111,6 +113,8 @@ class _MainAppState extends State<MainApp> {
           TicketForm.route: (ctx) => TicketForm(),
           Search.searchPageRoute: (ctx) => const Search(),
           BarLocation.route: (ctx) => BarLocation(),
+          AllCoupons.route: (ctx) => AllCoupons(),
+          CouponForm.route: (ctx) => CouponForm(),
         },
       ),
     );
