@@ -14,6 +14,7 @@ class TransparentButtonNoIcon extends StatefulWidget {
   final String text;
   final Function onPressed;
   bool buttonState;
+  final String eventId;
 
   /// It takes:
   ///
@@ -23,7 +24,8 @@ class TransparentButtonNoIcon extends StatefulWidget {
   ///
   ///   • Button state (Activate or not)
   ///
-  TransparentButtonNoIcon(this.text, this.onPressed, this.buttonState,
+  TransparentButtonNoIcon(
+      this.text, this.onPressed, this.buttonState, this.eventId,
       {super.key});
 
   @override
@@ -73,7 +75,7 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
                 ),
               )
             : TextButton(
-                style: widget.text == 'Tickets'
+                style: (widget.text == 'Tickets' || widget.text == 'Check out')
                     ? ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                             Theme.of(context).primaryColor),
@@ -99,8 +101,10 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
                           ),
                         ),
                       ),
-                onPressed: widget.text == 'Tickets'
-                    ? () => widget.onPressed(context,widget.key.toString()) : () => widget.onPressed(context),
+                onPressed:
+                    (widget.text == 'Tickets' || widget.text == 'Check out')
+                        ? () => widget.onPressed(context, widget.eventId)
+                        : () => widget.onPressed(context),
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(

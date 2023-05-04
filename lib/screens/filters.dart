@@ -129,7 +129,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   key: const Key("ApplyFiltersBtn"),
                   'Apply filters (${filtersDataValues.selectedFilterCount})',
                   applyFilters,
-                  widget.applyBtnState),
+                  widget.applyBtnState, '0'),
             ),
           )
         ],

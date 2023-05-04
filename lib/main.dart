@@ -97,7 +97,6 @@ class _MainAppState extends State<MainApp> {
               TabBarScreen(title: 'Eventbrite', tabBarIndex: 0),
           SignUpOrLogIn.signUpRoute: (ctx) => const SignUpOrLogIn(),
           EmailCheck.emailCheckRoute: (ctx) => EmailCheck(),
-          FindTickets.findTicketsRoute: (ctx) => const FindTickets(),
           TabBarEvents.route: (ctx) => TabBarEvents(),
           PastEvents.route: (ctx) => PastEvents(),
           EventTitle.route: (ctx) => EventTitle(),
