@@ -104,14 +104,14 @@ class _FilterScreenState extends State<FilterScreen> {
                             'Price',
                             'Free stuff only',
                             widget.applyBtnState),
-                        CheckBox(
-                            key: const Key("OragnizerCheckBox"),
-                            'Organiser',
-                            'From organizers you follow',
-                            widget.applyBtnState),
-                        RadioButton(
-                            key: const Key("SortByRadioBtns"),
-                            widget.applyBtnState),
+                        // CheckBox(
+                        //     key: const Key("OragnizerCheckBox"),
+                        //     'Organiser',
+                        //     'From organizers you follow',
+                        // widget.applyBtnState),
+                        // RadioButton(
+                        //     key: const Key("SortByRadioBtns"),
+                        //     widget.applyBtnState),
                       ],
                     ),
                   );
@@ -129,7 +129,8 @@ class _FilterScreenState extends State<FilterScreen> {
                   key: const Key("ApplyFiltersBtn"),
                   'Apply filters (${filtersDataValues.selectedFilterCount})',
                   applyFilters,
-                  widget.applyBtnState, '0'),
+                  widget.applyBtnState,
+                  '0'),
             ),
           )
         ],
