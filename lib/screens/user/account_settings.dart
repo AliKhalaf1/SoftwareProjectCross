@@ -1,6 +1,7 @@
 library AccountSettingsScreen;
 
 import 'package:Eventbrite/helper_functions/upload_image.dart';
+import 'package:Eventbrite/main.dart';
 import 'package:Eventbrite/screens/user/update_name.dart';
 import 'package:Eventbrite/widgets/app_bar_text.dart';
 import 'package:Eventbrite/widgets/text_link.dart';
@@ -9,6 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../helper_functions/log_in.dart';
 import '../../models/user.dart';
+import '../../objectbox.dart';
+import '../../objectbox.g.dart';
 import '../../widgets/profile_picture.dart';
 import 'dart:io';
 import '../../models/db_mock.dart';
@@ -30,10 +33,11 @@ import '../../models/db_mock.dart';
 ///
 class AccountSettings extends StatefulWidget {
   var imageurl;
-  String email = '';
-  String firstname = '';
-  String lastname = '';
-  AccountSettings({this.imageurl, super.key});
+  final String email;
+  var firstname;
+  var lastname;
+  AccountSettings(this.email, this.firstname, this.lastname, this.imageurl,
+      {super.key});
 
   static const accountSettingsRoute = '/Account-Settings';
 
@@ -55,14 +59,6 @@ class _AccountSettingsState extends State<AccountSettings> {
   @override
   void initState() {
     super.initState();
-    getEmail().then((value) {
-      setState(() {
-        User user = DBMock.getUserData(value);
-        widget.email = value;
-        widget.firstname = user.firstName;
-        widget.lastname = user.lastName;
-      });
-    });
   }
 
   @override
@@ -87,7 +83,16 @@ class _AccountSettingsState extends State<AccountSettings> {
               setState(() {
                 widget.imageurl = url;
               });
-              DBMock.updateUserImage(widget.email, url);
+              // DBMock.updateUserImage(widget.email, url);
+
+              //mock server implementation
+              // var userbox = ObjectBox.userBox;
+              // var user = userbox
+              //     .query(User_.email.equals(widget.email))
+              //     .build()
+              //     .findFirst();
+              // user!.imageUrl = url;
+              // userbox.put(user);
             },
             key: const Key('update_Picture'),
           ),

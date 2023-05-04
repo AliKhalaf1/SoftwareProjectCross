@@ -208,7 +208,7 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
                                   widget.lastNameText.text);
 
                               Navigator.of(context).pop();
-                              Navigator.of(context).pop();
+                              Navigator.of(context).pop(true);
                             });
                           }
                         : () => {},

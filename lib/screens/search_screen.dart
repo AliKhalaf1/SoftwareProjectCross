@@ -108,136 +108,150 @@ class _SearchState extends State<Search> {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              GestureDetector(
-                key: const Key("GoToNearbyEvents"),
-                onTap: () => goToBearby(context),
-                child: Row(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.only(left: 5),
-                      child: TextButton(
-                        onPressed: null,
-                        child: Text(
-                          'Online events',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: Color.fromARGB(229, 41, 41, 41),
-                    ),
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 15, right: 15),
-                child: TextField(
-                  key: Key("TextFieldInput"),
-                  cursorWidth: 0.5,
-                  cursorColor: Colors.grey,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    hintText: 'Start searching...',
-                    hintStyle:
-                        TextStyle(color: Color.fromARGB(255, 147, 147, 147)),
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(229, 41, 41, 41), width: 2.0),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(255, 67, 96, 244), width: 2.0),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 30,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: tags.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ChangeNotifierProvider.value(
-                        value: tags[index],
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(60),
-                              color: tags[index].selected
-                                  ? const Color.fromARGB(255, 67, 96, 244)
-                                  : const Color.fromARGB(255, 242, 242, 242)),
-                          child: InkWell(
-                            key: const Key("TagSelectionGesture"),
-                            borderRadius: BorderRadius.circular(60),
-                            splashColor: const Color.fromARGB(255, 67, 96, 244),
-                            onTap: () => selectTag(context,
-                                tags[index]), // Action when button is pressed
-                            child: Container(
-                              height: 10,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    tags[index].value,
-                                    style: TextStyle(
-                                        color: tags[index].selected
-                                            ? Colors.white
-                                            : const Color.fromARGB(
-                                                255, 104, 104, 104),
-                                        fontSize: 12),
-                                  ),
-                                  tags[index].selected
-                                      ? const Padding(
-                                          padding: EdgeInsets.only(left: 15),
-                                          child: Icon(
-                                            Icons.close_outlined,
-                                            color: Colors.white,
-                                            size: 16,
-                                          ),
-                                        )
-                                      : const GreyArea()
-                                ],
-                              ),
-                            ),
+        body: GlowingOverscrollIndicator(
+          axisDirection: AxisDirection.down,
+          color: const Color.fromARGB(255, 255, 72, 0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                GestureDetector(
+                  key: const Key("GoToNearbyEvents"),
+                  onTap: () => goToBearby(context),
+                  child: Row(
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: TextButton(
+                          onPressed: null,
+                          child: Text(
+                            'Online events',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
                           ),
                         ),
-                      );
-                    },
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Color.fromARGB(229, 41, 41, 41),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 350,
-                child: GlowingOverscrollIndicator(
-                  axisDirection: AxisDirection.down,
-                  color: Colors.orange.shade900,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(top: 40),
-                    itemCount: 1, // substitute with collectionCounts
-                    itemBuilder: (ctx, index) {
-                      return EventCollections(
-                          "${events.length} events", false, events);
-                    },
+                const Padding(
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  child: TextField(
+                    key: Key("TextFieldInput"),
+                    cursorWidth: 0.5,
+                    cursorColor: Colors.grey,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      hintText: 'Start searching...',
+                      hintStyle:
+                          TextStyle(color: Color.fromARGB(255, 147, 147, 147)),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(229, 41, 41, 41), width: 2.0),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 67, 96, 244),
+                            width: 2.0),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 30,
+                    child: GlowingOverscrollIndicator(
+                      axisDirection: AxisDirection.right,
+                      color: const Color.fromARGB(255, 255, 72, 0),
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: tags.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ChangeNotifierProvider.value(
+                            value: tags[index],
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 8),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(60),
+                                  color: tags[index].selected
+                                      ? const Color.fromARGB(255, 67, 96, 244)
+                                      : const Color.fromARGB(
+                                          255, 242, 242, 242)),
+                              child: InkWell(
+                                key: const Key("TagSelectionGesture"),
+                                borderRadius: BorderRadius.circular(60),
+                                splashColor:
+                                    const Color.fromARGB(255, 67, 96, 244),
+                                onTap: () => selectTag(
+                                    context,
+                                    tags[
+                                        index]), // Action when button is pressed
+                                child: Container(
+                                  height: 10,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        tags[index].value,
+                                        style: TextStyle(
+                                            color: tags[index].selected
+                                                ? Colors.white
+                                                : const Color.fromARGB(
+                                                    255, 104, 104, 104),
+                                            fontSize: 12),
+                                      ),
+                                      tags[index].selected
+                                          ? const Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 15),
+                                              child: Icon(
+                                                Icons.close_outlined,
+                                                color: Colors.white,
+                                                size: 16,
+                                              ),
+                                            )
+                                          : const GreyArea()
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 350,
+                  child: GlowingOverscrollIndicator(
+                    axisDirection: AxisDirection.down,
+                    color: Colors.orange.shade900,
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(top: 40),
+                      itemCount: 1, // substitute with collectionCounts
+                      itemBuilder: (ctx, index) {
+                        return EventCollections(
+                            "${events.length} events", false, events);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ));
   }

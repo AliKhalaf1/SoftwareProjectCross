@@ -1,7 +1,9 @@
 library BottomNavBar;
 
+import 'package:Eventbrite/helper_functions/log_in.dart';
 import 'package:Eventbrite/screens/user/favourites.dart';
 import 'package:Eventbrite/screens/user/tickets_tab_bar.dart';
+import 'package:Eventbrite/widgets/loading_spinner.dart';
 import 'package:provider/provider.dart';
 
 import '../../screens/guest/favourites_sign_up.dart';
@@ -46,6 +48,7 @@ class TabBarScreen extends StatefulWidget {
   static const tabBarScreenRoute = '/';
   final String title;
   int tabBarIndex;
+  bool isLoading = false;
   TabBarScreen({super.key, required this.title, this.tabBarIndex = 0});
 
   @override
@@ -57,13 +60,16 @@ class TabBarScreen extends StatefulWidget {
 ///
 class TabBarScreenState extends State<TabBarScreen> {
   Future<void> checkLoggedUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.getString('token') ?? '';
+    widget.isLoading = true;
+    String token = await getToken();
 
-    if (token.isNotEmpty) {
-      var email = prefs.getString('email') ?? '';
-      User user = DBMock.getUserData(email);
+    print('tab_bar token: $token');
 
+    bool isLoggedIn = await checkToken(token);
+    widget.isLoading = false;
+    //bool isLoggedIn = token.isNotEmpty;
+    print('tab_bar isLoggedIn: $isLoggedIn');
+    if (isLoggedIn) {
       setState(() {
         widget.tabBarIndex = 4;
         pages = [
@@ -167,7 +173,7 @@ class TabBarScreenState extends State<TabBarScreen> {
               label: 'Profile',
             ),
           ]),
-      body: pages[_currentIndex],
+      body: widget.isLoading ? const LoadingSpinner() : pages[_currentIndex],
     );
   }
 }
