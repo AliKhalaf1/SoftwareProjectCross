@@ -375,6 +375,7 @@ class _EventPageState extends State<EventPage> {
 
         //--------------------------------------- Tickets modal --------------------------------------------------------
         //Stack 2nd child
+        //To Be: check if event date is after time.now so can purchase a ticket
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
@@ -383,7 +384,7 @@ class _EventPageState extends State<EventPage> {
                 key: const Key("BuyTicketsBtn"),
                 'Tickets',
                 buyTickets,
-                false,
+                loadedEvent.startDate.toUtc().isBefore(DateTime.now().add(const Duration(hours: 1)).toUtc()) ,
                 eventId),
           ),
         ),
