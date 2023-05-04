@@ -57,11 +57,11 @@ class _EventLocationState extends State<EventLocation> {
                 });
               },
               itemBuilder: (_) => [
-                PopupMenuItem(
+                const PopupMenuItem(
                   child: Text('Venue'),
                   value: eventPlace.Venue,
                 ),
-                PopupMenuItem(
+                const PopupMenuItem(
                   child: Text('Online event'),
                   value: eventPlace.Online,
                 ),
@@ -75,14 +75,14 @@ class _EventLocationState extends State<EventLocation> {
                     color: Colors.black,
                   ),
                   Text(thePlace == eventPlace.Venue ? 'Venue' : 'Online event'),
-                  Icon(
+                  const Icon(
                     Icons.arrow_drop_down,
                     color: Colors.black,
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             if (thePlace == eventPlace.Venue)

@@ -64,7 +64,8 @@ class _FilterScreenState extends State<FilterScreen> {
           onPressed: () {
             tagsData.setAll(tempTagsData);
             filtersDataValues.setAll(tempFiltersDataValues);
-            Navigator.pop(context);
+            // Navigator.pop(context);
+            Navigator.of(context).popUntil((route) => route.isFirst);
           },
         ),
         backgroundColor: Colors.white38,

@@ -1,4 +1,4 @@
-import 'package:Eventbrite/screens/creator/description_title.dart';
+import 'package:Eventbrite/screens/creator/description_event.dart';
 import 'package:flutter/material.dart';
 
 class EventTitle extends StatefulWidget {
@@ -81,10 +81,12 @@ class _EventTitleState extends State<EventTitle> {
                               return null;
                             }
                           }
-                          return null;
+                          return 'null value';
                         },
                         onChanged: (value) {
-                          enableRightArrow(value);
+                          if (value.trim().isNotEmpty && value.isNotEmpty) {
+                            enableRightArrow(value);
+                          }
                         },
                         cursorColor: Colors.black,
                         cursorHeight: 18,

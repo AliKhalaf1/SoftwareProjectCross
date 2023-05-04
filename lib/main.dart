@@ -2,7 +2,7 @@ import 'package:Eventbrite/providers/categories/categories.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/providers/filters/tags.dart';
 import 'package:Eventbrite/providers/filters/temp_tags.dart';
-import 'package:Eventbrite/screens/creator/description_title.dart';
+import 'package:Eventbrite/screens/creator/description_event.dart';
 import 'package:Eventbrite/screens/creator/event_location.dart';
 import 'package:Eventbrite/screens/creator/event_start_end_date.dart';
 import 'package:Eventbrite/screens/creator/event_title.dart';
@@ -101,9 +101,9 @@ class _MainAppState extends State<MainApp> {
               AccountSettings("", "", "", ""),
           EventDate.route: (ctx) => EventDate(),
           EventPage.eventPageRoute: (ctx) => const EventPage(),
-          EventLocation.route: (ctx) => EventLocation(),
+          EventLocation.route: (ctx) => const EventLocation(),
           Home.homePageRoute: (ctx) => Home(),
-          EventForm.route: (ctx) => EventForm(),
+          EventForm.route: (ctx) => const EventForm(),
           Search.searchPageRoute: (ctx) => const Search(),
         },
       ),

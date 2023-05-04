@@ -58,13 +58,11 @@ class _HomeState extends State<Home> {
   // var _isLoading = false;
 
   final List<String> categoryTitles = [
-    "Tech",
-    "Sports",
-    "Health & Wellness",
-    "Art",
+    "Learn",
     "Business",
-    "Family & Education",
-    "Science",
+    "Health",
+    "Tech",
+    "Sports & Fitness",
     "Culture"
   ];
 
@@ -137,15 +135,22 @@ class _HomeState extends State<Home> {
       key: const Key("HomeScreen"),
       body: SizedBox(
         height: 700,
-        child: ListView.builder(
-          padding: const EdgeInsets.only(top: 40),
-          itemCount: categoryTitles.length, // substitute with collectionCounts
-          itemBuilder: (ctx, index) {
-            List<Event> matchedEvents = events
-                .where((eventItem) => eventItem.categ == categoryTitles[index])
-                .toList();
-            return EventCollections(categoryTitles[index], true, matchedEvents);
-          },
+        child: GlowingOverscrollIndicator(
+          axisDirection: AxisDirection.down,
+          color: const Color.fromARGB(255, 255, 72, 0),
+          child: ListView.builder(
+            padding: const EdgeInsets.only(top: 40),
+            itemCount:
+                categoryTitles.length, // substitute with collectionCounts
+            itemBuilder: (ctx, index) {
+              List<Event> matchedEvents = events
+                  .where(
+                      (eventItem) => eventItem.categ == categoryTitles[index])
+                  .toList();
+              return EventCollections(
+                  categoryTitles[index], true, matchedEvents);
+            },
+          ),
         ),
       ),
     );

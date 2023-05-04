@@ -1,4 +1,4 @@
-library FavouriteEventCard;
+library MoreLikeEventCard;
 
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:flutter/material.dart';
@@ -22,18 +22,14 @@ import '../screens/sign_up/sign_up_or_log_in.dart';
 ///
 ///<strong>'EEE, MMM d • hh:mmaaa ' </strong>
 ///
-class FavouriteEventCard extends StatefulWidget {
-  //event to be shown in the card
-  // Event event;
-
-  //constructor
-  // EventCard(this.event, {super.key});
+class MoreLikeEventCard extends StatefulWidget {
+  const MoreLikeEventCard({super.key});
 
   @override
-  State<FavouriteEventCard> createState() => _FavouriteEventCardState();
+  State<MoreLikeEventCard> createState() => _MoreLikeEventCardState();
 }
 
-class _FavouriteEventCardState extends State<FavouriteEventCard> {
+class _MoreLikeEventCardState extends State<MoreLikeEventCard> {
   @override
   Widget build(BuildContext context) {
     //----------------------- Event provider ------------------------------
@@ -66,59 +62,58 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
       fit: StackFit.loose,
       children: [
         InkWell(
+          key: const Key("MoreLikeEventCard"),
           onTap: () => selectEvent(context, event),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 15, left: 15, bottom: 15),
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: event.eventImg.startsWith('http')
-                        ? Image.network(
-                            event.eventImg,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.asset(
-                            event.eventImg,
-                            fit: BoxFit.cover,
-                          )),
-                Container(
-                  height: 100,
-                  padding: const EdgeInsets.only(left: 10, top: 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.startDate)} EET',
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14)),
-                      SizedBox(
-                          width: 200,
-                          child: Text(event.description,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 16))),
-                    ],
-                  ),
-                )
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  height: 130,
+                  child: event.eventImg.startsWith('http')
+                      ? Image.network(
+                          event.eventImg,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          event.eventImg,
+                          fit: BoxFit.cover,
+                        )),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                    '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.startDate)} EET',
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14)),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  width: 200,
+                  height: 40,
+                  child: Text(event.title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 16))),
+            ],
           ),
         ),
         Positioned(
           bottom: 2,
-          right: 10,
+          right: 0,
           child: IconButton(
+            key: const Key("AddToFavBtn"),
             onPressed: () => toggleFav(context),
             icon: Icon(
-              key: const Key("fav"),
+              key: const Key("favIcon"),
               !event.isFav
                   ? Icons.favorite_border_rounded
                   : Icons.favorite_sharp,

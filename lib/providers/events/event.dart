@@ -26,19 +26,20 @@ enum EventState { online, offline }
 class Event with ChangeNotifier {
   //parameters of the EventCard Widget
   final String eventImg; /*event card image */
-  final DateTime date; /*event date*/
+  final DateTime startDate; /*start event date*/
+  final DateTime endDate; /*end event date*/
   final String description; /*event dscription*/
   final EventState state; /*event state (online/onsite)*/
-  final int creatorFollowers; /*number of followers of the event creator*/
   bool isFav;
   final String categ;
   final List<String> tags;
   final String id;
+  final String title;
 
   ///Constructor
   Event(
-    this.creatorFollowers,
-    this.date,
+    this.startDate,
+    this.endDate,
     this.description,
     this.eventImg,
     this.state,
@@ -46,6 +47,7 @@ class Event with ChangeNotifier {
     this.categ,
     this.tags,
     this.id,
+    this.title
   );
 
   /// Set isFav Value by true or false

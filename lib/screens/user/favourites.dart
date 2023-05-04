@@ -28,18 +28,18 @@ List<List<Event>> sortAndSplitByDate(List<Event> list) {
     return [];
   }
   List<Event> sortedByDateList = list;
-  sortedByDateList.sort((a, b) => a.date.compareTo(b.date));
+  sortedByDateList.sort((a, b) => a.startDate.compareTo(b.startDate));
 
-  DateTime refrenceDate = sortedByDateList[0].date;
+  DateTime refrenceDate = sortedByDateList[0].startDate;
   List<int> lengths = [];
   int count = 0;
   for (int i = 0; i < sortedByDateList.length; i++) {
     if (i == sortedByDateList.length - 1) {
       lengths.add(count);
-    } else if (refrenceDate != sortedByDateList[i].date) {
+    } else if (refrenceDate != sortedByDateList[i].startDate) {
       lengths.add(count);
       count = 0;
-      refrenceDate = sortedByDateList[i].date;
+      refrenceDate = sortedByDateList[i].startDate;
     }
     count++;
   }
@@ -100,7 +100,7 @@ class _FavouritesState extends State<Favourites> {
                 itemCount: 1, // substitute with collectionCounts
                 itemBuilder: (ctx, index) {
                   return FavEventCollection(
-                    DateFormat.yMEd().format(favourites[0].date),
+                    DateFormat.yMEd().format(favourites[0].startDate),
                     favourites,
                     key: Key('fav_event_${index}'),
                   );
