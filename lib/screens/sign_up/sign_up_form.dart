@@ -183,14 +183,14 @@ class _SignUpFormState extends State<SignUpForm> {
       });
 
       if (res == 200) {
-        setLoggedIn(userEmail, "Dummy Token");
+        //setLoggedIn(userEmail, "Dummy Token");
         Navigator.of(context).popUntil((route) => route.isFirst);
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
           return TabBarScreen(title: 'Profile', tabBarIndex: 4);
         }));
 
-        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        //     content: Text('Please verify your email then login')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Please verify your email then login again')));
       } else if (res == 400) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
