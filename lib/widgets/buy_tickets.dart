@@ -32,11 +32,9 @@ class _BuyTicketsState extends State<BuyTickets> {
   String? validPromocode = '1234';
 
 // ---------------------- Method -----------------------
-  void addPromoCode(String promo)
-  {
+  void addPromoCode(String promo) {
     final isValid = _form.currentState?.validate();
   }
-
 
   void purchase(String promo, String price) {}
   void saveForm(BuildContext ctx, String eventId) {
@@ -72,9 +70,9 @@ class _BuyTicketsState extends State<BuyTickets> {
                           }
                           return "Invalid promocode";
                         },
-                        // onSaved: (newValue) {
-                        //   data.promo = newValue;
-                        // },
+                        onSaved: (newValue) {
+                          data.promo = newValue;
+                        },
                         cursorColor: Theme.of(context).primaryColor,
                         maxLength: 10,
                         decoration: InputDecoration(
