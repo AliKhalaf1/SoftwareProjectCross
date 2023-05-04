@@ -99,7 +99,8 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
                           ),
                         ),
                       ),
-                onPressed: () => widget.onPressed(context),
+                onPressed: widget.text == 'Tickets'
+                    ? () => widget.onPressed(context,widget.key.toString()) : () => widget.onPressed(context),
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
