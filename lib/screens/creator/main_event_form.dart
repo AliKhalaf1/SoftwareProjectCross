@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Eventbrite/screens/creator/all_coupons.dart';
 import 'package:Eventbrite/screens/creator/all_tickets.dart';
 import 'package:Eventbrite/screens/creator/bar_location.dart';
 import 'package:Eventbrite/screens/user/profile.dart';
@@ -437,8 +438,6 @@ class _EventFormState extends State<EventForm> {
                         readOnly: true,
                         enabled: true,
                         onTap: () {
-                          // Navigate to add location page;
-                          //
                           Navigator.of(context).pushNamed(BarLocation.route);
                         },
                         controller: _addressController,
@@ -474,7 +473,7 @@ class _EventFormState extends State<EventForm> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               ListTile(
@@ -520,7 +519,7 @@ class _EventFormState extends State<EventForm> {
                           value: eventCategories.HealthWellness,
                         ),
                         const PopupMenuItem(
-                          child: Text('Parenting'),
+                          child: Text('Sport'),
                           value: eventCategories.Sport,
                         ),
                         const PopupMenuItem(
@@ -528,8 +527,8 @@ class _EventFormState extends State<EventForm> {
                           value: eventCategories.Tech,
                         ),
                         const PopupMenuItem(
-                          child: Text('Culture'),
                           value: eventCategories.Culture,
+                          child: Text('Culture'),
                         ),
                       ],
                       child: Row(
@@ -545,112 +544,110 @@ class _EventFormState extends State<EventForm> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
-              ListTile(
-                leading: Icon(Icons.assignment_ind_outlined),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        // Navigate to add Tickets page;
-                        Navigator.of(context).pushNamed(All_Tickets.route);
-                        setState(() {
-                          ticketsNum++;
-                        });
-                      },
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Tickets"),
-                          TextFormField(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .pushNamed(All_Tickets.route);
-                              setState(() {
-                                ticketsNum++;
-                              });
-                            },
-                            readOnly: true,
-                            controller: _ticketsController,
-                            enabled: true,
-                            validator: (value) {
-                              if (value != null) {
-                                if (value == '0') {
-                                  return "Add tickets ";
-                                } else {
-                                  return null;
-                                }
-                              }
-                              return 'null value';
-                            },
-                            style: const TextStyle(
-                              fontFamily: 'Neue Plak Extended',
-                              fontWeight: FontWeight.w200,
-                              fontSize: 15,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'Add your Tickets',
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(
-                                fontFamily: 'Neue Plak Extended',
-                                fontWeight: FontWeight.w200,
-                                fontSize: 14,
-                                color: Colors.blueGrey.withOpacity(0.8),
-                              ),
-                            ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(All_Tickets.route);
+                  setState(() {
+                    ticketsNum++;
+                  });
+                },
+                child: ListTile(
+                  leading: Icon(Icons.assignment_ind_outlined),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text("Tickets"),
+                      TextFormField(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(All_Tickets.route);
+                          setState(() {
+                            ticketsNum++;
+                          });
+                        },
+                        readOnly: true,
+                        controller: _ticketsController,
+                        enabled: true,
+                        validator: (value) {
+                          if (value != null) {
+                            if (value == '0') {
+                              return "Add tickets ";
+                            } else {
+                              return null;
+                            }
+                          }
+                          return 'null value';
+                        },
+                        style: const TextStyle(
+                          fontFamily: 'Neue Plak Extended',
+                          fontWeight: FontWeight.w200,
+                          fontSize: 15,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Add your Tickets',
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
+                            fontFamily: 'Neue Plak Extended',
+                            fontWeight: FontWeight.w200,
+                            fontSize: 14,
+                            color: Colors.blueGrey.withOpacity(0.8),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              ListTile(
-                leading: Icon(Icons.card_giftcard_sharp),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text("Coupons"),
-                          TextFormField(
-                            onTap: () {
-                              // Navigate to add Tickets page;
-                              setState(() {
-                                ticketsNum++;
-                              });
-                            },
-                            readOnly: true,
-                            controller: _ticketsController,
-                            enabled: true,
-                            style: const TextStyle(
-                              fontFamily: 'Neue Plak Extended',
-                              fontWeight: FontWeight.w200,
-                              fontSize: 15,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'Add your Coupons',
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(AllCoupons.route);
+                  setState(() {
+                    ticketsNum++;
+                  });
+                },
+                child: ListTile(
+                  leading: Icon(Icons.card_giftcard_sharp),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Coupons"),
+                            TextFormField(
+                              onTap: () {
+                                // Navigate to add Tickets page;
+                              },
+                              readOnly: true,
+                              controller: _ticketsController,
+                              enabled: true,
+                              style: const TextStyle(
                                 fontFamily: 'Neue Plak Extended',
                                 fontWeight: FontWeight.w200,
-                                fontSize: 14,
-                                color: Colors.blueGrey.withOpacity(0.8),
+                                fontSize: 15,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'Add your Coupons',
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  fontFamily: 'Neue Plak Extended',
+                                  fontWeight: FontWeight.w200,
+                                  fontSize: 14,
+                                  color: Colors.blueGrey.withOpacity(0.8),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               ListTile(

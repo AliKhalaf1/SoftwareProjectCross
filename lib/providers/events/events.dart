@@ -18,8 +18,8 @@ class Events with ChangeNotifier {
         "Arts",
         ['smart', 'wellness', 'aykalam'],
         '0',
-        'Ancara messi ancara messi'
-        ),
+        'Ancara messi ancara messi',
+        '1234'),
     Event(
         DateTime.now(),
         DateTime.now().add(const Duration(days: 16)),
@@ -30,8 +30,8 @@ class Events with ChangeNotifier {
         "Health & Wellness",
         ['smart', 'wellness', 'aykalam'],
         '1',
-        'Ancara messi ancara messi'
-        ),
+        'Ancara messi ancara messi',
+        '1234'),
     Event(
         DateTime.now(),
         DateTime.now().add(const Duration(days: 9)),
@@ -42,7 +42,8 @@ class Events with ChangeNotifier {
         "Tech",
         ['smart', 'wellness', 'aykalam'],
         '2',
-        'Ancara messi ancara messi'),
+        'Ancara messi ancara messi',
+        '1234'),
     Event(
         DateTime.now(),
         DateTime.now().add(const Duration(days: 6)),
@@ -53,7 +54,8 @@ class Events with ChangeNotifier {
         "Sports",
         ['smart', 'wellness', 'aykalam'],
         '2',
-        'Ancara messi ancara messi'),
+        'Ancara messi ancara messi',
+        '1234'),
     Event(
         DateTime.now(),
         DateTime.now().add(const Duration(days: 33)),
@@ -64,10 +66,11 @@ class Events with ChangeNotifier {
         "Business",
         ['smart', 'wellness', 'aykalam'],
         '2',
-        'Ancara messi ancara messi'),
+        'Ancara messi ancara messi',
+        '1234'),
     Event(
         DateTime.now(),
-        DateTime.now().add(const Duration(minutes: 30,hours: 5)),
+        DateTime.now().add(const Duration(minutes: 30, hours: 5)),
         'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/OIP.we5keYDOBq6j9Dm-pOGIKgHaD1?pid=ImgDet&rs=1',
         EventState.online,
@@ -75,10 +78,11 @@ class Events with ChangeNotifier {
         "Science",
         ['smart', 'wellness', 'aykalam'],
         '2',
-        'Ancara messi ancara messi'),
+        'Ancara messi ancara messi',
+        '1234'),
     Event(
         DateTime.now(),
-        DateTime.now().add(const Duration(days:7)),
+        DateTime.now().add(const Duration(days: 7)),
         'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/R.1edb438b3f510aa9f4ea42a306507e35?rik=22xbsX8Xr5Z1KQ&pid=ImgRaw&r=0',
         EventState.online,
@@ -86,7 +90,8 @@ class Events with ChangeNotifier {
         "Culture",
         ['smart', 'wellness', 'aykalam'],
         '0',
-        'Ancara messi ancara messi'),
+        'Ancara messi ancara messi',
+        '1234'),
     Event(
         DateTime.now(),
         DateTime.now().add(const Duration(days: 4)),
@@ -97,10 +102,11 @@ class Events with ChangeNotifier {
         "Tech",
         ['smart', 'wellness', 'aykalam'],
         '2',
-        'Ancara messi ancara messi'),
+        'Ancara messi ancara messi',
+        '1234'),
     Event(
         DateTime.now(),
-        DateTime.now().add(const Duration(minutes: 30,hours: 1)),
+        DateTime.now().add(const Duration(minutes: 30, hours: 1)),
         'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
         'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
         EventState.offline,
@@ -108,7 +114,8 @@ class Events with ChangeNotifier {
         "Sports",
         ['smart', 'wellness', 'aykalam'],
         '1',
-        'Ancara messi ancara messi'),
+        'Ancara messi ancara messi',
+        '1234'),
     Event(
         DateTime.now(),
         DateTime.now().add(const Duration(hours: 2)),
@@ -119,7 +126,8 @@ class Events with ChangeNotifier {
         "Tech",
         ['smart', 'wellness', 'aykalam'],
         '1',
-        'Ancara messi ancara messi'),
+        'Ancara messi ancara messi',
+        '1234'),
   ];
 
   ///Get events

@@ -189,186 +189,205 @@ class _EventPageState extends State<EventPage> {
           ]),
 
       //--------------------------------------- Tickets modal --------------------------------------------------------
-      floatingActionButton: Align(
-        alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: TransparentButtonNoIcon(
-              key: const Key("BuyTicketsBtn"),
-              'Tickets',
-              () => buyTickets(context, eventId),
-              false),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: Align(
+      //   alignment: Alignment.bottomCenter,
+      //   child: Padding(
+      //     padding: const EdgeInsets.only(bottom: 10),
+      //     child: TransparentButtonNoIcon(
+      //         key: const Key("BuyTicketsBtn"),
+      //         'Tickets',
+      //         buyTickets,
+      //         false,
+      //         eventId),
+      //   ),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
       //--------------------------------------- Body --------------------------------------------------------
-      body: GlowingOverscrollIndicator(
-        axisDirection: AxisDirection.down,
-        color: const Color.fromARGB(255, 255, 72, 0),
-        child: SingleChildScrollView(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                // -------------------- Event image --------------------
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: SizedBox(
-                    height: 200,
+      body: Stack(fit: StackFit.loose, children: [
+        //Stack 1st child
+        GlowingOverscrollIndicator(
+          axisDirection: AxisDirection.down,
+          color: const Color.fromARGB(255, 255, 72, 0),
+          child: SingleChildScrollView(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  // -------------------- Event image --------------------
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15.0),
+                    child: SizedBox(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Image.network(
+                        loadedEvent.eventImg,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+
+                  // -------------------- Event Name --------------------
+                  const SizedBox(height: 30),
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
-                    child: Image.network(
-                      loadedEvent.eventImg,
-                      fit: BoxFit.cover,
+                    child: TitleText1(
+                      loadedEvent.title,
                     ),
                   ),
-                ),
 
-                // -------------------- Event Name --------------------
-                const SizedBox(height: 30),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: TitleText1(
-                    loadedEvent.title,
+                  // -------------------- Event time/location --------------------
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(bottom: 10, top: 0),
+                      child: const Text(
+                        'Times are displayed in your local timezone',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 15.5,
+                            color: Color.fromRGBO(121, 121, 121, 0.875)),
+                      ),
+                    ),
                   ),
-                ),
 
-                // -------------------- Event time/location --------------------
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Container(
+                  Container(
+                    padding: const EdgeInsets.all(0),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.calendar_today, size: 15),
+                      title: Text(DateFormat('EEEE, MMMM d')
+                          .format(loadedEvent.startDate.toLocal())),
+                      subtitle: Text(
+                          'Starts at: ${DateFormat('hh:mmaaa').format(loadedEvent.startDate.toLocal())}'),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading:
+                          const Icon(Icons.ondemand_video_outlined, size: 15),
+                      title: Text(
+                        (loadedEvent.state == EventState.online)
+                            ? 'Online event'
+                            : 'Offline event',
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.access_time_rounded, size: 15),
+                      title: Text(
+                          'Duration: ${getDuration(loadedEvent.endDate.difference(loadedEvent.startDate))}'),
+                    ),
+                  ),
+
+                  // ---------------------- About ----------------
+                  const SizedBox(height: 30),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(right: 15, bottom: 10),
+                      child: const Text(
+                        'About',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 20,
+                            height: 1.2,
+                            letterSpacing: 1.3,
+                            fontFamily: 'Neue Plak Extended',
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromRGBO(17, 3, 59, 1)),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: TitleText2(loadedEvent.description),
+                  ),
+                  const SizedBox(height: 30),
+
+                  // ------------- More like evnets -----------
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(right: 15, bottom: 10),
+                      child: const Text(
+                        'More like this',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 20,
+                            height: 1.2,
+                            letterSpacing: 1.3,
+                            fontFamily: 'Neue Plak Extended',
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromRGBO(17, 3, 59, 1)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+
+                  SizedBox(
+                    height: 270,
                     width: double.infinity,
-                    padding: const EdgeInsets.only(bottom: 10, top: 0),
-                    child: const Text(
-                      'Times are displayed in your local timezone',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontSize: 15.5,
-                          color: Color.fromRGBO(121, 121, 121, 0.875)),
+                    child: GlowingOverscrollIndicator(
+                      axisDirection: AxisDirection.right,
+                      color: const Color.fromARGB(255, 255, 72, 0),
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount:
+                            7, // To Be: substitute with number of events in collection
+                        itemBuilder: (ctx, index) {
+                          return ChangeNotifierProvider.value(
+                              // To Be: get event from events of the collection by get events by collection API
+                              value: loadedEvent,
+                              child: const Padding(
+                                padding: EdgeInsets.only(left: 15.0),
+                                child: PhysicalModel(
+                                    color: Colors.white,
+                                    elevation: 10.0,
+                                    child: MoreLikeEventCard()),
+                              ));
+                        },
+                      ),
                     ),
                   ),
-                ),
 
-                Container(
-                  padding: const EdgeInsets.all(0),
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.calendar_today, size: 15),
-                    title: Text(DateFormat('EEEE, MMMM d')
-                        .format(loadedEvent.startDate.toLocal())),
-                    subtitle: Text(
-                        'Starts at: ${DateFormat('hh:mmaaa').format(loadedEvent.startDate.toLocal())}'),
+                  //------------ End of Page -------------
+                  Container(
+                    height: 90,
                   ),
-                ),
-
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading:
-                        const Icon(Icons.ondemand_video_outlined, size: 15),
-                    title: Text(
-                      (loadedEvent.state == EventState.online)
-                          ? 'Online event'
-                          : 'Offline event',
-                    ),
-                  ),
-                ),
-
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.access_time_rounded, size: 15),
-                    title: Text(
-                        'Duration: ${getDuration(loadedEvent.endDate.difference(loadedEvent.startDate))}'),
-                  ),
-                ),
-
-                // ---------------------- About ----------------
-                const SizedBox(height: 30),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(right: 15, bottom: 10),
-                    child: const Text(
-                      'About',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontSize: 20,
-                          height: 1.2,
-                          letterSpacing: 1.3,
-                          fontFamily: 'Neue Plak Extended',
-                          fontWeight: FontWeight.w700,
-                          color: Color.fromRGBO(17, 3, 59, 1)),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: TitleText2(loadedEvent.description),
-                ),
-                const SizedBox(height: 30),
-
-                // ------------- More like evnets -----------
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(right: 15, bottom: 10),
-                    child: const Text(
-                      'More like this',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontSize: 20,
-                          height: 1.2,
-                          letterSpacing: 1.3,
-                          fontFamily: 'Neue Plak Extended',
-                          fontWeight: FontWeight.w700,
-                          color: Color.fromRGBO(17, 3, 59, 1)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-
-                SizedBox(
-                  height: 270,
-                  width: double.infinity,
-                  child: GlowingOverscrollIndicator(
-                    axisDirection: AxisDirection.right,
-                    color: const Color.fromARGB(255, 255, 72, 0),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount:
-                          7, // To Be: substitute with number of events in collection
-                      itemBuilder: (ctx, index) {
-                        return ChangeNotifierProvider.value(
-                            // To Be: get event from events of the collection by get events by collection API
-                            value: loadedEvent,
-                            child: const Padding(
-                              padding: EdgeInsets.only(left: 15.0),
-                              child: PhysicalModel(
-                                  color: Colors.white,
-                                  elevation: 10.0,
-                                  child: MoreLikeEventCard()),
-                            ));
-                      },
-                    ),
-                  ),
-                ),
-
-                //------------ End of Page -------------
-                Container(
-                  height: 90,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ),
+
+        //--------------------------------------- Tickets modal --------------------------------------------------------
+        //Stack 2nd child
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: TransparentButtonNoIcon(
+                key: const Key("BuyTicketsBtn"),
+                'Tickets',
+                buyTickets,
+                false,
+                eventId),
+          ),
+        ),
+      ]),
     );
   }
 }

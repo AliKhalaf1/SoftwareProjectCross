@@ -2,8 +2,10 @@ import 'package:Eventbrite/providers/categories/categories.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/providers/filters/tags.dart';
 import 'package:Eventbrite/providers/filters/temp_tags.dart';
+import 'package:Eventbrite/screens/creator/all_coupons.dart';
 import 'package:Eventbrite/screens/creator/all_tickets.dart';
 import 'package:Eventbrite/screens/creator/bar_location.dart';
+import 'package:Eventbrite/screens/creator/coupons_form.dart';
 import 'package:Eventbrite/screens/creator/description_event.dart';
 import 'package:Eventbrite/screens/creator/event_location.dart';
 import 'package:Eventbrite/screens/creator/event_start_end_date.dart';
@@ -25,7 +27,6 @@ import 'providers/tickets/tickets.dart';
 import 'screens/sign_up/sign_up_or_log_in.dart';
 import 'screens/tab_bar.dart';
 import 'screens/sign_in/email_check.dart';
-import './screens/find_tickets.dart';
 import 'widgets/tab_bar_Events.dart';
 import 'providers/events/events.dart';
 
@@ -95,7 +96,6 @@ class _MainAppState extends State<MainApp> {
               TabBarScreen(title: 'Eventbrite', tabBarIndex: 0),
           SignUpOrLogIn.signUpRoute: (ctx) => const SignUpOrLogIn(),
           EmailCheck.emailCheckRoute: (ctx) => EmailCheck(),
-          FindTickets.findTicketsRoute: (ctx) => const FindTickets(),
           TabBarEvents.route: (ctx) => TabBarEvents(),
           PastEvents.route: (ctx) => PastEvents(),
           EventTitle.route: (ctx) => EventTitle(),
@@ -111,6 +111,8 @@ class _MainAppState extends State<MainApp> {
           TicketForm.route: (ctx) => TicketForm(),
           Search.searchPageRoute: (ctx) => const Search(),
           BarLocation.route: (ctx) => BarLocation(),
+          AllCoupons.route: (ctx) => AllCoupons(),
+          CouponForm.route: (ctx) => CouponForm(),
         },
       ),
     );

@@ -154,7 +154,7 @@ class _TicketFormState extends State<TicketForm> {
               onSaved: (value) {},
               autofocus: true,
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Text(
@@ -192,7 +192,7 @@ class _TicketFormState extends State<TicketForm> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Text(
@@ -238,9 +238,8 @@ class _TicketFormState extends State<TicketForm> {
 // inputString = inputString.replaceFirst(RegExp('^0+'), ''); // Remove leading zeros
 // print(inputString); // Output: "222"
               },
-              autofocus: true,
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Text(

@@ -120,25 +120,25 @@ class _EventCardState extends State<EventCard> {
                             : 'Offline',
                         style: const TextStyle(color: Colors.grey),
                       ),
-                      // Row(
-                      //   children: [
-                      //     const Icon(
-                      //       key: Key("person"),
-                      //       Icons.person_outline_outlined,
-                      //       color: Color.fromRGBO(0, 0, 0, 0.7),
-                      //     ),
-                      //     SizedBox(
-                      //       width: 130,
-                      //       child: Text(
-                      //           '${event.creatorFollowers} creator followers',
-                      //           overflow: TextOverflow.ellipsis,
-                      //           style: const TextStyle(
-                      //               color: Color.fromRGBO(0, 0, 0, 0.7),
-                      //               fontSize: 10,
-                      //               fontWeight: FontWeight.w500)),
-                      //     )
-                      //   ],
-                      // )
+                      Row(
+                        children: [
+                          const Icon(
+                            key: Key("person"),
+                            Icons.person_outline_outlined,
+                            color: Color.fromRGBO(0, 0, 0, 0.7),
+                          ),
+                          SizedBox(
+                            width: 130,
+                            child: Text(
+                                '${event.creatorFollowers} creator followers',
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(0, 0, 0, 0.7),
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500)),
+                          )
+                        ],
+                      )
                     ],
                   ),
                 )
