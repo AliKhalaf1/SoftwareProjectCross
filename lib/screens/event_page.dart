@@ -307,7 +307,7 @@ class _EventPageState extends State<EventPage> {
                   const SizedBox(height: 10),
 
                   SizedBox(
-                    height: 250,
+                    height: 270,
                     width: double.infinity,
                     child: GlowingOverscrollIndicator(
                       axisDirection: AxisDirection.right,
@@ -319,26 +319,21 @@ class _EventPageState extends State<EventPage> {
                         itemBuilder: (ctx, index) {
                           return ChangeNotifierProvider.value(
                               // To Be: get event from events of the collection by get events by collection API
-                              value: Event(
-                                  DateTime.now(),
-                                  DateTime.now().add(
-                                      const Duration(minutes: 30, hours: 5)),
-                                  'We The Medicine- Healing Our Inner Child 2023.Guide and here we go ramos is paris player',
-                                  'https://th.bing.com/th/id/OIP.we5keYDOBq6j9Dm-pOGIKgHaD1?pid=ImgDet&rs=1',
-                                  EventState.online,
-                                  false,
-                                  "Science",
-                                  ['smart', 'wellness', 'aykalam'],
-                                  '2',
-                                  'Ancara messi ancara messi'),
-                              child: const MoreLikeEventCard());
+                              value: loadedEvent,
+                              child:  const Padding(
+                                padding: EdgeInsets.only(left: 15.0),
+                                child: PhysicalModel(
+                                  color: Colors.white,
+                                  elevation: 10.0,
+                                  child: MoreLikeEventCard()),
+                              ));
                         },
                       ),
                     ),
                   ),
 
                   //------------ End of Page -------------
-                  const SizedBox(height: 90),
+                  Container(height: 90, padding: const EdgeInsets.only(top: 10),),
                 ],
               ),
             ),

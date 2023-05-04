@@ -23,14 +23,13 @@ import '../screens/sign_up/sign_up_or_log_in.dart';
 ///<strong>'EEE, MMM d • hh:mmaaa ' </strong>
 ///
 class MoreLikeEventCard extends StatefulWidget {
-  
   const MoreLikeEventCard({super.key});
 
   @override
-  State<MoreLikeEventCard> createState() => _MoreLikeEventCardStateState();
+  State<MoreLikeEventCard> createState() => _MoreLikeEventCardState();
 }
 
-class _MoreLikeEventCardStateState extends State<MoreLikeEventCard> {
+class _MoreLikeEventCardState extends State<MoreLikeEventCard> {
   @override
   Widget build(BuildContext context) {
     //----------------------- Event provider ------------------------------
@@ -62,57 +61,54 @@ class _MoreLikeEventCardStateState extends State<MoreLikeEventCard> {
     return Stack(
       fit: StackFit.loose,
       children: [
-        Material(
-          elevation: 10,
-          child: InkWell(
-            key: const Key("MoreLikeEventCard"),
-            onTap: () => selectEvent(context, event),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      height: 150,
-                      child: event.eventImg.startsWith('http')
-                          ? Image.network(
-                              event.eventImg,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.asset(
-                              event.eventImg,
-                              fit: BoxFit.cover,
-                            )),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                      '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.startDate)} EET',
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14)),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                      width: 200,
-                      height: 50,
-                      child: Text(event.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 16))),
-                ],
+        InkWell(
+          key: const Key("MoreLikeEventCard"),
+          onTap: () => selectEvent(context, event),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  height: 130,
+                  child: event.eventImg.startsWith('http')
+                      ? Image.network(
+                          event.eventImg,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          event.eventImg,
+                          fit: BoxFit.cover,
+                        )),
+              const SizedBox(
+                height: 10,
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                    '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.startDate)} EET',
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14)),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  width: 200,
+                  height: 40,
+                  child: Text(event.title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 16))),
+            ],
           ),
         ),
         Positioned(
           bottom: 2,
-          right: 10,
+          right: 0,
           child: IconButton(
             key: const Key("AddToFavBtn"),
             onPressed: () => toggleFav(context),
