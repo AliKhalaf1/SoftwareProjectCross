@@ -34,14 +34,17 @@ Future<User> getUserInfo(String info) async {
     headers: reqHeaders,
   );
 
+  print(response.statusCode);
+
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
     currUser.email = data['email'];
     currUser.firstName = data['firstname'];
     currUser.lastName = data['lastname'];
     currUser.imageUrl = data['avatar_url'];
+    print('avatar url: ${currUser.imageUrl}');
     return currUser;
-  }
+  } else {}
 
   return currUser;
 }

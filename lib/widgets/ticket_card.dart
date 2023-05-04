@@ -32,7 +32,10 @@ class TicketCard extends StatelessWidget {
                   ClipPath(
                       clipper: CardTicketClipper(),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.15,
+                        height: MediaQuery.of(context).orientation ==
+                                Orientation.landscape
+                            ? MediaQuery.of(context).size.height * 0.3
+                            : MediaQuery.of(context).size.height * 0.15,
                         width: MediaQuery.of(context).size.width * 0.9 * 0.6,
                         color: col,
                         child: Container(
@@ -45,6 +48,7 @@ class TicketCard extends StatelessWidget {
                                 0.75,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Column(
                                   children: [
@@ -94,19 +98,13 @@ class TicketCard extends StatelessWidget {
                                         ticket.title,
                                         softWrap: true,
                                         overflow: TextOverflow.ellipsis,
-                                        maxLines: 3,
+                                        maxLines: 2,
                                         style: GoogleFonts.roboto(
                                           fontSize: 17,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.black,
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.1 *
-                                              0.1,
                                     ),
                                     Container(
                                       width: MediaQuery.of(context).size.width *
@@ -131,8 +129,12 @@ class TicketCard extends StatelessWidget {
                       )),
                   CustomPaint(
                     painter: CardTicketBorder(),
-                    size: Size(MediaQuery.of(context).size.width * 0.6 * 0.9,
-                        MediaQuery.of(context).size.height * 0.15),
+                    size: MediaQuery.of(context).orientation ==
+                            Orientation.landscape
+                        ? Size(MediaQuery.of(context).size.width * 0.6 * 0.9,
+                            MediaQuery.of(context).size.height * 0.3)
+                        : Size(MediaQuery.of(context).size.width * 0.6 * 0.9,
+                            MediaQuery.of(context).size.height * 0.15),
                   ),
                 ],
               ),
@@ -141,7 +143,10 @@ class TicketCard extends StatelessWidget {
                   ClipPath(
                       clipper: ImageTicketClipper(),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.15,
+                        height: MediaQuery.of(context).orientation ==
+                                Orientation.landscape
+                            ? MediaQuery.of(context).size.height * 0.3
+                            : MediaQuery.of(context).size.height * 0.15,
                         width: MediaQuery.of(context).size.width * 0.4,
                         color: col,
                         child: Container(
@@ -151,19 +156,32 @@ class TicketCard extends StatelessWidget {
                                   backgroundBlendMode: BlendMode.saturation,
                                 )
                               : null,
-                          child: Image(
+                          child: FadeInImage(
                             image: ticket.eventImgUrl.isEmpty
                                 ? AssetImage('assets/images/no_image_found.png')
                                     as ImageProvider
-                                : NetworkImage(ticket.eventImgUrl),
+                                : NetworkImage(
+                                    ticket.eventImgUrl,
+                                  ),
+                            placeholder:
+                                AssetImage("assets/images/no_image_found.png"),
+                            imageErrorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                  'assets/images/no_image_found.png',
+                                  fit: BoxFit.cover);
+                            },
                             fit: BoxFit.cover,
                           ),
                         ),
                       )),
                   CustomPaint(
                     painter: ImageTicketBorder(),
-                    size: Size(MediaQuery.of(context).size.width * 0.4,
-                        MediaQuery.of(context).size.height * 0.15),
+                    size: MediaQuery.of(context).orientation ==
+                            Orientation.landscape
+                        ? Size(MediaQuery.of(context).size.width * 0.4,
+                            MediaQuery.of(context).size.height * 0.3)
+                        : Size(MediaQuery.of(context).size.width * 0.4,
+                            MediaQuery.of(context).size.height * 0.15),
                   ),
                 ],
               ),
