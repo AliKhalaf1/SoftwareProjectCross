@@ -880,6 +880,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.5"
+  search_map_location:
+    dependency: "direct main"
+    description:
+      name: search_map_location
+      sha256: "21308e8cac8eb908fc5c61266cb6f8f002ecbe77ba5c12da8681bce68ccc2d61"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   shared_preferences:
     dependency: "direct main"
     description:

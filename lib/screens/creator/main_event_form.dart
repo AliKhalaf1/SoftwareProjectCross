@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:Eventbrite/screens/creator/all_tickets.dart';
+import 'package:Eventbrite/screens/creator/bar_location.dart';
 import 'package:Eventbrite/screens/user/profile.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,7 +23,7 @@ enum eventCategories {
   Learn,
   Buisness,
   HealthWellness,
-  Parenting,
+  Sport,
   Tech,
   Culture,
 }
@@ -437,6 +439,7 @@ class _EventFormState extends State<EventForm> {
                         onTap: () {
                           // Navigate to add location page;
                           //
+                          Navigator.of(context).pushNamed(BarLocation.route);
                         },
                         controller: _addressController,
                         validator: (value) {
@@ -518,7 +521,7 @@ class _EventFormState extends State<EventForm> {
                         ),
                         const PopupMenuItem(
                           child: Text('Parenting'),
-                          value: eventCategories.Parenting,
+                          value: eventCategories.Sport,
                         ),
                         const PopupMenuItem(
                           child: Text('Tech'),
@@ -550,41 +553,56 @@ class _EventFormState extends State<EventForm> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Tickets"),
-                    TextFormField(
+                    GestureDetector(
                       onTap: () {
                         // Navigate to add Tickets page;
+                        Navigator.of(context).pushNamed(All_Tickets.route);
                         setState(() {
                           ticketsNum++;
                         });
                       },
-                      readOnly: true,
-                      controller: _ticketsController,
-                      enabled: true,
-                      validator: (value) {
-                        if (value != null) {
-                          if (value == '0') {
-                            return "Add tickets ";
-                          } else {
-                            return null;
-                          }
-                        }
-                        return 'null value';
-                      },
-                      style: const TextStyle(
-                        fontFamily: 'Neue Plak Extended',
-                        fontWeight: FontWeight.w200,
-                        fontSize: 15,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: 'Add your Tickets',
-                        border: InputBorder.none,
-                        hintStyle: TextStyle(
-                          fontFamily: 'Neue Plak Extended',
-                          fontWeight: FontWeight.w200,
-                          fontSize: 14,
-                          color: Colors.blueGrey.withOpacity(0.8),
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Tickets"),
+                          TextFormField(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushNamed(All_Tickets.route);
+                              setState(() {
+                                ticketsNum++;
+                              });
+                            },
+                            readOnly: true,
+                            controller: _ticketsController,
+                            enabled: true,
+                            validator: (value) {
+                              if (value != null) {
+                                if (value == '0') {
+                                  return "Add tickets ";
+                                } else {
+                                  return null;
+                                }
+                              }
+                              return 'null value';
+                            },
+                            style: const TextStyle(
+                              fontFamily: 'Neue Plak Extended',
+                              fontWeight: FontWeight.w200,
+                              fontSize: 15,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Add your Tickets',
+                              border: InputBorder.none,
+                              hintStyle: TextStyle(
+                                fontFamily: 'Neue Plak Extended',
+                                fontWeight: FontWeight.w200,
+                                fontSize: 14,
+                                color: Colors.blueGrey.withOpacity(0.8),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -598,31 +616,38 @@ class _EventFormState extends State<EventForm> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Coupons"),
-                    TextFormField(
-                      onTap: () {
-                        // Navigate to add Tickets page;
-                        setState(() {
-                          ticketsNum++;
-                        });
-                      },
-                      readOnly: true,
-                      controller: _ticketsController,
-                      enabled: true,
-                      style: const TextStyle(
-                        fontFamily: 'Neue Plak Extended',
-                        fontWeight: FontWeight.w200,
-                        fontSize: 15,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: 'Add your Coupons',
-                        border: InputBorder.none,
-                        hintStyle: TextStyle(
-                          fontFamily: 'Neue Plak Extended',
-                          fontWeight: FontWeight.w200,
-                          fontSize: 14,
-                          color: Colors.blueGrey.withOpacity(0.8),
-                        ),
+                    GestureDetector(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Coupons"),
+                          TextFormField(
+                            onTap: () {
+                              // Navigate to add Tickets page;
+                              setState(() {
+                                ticketsNum++;
+                              });
+                            },
+                            readOnly: true,
+                            controller: _ticketsController,
+                            enabled: true,
+                            style: const TextStyle(
+                              fontFamily: 'Neue Plak Extended',
+                              fontWeight: FontWeight.w200,
+                              fontSize: 15,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Add your Coupons',
+                              border: InputBorder.none,
+                              hintStyle: TextStyle(
+                                fontFamily: 'Neue Plak Extended',
+                                fontWeight: FontWeight.w200,
+                                fontSize: 14,
+                                color: Colors.blueGrey.withOpacity(0.8),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
