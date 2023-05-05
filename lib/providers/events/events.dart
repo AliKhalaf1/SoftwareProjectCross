@@ -19,7 +19,7 @@ class Events with ChangeNotifier {
         ['smart', 'wellness', 'aykalam'],
         '0',
         'Ancara messi ancara messi',
-        'Amin'),
+        'Amin',EventStatus.private),
     Event(
         DateTime.now().add(const Duration(hours: 3)),
         DateTime.now().add(const Duration(days: 16)),
@@ -31,7 +31,7 @@ class Events with ChangeNotifier {
         ['smart', 'wellness', 'aykalam'],
         '1',
         'Ancara messi ancara messi',
-        'Megs'),
+        'Megs',EventStatus.private),
     Event(
         DateTime.now().add(const Duration(hours: 3)),
         DateTime.now().add(const Duration(days: 9)),
@@ -43,7 +43,7 @@ class Events with ChangeNotifier {
         ['smart', 'wellness', 'aykalam'],
         '2',
         'Ancara messi ancara messi',
-        'Saad'),
+        'Saad',EventStatus.private),
     Event(
         DateTime.now().add(const Duration(hours: 3)),
         DateTime.now().add(const Duration(days: 6)),
@@ -55,7 +55,7 @@ class Events with ChangeNotifier {
         ['smart', 'wellness', 'aykalam'],
         '8',
         'Ancara messi ancara messi',
-        'Gilany'),
+        'Gilany',EventStatus.private),
     Event(
         DateTime.now().add(const Duration(hours: 3)),
         DateTime.now().add(const Duration(days: 33)),
@@ -67,7 +67,7 @@ class Events with ChangeNotifier {
         ['smart', 'wellness', 'aykalam'],
         '6',
         'Ancara messi ancara messi',
-        'Amaar'),
+        'Amaar',EventStatus.private),
     Event(
         DateTime.now().add(const Duration(hours: 3)),
         DateTime.now().add(const Duration(minutes: 30, hours: 5)),
@@ -79,7 +79,7 @@ class Events with ChangeNotifier {
         ['smart', 'wellness', 'aykalam'],
         '12',
         'Ancara messi ancara messi',
-        'Hazem'),
+        'Hazem',EventStatus.private),
     Event(
         DateTime.now(),
         DateTime.now().add(const Duration(days: 7)),
@@ -91,7 +91,7 @@ class Events with ChangeNotifier {
         ['smart', 'wellness', 'aykalam'],
         '20',
         'Ancara messi ancara messi',
-        'Mahmoud'),
+        'Mahmoud',EventStatus.private),
     Event(
         DateTime.now().add(const Duration(days: 1)),
         DateTime.now().add(const Duration(days: 4)),
@@ -103,7 +103,7 @@ class Events with ChangeNotifier {
         ['smart', 'wellness', 'aykalam'],
         '21',
         'Ancara messi ancara messi',
-        'Ali'),
+        'Ali',EventStatus.private),
     Event(
         DateTime.now().add(const Duration(hours: 2)),
         DateTime.now().add(const Duration(minutes: 30, hours: 4)),
@@ -115,7 +115,7 @@ class Events with ChangeNotifier {
         ['smart', 'wellness', 'aykalam'],
         '11',
         'Ancara messi ancara messi',
-        'Ziad'),
+        'Ziad',EventStatus.private),
     Event(
         DateTime.now().add(const Duration(hours: 1)),
         DateTime.now().add(const Duration(hours: 2)),
@@ -127,7 +127,7 @@ class Events with ChangeNotifier {
         ['smart', 'wellness', 'aykalam'],
         '10',
         'Ancara messi ancara messi',
-        'Abdelhameed'),
+        'Abdelhameed',EventStatus.private),
   ];
 
   ///Get events

@@ -27,7 +27,7 @@ import 'sign_up/sign_up_or_log_in.dart';
 ///
 /// It knows the event to display from (event.id) that is passed to naivator.pushNamed
 ///
-/// It Know user is logged in or not from 
+/// It Know user is logged in or not from
 class EventPage extends StatefulWidget {
   const EventPage({super.key});
 
@@ -40,20 +40,19 @@ class EventPage extends StatefulWidget {
 class _EventPageState extends State<EventPage> {
   //---------------- Methods -----------------//
   // To Be: Navigate to buy a ticket
-  void buyTickets(BuildContext ctx, String eventId) {
+  void buyTickets(BuildContext ctx, String eventId, String eventTitle, String eventStartDate) {
     // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
     //   return TabBarScreen(title: 'Search', tabBarIndex: 1);
     // }));
-
     showModalBottomSheet(
         context: ctx,
-        isScrollControlled: false,
+        isScrollControlled: true,
         builder: (_) {
           //------------------------ user input -------------------//
           return GestureDetector(
               onTap: () {},
               behavior: HitTestBehavior.opaque,
-              child: BuyTickets(eventId));
+              child: BuyTickets(eventId,eventTitle,eventStartDate));
         });
   }
 
@@ -124,7 +123,7 @@ class _EventPageState extends State<EventPage> {
     final favsData = Provider.of<FavEvents>(context);
 
     //----------------------- Event id ------------------------------------
-    // TO BE: take thid eventId and get event data from API get eventById
+    // TO BE: take this eventId and get event data from API get eventById to be loadedEvent
     final obj = ModalRoute.of(context)?.settings.arguments as Map;
     final eventId = obj['eventId'] as String; // is the id!
     final loadedEvent = Provider.of<Events>(
@@ -461,7 +460,7 @@ class _EventPageState extends State<EventPage> {
                   'Tickets',
                   buyTickets,
                   false,
-                  eventId),
+                  eventId, loadedEvent.title , '${DateFormat('EEE, MMM d • hh:mmaaa ').format(loadedEvent.startDate)} EET'),
             ),
           ),
       ]),

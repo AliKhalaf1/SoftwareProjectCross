@@ -15,6 +15,8 @@ class TransparentButtonNoIcon extends StatefulWidget {
   final Function onPressed;
   bool isDiabled;
   final String eventId;
+  final String eventTitle;
+  final String eventStartDate;
 
   /// It takes:
   ///
@@ -24,8 +26,8 @@ class TransparentButtonNoIcon extends StatefulWidget {
   ///
   ///   • Button state (Activate or not)
   ///
-  TransparentButtonNoIcon(
-      this.text, this.onPressed, this.isDiabled, this.eventId,
+  TransparentButtonNoIcon(this.text, this.onPressed, this.isDiabled,
+      this.eventId, this.eventTitle, this.eventStartDate,
       {super.key});
 
   @override
@@ -34,7 +36,6 @@ class TransparentButtonNoIcon extends StatefulWidget {
 }
 
 class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -95,9 +96,14 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
                           ),
                         ),
                       ),
-                onPressed:
-                    (widget.text == 'Tickets' || widget.text == 'Check out')
-                        ? () => widget.onPressed(context, widget.eventId)
+                onPressed: (widget.text == 'Tickets')
+                    ? () => widget.onPressed(context, widget.eventId,
+                        widget.eventTitle, widget.eventStartDate)
+                    : (widget.text == 'Check out')
+                        ? () => widget.onPressed(
+                              context,
+                              widget.eventId,
+                            )
                         : () => widget.onPressed(context),
                 child: Align(
                   alignment: Alignment.center,
