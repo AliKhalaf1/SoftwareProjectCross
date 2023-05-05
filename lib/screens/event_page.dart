@@ -47,6 +47,7 @@ class _EventPageState extends State<EventPage> {
 
     showModalBottomSheet(
         context: ctx,
+        isScrollControlled: false,
         builder: (_) {
           //------------------------ user input -------------------//
           return GestureDetector(
@@ -290,6 +291,51 @@ class _EventPageState extends State<EventPage> {
                     ),
                   ),
 
+                  // -------------------- Organization Name --------------------
+                  const SizedBox(height: 30),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(right: 15, bottom: 10),
+                      child: const Text(
+                        'Organizer',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 20,
+                            height: 1.2,
+                            letterSpacing: 1.3,
+                            fontFamily: 'Neue Plak Extended',
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromRGBO(17, 3, 59, 1)),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          key: Key("person"),
+                          Icons.person,
+                          color:  Color.fromRGBO(62, 9, 137, 1),
+                          size: 40,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(left: 7),
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: Text(loadedEvent.organization,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(0, 0, 0, 0.7),
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500)),
+                        )
+                      ],
+                    ),
+                  ),
+
                   // ---------------------- About ----------------
                   const SizedBox(height: 30),
                   SizedBox(
@@ -375,7 +421,7 @@ class _EventPageState extends State<EventPage> {
 
         //--------------------------------------- Tickets modal --------------------------------------------------------
         //Stack 2nd child
-        //To Be: check if event date is after time.now so can purchase a ticket
+        //To Be: if events tickets avaliability : not avliable disable Tickets Btn (get from event API tickets.avaliable) => add this check OPED with [loadedEvent.startDate.toUtc().isBefore(DateTime.now().add(const Duration(hours: 1)).toUtc())]
         Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
@@ -384,7 +430,8 @@ class _EventPageState extends State<EventPage> {
                 key: const Key("BuyTicketsBtn"),
                 'Tickets',
                 buyTickets,
-                loadedEvent.startDate.toUtc().isBefore(DateTime.now().add(const Duration(hours: 1)).toUtc()) ,
+                loadedEvent.startDate.toUtc().isBefore(
+                    DateTime.now().add(const Duration(hours: 1)).toUtc()),
                 eventId),
           ),
         ),

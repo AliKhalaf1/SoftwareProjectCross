@@ -95,11 +95,12 @@ class _BuyTicketsState extends State<BuyTickets> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
                             ),
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor),
+                                color: Colors.grey,
+                              ),
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(10)),
                             )),
                         controller: promoCodeInp,
                         onChanged: (value) {

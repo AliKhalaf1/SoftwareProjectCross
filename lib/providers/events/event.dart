@@ -35,7 +35,7 @@ class Event with ChangeNotifier {
   final List<String> tags;
   final String id;
   final String title;
-  final String creatorFollowers;
+  final String organization;
 
   ///Constructor
   Event(
@@ -49,7 +49,7 @@ class Event with ChangeNotifier {
     this.tags,
     this.id,
     this.title,
-    this.creatorFollowers
+    this.organization
   );
 
   /// Set isFav Value by true or false

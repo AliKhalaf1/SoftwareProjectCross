@@ -129,12 +129,11 @@ class _EventCardState extends State<EventCard> {
                           ),
                           SizedBox(
                             width: 130,
-                            child: Text(
-                                '${event.creatorFollowers} creator followers',
+                            child: Text(event.organization,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     color: Color.fromRGBO(0, 0, 0, 0.7),
-                                    fontSize: 10,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w500)),
                           )
                         ],
