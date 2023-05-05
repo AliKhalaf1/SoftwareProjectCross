@@ -95,6 +95,27 @@ class _EventPageState extends State<EventPage> {
     }
   }
 
+  //--------------------- Get user token (logged in or not) ---------------------
+  //----------------------- Variables ----------------------------
+  // true only if user is logged in
+  // bool isLogged = false;
+  // // called before build as init function once widget inserted into tree
+  // // NOTE: It must be outside build method
+  // Future<void> _myAsyncMethod() async {
+  //   isLogged = await checkLoggedUser();
+  //   print('la7ees : ${isLogged}');
+  // }
+
+  // @override
+  // void initState() {
+  //   _myAsyncMethod().then((_) {
+  //     // Add code here that depends on the result of _myAsyncMethod()
+  //     super.initState();
+  //     print('henaa : ${isLogged}');
+  //   });
+  //   print('ba3den : ${isLogged}');
+  // }
+
   @override
   Widget build(BuildContext context) {
     //----------------------- Event provider ------------------------------
@@ -104,23 +125,21 @@ class _EventPageState extends State<EventPage> {
 
     //----------------------- Event id ------------------------------------
     // TO BE: take thid eventId and get event data from API get eventById
-    final eventId =
-        ModalRoute.of(context)?.settings.arguments as String; // is the id!
+    final obj = ModalRoute.of(context)?.settings.arguments as Map;
+    final eventId = obj['eventId'] as String; // is the id!
     final loadedEvent = Provider.of<Events>(
       context,
       listen: false,
     ).findById(eventId);
 
-    //--------------------- list of tags ---------------------
-    //To Be: substituted by subcategories list from API
-    // List<Tag> subCategories
+    bool isLogged = obj['isLogged'] as bool;
 
     //----------------------- Methods ------------------------------
 
     // TO BE: toggle fav state API
     Future<void> toggleFav(BuildContext ctx) async {
       //add to favourites list
-      bool isLogged = await checkLoggedUser();
+      // isLogged = await checkLoggedUser();
       setState(() {
         if (isLogged) {
           //Call toggleStatus function from event class
@@ -319,7 +338,7 @@ class _EventPageState extends State<EventPage> {
                         const Icon(
                           key: Key("person"),
                           Icons.person,
-                          color:  Color.fromRGBO(62, 9, 137, 1),
+                          color: Color.fromRGBO(62, 9, 137, 1),
                           size: 40,
                         ),
                         Container(
@@ -422,19 +441,29 @@ class _EventPageState extends State<EventPage> {
         //--------------------------------------- Tickets modal --------------------------------------------------------
         //Stack 2nd child
         //To Be: if events tickets avaliability : not avliable disable Tickets Btn (get from event API tickets.avaliable) => add this check OPED with [loadedEvent.startDate.toUtc().isBefore(DateTime.now().add(const Duration(hours: 1)).toUtc())]
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: TransparentButtonNoIcon(
-                key: const Key("BuyTicketsBtn"),
-                'Tickets',
-                buyTickets,
-                loadedEvent.startDate.toUtc().isBefore(
-                    DateTime.now().add(const Duration(hours: 1)).toUtc()),
-                eventId),
+
+        // ----- Checks -----
+        // 1. is logged user
+        // 2. is event before now
+        // 3. To Be: is there is avliable tickets (avaliable tickets > 0)
+        if (!isLogged ||
+            loadedEvent.startDate
+                .toUtc()
+                .isBefore(DateTime.now().add(const Duration(hours: 1)).toUtc()))
+          const SizedBox()
+        else
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: TransparentButtonNoIcon(
+                  key: const Key("BuyTicketsBtn"),
+                  'Tickets',
+                  buyTickets,
+                  false,
+                  eventId),
+            ),
           ),
-        ),
       ]),
     );
   }

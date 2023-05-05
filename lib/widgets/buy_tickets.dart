@@ -1,8 +1,8 @@
 library BuyTicketsWidget;
 
 import 'package:flutter/material.dart';
-
 import 'transparent_button_no_icon.dart';
+import '../helper_functions/log_in.dart';
 
 class BuyTickets extends StatefulWidget {
   final String eventId;
@@ -25,6 +25,8 @@ class _BuyTicketsState extends State<BuyTickets> {
   bool _showSuffixIcon = false;
   final data = SubmittedData();
   final _form = GlobalKey<FormState>();
+  final _fieldKey = GlobalKey<FormFieldState>();
+
   //Promocode valid code
   // validPromocode could be nullable as api can return null
   // To Be: Get it from API return promocode valid for this event (it takes eventId)
@@ -32,11 +34,16 @@ class _BuyTicketsState extends State<BuyTickets> {
   String? validPromocode = '1234';
 
 // ---------------------- Method -----------------------
-  void addPromoCode(String promo) {
-    final isValid = _form.currentState?.validate();
+  /// Call validator of the textformfield and checks if promocode is valid whenpress on Btn
+  void addPromoCode() {
+    final isValid = _fieldKey.currentState?.validate();
+    if (!isValid!) {
+      return;
+    }
+    _fieldKey.currentState?.save();
   }
 
-  void purchase(String promo, String price) {}
+  void purchase(BuildContext ctx, String promo, String price) {}
   void saveForm(BuildContext ctx, String eventId) {
     final isValid = _form.currentState?.validate();
     if (!isValid!) {
@@ -62,6 +69,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                   : Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: TextFormField(
+                        key: _fieldKey,
                         validator: (value) {
                           //check that promocode validation
                           if (value!.isEmpty || value == validPromocode) {
@@ -75,6 +83,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                         },
                         cursorColor: Theme.of(context).primaryColor,
                         maxLength: 10,
+                        style: const TextStyle(),
                         decoration: InputDecoration(
                             hintText: "Enter code",
                             floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -83,10 +92,11 @@ class _BuyTicketsState extends State<BuyTickets> {
                             suffixIcon: _showSuffixIcon
                                 ? IconButton(
                                     icon: const Icon(Icons.send_rounded),
-                                    onPressed: () {},
+                                    onPressed: addPromoCode,
                                     color: Theme.of(context).primaryColor,
                                   )
                                 : const IconButton(
+                                    key: Key('ApplyPromocodeBtn'),
                                     icon: Icon(Icons.send_rounded),
                                     onPressed: null,
                                   ),
