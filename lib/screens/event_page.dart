@@ -2,12 +2,13 @@ library SingleEventScreen;
 
 import 'dart:ui';
 
+import 'package:Eventbrite/helper_functions/event_tickets_info.dart';
 import 'package:Eventbrite/widgets/title_text_1.dart';
 import 'package:Eventbrite/widgets/title_text_2.dart';
 import 'package:intl/intl.dart';
 
-import '../helper_functions/log_in.dart';
-// import '../providers/events/event.dart';
+// import '../helper_functions/log_in.dart';
+import '../models/event_tickets.dart';
 import '../providers/events/event.dart';
 import '../providers/events/events.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,13 @@ import 'sign_up/sign_up_or_log_in.dart';
 ///
 /// It Know user is logged in or not from
 class EventPage extends StatefulWidget {
-  const EventPage({super.key});
+  // To Be: make this class take its data from API
+  // To Be: Duration can be get from getDuration function => shoof hat3ml eh feha
+  // To Be: initialized  by Empty lists in all attr but i but values for teating
+  EventTicketsInfo eventTickets = EventTicketsInfo(['Regular','VIP'], [10,10], ['10','20']);
+  bool isLoading = false;
+
+  EventPage({super.key});
 
   static const eventPageRoute = '/Event-Page';
 
@@ -38,21 +45,45 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
-  //---------------- Methods -----------------//
-  // To Be: Navigate to buy a ticket
-  void buyTickets(BuildContext ctx, String eventId, String eventTitle, String eventStartDate) {
-    // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-    //   return TabBarScreen(title: 'Search', tabBarIndex: 1);
-    // }));
+  //----------------------------------------------------- Methods -----------------------------------------------------------//
+
+  // To Be: Get event tickets data with this function as it is called when navigate to tickets modal
+  // Hint: you can find similar function at Profile.dart
+  Future<void> getEventTickets(String eventId) async {
+    getEventTicketsInfo(eventId).then(
+        // To Be: E3mlha beltafsel a7san men dh equal dh lef 3aka kol attr goa classes
+        // example: widget.eventTickets.avaliableQuantaties = eventTicketsdata.avaliableQuantaties
+        (eventTicketsdata) => widget.eventTickets = eventTicketsdata);
+  }
+
+  // Open buyTickets model
+  void buyTickets(BuildContext ctx, String eventId, String eventTitle,
+      String eventStartDate) {
+    // To Be: sheel uncommented w raga3 commented => 3shan showModalBottomSheet() tetnafez ba3d ma ageb data men API
+    // getEventTickets(eventId).then((value) => showModalBottomSheet(
+    //     context: ctx,
+    //     isScrollControlled: true,
+    //     builder: (_) {
+    //       //------------------------ user input -------------------//
+    //       return GestureDetector(
+    //           onTap: () {
+    //             FocusScope.of(context).requestFocus(FocusNode());
+    //           },
+    //           behavior: HitTestBehavior.opaque,
+    //           child: BuyTickets(eventId, eventTitle, eventStartDate, widget.eventTickets));
+    //     }));
     showModalBottomSheet(
         context: ctx,
         isScrollControlled: true,
         builder: (_) {
           //------------------------ user input -------------------//
           return GestureDetector(
-              onTap: () {},
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
               behavior: HitTestBehavior.opaque,
-              child: BuyTickets(eventId,eventTitle,eventStartDate));
+              child: BuyTickets(
+                  eventId, eventTitle, eventStartDate, widget.eventTickets));
         });
   }
 
@@ -114,6 +145,15 @@ class _EventPageState extends State<EventPage> {
   //   });
   //   print('ba3den : ${isLogged}');
   // }
+
+  // To Be: Call functions that fetch from APis:
+  // 1. Get event info by id
+  // 2. Get events similar by same categorey of the event
+  @override
+  void initState() {
+    // call them here
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -460,7 +500,9 @@ class _EventPageState extends State<EventPage> {
                   'Tickets',
                   buyTickets,
                   false,
-                  eventId, loadedEvent.title , '${DateFormat('EEE, MMM d • hh:mmaaa ').format(loadedEvent.startDate)} EET'),
+                  eventId,
+                  loadedEvent.title,
+                  '${DateFormat('EEE, MMM d • hh:mmaaa ').format(loadedEvent.startDate)} EET'),
             ),
           ),
       ]),
