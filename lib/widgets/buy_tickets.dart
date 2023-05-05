@@ -3,12 +3,15 @@ library BuyTicketsWidget;
 import 'package:Eventbrite/widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
 import 'transparent_button_no_icon.dart';
+import '../models/event_tickets.dart';
 
 class BuyTickets extends StatefulWidget {
   final String eventId;
   final String eventtitle;
   final String eventStartDate;
-  const BuyTickets(this.eventId, this.eventtitle, this.eventStartDate,
+  final EventTicketsInfo eventTickets;
+  const BuyTickets(
+      this.eventId, this.eventtitle, this.eventStartDate, this.eventTickets,
       {super.key});
 
   @override
@@ -21,8 +24,12 @@ class SubmittedData {
 }
 
 class _BuyTicketsState extends State<BuyTickets> {
-// ---------------------- variables -----------------------
-//-- Controllers of the form --
+//**************************************************************************************************************** */
+//--========================================= Controllers of the form =========================================--
+//--================================================== variables ==============================================--
+//**************************************************************************************************************** */
+
+  // --------------------------------------------- Promocode ---------------------------------------------------------
   //Promo code input
   final promoCodeInp = TextEditingController();
   bool _showSuffixIcon = false;
@@ -36,8 +43,8 @@ class _BuyTicketsState extends State<BuyTickets> {
   // To Be: remove intialization value
   String? validPromocode = '1234';
 
-  // Promocode checks idea
-  // promocodes regulartly checked in validator
+  /// Promocode checks idea
+  /// promocodes alwyas checked in validator
   /// PromoCheck: validator called when press on apply iconBtn
   /// PromoCheck: Apply canceled when tab on field again
   /// promocodeApplied: boolean check if promocode applied or not
@@ -45,7 +52,12 @@ class _BuyTicketsState extends State<BuyTickets> {
   bool promocodeApplied = false;
   bool checkoutClicked = false;
 
-// ---------------------- Method -----------------------
+  // --------------------------------------------- Tickets ---------------------------------------------------------
+
+//--================================================== Methods ==============================================--
+//**************************************************************************************************************** */
+
+  // --------------------------------------------- Promocode ---------------------------------------------------------
   /// Call validator of the textformfield and checks if promocode is valid whenpress on Btn
   void addPromoCode() {
     final isValid = _fieldKey.currentState?.validate();
@@ -59,7 +71,6 @@ class _BuyTicketsState extends State<BuyTickets> {
       data.promo = null;
       return;
     }
-
     setState(() {
       // Entered value is valid so apply promocode
       promocodeApplied = true;
@@ -72,12 +83,19 @@ class _BuyTicketsState extends State<BuyTickets> {
     _fieldKey.currentState?.save();
   }
 
-  void purchase(BuildContext ctx, String promo, String price) {}
+  // --------------------------------------------- Tickets ---------------------------------------------------------
+
+  // --------------------------------------------- Form ---------------------------------------------------------
+  // void purchase(BuildContext ctx, String promo, String price) {}
+
+  /// Function to be called when checkout button is clicked
   void saveForm(BuildContext ctx, String eventId) {
     checkoutClicked = true;
     final isValid = _form.currentState?.validate();
-    print('Data promo is: ');
+    print('Data is: ');
     print(data.promo);
+    print(data.price);
+
     if (!isValid!) {
       return;
     }
@@ -138,7 +156,9 @@ class _BuyTicketsState extends State<BuyTickets> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 // --------------------------------------- Promo-code ------------------------------------------------------------
-                validPromocode == null
+                // if there is no promo code for this event or no Vip tickets for the event
+                (validPromocode == null ||
+                        widget.eventTickets.avaliableQuantaties[1] == 0)
                     ? const SizedBox()
                     : Padding(
                         padding: const EdgeInsets.only(top: 10),
@@ -255,3 +275,5 @@ class _BuyTicketsState extends State<BuyTickets> {
     ;
   }
 }
+
+class EventTicketsInf {}
