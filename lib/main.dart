@@ -1,4 +1,5 @@
 import 'package:Eventbrite/providers/categories/categories.dart';
+import 'package:Eventbrite/providers/createevent/createevent.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/providers/filters/tags.dart';
 import 'package:Eventbrite/providers/filters/temp_tags.dart';
@@ -77,6 +78,9 @@ class _MainAppState extends State<MainApp> {
         ),
         ChangeNotifierProvider.value(
           value: Tickets(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TheEvent(),
         ),
       ],
       child: MaterialApp(

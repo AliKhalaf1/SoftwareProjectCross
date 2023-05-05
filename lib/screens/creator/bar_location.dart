@@ -8,8 +8,8 @@ class BarLocation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Location"),
-      ),
+          title: Text("Location"),
+          backgroundColor: const Color.fromRGBO(31, 10, 61, 1)),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Container(

@@ -273,6 +273,7 @@ class _TicketFormState extends State<TicketForm> {
                 fontSize: 15,
               ),
               decoration: InputDecoration(
+                
                 prefixIcon: Icon(
                   Icons.attach_money,
                   size: 20,

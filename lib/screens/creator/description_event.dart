@@ -1,6 +1,8 @@
 import 'package:Eventbrite/widgets/arc_painter.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/createevent/createevent.dart';
 import 'event_start_end_date.dart';
 
 class Event_Description extends StatefulWidget {
@@ -33,6 +35,7 @@ class _EventTitleState extends State<Event_Description> {
   }
 
   Widget build(BuildContext context) {
+    final event = Provider.of<TheEvent>(context, listen: false);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 65, left: 15, right: 15),
@@ -94,7 +97,9 @@ class _EventTitleState extends State<Event_Description> {
                       onFieldSubmitted: (_) {
                         _saveForm();
                       },
-                      onSaved: (value) {},
+                      onSaved: (value) {
+                        event.setDescription = value!;
+                      },
                       maxLength: 140,
                       autofocus: true,
                     ),
