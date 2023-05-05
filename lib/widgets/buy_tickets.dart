@@ -250,6 +250,33 @@ class _BuyTicketsState extends State<BuyTickets> {
                 ),
 
                 // --------------------------------------- Promo-code ------------------------------------------------------------
+                Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      // decoration: BoxDecoration(
+                      //   borderRadius:
+                      //       const BorderRadius.all(Radius.circular(10)),
+                      //   color: Theme.of(context).primaryColor,
+                      // ),
+                      color: Colors.white,
+                      // child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: const <Widget>[
+                      //       Text("Free Tickets",
+                      //           overflow: TextOverflow.ellipsis,
+                      //           style: TextStyle(
+                      //             fontSize: 18,
+                      //             fontWeight: FontWeight.w400,
+                      //           )),
+                      //     ]),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 20,
+                ),
 
                 //--------------------------------------- Check out button --------------------------------------------------------
                 Align(
