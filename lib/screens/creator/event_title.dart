@@ -1,5 +1,7 @@
+import 'package:Eventbrite/providers/createevent/createevent.dart';
 import 'package:Eventbrite/screens/creator/description_event.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EventTitle extends StatefulWidget {
   const EventTitle({super.key});
@@ -48,6 +50,8 @@ class _EventTitleState extends State<EventTitle> {
   }
 
   Widget build(BuildContext context) {
+    final event = Provider.of<TheEvent>(context, listen: false);
+
     return !_showAnimation
         ? Scaffold(
             body: Padding(
@@ -108,7 +112,9 @@ class _EventTitleState extends State<EventTitle> {
                         onFieldSubmitted: (_) {
                           _saveForm();
                         },
-                        onSaved: (value) {},
+                        onSaved: (value) {
+                          event.setTitle = value!;
+                        },
                         autofocus: true,
                       ),
                     ),

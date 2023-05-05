@@ -1,4 +1,5 @@
 import 'package:Eventbrite/providers/categories/categories.dart';
+import 'package:Eventbrite/providers/createevent/createevent.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/providers/filters/tags.dart';
 import 'package:Eventbrite/providers/filters/temp_tags.dart';
@@ -14,6 +15,7 @@ import 'package:Eventbrite/screens/creator/main_event_form.dart';
 import 'package:Eventbrite/screens/creator/tickets_form.dart';
 import 'package:Eventbrite/screens/event_page.dart';
 import 'package:Eventbrite/screens/guest/home.dart';
+import 'package:Eventbrite/screens/landing_screen.dart';
 import 'package:Eventbrite/screens/search_screen.dart';
 import 'package:Eventbrite/screens/user/account_settings.dart';
 import 'package:Eventbrite/screens/creator/past_events.dart';
@@ -77,6 +79,9 @@ class _MainAppState extends State<MainApp> {
         ChangeNotifierProvider.value(
           value: Tickets(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => TheEvent(),
+        ),
       ],
       child: MaterialApp(
         title: 'Eventbrite',
@@ -90,8 +95,10 @@ class _MainAppState extends State<MainApp> {
         ),
 
         // home: const TabBarScreen(title: 'Eventbrite'),
-        initialRoute: TabBarScreen.tabBarScreenRoute,
+        initialRoute: LandingScreen.landingScreenRoute,
+
         routes: {
+          LandingScreen.landingScreenRoute: (ctx) => const LandingScreen(),
           TabBarScreen.tabBarScreenRoute: (ctx) =>
               TabBarScreen(title: 'Eventbrite', tabBarIndex: 0),
           SignUpOrLogIn.signUpRoute: (ctx) => const SignUpOrLogIn(),

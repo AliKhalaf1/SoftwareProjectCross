@@ -45,7 +45,7 @@ class TabBarScreen extends StatefulWidget {
   // const TabBarScreen({super.key});
 
   //Routing value
-  static const tabBarScreenRoute = '/';
+  static const tabBarScreenRoute = '/tabBar';
   final String title;
   int tabBarIndex;
   bool isLoading = false;

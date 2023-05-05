@@ -7,8 +7,10 @@ import 'package:Eventbrite/screens/user/profile.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../helper_functions/upload_image.dart';
+import '../../providers/createevent/createevent.dart';
 import '../../widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -23,8 +25,8 @@ enum eventCategories {
   Anything,
   Learn,
   Buisness,
-  HealthWellness,
-  Sport,
+  Health,
+  SportsandFitness,
   Tech,
   Culture,
 }
@@ -43,13 +45,14 @@ class EventForm extends StatefulWidget {
 }
 
 class _EventFormState extends State<EventForm> {
-  DateTime? _dateFrom = DateTime.now();
-  DateTime? _dateTo = DateTime.now();
-  TimeOfDay? _timeFrom = TimeOfDay.now();
-  TimeOfDay? _timeTo = TimeOfDay.now();
+  final _form = GlobalKey<FormState>();
+
+  DateTime? _dateFrom;
+  DateTime? _dateTo;
+  TimeOfDay? _timeFrom;
+  TimeOfDay? _timeTo;
   final DateFormat formatter = DateFormat('EEE, dd MMM yyyy');
 
-  eventPlace thePlace = eventPlace.Venue;
   String? address;
   eventCategories eventCategory = eventCategories.Anything;
   int ticketsNum = 0;
@@ -120,16 +123,21 @@ class _EventFormState extends State<EventForm> {
     });
   }
 
-  late TextEditingController _ticketsController, _addressController;
+  late TextEditingController _ticketsController,
+      _addressController,
+      _couponController;
   void initState() {
-    _ticketsController = TextEditingController(text: ticketsNum.toString());
-    _addressController = TextEditingController(text: address);
+    _ticketsController = TextEditingController(text: "0");
+    _addressController = TextEditingController(text: " ");
+    _couponController = TextEditingController(text: "0");
     super.initState();
   }
 
+  eventPlace? thePlace;
   void dispose() {
     _ticketsController.dispose();
     _addressController.dispose();
+    _couponController.dispose();
   }
 
   XFile? image;
@@ -147,9 +155,57 @@ class _EventFormState extends State<EventForm> {
     }
   }
 
+  late TheEvent event;
+  void didChangeDependencies() {
+    event = Provider.of<TheEvent>(context, listen: true);
+    _dateFrom = event.startofEvent;
+    _dateTo = event.endofEvent;
+    _timeFrom = event.startofEventClock;
+    _timeTo = event.endofEventClock;
+    thePlace = event.isOnline ? eventPlace.Online : eventPlace.Venue;
+    super.didChangeDependencies();
+  }
+
+  String saveForm() {
+    //validataion
+
+    if (url == null) {
+      return "Error we need a photo";
+    }
+    DateTime dateTime1 = DateTime.now();
+    DateTime dateTime2 = DateTime.now();
+
+    if (_dateFrom == null ||
+        _dateTo == null ||
+        _timeFrom == null ||
+        _timeTo == null) {
+      // Display an error message if any of the values are null
+      // ...
+      return "Error in your date";
+    }
+    dateTime1 = DateTime(0, 0, 0, _timeFrom!.hour, _timeFrom!.minute);
+    dateTime2 = DateTime(0, 0, 0, _timeTo!.hour, _timeTo!.minute);
+    if ((_dateFrom!.isAfter(_dateTo!)) ||
+        ((_dateFrom == _dateTo) && ((dateTime1.isAfter(dateTime2)))) ||
+        ((_dateFrom == _dateTo) && (dateTime1 == dateTime2))) {
+      return "Error in your date";
+    }
+    if (thePlace == eventPlace.Venue && address == null)
+      return 'Error We need a valid Place';
+
+    // if (event.totalTicketsLength < 1) return 'Error We need at least 1 Ticket';
+
+    return "Done";
+  }
+
   Widget build(BuildContext context) {
-    _ticketsController = TextEditingController(text: ticketsNum.toString());
-    _addressController = TextEditingController(text: address);
+    _ticketsController =
+        TextEditingController(text: event.totalTicketsLength.toString());
+
+    _addressController = TextEditingController(text: event.city);
+
+    _couponController =
+        TextEditingController(text: event.totalCouponsLength.toString());
     return WillPopScope(
       onWillPop: () async {
         int count = 0;
@@ -183,15 +239,63 @@ class _EventFormState extends State<EventForm> {
               icon: Icon(Icons.cancel_rounded),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                String check = saveForm();
+
+                if (check == 'Done') {
+                  final isValid = _form.currentState?.validate();
+                  if (!isValid!) {
+                    return;
+                  }
+                  _form.currentState?.save();
+
+                  event.setImageUrl = url!;
+                  event.setStartOfEvent = _dateFrom!;
+                  event.setEndOfEvent = _dateTo!;
+                  event.setStartOfEventClock = _timeFrom!;
+                  event.setEndOfEventClock = _timeTo!;
+                  event.setIsOnline =
+                      thePlace == eventPlace.Online ? true : false;
+
+                  if (event.isOnline) event.setCity = null;
+
+                  event.setEventCategory =
+                      eventCategory != eventCategories.SportsandFitness
+                          ? eventCategory.toString().split('.').last
+                          : "Sports & Fitness";
+                  event.setIsPublic =
+                      eventPrivacy == thePrivacy.Public ? true : false;
+                  print(event.toString());
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Error'),
+                        content: Text(check),
+                        actions: [
+                          TextButton(
+                            child: const Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
               icon: Icon(Icons.upload),
             )
           ],
         ),
         drawer: EventDrawer(),
         body: Form(
+          key: _form,
           child: ListView(
             children: [
+              // Image Insert
               url == null
                   ? GestureDetector(
                       onTap: () {
@@ -220,13 +324,14 @@ class _EventFormState extends State<EventForm> {
                       ),
                       // Optional: add child widgets or other properties to the Container
                     ),
+              //title , username ,description
               ListTile(
                 leading: Icon(Icons.text_fields_outlined),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
-                      initialValue: null,
+                      initialValue: event.title,
                       validator: (value) {
                         if (value != null) {
                           if (value.isEmpty) {
@@ -256,10 +361,12 @@ class _EventFormState extends State<EventForm> {
                           color: Colors.blueGrey.withOpacity(0.8),
                         ),
                       ),
-                      onSaved: (value) {},
+                      onSaved: (value) {
+                        event.setTitle = value!;
+                      },
                     ),
                     Text(
-                      "User Name",
+                      event.nameOrganizer,
                       style: const TextStyle(
                         fontFamily: 'Neue Plak Extended',
                         fontWeight: FontWeight.w200,
@@ -267,7 +374,7 @@ class _EventFormState extends State<EventForm> {
                       ),
                     ),
                     TextFormField(
-                      initialValue: null,
+                      initialValue: event.description,
                       validator: (value) {
                         if (value != null) {
                           if (value.isEmpty) {
@@ -298,7 +405,9 @@ class _EventFormState extends State<EventForm> {
                             color: Colors.blueGrey.withOpacity(0.8),
                           ),
                           counterText: ""),
-                      onSaved: (value) {},
+                      onSaved: (value) {
+                        event.setDescription = value!;
+                      },
                       maxLength: 140,
                     ),
                   ],
@@ -307,6 +416,7 @@ class _EventFormState extends State<EventForm> {
               const SizedBox(
                 height: 10,
               ),
+              //Start&End
               ListTile(
                 leading: Icon(Icons.calendar_month),
                 subtitle: Column(
@@ -392,7 +502,7 @@ class _EventFormState extends State<EventForm> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               ListTile(
@@ -468,6 +578,9 @@ class _EventFormState extends State<EventForm> {
                             color: Colors.blueGrey.withOpacity(0.8),
                           ),
                         ),
+                        onSaved: (value) {
+                          event.setCity = value;
+                        },
                       ),
                     // else should put address = null before submit
                   ],
@@ -515,12 +628,12 @@ class _EventFormState extends State<EventForm> {
                           value: eventCategories.Buisness,
                         ),
                         const PopupMenuItem(
-                          child: Text('HealthWellness'),
-                          value: eventCategories.HealthWellness,
+                          child: Text('Health'),
+                          value: eventCategories.Health,
                         ),
                         const PopupMenuItem(
-                          child: Text('Sport'),
-                          value: eventCategories.Sport,
+                          child: Text('Sports & Fitness'),
+                          value: eventCategories.SportsandFitness,
                         ),
                         const PopupMenuItem(
                           child: Text('Tech'),
@@ -533,7 +646,9 @@ class _EventFormState extends State<EventForm> {
                       ],
                       child: Row(
                         children: [
-                          Text(eventCategory.toString().split('.').last),
+                          Text(eventCategory != eventCategories.SportsandFitness
+                              ? eventCategory.toString().split('.').last
+                              : "Sports & Fitness"),
                           const Icon(
                             Icons.arrow_drop_down,
                             color: Colors.black,
@@ -550,9 +665,6 @@ class _EventFormState extends State<EventForm> {
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushNamed(All_Tickets.route);
-                  setState(() {
-                    ticketsNum++;
-                  });
                 },
                 child: ListTile(
                   leading: Icon(Icons.assignment_ind_outlined),
@@ -572,7 +684,7 @@ class _EventFormState extends State<EventForm> {
                         enabled: true,
                         validator: (value) {
                           if (value != null) {
-                            if (value == '0') {
+                            if (value != '0') {
                               return "Add tickets ";
                             } else {
                               return null;
@@ -606,9 +718,6 @@ class _EventFormState extends State<EventForm> {
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushNamed(AllCoupons.route);
-                  setState(() {
-                    ticketsNum++;
-                  });
                 },
                 child: ListTile(
                   leading: Icon(Icons.card_giftcard_sharp),
@@ -622,10 +731,12 @@ class _EventFormState extends State<EventForm> {
                             const Text("Coupons"),
                             TextFormField(
                               onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(AllCoupons.route);
                                 // Navigate to add Tickets page;
                               },
                               readOnly: true,
-                              controller: _ticketsController,
+                              controller: _couponController,
                               enabled: true,
                               style: const TextStyle(
                                 fontFamily: 'Neue Plak Extended',

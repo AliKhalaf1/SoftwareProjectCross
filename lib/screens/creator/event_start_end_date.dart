@@ -2,6 +2,8 @@ import 'package:Eventbrite/screens/creator/event_location.dart';
 import 'package:Eventbrite/widgets/from_to_date.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/createevent/createevent.dart';
 import '../../widgets/arc_painter.dart';
 
 class EventDate extends StatefulWidget {
@@ -17,6 +19,7 @@ class _EventDateState extends State<EventDate> {
   TimeOfDay? _timeFrom = null;
   TimeOfDay? _timeTo = null;
   final DateFormat formatter = DateFormat('d-MMM');
+
   void _showDatePickerfrom() {
     showDatePicker(
       context: context,
@@ -86,10 +89,7 @@ class _EventDateState extends State<EventDate> {
   bool _handleSubmit() {
     DateTime dateTime1 = DateTime.now();
     DateTime dateTime2 = DateTime.now();
-    if (_timeFrom != null && _timeTo != null) {
-      dateTime1 = DateTime(0, 0, 0, _timeFrom!.hour, _timeFrom!.minute);
-      dateTime2 = DateTime(0, 0, 0, _timeTo!.hour, _timeTo!.minute);
-    }
+
     if (_dateFrom == null ||
         _dateTo == null ||
         _timeFrom == null ||
@@ -97,11 +97,12 @@ class _EventDateState extends State<EventDate> {
       // Display an error message if any of the values are null
       // ...
       return false;
-    } else if ((_dateFrom!.isAfter(_dateTo!) || (_dateFrom == _dateTo)) &&
-        ((dateTime1.isAfter(dateTime2)) ||
-            (dateTime1.isAtSameMomentAs(dateTime2)))) {
-      // Display an error message if the from date and time are greater than the to date and time
-
+    }
+    dateTime1 = DateTime(0, 0, 0, _timeFrom!.hour, _timeFrom!.minute);
+    dateTime2 = DateTime(0, 0, 0, _timeTo!.hour, _timeTo!.minute);
+    if ((_dateFrom!.isAfter(_dateTo!)) ||
+        ((_dateFrom == _dateTo) && ((dateTime1.isAfter(dateTime2)))) ||
+        ((_dateFrom == _dateTo) && (dateTime1 == dateTime2))) {
       return false;
     } else {
       // All values are valid, submit
@@ -112,6 +113,7 @@ class _EventDateState extends State<EventDate> {
 
   @override
   Widget build(BuildContext context) {
+    final event = Provider.of<TheEvent>(context, listen: false);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 65, left: 15, right: 15),
@@ -150,6 +152,11 @@ class _EventDateState extends State<EventDate> {
         onTap: () {
           bool check = _handleSubmit();
           if (check) {
+            event.setStartOfEvent = _dateFrom!;
+            event.setEndOfEvent = _dateTo!;
+            event.setStartOfEventClock = _timeFrom!;
+            event.setEndOfEventClock = _timeTo!;
+
             Navigator.of(context).pushNamed(
               EventLocation.route,
             );
