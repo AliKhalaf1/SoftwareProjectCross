@@ -16,12 +16,16 @@ import '../filters/tag.dart';
 ///
 ///   • state: Online / Offline
 ///
-///   • creatorFollowers: number of followers who follow the event organizer
+///   • status: private / public
+///
+///   • organization: organization that organize the event
 ///
 ///   • isFav: boolean variable check if user mark this event to its favourites or not
 ///
 
 enum EventState { online, offline }
+
+enum EventStatus { private, public }
 
 class Event with ChangeNotifier {
   //parameters of the EventCard Widget
@@ -30,27 +34,28 @@ class Event with ChangeNotifier {
   final DateTime endDate; /*end event date*/
   final String description; /*event dscription*/
   final EventState state; /*event state (online/onsite)*/
+  final EventStatus status; /*event status (private/public) */
   bool isFav;
   final String categ;
   final List<String> tags;
   final String id;
   final String title;
-  final String creatorFollowers;
+  final String organization;
 
   ///Constructor
   Event(
-    this.startDate,
-    this.endDate,
-    this.description,
-    this.eventImg,
-    this.state,
-    this.isFav,
-    this.categ,
-    this.tags,
-    this.id,
-    this.title,
-    this.creatorFollowers
-  );
+      this.startDate,
+      this.endDate,
+      this.description,
+      this.eventImg,
+      this.state,
+      this.isFav,
+      this.categ,
+      this.tags,
+      this.id,
+      this.title,
+      this.organization,
+      this.status);
 
   /// Set isFav Value by true or false
   void _setFavValue(bool newValue) {

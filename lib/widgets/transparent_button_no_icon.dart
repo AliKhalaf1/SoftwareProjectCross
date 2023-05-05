@@ -13,8 +13,10 @@ import '../providers/filters/tag.dart';
 class TransparentButtonNoIcon extends StatefulWidget {
   final String text;
   final Function onPressed;
-  bool buttonState;
+  bool isDiabled;
   final String eventId;
+  final String eventTitle;
+  final String eventStartDate;
 
   /// It takes:
   ///
@@ -24,8 +26,8 @@ class TransparentButtonNoIcon extends StatefulWidget {
   ///
   ///   • Button state (Activate or not)
   ///
-  TransparentButtonNoIcon(
-      this.text, this.onPressed, this.buttonState, this.eventId,
+  TransparentButtonNoIcon(this.text, this.onPressed, this.isDiabled,
+      this.eventId, this.eventTitle, this.eventStartDate,
       {super.key});
 
   @override
@@ -34,13 +36,6 @@ class TransparentButtonNoIcon extends StatefulWidget {
 }
 
 class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
-  /* Method to check disable or enable the button */
-  void buttonState() {
-    setState(() {
-      widget.buttonState = true;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +43,7 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
       child: SizedBox(
         height: 40,
         width: MediaQuery.of(context).size.width * 0.9,
-        child: widget.buttonState
+        child: widget.isDiabled
             ? TextButton(
                 style: ButtonStyle(
                   side: MaterialStateProperty.all(
@@ -101,9 +96,14 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
                           ),
                         ),
                       ),
-                onPressed:
-                    (widget.text == 'Tickets' || widget.text == 'Check out')
-                        ? () => widget.onPressed(context, widget.eventId)
+                onPressed: (widget.text == 'Tickets')
+                    ? () => widget.onPressed(context, widget.eventId,
+                        widget.eventTitle, widget.eventStartDate)
+                    : (widget.text == 'Check out')
+                        ? () => widget.onPressed(
+                              context,
+                              widget.eventId,
+                            )
                         : () => widget.onPressed(context),
                 child: Align(
                   alignment: Alignment.center,

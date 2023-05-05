@@ -27,7 +27,7 @@ import 'sign_up/sign_up_or_log_in.dart';
 ///
 /// It knows the event to display from (event.id) that is passed to naivator.pushNamed
 ///
-///
+/// It Know user is logged in or not from
 class EventPage extends StatefulWidget {
   const EventPage({super.key});
 
@@ -40,19 +40,19 @@ class EventPage extends StatefulWidget {
 class _EventPageState extends State<EventPage> {
   //---------------- Methods -----------------//
   // To Be: Navigate to buy a ticket
-  void buyTickets(BuildContext ctx, String eventId) {
+  void buyTickets(BuildContext ctx, String eventId, String eventTitle, String eventStartDate) {
     // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
     //   return TabBarScreen(title: 'Search', tabBarIndex: 1);
     // }));
-
     showModalBottomSheet(
         context: ctx,
+        isScrollControlled: true,
         builder: (_) {
           //------------------------ user input -------------------//
           return GestureDetector(
               onTap: () {},
               behavior: HitTestBehavior.opaque,
-              child: BuyTickets(eventId));
+              child: BuyTickets(eventId,eventTitle,eventStartDate));
         });
   }
 
@@ -94,6 +94,27 @@ class _EventPageState extends State<EventPage> {
     }
   }
 
+  //--------------------- Get user token (logged in or not) ---------------------
+  //----------------------- Variables ----------------------------
+  // true only if user is logged in
+  // bool isLogged = false;
+  // // called before build as init function once widget inserted into tree
+  // // NOTE: It must be outside build method
+  // Future<void> _myAsyncMethod() async {
+  //   isLogged = await checkLoggedUser();
+  //   print('la7ees : ${isLogged}');
+  // }
+
+  // @override
+  // void initState() {
+  //   _myAsyncMethod().then((_) {
+  //     // Add code here that depends on the result of _myAsyncMethod()
+  //     super.initState();
+  //     print('henaa : ${isLogged}');
+  //   });
+  //   print('ba3den : ${isLogged}');
+  // }
+
   @override
   Widget build(BuildContext context) {
     //----------------------- Event provider ------------------------------
@@ -102,24 +123,22 @@ class _EventPageState extends State<EventPage> {
     final favsData = Provider.of<FavEvents>(context);
 
     //----------------------- Event id ------------------------------------
-    // TO BE: take thid eventId and get event data from API get eventById
-    final eventId =
-        ModalRoute.of(context)?.settings.arguments as String; // is the id!
+    // TO BE: take this eventId and get event data from API get eventById to be loadedEvent
+    final obj = ModalRoute.of(context)?.settings.arguments as Map;
+    final eventId = obj['eventId'] as String; // is the id!
     final loadedEvent = Provider.of<Events>(
       context,
       listen: false,
     ).findById(eventId);
 
-    //--------------------- list of tags ---------------------
-    //To Be: substituted by subcategories list from API
-    // List<Tag> subCategories
+    bool isLogged = obj['isLogged'] as bool;
 
     //----------------------- Methods ------------------------------
 
     // TO BE: toggle fav state API
     Future<void> toggleFav(BuildContext ctx) async {
       //add to favourites list
-      bool isLogged = await checkLoggedUser();
+      // isLogged = await checkLoggedUser();
       setState(() {
         if (isLogged) {
           //Call toggleStatus function from event class
@@ -290,6 +309,51 @@ class _EventPageState extends State<EventPage> {
                     ),
                   ),
 
+                  // -------------------- Organization Name --------------------
+                  const SizedBox(height: 30),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(right: 15, bottom: 10),
+                      child: const Text(
+                        'Organizer',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 20,
+                            height: 1.2,
+                            letterSpacing: 1.3,
+                            fontFamily: 'Neue Plak Extended',
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromRGBO(17, 3, 59, 1)),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          key: Key("person"),
+                          Icons.person,
+                          color: Color.fromRGBO(62, 9, 137, 1),
+                          size: 40,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(left: 7),
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: Text(loadedEvent.organization,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(0, 0, 0, 0.7),
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500)),
+                        )
+                      ],
+                    ),
+                  ),
+
                   // ---------------------- About ----------------
                   const SizedBox(height: 30),
                   SizedBox(
@@ -375,18 +439,30 @@ class _EventPageState extends State<EventPage> {
 
         //--------------------------------------- Tickets modal --------------------------------------------------------
         //Stack 2nd child
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: TransparentButtonNoIcon(
-                key: const Key("BuyTicketsBtn"),
-                'Tickets',
-                buyTickets,
-                false,
-                eventId),
+        //To Be: if events tickets avaliability : not avliable disable Tickets Btn (get from event API tickets.avaliable) => add this check OPED with [loadedEvent.startDate.toUtc().isBefore(DateTime.now().add(const Duration(hours: 1)).toUtc())]
+
+        // ----- Checks -----
+        // 1. is logged user
+        // 2. is event before now
+        // 3. To Be: is there is avliable tickets (avaliable tickets > 0)
+        if (!isLogged ||
+            loadedEvent.startDate
+                .toUtc()
+                .isBefore(DateTime.now().add(const Duration(hours: 1)).toUtc()))
+          const SizedBox()
+        else
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: TransparentButtonNoIcon(
+                  key: const Key("BuyTicketsBtn"),
+                  'Tickets',
+                  buyTickets,
+                  false,
+                  eventId, loadedEvent.title , '${DateFormat('EEE, MMM d • hh:mmaaa ').format(loadedEvent.startDate)} EET'),
+            ),
           ),
-        ),
       ]),
     );
   }
