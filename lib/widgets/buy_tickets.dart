@@ -30,24 +30,47 @@ class _BuyTicketsState extends State<BuyTickets> {
   final _form = GlobalKey<FormState>();
   final _fieldKey = GlobalKey<FormFieldState>();
 
-  //Promocode valid code
+  // Promocode valid code
   // validPromocode could be nullable as api can return null
   // To Be: Get it from API return promocode valid for this event (it takes eventId)
   // To Be: remove intialization value
   String? validPromocode = '1234';
+
+  // Promocode checks idea
+  // promocodes regulartly checked in validator
+  /// PromoCheck: validator called when press on apply iconBtn 
+  /// PromoCheck: Apply canceled when tab on field again
+  /// promocodeApplied: boolean check if promocode applied or not
+  /// checkoutClicked: boolean to be true only if checkout Btn clicked
+  bool promocodeApplied =
+      false;
+  bool checkoutClicked = false;
 
 // ---------------------- Method -----------------------
   /// Call validator of the textformfield and checks if promocode is valid whenpress on Btn
   void addPromoCode() {
     final isValid = _fieldKey.currentState?.validate();
     if (!isValid!) {
+      setState(() {
+        // Entered value is not valid so Not to apply promocode
+        promocodeApplied = false;
+      });
       return;
     }
+
+    setState(() {
+      // Entered value is valid so apply promocode
+      promocodeApplied = true;
+    });
+    /// PromoCheck: close Textfield
+    FocusScope.of(context).requestFocus(FocusNode());
+    /// _fieldKey.currentState?.save(): save the value into submitted data class by calling onsave:
     _fieldKey.currentState?.save();
   }
 
   void purchase(BuildContext ctx, String promo, String price) {}
   void saveForm(BuildContext ctx, String eventId) {
+    checkoutClicked = true;
     final isValid = _form.currentState?.validate();
     if (!isValid!) {
       return;
@@ -115,14 +138,24 @@ class _BuyTicketsState extends State<BuyTickets> {
                         padding: const EdgeInsets.only(top: 10),
                         child: TextFormField(
                           key: _fieldKey,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          //Validations
                           validator: (value) {
-                            //check that promocode validation
-                            if (value!.isEmpty || value == validPromocode) {
-                              data.promo = value;
+                            /// PromoCheck: check that promocode validation or no promocode entered
+                            if (value == null) {
+                              return null;
+                            }
+                            if (value.isEmpty ||
+                                value.length < 4 ||
+                                value == validPromocode) {
+                              return null;
+                            }
+                            if (checkoutClicked && !promocodeApplied) {
                               return null;
                             }
                             return "Invalid promocode";
                           },
+                          /// PromoCheck:Save value if valid and apply button clicked
                           onSaved: (newValue) {
                             data.promo = newValue;
                           },
@@ -135,15 +168,22 @@ class _BuyTicketsState extends State<BuyTickets> {
                                   FloatingLabelBehavior.always,
                               floatingLabelStyle: TextStyle(
                                   color: Theme.of(context).primaryColor),
+                              //Apply button
                               suffixIcon: _showSuffixIcon
-                                  ? IconButton(
-                                      icon: const Icon(Icons.send_rounded),
-                                      onPressed: addPromoCode,
-                                      color: Theme.of(context).primaryColor,
-                                    )
+                                  ? promocodeApplied
+                                      ? const Icon(
+                                          Icons.check_circle,
+                                          color:
+                                              Color.fromARGB(255, 16, 191, 22),
+                                        )
+                                      : IconButton(
+                                          icon: const Icon(Icons.check_circle),
+                                          onPressed: addPromoCode,
+                                          color: Theme.of(context).primaryColor,
+                                        )
                                   : const IconButton(
                                       key: Key('ApplyPromocodeBtn'),
-                                      icon: Icon(Icons.send_rounded),
+                                      icon: Icon(Icons.check_circle),
                                       onPressed: null,
                                     ),
                               labelText: 'Promo Code',
@@ -159,11 +199,16 @@ class _BuyTicketsState extends State<BuyTickets> {
                                     BorderRadius.all(Radius.circular(10)),
                               )),
                           controller: promoCodeInp,
+                          /// PromoCheck: check with every change of textfield
                           onChanged: (value) {
                             ///Check on length of the text to determine show the apply icon or not
                             setState(() {
                               _showSuffixIcon = (value.length > 3);
                             });
+                          },
+                          /// PromoCheck: Cancel apply if user tap on textfield again
+                          onTap: () {
+                            promocodeApplied = false;
                           },
                         ),
                       ),
@@ -184,7 +229,9 @@ class _BuyTicketsState extends State<BuyTickets> {
                         'Check out',
                         saveForm,
                         false,
-                        widget.eventId, '', ''),
+                        widget.eventId,
+                        '',
+                        ''),
                   ),
                 ),
               ],

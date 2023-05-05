@@ -40,7 +40,8 @@ class EventPage extends StatefulWidget {
 class _EventPageState extends State<EventPage> {
   //---------------- Methods -----------------//
   // To Be: Navigate to buy a ticket
-  void buyTickets(BuildContext ctx, String eventId, String eventTitle, String eventStartDate) {
+  void buyTickets(BuildContext ctx, String eventId, String eventTitle,
+      String eventStartDate) {
     // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
     //   return TabBarScreen(title: 'Search', tabBarIndex: 1);
     // }));
@@ -50,9 +51,11 @@ class _EventPageState extends State<EventPage> {
         builder: (_) {
           //------------------------ user input -------------------//
           return GestureDetector(
-              onTap: () {},
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
               behavior: HitTestBehavior.opaque,
-              child: BuyTickets(eventId,eventTitle,eventStartDate));
+              child: BuyTickets(eventId, eventTitle, eventStartDate));
         });
   }
 
@@ -460,7 +463,9 @@ class _EventPageState extends State<EventPage> {
                   'Tickets',
                   buyTickets,
                   false,
-                  eventId, loadedEvent.title , '${DateFormat('EEE, MMM d • hh:mmaaa ').format(loadedEvent.startDate)} EET'),
+                  eventId,
+                  loadedEvent.title,
+                  '${DateFormat('EEE, MMM d • hh:mmaaa ').format(loadedEvent.startDate)} EET'),
             ),
           ),
       ]),
