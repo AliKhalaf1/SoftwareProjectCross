@@ -38,12 +38,11 @@ class _BuyTicketsState extends State<BuyTickets> {
 
   // Promocode checks idea
   // promocodes regulartly checked in validator
-  /// PromoCheck: validator called when press on apply iconBtn 
+  /// PromoCheck: validator called when press on apply iconBtn
   /// PromoCheck: Apply canceled when tab on field again
   /// promocodeApplied: boolean check if promocode applied or not
   /// checkoutClicked: boolean to be true only if checkout Btn clicked
-  bool promocodeApplied =
-      false;
+  bool promocodeApplied = false;
   bool checkoutClicked = false;
 
 // ---------------------- Method -----------------------
@@ -55,6 +54,9 @@ class _BuyTicketsState extends State<BuyTickets> {
         // Entered value is not valid so Not to apply promocode
         promocodeApplied = false;
       });
+
+      /// Remove the data.promo value from submetted data
+      data.promo = null;
       return;
     }
 
@@ -62,8 +64,10 @@ class _BuyTicketsState extends State<BuyTickets> {
       // Entered value is valid so apply promocode
       promocodeApplied = true;
     });
+
     /// PromoCheck: close Textfield
     FocusScope.of(context).requestFocus(FocusNode());
+
     /// _fieldKey.currentState?.save(): save the value into submitted data class by calling onsave:
     _fieldKey.currentState?.save();
   }
@@ -72,6 +76,8 @@ class _BuyTicketsState extends State<BuyTickets> {
   void saveForm(BuildContext ctx, String eventId) {
     checkoutClicked = true;
     final isValid = _form.currentState?.validate();
+    print('Data promo is: ');
+    print(data.promo);
     if (!isValid!) {
       return;
     }
@@ -138,7 +144,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                         padding: const EdgeInsets.only(top: 10),
                         child: TextFormField(
                           key: _fieldKey,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          // autovalidateMode: AutovalidateMode.onUserInteraction,
                           //Validations
                           validator: (value) {
                             /// PromoCheck: check that promocode validation or no promocode entered
@@ -155,6 +161,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                             }
                             return "Invalid promocode";
                           },
+
                           /// PromoCheck:Save value if valid and apply button clicked
                           onSaved: (newValue) {
                             data.promo = newValue;
@@ -199,6 +206,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                                     BorderRadius.all(Radius.circular(10)),
                               )),
                           controller: promoCodeInp,
+
                           /// PromoCheck: check with every change of textfield
                           onChanged: (value) {
                             ///Check on length of the text to determine show the apply icon or not
@@ -206,9 +214,13 @@ class _BuyTicketsState extends State<BuyTickets> {
                               _showSuffixIcon = (value.length > 3);
                             });
                           },
+
                           /// PromoCheck: Cancel apply if user tap on textfield again
                           onTap: () {
                             promocodeApplied = false;
+
+                            /// Remove the data.promo value from submetted data
+                            data.promo = null;
                           },
                         ),
                       ),
