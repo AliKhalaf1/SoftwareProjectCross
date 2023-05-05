@@ -5,10 +5,15 @@ class TheTicket {
   String type;
   int maxquantity;
   int price;
-  String startDate;
-  String endDate;
+  DateTime startDate;
+  DateTime endDate;
+  TimeOfDay startofEventClock;
+  TimeOfDay endofEventClock;
   TheTicket(this.name, this.type, this.maxquantity, this.price, this.startDate,
-      this.endDate);
+      this.endDate, this.startofEventClock, this.endofEventClock);
+  String toString() {
+    return 'TheTicket{name: $name, type: $type, maxquantity: $maxquantity, price: $price, startDate: $startDate, endDate: $endDate, startofEventClock: $startofEventClock, endofEventClock: $endofEventClock}';
+  }
 }
 
 class TheCoupon {
@@ -135,10 +140,19 @@ class TheEvent with ChangeNotifier {
     return allCoupon.length;
   }
 
-  void addTicket(String name, String type, int maxQuantity, int price,
-      String startDate, String endDate) {
-    allTickets
-        .add(TheTicket(name, type, maxQuantity, price, startDate, endDate));
+  void addTicket(
+      String name,
+      String type,
+      int maxQuantity,
+      int price,
+      DateTime startDate,
+      DateTime endDate,
+      TimeOfDay startDateClock,
+      TimeOfDay endDateClock) {
+    allTickets.add(
+      TheTicket(name, type, maxQuantity, price, startDate, endDate,
+          startDateClock, endDateClock),
+    );
     notifyListeners();
   }
 

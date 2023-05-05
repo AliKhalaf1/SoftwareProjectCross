@@ -190,8 +190,6 @@ class _EventFormState extends State<EventForm> {
         ((_dateFrom == _dateTo) && (dateTime1 == dateTime2))) {
       return "Error in your date";
     }
-    if (thePlace == eventPlace.Venue && address == null)
-      return 'Error We need a valid Place';
 
     // if (event.totalTicketsLength < 1) return 'Error We need at least 1 Ticket';
 
@@ -206,6 +204,7 @@ class _EventFormState extends State<EventForm> {
 
     _couponController =
         TextEditingController(text: event.totalCouponsLength.toString());
+
     return WillPopScope(
       onWillPop: () async {
         int count = 0;
@@ -684,7 +683,7 @@ class _EventFormState extends State<EventForm> {
                         enabled: true,
                         validator: (value) {
                           if (value != null) {
-                            if (value != '0') {
+                            if (value == '0') {
                               return "Add tickets ";
                             } else {
                               return null;
