@@ -48,3 +48,5 @@ Future<User> getUserInfo(String info) async {
 
   return currUser;
 }
+
+

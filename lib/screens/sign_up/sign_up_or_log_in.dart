@@ -5,7 +5,6 @@ import '../../widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/log_in_btn.dart';
 import '../sign_in/email_check.dart';
-import '../find_tickets.dart';
 import '../../widgets/transparent_button.dart';
 
 /// {@category Sign Up}
@@ -56,11 +55,13 @@ class SignUpOrLogIn extends StatelessWidget {
   }
 
   //Find Ticket with mail function
-  void findTicket(BuildContext ctx) {
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return const FindTickets();
-    }));
-  }
+  // void findTicket(BuildContext ctx) {
+  //   // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+  //   //   return const FindTickets();
+  //   // }));
+
+  //   /// Route from 
+  // }
 
   //Find Ticket with facebook function
   void signWithFacebook() {}
@@ -135,17 +136,17 @@ class SignUpOrLogIn extends StatelessWidget {
                   ),
 
                   //Fourth child
-                  TextButton(
-                    key: const Key('FindTicketsBtn'),
-                    onPressed: () => findTicket(context),
-                    child: const Text(
-                      'I bought tickets, but I don\'t have an account.',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 16, 84, 211),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  )
+                  // TextButton(
+                  //   key: const Key('FindTicketsBtn'),
+                  //   onPressed: () => findTicket(context),
+                  //   child: const Text(
+                  //     'I bought tickets, but I don\'t have an account.',
+                  //     style: TextStyle(
+                  //         color: Color.fromARGB(255, 16, 84, 211),
+                  //         fontSize: 15,
+                  //         fontWeight: FontWeight.w500),
+                  //   ),
+                  // )
                 ],
               )
             ],

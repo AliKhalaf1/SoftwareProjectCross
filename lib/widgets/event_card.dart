@@ -61,7 +61,7 @@ class _EventCardState extends State<EventCard> {
         }
       });
     }
-    
+
     return Stack(
       fit: StackFit.loose,
       children: [
@@ -78,8 +78,16 @@ class _EventCardState extends State<EventCard> {
                     width: 100,
                     height: 100,
                     child: event.eventImg.startsWith('http')
-                        ? Image.network(
-                            event.eventImg,
+                        ? FadeInImage(
+                            placeholder: const AssetImage(
+                                'assets/images/no_image_found.png'),
+                            imageErrorBuilder: (context, error, stackTrace) =>
+                                const Image(
+                              image: AssetImage(
+                                  'assets/images/no_image_found.png'),
+                              fit: BoxFit.cover,
+                            ),
+                            image: NetworkImage(event.eventImg),
                             fit: BoxFit.cover,
                           )
                         : Image.asset(
@@ -112,25 +120,24 @@ class _EventCardState extends State<EventCard> {
                             : 'Offline',
                         style: const TextStyle(color: Colors.grey),
                       ),
-                      // Row(
-                      //   children: [
-                      //     const Icon(
-                      //       key: Key("person"),
-                      //       Icons.person_outline_outlined,
-                      //       color: Color.fromRGBO(0, 0, 0, 0.7),
-                      //     ),
-                      //     SizedBox(
-                      //       width: 130,
-                      //       child: Text(
-                      //           '${event.creatorFollowers} creator followers',
-                      //           overflow: TextOverflow.ellipsis,
-                      //           style: const TextStyle(
-                      //               color: Color.fromRGBO(0, 0, 0, 0.7),
-                      //               fontSize: 10,
-                      //               fontWeight: FontWeight.w500)),
-                      //     )
-                      //   ],
-                      // )
+                      Row(
+                        children: [
+                          const Icon(
+                            key: Key("person"),
+                            Icons.person_outline_outlined,
+                            color: Color.fromRGBO(0, 0, 0, 0.7),
+                          ),
+                          SizedBox(
+                            width: 130,
+                            child: Text(event.organization,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(0, 0, 0, 0.7),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500)),
+                          )
+                        ],
+                      )
                     ],
                   ),
                 )

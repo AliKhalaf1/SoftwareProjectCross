@@ -15,6 +15,7 @@ import 'package:Eventbrite/screens/creator/main_event_form.dart';
 import 'package:Eventbrite/screens/creator/tickets_form.dart';
 import 'package:Eventbrite/screens/event_page.dart';
 import 'package:Eventbrite/screens/guest/home.dart';
+import 'package:Eventbrite/screens/landing_screen.dart';
 import 'package:Eventbrite/screens/search_screen.dart';
 import 'package:Eventbrite/screens/user/account_settings.dart';
 import 'package:Eventbrite/screens/creator/past_events.dart';
@@ -28,7 +29,6 @@ import 'providers/tickets/tickets.dart';
 import 'screens/sign_up/sign_up_or_log_in.dart';
 import 'screens/tab_bar.dart';
 import 'screens/sign_in/email_check.dart';
-import './screens/find_tickets.dart';
 import 'widgets/tab_bar_Events.dart';
 import 'providers/events/events.dart';
 
@@ -95,13 +95,14 @@ class _MainAppState extends State<MainApp> {
         ),
 
         // home: const TabBarScreen(title: 'Eventbrite'),
-        initialRoute: TabBarScreen.tabBarScreenRoute,
+        initialRoute: LandingScreen.landingScreenRoute,
+
         routes: {
+          LandingScreen.landingScreenRoute: (ctx) => const LandingScreen(),
           TabBarScreen.tabBarScreenRoute: (ctx) =>
               TabBarScreen(title: 'Eventbrite', tabBarIndex: 0),
           SignUpOrLogIn.signUpRoute: (ctx) => const SignUpOrLogIn(),
           EmailCheck.emailCheckRoute: (ctx) => EmailCheck(),
-          FindTickets.findTicketsRoute: (ctx) => const FindTickets(),
           TabBarEvents.route: (ctx) => TabBarEvents(),
           PastEvents.route: (ctx) => PastEvents(),
           EventTitle.route: (ctx) => EventTitle(),
