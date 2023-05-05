@@ -53,7 +53,7 @@ class Events with ChangeNotifier {
         false,
         "Sports & Fitness",
         ['smart', 'wellness', 'aykalam'],
-        '2',
+        '8',
         'Ancara messi ancara messi',
         'Gilany'),
     Event(
@@ -65,7 +65,7 @@ class Events with ChangeNotifier {
         false,
         "Business",
         ['smart', 'wellness', 'aykalam'],
-        '2',
+        '6',
         'Ancara messi ancara messi',
         'Amaar'),
     Event(
@@ -77,7 +77,7 @@ class Events with ChangeNotifier {
         false,
         "Business",
         ['smart', 'wellness', 'aykalam'],
-        '2',
+        '12',
         'Ancara messi ancara messi',
         'Hazem'),
     Event(
@@ -89,7 +89,7 @@ class Events with ChangeNotifier {
         false,
         "Culture",
         ['smart', 'wellness', 'aykalam'],
-        '0',
+        '20',
         'Ancara messi ancara messi',
         'Mahmoud'),
     Event(
@@ -101,7 +101,7 @@ class Events with ChangeNotifier {
         false,
         "Tech",
         ['smart', 'wellness', 'aykalam'],
-        '2',
+        '21',
         'Ancara messi ancara messi',
         'Ali'),
     Event(
@@ -113,7 +113,7 @@ class Events with ChangeNotifier {
         false,
         "Sports & Fitness",
         ['smart', 'wellness', 'aykalam'],
-        '1',
+        '11',
         'Ancara messi ancara messi',
         'Ziad'),
     Event(

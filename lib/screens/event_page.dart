@@ -27,7 +27,7 @@ import 'sign_up/sign_up_or_log_in.dart';
 ///
 /// It knows the event to display from (event.id) that is passed to naivator.pushNamed
 ///
-///
+/// It Know user is logged in or not from 
 class EventPage extends StatefulWidget {
   const EventPage({super.key});
 

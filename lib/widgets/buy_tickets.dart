@@ -2,7 +2,6 @@ library BuyTicketsWidget;
 
 import 'package:flutter/material.dart';
 import 'transparent_button_no_icon.dart';
-import '../helper_functions/log_in.dart';
 
 class BuyTickets extends StatefulWidget {
   final String eventId;
@@ -64,6 +63,7 @@ class _BuyTicketsState extends State<BuyTickets> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
+              // --------------------------------------- Promo-code ------------------------------------------------------------
               validPromocode == null
                   ? const SizedBox()
                   : Padding(
@@ -126,7 +126,10 @@ class _BuyTicketsState extends State<BuyTickets> {
                 height: 20,
               ),
 
-              //--------------------------------------- Chech out button --------------------------------------------------------
+              // --------------------------------------- Promo-code ------------------------------------------------------------
+
+
+              //--------------------------------------- Check out button --------------------------------------------------------
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
