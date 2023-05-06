@@ -161,4 +161,22 @@ class TheEvent with ChangeNotifier {
     allCoupon.add(TheCoupon(name, limitedTo, discountType, discountValue));
     notifyListeners();
   }
+
+  void reset() {
+    title = "";
+    nameOrganizer = "";
+    eventCategory = "";
+    imageUrl = "";
+    description = "";
+    isPublic = true;
+    startofEvent = null;
+    endofEvent = null;
+    startofEventClock = null;
+    endofEventClock = null;
+    isOnline = false;
+    city = null;
+    allTickets = [];
+    allCoupon = [];
+    notifyListeners();
+  }
 }

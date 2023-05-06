@@ -138,6 +138,7 @@ class _EventFormState extends State<EventForm> {
     _ticketsController.dispose();
     _addressController.dispose();
     _couponController.dispose();
+    event.reset();
   }
 
   XFile? image;
@@ -186,8 +187,9 @@ class _EventFormState extends State<EventForm> {
     dateTime1 = DateTime(0, 0, 0, _timeFrom!.hour, _timeFrom!.minute);
     dateTime2 = DateTime(0, 0, 0, _timeTo!.hour, _timeTo!.minute);
     if ((_dateFrom!.isAfter(_dateTo!)) ||
-        ((_dateFrom == _dateTo) && ((dateTime1.isAfter(dateTime2)))) ||
-        ((_dateFrom == _dateTo) && (dateTime1 == dateTime2))) {
+        ((_dateFrom?.day == _dateTo?.day) &&
+            ((dateTime1.isAfter(dateTime2)))) ||
+        ((_dateFrom?.day == _dateTo?.day) && (dateTime1 == dateTime2))) {
       return "Error in your date";
     }
 

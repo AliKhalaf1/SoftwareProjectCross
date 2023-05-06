@@ -101,8 +101,9 @@ class _EventDateState extends State<EventDate> {
     dateTime1 = DateTime(0, 0, 0, _timeFrom!.hour, _timeFrom!.minute);
     dateTime2 = DateTime(0, 0, 0, _timeTo!.hour, _timeTo!.minute);
     if ((_dateFrom!.isAfter(_dateTo!)) ||
-        ((_dateFrom == _dateTo) && ((dateTime1.isAfter(dateTime2)))) ||
-        ((_dateFrom == _dateTo) && (dateTime1 == dateTime2))) {
+        ((_dateFrom?.day == _dateTo?.day) &&
+            ((dateTime1.isAfter(dateTime2)))) ||
+        ((_dateFrom?.day == _dateTo?.day) && (dateTime1 == dateTime2))) {
       return false;
     } else {
       // All values are valid, submit

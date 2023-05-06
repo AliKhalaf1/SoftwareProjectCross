@@ -2,6 +2,8 @@ import 'package:Eventbrite/screens/creator/coupons_form.dart';
 import 'package:Eventbrite/screens/creator/tickets_form.dart';
 import 'package:Eventbrite/widgets/coupon_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/createevent/createevent.dart';
 import '../../widgets/backgroud.dart';
 
 class AllCoupons extends StatelessWidget {
@@ -9,6 +11,9 @@ class AllCoupons extends StatelessWidget {
   static const route = '/eventsAllCoupons';
   @override
   Widget build(BuildContext context) {
+    final event = Provider.of<TheEvent>(context, listen: true);
+    final couponsItems = event.alltheCoupons;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(31, 10, 61, 1),
@@ -20,14 +25,20 @@ class AllCoupons extends StatelessWidget {
           ),
         ),
       ),
-      body: found
-          ? ListView(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                CouponCard('Coupon1', '50', 'amount', '5'),
-              ],
+      body: event.totalCouponsLength != 0
+          ? Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              child: ListView.builder(
+                itemCount: event.totalCouponsLength,
+                itemBuilder: (context, index) {
+                  return CouponCard(
+                    couponsItems[index].name,
+                    couponsItems[index].limitedTo.toString(),
+                    couponsItems[index].discountType,
+                    couponsItems[index].discountValue.toString(),
+                  );
+                },
+              ),
             )
           : Background("assets/images/tickets.jfif"),
       floatingActionButton: FloatingActionButton(

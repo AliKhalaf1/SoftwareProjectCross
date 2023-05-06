@@ -109,10 +109,14 @@ class _TicketFormState extends State<TicketForm> {
     }
     dateTime1 = DateTime(0, 0, 0, _timeFrom!.hour, _timeFrom!.minute);
     dateTime2 = DateTime(0, 0, 0, _timeTo!.hour, _timeTo!.minute);
+    print(dateTime1);
+    print(dateTime2);
+    print(dateTime1.isAfter(dateTime2));
     if ((_dateFrom!.isAfter(_dateTo!)) ||
-        ((_dateFrom == _dateTo) && ((dateTime1.isAfter(dateTime2)))) ||
-        ((_dateFrom == _dateTo) && (dateTime1 == dateTime2))) {
-      return "Error in your date man";
+        ((_dateFrom?.day == _dateTo?.day) &&
+            ((dateTime1.isAfter(dateTime2)))) ||
+        ((_dateFrom?.day == _dateTo?.day) && (dateTime1 == dateTime2))) {
+      return "Error in your date ";
     }
 
     return "Done";
@@ -150,6 +154,28 @@ class _TicketFormState extends State<TicketForm> {
                       _dateTo!,
                       _timeFrom!,
                       _timeTo!);
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Successfully Added'),
+                        content:
+                            const Text('Your Ticket is Successfully added'),
+                        actions: [
+                          TextButton(
+                            child: const Text('OK'),
+                            onPressed: () {
+                              int count = 0;
+                              Navigator.popUntil(
+                                context,
+                                (route) => count++ == 2 || route.isFirst,
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 } else {
                   showDialog(
                     context: context,

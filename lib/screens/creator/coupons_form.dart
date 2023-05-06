@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/createevent/createevent.dart';
 
 enum discountType {
   percentage,
@@ -13,10 +16,16 @@ class CouponForm extends StatefulWidget {
   State<CouponForm> createState() => _CouponFormState();
 }
 
+String? couponName;
+int? limitedTo;
+int? discountValue;
+final _form = GlobalKey<FormState>();
+
 class _CouponFormState extends State<CouponForm> {
   @override
   discountType couponType = discountType.percentage;
   Widget build(BuildContext context) {
+    final event = Provider.of<TheEvent>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(31, 10, 61, 1),
@@ -29,14 +38,45 @@ class _CouponFormState extends State<CouponForm> {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: Icon(
+              onPressed: () {
+                final isValid = _form.currentState?.validate();
+                if (!isValid!) {
+                  return;
+                }
+                _form.currentState?.save();
+                event.addCoupon(couponName!, limitedTo!,
+                    couponType.toString().split('.').last, discountValue!);
+
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Successfully Added'),
+                      content: const Text('Your Coupon is Successfully added'),
+                      actions: [
+                        TextButton(
+                          child: const Text('OK'),
+                          onPressed: () {
+                            int count = 0;
+                            Navigator.popUntil(
+                              context,
+                              (route) => count++ == 2 || route.isFirst,
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              icon: const Icon(
                 Icons.add_task,
                 color: Colors.green,
               ))
         ],
       ),
       body: Form(
+        key: _form,
         child: Padding(
           padding: EdgeInsets.all(15),
           child: ListView(children: [
@@ -70,7 +110,7 @@ class _CouponFormState extends State<CouponForm> {
                 fontSize: 20,
               ),
               decoration: InputDecoration(
-                hintText: 'Enter a short distinct name',
+                hintText: 'Enter a coupon name',
                 border: InputBorder.none,
                 hintStyle: TextStyle(
                   fontFamily: 'Neue Plak Extended',
@@ -79,7 +119,9 @@ class _CouponFormState extends State<CouponForm> {
                   color: Colors.blueGrey.withOpacity(0.8),
                 ),
               ),
-              onSaved: (value) {},
+              onSaved: (value) {
+                couponName = value;
+              },
               autofocus: true,
             ),
             Text(
@@ -157,11 +199,7 @@ class _CouponFormState extends State<CouponForm> {
                 ),
               ),
               onSaved: (value) {
-                // CAN BE NEEDED
-//                              int inputValue = 00222; // Example input value
-// String inputString = inputValue.toString(); // Convert to string
-// inputString = inputString.replaceFirst(RegExp('^0+'), ''); // Remove leading zeros
-// print(inputString); // Output: "222"
+                limitedTo = int.parse(value!);
               },
             ),
             SizedBox(
@@ -204,11 +242,7 @@ class _CouponFormState extends State<CouponForm> {
                 ),
               ),
               onSaved: (value) {
-                // CAN BE NEEDED
-//                              int inputValue = 00222; // Example input value
-// String inputString = inputValue.toString(); // Convert to string
-// inputString = inputString.replaceFirst(RegExp('^0+'), ''); // Remove leading zeros
-// print(inputString); // Output: "222"
+                discountValue = int.parse(value!);
               },
             ),
             const SizedBox(
