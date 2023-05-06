@@ -1,15 +1,14 @@
-library EventTicketsHelperFunctions;
+library EventPromocodeHelperFunctions;
 
-import '../models/event_tickets.dart';
+import '../models/event_promocode.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'constants.dart';
 
-/// {@category Helper Functions}
-///
-Future<EventTicketsInfo> getEventTicketsInfo(String eventId) async {
+Future<EventPromocodeInfo> getEventPrmocodeInfo(String eventId) async {
   // To Be: Remove initialization
-  EventTicketsInfo eventTickets = EventTicketsInfo([], [], [], [], 0);
+  EventPromocodeInfo eventPromo = EventPromocodeInfo(
+      '', false, 0, 'value', 0, DateTime.now(), DateTime.now());
 
   // To Be: parse API url in uri
   // var uri = Uri.parse('${Constants.host}/users/me/eventId');
@@ -36,6 +35,5 @@ Future<EventTicketsInfo> getEventTicketsInfo(String eventId) async {
   // eventTickets.durations = /*list of durations */;
   // return eventTickets;
   // } else {}
-
-  return eventTickets;
+  return eventPromo;
 }

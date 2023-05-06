@@ -2,6 +2,7 @@ library EventTicketsModel;
 
 import 'package:objectbox/objectbox.dart';
 import '../screens/event_page.dart';
+import '../widgets/buy_tickets.dart';
 
 /// {@category Models}
 ///
@@ -9,6 +10,8 @@ import '../screens/event_page.dart';
 /// <h1> This model represents the event tickets Data </h1>
 ///
 /// it's used in the [EventPage] screen
+///
+/// it's used in the [BuyTickets] Widget as we need ticket id
 ///
 ///  Anylist[0] : Regular - Anylist[1] : Vip
 ///
@@ -28,14 +31,17 @@ class EventTicketsInfo {
   // List<bool> types =
   //     List<bool>.filled(2, false); /*false: doesnt exist / true: exists */
   List<int> avaliableQuantaties = List<int>.filled(2, 0); /*Avaliable number */
-  List<DateTime> endDates = List<DateTime>.filled(2, DateTime.now());
+  List<DateTime> startDates = List<DateTime>.filled(
+      2, DateTime.now().subtract(const Duration(days: 1000)));
+  List<DateTime> endDates = List<DateTime>.filled(
+      2, DateTime.now().subtract(const Duration(days: 1000)));
   int vipTicketPrice;
   //constructor
   EventTicketsInfo(
-    this.names,
-    // this.types,
-    this.avaliableQuantaties,
-    this.endDates,
-    this.vipTicketPrice
-  );
+      this.names,
+      // this.types,
+      this.avaliableQuantaties,
+      this.startDates,
+      this.endDates,
+      this.vipTicketPrice);
 }
