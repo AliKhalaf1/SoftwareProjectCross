@@ -28,12 +28,14 @@ class EventTicketsInfo {
   // List<bool> types =
   //     List<bool>.filled(2, false); /*false: doesnt exist / true: exists */
   List<int> avaliableQuantaties = List<int>.filled(2, 0); /*Avaliable number */
-  List<String> durations = List<String>.filled(1, '');
+  List<DateTime> endDates = List<DateTime>.filled(2, DateTime.now());
+  int vipTicketPrice;
   //constructor
   EventTicketsInfo(
     this.names,
     // this.types,
     this.avaliableQuantaties,
-    this.durations,
+    this.endDates,
+    this.vipTicketPrice
   );
 }

@@ -8,7 +8,7 @@ import 'constants.dart';
 /// {@category Helper Functions}
 ///
 Future<EventTicketsInfo> getEventTicketsInfo(String eventId) async {
-  EventTicketsInfo eventTickets = EventTicketsInfo([], [], []);
+  EventTicketsInfo eventTickets = EventTicketsInfo([], [], [], 0);
 
   // To Be: parse API url in uri
   // var uri = Uri.parse('${Constants.host}/users/me/eventId');
@@ -26,6 +26,7 @@ Future<EventTicketsInfo> getEventTicketsInfo(String eventId) async {
   // print(response.statusCode);
 
   // To Be: if response is 200 get data and put it in class eventTickets
+  // To Be: Dont forget to parse the end_date of ticket from string to DateTime 
   // if (response.statusCode == 200) {
   // var data = json.decode(response.body);
   // eventTickets.names = /*list of names */;

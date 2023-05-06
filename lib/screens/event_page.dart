@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/events/fav_events.dart';
 import '../widgets/buy_tickets.dart';
+import '../widgets/loading_spinner.dart';
 import '../widgets/more_like_events_card.dart';
 import '../widgets/transparent_button_no_icon.dart';
 import 'sign_up/sign_up_or_log_in.dart';
@@ -33,10 +34,35 @@ class EventPage extends StatefulWidget {
   // To Be: make this class take its data from API
   // To Be: Duration can be get from getDuration function => shoof hat3ml eh feha
   // To Be: initialized  by Empty lists in all attr but i but values for teating
-  EventTicketsInfo eventTickets = EventTicketsInfo(['Regular','VIP'], [10,10], ['10','20']);
+  // Initial values:   EventTicketsInfo eventTickets = EventTicketsInfo(['', ''], [0, 0], ['', '']);
+  EventTicketsInfo eventTickets = EventTicketsInfo([
+    'Regular',
+    'VIP'
+  ], [
+    5,
+    2
+  ], [
+    DateTime.now().subtract(const Duration(days: 5)),
+    DateTime.now().add(const Duration(days: 5))
+  ], 50);
   bool isLoading = false;
+  bool isLoadingEventApi = false;
+  bool isLoadingSimilarEventsApi = false;
+  bool isLoadingTicketsApi = false;
 
-  EventPage({super.key});
+  // Data passed from navigating screen at initState()
+  final String eventId;
+  final bool isLogged;
+  // To Be: Taken from Api get event by id
+  Event loadedEvent = Event(DateTime.now(), DateTime.now(), '', '',
+      EventState.offline, false, '', [], '', '', '', EventStatus.public);
+
+  // To Be: List of similar events to be fetched from Api search by categorey
+  // It could be null as there could be no similar events
+  List<Event>? similarEvents;
+
+  // Constructor of EventPage scree
+  EventPage(this.eventId, this.isLogged, {super.key});
 
   static const eventPageRoute = '/Event-Page';
 
@@ -49,29 +75,23 @@ class _EventPageState extends State<EventPage> {
 
   // To Be: Get event tickets data with this function as it is called when navigate to tickets modal
   // Hint: you can find similar function at Profile.dart
-  Future<void> getEventTickets(String eventId) async {
+  void getEventTickets(String eventId) {
     getEventTicketsInfo(eventId).then(
         // To Be: E3mlha beltafsel a7san men dh equal dh lef 3aka kol attr goa classes
+        // To Be: be sure that fetch code is 200 succeses to make widget.isLoadingTicketsApi  = false
+        // Make sure before assign that lists length must be 2 so dont assign if not valid response ##Note## avaliableQuanitity list must be initialized by zeros
         // example: widget.eventTickets.avaliableQuantaties = eventTicketsdata.avaliableQuantaties
-        (eventTicketsdata) => widget.eventTickets = eventTicketsdata);
+        (eventTicketsdata) {
+      setState(() {
+        // make it false to render the page
+        widget.isLoadingTicketsApi = false;
+        // widget.eventTickets = eventTicketsdata;
+      });
+    });
   }
 
   // Open buyTickets model
-  void buyTickets(BuildContext ctx, String eventId, String eventTitle,
-      String eventStartDate) {
-    // To Be: sheel uncommented w raga3 commented => 3shan showModalBottomSheet() tetnafez ba3d ma ageb data men API
-    // getEventTickets(eventId).then((value) => showModalBottomSheet(
-    //     context: ctx,
-    //     isScrollControlled: true,
-    //     builder: (_) {
-    //       //------------------------ user input -------------------//
-    //       return GestureDetector(
-    //           onTap: () {
-    //             FocusScope.of(context).requestFocus(FocusNode());
-    //           },
-    //           behavior: HitTestBehavior.opaque,
-    //           child: BuyTickets(eventId, eventTitle, eventStartDate, widget.eventTickets));
-    //     }));
+  void buyTickets(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
         isScrollControlled: true,
@@ -83,7 +103,10 @@ class _EventPageState extends State<EventPage> {
               },
               behavior: HitTestBehavior.opaque,
               child: BuyTickets(
-                  eventId, eventTitle, eventStartDate, widget.eventTickets));
+                  widget.eventId,
+                  widget.loadedEvent.title,
+                  '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET',
+                  widget.eventTickets));
         });
   }
 
@@ -125,33 +148,42 @@ class _EventPageState extends State<EventPage> {
     }
   }
 
-  //--------------------- Get user token (logged in or not) ---------------------
-  //----------------------- Variables ----------------------------
-  // true only if user is logged in
-  // bool isLogged = false;
-  // // called before build as init function once widget inserted into tree
-  // // NOTE: It must be outside build method
-  // Future<void> _myAsyncMethod() async {
-  //   isLogged = await checkLoggedUser();
-  //   print('la7ees : ${isLogged}');
-  // }
-
-  // @override
-  // void initState() {
-  //   _myAsyncMethod().then((_) {
-  //     // Add code here that depends on the result of _myAsyncMethod()
-  //     super.initState();
-  //     print('henaa : ${isLogged}');
-  //   });
-  //   print('ba3den : ${isLogged}');
-  // }
-
   // To Be: Call functions that fetch from APis:
   // 1. Get event info by id
   // 2. Get events similar by same categorey of the event
+  // 3. Get event avaliable tickets
   @override
   void initState() {
-    // call them here
+    //Make screen to be in in loading state
+    widget.isLoading = true;
+    widget.isLoadingEventApi = true;
+    widget.isLoadingSimilarEventsApi = true;
+    widget.isLoadingTicketsApi = true;
+
+    // To Be: eventId be used for 3 APIs here
+
+    // 1. Get event info by id
+    // To Be: when Fetch success make widget.isLoadingEventApi = false
+
+    // 2. Get events similar by same categorey of the event
+    // To Be: when Fetch success make widget.isLoadingSimilarEventsApi = false
+
+    // 3.  Get event avaliable tickets
+    getEventTickets(widget.eventId);
+
+    //Render page after fetching from Apis
+    // Busy wait until all Apis finish their fetch
+    // moshkeletha enha b pause application
+    // To Be: Move [widget.isLoadingEventApi = false; & widget.isLoadingSimilarEventsApi = false;] to theit API fetch
+    widget.isLoadingEventApi = false;
+    widget.isLoadingSimilarEventsApi = false;
+    widget.isLoadingTicketsApi = false;
+    // while (widget.isLoadingEventApi ||
+    //     widget.isLoadingSimilarEventsApi ||
+    //     widget.isLoadingTicketsApi) {}
+
+    widget.isLoading = false;
+
     super.initState();
   }
 
@@ -163,15 +195,11 @@ class _EventPageState extends State<EventPage> {
     final favsData = Provider.of<FavEvents>(context);
 
     //----------------------- Event id ------------------------------------
-    // TO BE: take this eventId and get event data from API get eventById to be loadedEvent
-    final obj = ModalRoute.of(context)?.settings.arguments as Map;
-    final eventId = obj['eventId'] as String; // is the id!
-    final loadedEvent = Provider.of<Events>(
+    // TO BE: take this eventId and get event data from API get eventById to be loadedEvent// is the id!
+    widget.loadedEvent = Provider.of<Events>(
       context,
       listen: false,
-    ).findById(eventId);
-
-    bool isLogged = obj['isLogged'] as bool;
+    ).findById(widget.eventId);
 
     //----------------------- Methods ------------------------------
 
@@ -180,12 +208,12 @@ class _EventPageState extends State<EventPage> {
       //add to favourites list
       // isLogged = await checkLoggedUser();
       setState(() {
-        if (isLogged) {
+        if (widget.isLogged) {
           //Call toggleStatus function from event class
-          if (loadedEvent.isFav) {
-            favsData.removeEventFromFav(loadedEvent);
+          if (widget.loadedEvent.isFav) {
+            favsData.removeEventFromFav(widget.loadedEvent);
           } else {
-            favsData.addEventToFav(loadedEvent);
+            favsData.addEventToFav(widget.loadedEvent);
           }
         } else {
           Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
@@ -206,7 +234,7 @@ class _EventPageState extends State<EventPage> {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(loadedEvent.eventImg),
+                  image: NetworkImage(widget.loadedEvent.eventImg),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -223,7 +251,7 @@ class _EventPageState extends State<EventPage> {
                 icon: const Icon(Icons.arrow_back),
                 color: const Color.fromARGB(255, 255, 255, 255),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                 },
               ),
             ),
@@ -236,10 +264,10 @@ class _EventPageState extends State<EventPage> {
                 onPressed: () => toggleFav(context),
                 icon: Icon(
                   key: const Key("favIcon"),
-                  !loadedEvent.isFav
+                  !widget.loadedEvent.isFav
                       ? Icons.favorite_border_rounded
                       : Icons.favorite_sharp,
-                  color: !loadedEvent.isFav
+                  color: !widget.loadedEvent.isFav
                       ? const Color.fromARGB(255, 255, 255, 255)
                       : const Color.fromARGB(255, 209, 65, 12),
                 ),
@@ -247,265 +275,276 @@ class _EventPageState extends State<EventPage> {
             ),
           ]),
 
-      //--------------------------------------- Tickets modal --------------------------------------------------------
-      // floatingActionButton: Align(
-      //   alignment: Alignment.bottomCenter,
-      //   child: Padding(
-      //     padding: const EdgeInsets.only(bottom: 10),
-      //     child: TransparentButtonNoIcon(
-      //         key: const Key("BuyTicketsBtn"),
-      //         'Tickets',
-      //         buyTickets,
-      //         false,
-      //         eventId),
-      //   ),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
       //--------------------------------------- Body --------------------------------------------------------
-      body: Stack(fit: StackFit.loose, children: [
-        //Stack 1st child
-        GlowingOverscrollIndicator(
-          axisDirection: AxisDirection.down,
-          color: const Color.fromARGB(255, 255, 72, 0),
-          child: SingleChildScrollView(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  // -------------------- Event image --------------------
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15.0),
-                    child: SizedBox(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: Image.network(
-                        loadedEvent.eventImg,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-
-                  // -------------------- Event Name --------------------
-                  const SizedBox(height: 30),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: TitleText1(
-                      loadedEvent.title,
-                    ),
-                  ),
-
-                  // -------------------- Event time/location --------------------
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(bottom: 10, top: 0),
-                      child: const Text(
-                        'Times are displayed in your local timezone',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 15.5,
-                            color: Color.fromRGBO(121, 121, 121, 0.875)),
-                      ),
-                    ),
-                  ),
-
-                  Container(
-                    padding: const EdgeInsets.all(0),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.calendar_today, size: 15),
-                      title: Text(DateFormat('EEEE, MMMM d')
-                          .format(loadedEvent.startDate.toLocal())),
-                      subtitle: Text(
-                          'Starts at: ${DateFormat('hh:mmaaa').format(loadedEvent.startDate.toLocal())}'),
-                    ),
-                  ),
-
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading:
-                          const Icon(Icons.ondemand_video_outlined, size: 15),
-                      title: Text(
-                        (loadedEvent.state == EventState.online)
-                            ? 'Online event'
-                            : 'Offline event',
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.access_time_rounded, size: 15),
-                      title: Text(
-                          'Duration: ${getDuration(loadedEvent.endDate.difference(loadedEvent.startDate))}'),
-                    ),
-                  ),
-
-                  // -------------------- Organization Name --------------------
-                  const SizedBox(height: 30),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(right: 15, bottom: 10),
-                      child: const Text(
-                        'Organizer',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 20,
-                            height: 1.2,
-                            letterSpacing: 1.3,
-                            fontFamily: 'Neue Plak Extended',
-                            fontWeight: FontWeight.w700,
-                            color: Color.fromRGBO(17, 3, 59, 1)),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Row(
-                      children: [
-                        const Icon(
-                          key: Key("person"),
-                          Icons.person,
-                          color: Color.fromRGBO(62, 9, 137, 1),
-                          size: 40,
+      body: widget.isLoading == true
+          ? const LoadingSpinner()
+          : Stack(fit: StackFit.loose, children: [
+              //Stack 1st child
+              GlowingOverscrollIndicator(
+                axisDirection: AxisDirection.down,
+                color: const Color.fromARGB(255, 255, 72, 0),
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        // -------------------- Event image --------------------
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: SizedBox(
+                            height: 200,
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child: Image.network(
+                              widget.loadedEvent.eventImg,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
+
+                        // -------------------- Event Name --------------------
+                        const SizedBox(height: 30),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: TitleText1(
+                            widget.loadedEvent.title,
+                          ),
+                        ),
+
+                        // -------------------- Event time/location --------------------
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.only(bottom: 10, top: 0),
+                            child: const Text(
+                              'Times are displayed in your local timezone',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 15.5,
+                                  color: Color.fromRGBO(121, 121, 121, 0.875)),
+                            ),
+                          ),
+                        ),
+
                         Container(
-                          padding: const EdgeInsets.only(left: 7),
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          child: Text(loadedEvent.organization,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  color: Color.fromRGBO(0, 0, 0, 0.7),
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w500)),
-                        )
+                          padding: const EdgeInsets.all(0),
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading: const Icon(Icons.calendar_today, size: 15),
+                            title: Text(DateFormat('EEEE, MMMM d').format(
+                                widget.loadedEvent.startDate.toLocal())),
+                            subtitle: Text(
+                                'Starts at: ${DateFormat('hh:mmaaa').format(widget.loadedEvent.startDate.toLocal())}'),
+                          ),
+                        ),
+
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading: const Icon(Icons.ondemand_video_outlined,
+                                size: 15),
+                            title: Text(
+                              (widget.loadedEvent.state == EventState.online)
+                                  ? 'Online event'
+                                  : 'Offline event',
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading:
+                                const Icon(Icons.access_time_rounded, size: 15),
+                            title: Text(
+                                'Duration: ${getDuration(widget.loadedEvent.endDate.difference(widget.loadedEvent.startDate))}'),
+                          ),
+                        ),
+
+                        // -------------------- Organization Name --------------------
+                        const SizedBox(height: 30),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: Container(
+                            width: double.infinity,
+                            padding:
+                                const EdgeInsets.only(right: 15, bottom: 10),
+                            child: const Text(
+                              'Organizer',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  height: 1.2,
+                                  letterSpacing: 1.3,
+                                  fontFamily: 'Neue Plak Extended',
+                                  fontWeight: FontWeight.w700,
+                                  color: Color.fromRGBO(17, 3, 59, 1)),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: Row(
+                            children: [
+                              const Icon(
+                                key: Key("person"),
+                                Icons.person,
+                                color: Color.fromRGBO(62, 9, 137, 1),
+                                size: 40,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(left: 7),
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: Text(widget.loadedEvent.organization,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        color: Color.fromRGBO(0, 0, 0, 0.7),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w500)),
+                              )
+                            ],
+                          ),
+                        ),
+
+                        // ---------------------- About ----------------
+                        const SizedBox(height: 30),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: Container(
+                            width: double.infinity,
+                            padding:
+                                const EdgeInsets.only(right: 15, bottom: 10),
+                            child: const Text(
+                              'About',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  height: 1.2,
+                                  letterSpacing: 1.3,
+                                  fontFamily: 'Neue Plak Extended',
+                                  fontWeight: FontWeight.w700,
+                                  color: Color.fromRGBO(17, 3, 59, 1)),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: TitleText2(widget.loadedEvent.description),
+                        ),
+                        const SizedBox(height: 30),
+
+                        // ------------- More like evnets -----------
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: Container(
+                            width: double.infinity,
+                            padding:
+                                const EdgeInsets.only(right: 15, bottom: 10),
+                            child: const Text(
+                              'More like this',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  height: 1.2,
+                                  letterSpacing: 1.3,
+                                  fontFamily: 'Neue Plak Extended',
+                                  fontWeight: FontWeight.w700,
+                                  color: Color.fromRGBO(17, 3, 59, 1)),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        widget.similarEvents == null
+                            ? SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: const TitleText2(
+                                    'No similar events right now'),
+                              )
+                            : SizedBox(
+                                height: 270,
+                                width: double.infinity,
+                                child: GlowingOverscrollIndicator(
+                                  axisDirection: AxisDirection.right,
+                                  color: const Color.fromARGB(255, 255, 72, 0),
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: widget.similarEvents == null
+                                        ? 0
+                                        : widget.similarEvents
+                                            ?.length, // To Be: substitute with number of events in collection
+                                    itemBuilder: (ctx, index) {
+                                      return ChangeNotifierProvider.value(
+                                          // To Be: get event from events of the collection by get events by collection API
+                                          value: widget.loadedEvent,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0),
+                                            child: PhysicalModel(
+                                                color: Colors.white,
+                                                elevation: 10.0,
+                                                child: MoreLikeEventCard(widget
+                                                    .similarEvents![index])),
+                                          ));
+                                    },
+                                  ),
+                                ),
+                              ),
+
+                        //------------ End of Page -------------
+                        Container(
+                          height: 90,
+                        ),
                       ],
                     ),
                   ),
-
-                  // ---------------------- About ----------------
-                  const SizedBox(height: 30),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(right: 15, bottom: 10),
-                      child: const Text(
-                        'About',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 20,
-                            height: 1.2,
-                            letterSpacing: 1.3,
-                            fontFamily: 'Neue Plak Extended',
-                            fontWeight: FontWeight.w700,
-                            color: Color.fromRGBO(17, 3, 59, 1)),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: TitleText2(loadedEvent.description),
-                  ),
-                  const SizedBox(height: 30),
-
-                  // ------------- More like evnets -----------
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.only(right: 15, bottom: 10),
-                      child: const Text(
-                        'More like this',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 20,
-                            height: 1.2,
-                            letterSpacing: 1.3,
-                            fontFamily: 'Neue Plak Extended',
-                            fontWeight: FontWeight.w700,
-                            color: Color.fromRGBO(17, 3, 59, 1)),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-
-                  SizedBox(
-                    height: 270,
-                    width: double.infinity,
-                    child: GlowingOverscrollIndicator(
-                      axisDirection: AxisDirection.right,
-                      color: const Color.fromARGB(255, 255, 72, 0),
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount:
-                            7, // To Be: substitute with number of events in collection
-                        itemBuilder: (ctx, index) {
-                          return ChangeNotifierProvider.value(
-                              // To Be: get event from events of the collection by get events by collection API
-                              value: loadedEvent,
-                              child: const Padding(
-                                padding: EdgeInsets.only(left: 15.0),
-                                child: PhysicalModel(
-                                    color: Colors.white,
-                                    elevation: 10.0,
-                                    child: MoreLikeEventCard()),
-                              ));
-                        },
-                      ),
-                    ),
-                  ),
-
-                  //------------ End of Page -------------
-                  Container(
-                    height: 90,
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
 
-        //--------------------------------------- Tickets modal --------------------------------------------------------
-        //Stack 2nd child
-        //To Be: if events tickets avaliability : not avliable disable Tickets Btn (get from event API tickets.avaliable) => add this check OPED with [loadedEvent.startDate.toUtc().isBefore(DateTime.now().add(const Duration(hours: 1)).toUtc())]
+              //--------------------------------------- Tickets modal --------------------------------------------------------
+              //Stack 2nd child
+              //To Be: if events tickets avaliability : not avliable disable Tickets Btn (get from event API tickets.avaliable) => add this check OPED with [widget.loadedEvent.startDate.toUtc().isBefore(DateTime.now().add(const Duration(hours: 1)).toUtc())]
 
-        // ----- Checks -----
-        // 1. is logged user
-        // 2. is event before now
-        // 3. To Be: is there is avliable tickets (avaliable tickets > 0)
-        if (!isLogged ||
-            loadedEvent.startDate
-                .toUtc()
-                .isBefore(DateTime.now().add(const Duration(hours: 1)).toUtc()))
-          const SizedBox()
-        else
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: TransparentButtonNoIcon(
-                  key: const Key("BuyTicketsBtn"),
-                  'Tickets',
-                  buyTickets,
-                  false,
-                  eventId,
-                  loadedEvent.title,
-                  '${DateFormat('EEE, MMM d • hh:mmaaa ').format(loadedEvent.startDate)} EET'),
-            ),
-          ),
-      ]),
+              // ----- Checks -----
+              // 1. is logged user
+              // 2. is event before now
+              // 3. To Be: is there is avliable tickets (avaliable tickets > 0)
+              if (!widget.isLogged ||
+                  widget.loadedEvent.startDate.toUtc().isBefore(
+                      DateTime.now().add(const Duration(hours: 1)).toUtc()) ||
+                  (widget.eventTickets.avaliableQuantaties[0] +
+                          widget.eventTickets.avaliableQuantaties[1]) ==
+                      0)
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: TransparentButtonNoIcon(
+                        key: const Key("BuyTicketsBtn"),
+                        'Tickets',
+                        buyTickets,
+                        true,
+                        '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET'),
+                  ),
+                )
+              else
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: TransparentButtonNoIcon(
+                        key: const Key("BuyTicketsBtn"),
+                        'Tickets',
+                        buyTickets,
+                        false,
+                        '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET'),
+                  ),
+                ),
+            ]),
     );
   }
 }
