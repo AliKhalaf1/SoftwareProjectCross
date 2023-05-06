@@ -15,18 +15,25 @@ import '../widgets/buy_tickets.dart';
 ///
 ///  Anylist[0] : Regular - Anylist[1] : Vip
 ///
+///   • ids: tickets ids [List<String>]
+/// 
 ///   • names: tickets names [List<String>]
 ///
 ///   • avaliableQuantaties: avaliable quantities of each type [List<int>]
 ///
-///   • durations: swhen sales end [List<String>]
+///   • startDates: when sales Start [List<DateTime>]
+/// 
+///   • ebdDates: when sales end [List<DateTime>]
+/// 
+///   • vipTicketPrice: Vip tickets price [int]
 ///
 @Entity()
 class EventTicketsInfo {
   @Id()
-  int id = 0;
+  List<int> idsMock = List<int>.filled(2, 0);
   //parameters
   // @Unique()
+  List<String> ids = List<String>.filled(2, '');
   List<String> names = List<String>.filled(2, '');
   // List<bool> types =
   //     List<bool>.filled(2, false); /*false: doesnt exist / true: exists */
@@ -38,6 +45,7 @@ class EventTicketsInfo {
   int vipTicketPrice;
   //constructor
   EventTicketsInfo(
+      this.ids,
       this.names,
       // this.types,
       this.avaliableQuantaties,

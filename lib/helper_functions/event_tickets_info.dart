@@ -9,7 +9,7 @@ import 'constants.dart';
 ///
 Future<EventTicketsInfo> getEventTicketsInfo(String eventId) async {
   // To Be: Remove initialization
-  EventTicketsInfo eventTickets = EventTicketsInfo([], [], [], [], 0);
+  EventTicketsInfo eventTickets = EventTicketsInfo([], [], [], [], [], 0);
 
   // To Be: parse API url in uri
   // var uri = Uri.parse('${Constants.host}/users/me/eventId');

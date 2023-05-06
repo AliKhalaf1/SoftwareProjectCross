@@ -37,6 +37,9 @@ class EventPage extends StatefulWidget {
   // To Be: initialized  by Empty lists in all attr but i but values for teating
   // Initial values:   EventTicketsInfo eventTickets = EventTicketsInfo(['', ''], [0, 0], ['', '']);
   EventTicketsInfo eventTickets = EventTicketsInfo([
+    '0',
+    '1'
+  ], [
     'Regular',
     'VIP'
   ], [
@@ -53,6 +56,7 @@ class EventPage extends StatefulWidget {
   // To Be: make this class take its data from API
   // To Be: Not to give initial value as it could be NULL => make sure ? is added as if no promocode it must be null
   EventPromocodeInfo? eventPromocode = EventPromocodeInfo(
+      '0',
       '1234',
       true,
       10,
@@ -105,7 +109,7 @@ class _EventPageState extends State<EventPage> {
       });
     });
   }
-  
+
   // To Be: Get event tickets data with this function as it is called when navigate to tickets modal
   // Hint: you can find similar function at Profile.dart
   void getEventPromo(String eventId) {
@@ -123,7 +127,6 @@ class _EventPageState extends State<EventPage> {
     });
   }
 
-
   // Open buyTickets model
   void buyTickets(BuildContext ctx) {
     showModalBottomSheet(
@@ -140,7 +143,8 @@ class _EventPageState extends State<EventPage> {
                   widget.eventId,
                   widget.loadedEvent.title,
                   '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET',
-                  widget.eventTickets,widget.eventPromocode));
+                  widget.eventTickets,
+                  widget.eventPromocode));
         });
   }
 

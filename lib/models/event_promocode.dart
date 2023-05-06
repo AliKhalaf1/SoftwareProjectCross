@@ -32,9 +32,10 @@ import '../widgets/buy_tickets.dart';
 @Entity()
 class EventPromocodeInfo {
   @Id()
-  int id = 0;
+  int idMock = 0;
   //parameters
   // @Unique()
+  String id;
   String name;
   bool isLimited; /*true: limited / false:unlimited */
   int avliableAmount; /*current_amount from API */
@@ -44,6 +45,6 @@ class EventPromocodeInfo {
   DateTime startDate;
   DateTime endDate;
 
-  EventPromocodeInfo(this.name, this.isLimited, this.avliableAmount, this.type,
+  EventPromocodeInfo(this.id,this.name, this.isLimited, this.avliableAmount, this.type,
       this.discount, this.startDate, this.endDate);
 }

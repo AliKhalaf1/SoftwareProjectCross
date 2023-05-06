@@ -7,7 +7,7 @@ import 'constants.dart';
 
 Future<EventPromocodeInfo> getEventPrmocodeInfo(String eventId) async {
   // To Be: Remove initialization
-  EventPromocodeInfo eventPromo = EventPromocodeInfo(
+  EventPromocodeInfo eventPromo = EventPromocodeInfo('',
       '', false, 0, 'value', 0, DateTime.now(), DateTime.now());
 
   // To Be: parse API url in uri

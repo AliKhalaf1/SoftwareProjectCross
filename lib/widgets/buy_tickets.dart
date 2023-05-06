@@ -75,6 +75,7 @@ class _BuyTicketsState extends State<BuyTickets> {
 
       /// Remove the data.promo value from submetted data
       data.promo = null;
+      data.promocodetId = null;
       return;
     }
     setState(() {
@@ -110,6 +111,20 @@ class _BuyTicketsState extends State<BuyTickets> {
     if (data.vipTickets > 0) {
       setState(() {
         --data.vipTickets;
+        // if (promocodeApplied) {
+        //   // To Be: Make sure that check is correct and it is like that is database
+        //   if (widget.eventPromocode?.type == 'value') {
+        //     data.totalPrice -= (widget.eventTickets.vipTicketPrice -
+        //         widget.eventPromocode!.discount);
+        //     if (data.totalPrice < 0) {
+        //       data.totalPrice = 0;
+        //     }
+        //   } else {
+        //     data.totalPrice -= widget.eventTickets.vipTicketPrice;
+        //   }
+        // } else {
+        //   data.totalPrice -= widget.eventTickets.vipTicketPrice;
+        // }
         data.totalPrice -= widget.eventTickets.vipTicketPrice;
       });
     }
@@ -201,9 +216,10 @@ class _BuyTicketsState extends State<BuyTickets> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     // --------------------------------------- Promo-code ------------------------------------------------------------
-                    // if there is no promo code for this event or no Vip tickets for the event
+                    // if there is no promo code for this event OR no Vip tickets for the event OR promocode usage limit exceed
                     (widget.eventPromocode == null ||
-                            widget.eventPromocode!.avliableAmount == 0 ||
+                            (widget.eventPromocode!.isLimited &&
+                                widget.eventPromocode!.avliableAmount == 0) ||
                             widget.eventTickets.avaliableQuantaties[1] == 0)
                         ? const SizedBox()
                         : Padding(
@@ -213,7 +229,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                               // autovalidateMode: AutovalidateMode.onUserInteraction,
                               //Validations
                               validator: (value) {
-                                /// PromoCheck: check that promocode validation or no promocode entered
+                                /// PromoCheck: check that promocode valid or no promocode entered
                                 if (value == null) {
                                   return null;
                                 }
@@ -231,6 +247,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                               /// PromoCheck:Save value if valid and apply button clicked
                               onSaved: (newValue) {
                                 data.promo = newValue;
+                                data.promocodetId = widget.eventPromocode?.id;
                               },
                               cursorColor:
                                   const Color.fromARGB(255, 50, 100, 237),
@@ -295,8 +312,9 @@ class _BuyTicketsState extends State<BuyTickets> {
                               onTap: () {
                                 promocodeApplied = false;
 
-                                /// Remove the data.promo value from submetted data
+                                /// Remove the data.promo value from submitted data
                                 data.promo = null;
+                                data.promocodetId = null;
                               },
                             ),
                           ),
