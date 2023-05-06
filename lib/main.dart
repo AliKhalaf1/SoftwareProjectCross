@@ -110,7 +110,7 @@ class _MainAppState extends State<MainApp> {
           AccountSettings.accountSettingsRoute: (ctx) =>
               AccountSettings("", "", "", ""),
           EventDate.route: (ctx) => EventDate(),
-          EventPage.eventPageRoute: (ctx) => EventPage(),
+          // EventPage.eventPageRoute: (ctx) => EventPage(),
           EventLocation.route: (ctx) => const EventLocation(),
           Home.homePageRoute: (ctx) => Home(),
           EventForm.route: (ctx) => const EventForm(),

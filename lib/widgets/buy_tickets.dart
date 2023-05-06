@@ -20,7 +20,9 @@ class BuyTickets extends StatefulWidget {
 
 class SubmittedData {
   String? promo;
-  String? price;
+  int freeTickets = 0;
+  int vipTickets = 0;
+  int? price;
 }
 
 class _BuyTicketsState extends State<BuyTickets> {
@@ -84,7 +86,37 @@ class _BuyTicketsState extends State<BuyTickets> {
   }
 
   // --------------------------------------------- Tickets ---------------------------------------------------------
+  void decrementFreeTickets() {
+    if (data.freeTickets > 0) {
+      setState(() {
+        --data.freeTickets;
+      });
+    }
+  }
 
+  void incrementFreeTickets() {
+    if (data.freeTickets < widget.eventTickets.avaliableQuantaties[0]) {
+      setState(() {
+        ++data.freeTickets;
+      });
+    }
+  }
+
+  void decrementVipTickets() {
+    if (data.vipTickets > 0) {
+      setState(() {
+        --data.vipTickets;
+      });
+    }
+  }
+
+  void incrementVipTickets() {
+    if (data.vipTickets < widget.eventTickets.avaliableQuantaties[1]) {
+      setState(() {
+        ++data.vipTickets;
+      });
+    }
+  }
   // --------------------------------------------- Form ---------------------------------------------------------
   // void purchase(BuildContext ctx, String promo, String price) {}
 
@@ -145,159 +177,226 @@ class _BuyTicketsState extends State<BuyTickets> {
           ),
         ],
       ),
-      body: Card(
-        color: Colors.white,
-        elevation: 5,
-        child: Form(
-          key: _form,
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                // --------------------------------------- Promo-code ------------------------------------------------------------
-                // if there is no promo code for this event or no Vip tickets for the event
-                (validPromocode == null ||
-                        widget.eventTickets.avaliableQuantaties[1] == 0)
-                    ? const SizedBox()
-                    : Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: TextFormField(
-                          key: _fieldKey,
-                          // autovalidateMode: AutovalidateMode.onUserInteraction,
-                          //Validations
-                          validator: (value) {
-                            /// PromoCheck: check that promocode validation or no promocode entered
-                            if (value == null) {
-                              return null;
-                            }
-                            if (value.isEmpty ||
-                                value.length < 4 ||
-                                value == validPromocode) {
-                              return null;
-                            }
-                            if (checkoutClicked && !promocodeApplied) {
-                              return null;
-                            }
-                            return "Invalid promocode";
-                          },
+      body: ListView(children: <Widget>[
+        Card(
+          color: Colors.white,
+          elevation: 5,
+          child: Form(
+            key: _form,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  // --------------------------------------- Promo-code ------------------------------------------------------------
+                  // if there is no promo code for this event or no Vip tickets for the event
+                  (validPromocode == null ||
+                          widget.eventTickets.avaliableQuantaties[1] == 0)
+                      ? const SizedBox()
+                      : Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: TextFormField(
+                            key: _fieldKey,
+                            // autovalidateMode: AutovalidateMode.onUserInteraction,
+                            //Validations
+                            validator: (value) {
+                              /// PromoCheck: check that promocode validation or no promocode entered
+                              if (value == null) {
+                                return null;
+                              }
+                              if (value.isEmpty ||
+                                  value.length < 4 ||
+                                  value == validPromocode) {
+                                return null;
+                              }
+                              if (checkoutClicked && !promocodeApplied) {
+                                return null;
+                              }
+                              return "Invalid promocode";
+                            },
 
-                          /// PromoCheck:Save value if valid and apply button clicked
-                          onSaved: (newValue) {
-                            data.promo = newValue;
-                          },
-                          cursorColor: Theme.of(context).primaryColor,
-                          maxLength: 10,
-                          style: const TextStyle(),
-                          decoration: InputDecoration(
-                              hintText: "Enter code",
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              floatingLabelStyle: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                              //Apply button
-                              suffixIcon: _showSuffixIcon
-                                  ? promocodeApplied
-                                      ? const Icon(
-                                          Icons.check_circle,
-                                          color:
-                                              Color.fromARGB(255, 16, 191, 22),
-                                        )
-                                      : IconButton(
-                                          icon: const Icon(Icons.check_circle),
-                                          onPressed: addPromoCode,
-                                          color: Theme.of(context).primaryColor,
-                                        )
-                                  : const IconButton(
-                                      key: Key('ApplyPromocodeBtn'),
-                                      icon: Icon(Icons.check_circle),
-                                      onPressed: null,
-                                    ),
-                              labelText: 'Promo Code',
-                              border: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.grey,
+                            /// PromoCheck:Save value if valid and apply button clicked
+                            onSaved: (newValue) {
+                              data.promo = newValue;
+                            },
+                            cursorColor:
+                                const Color.fromARGB(255, 50, 100, 237),
+                            maxLength: 10,
+                            style: const TextStyle(),
+                            decoration: InputDecoration(
+                                hintText: "Enter code",
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                floatingLabelStyle: const TextStyle(
+                                    color: Color.fromARGB(255, 50, 100, 237)),
+                                //Apply button
+                                suffixIcon: _showSuffixIcon
+                                    ? promocodeApplied
+                                        ? const Icon(
+                                            Icons.check_circle,
+                                            color: Color.fromARGB(
+                                                255, 16, 191, 22),
+                                          )
+                                        : IconButton(
+                                            icon:
+                                                const Icon(Icons.check_circle),
+                                            onPressed: addPromoCode,
+                                            color: const Color.fromARGB(
+                                                255, 50, 100, 237),
+                                          )
+                                    : const IconButton(
+                                        key: Key('ApplyPromocodeBtn'),
+                                        icon: Icon(Icons.check_circle),
+                                        onPressed: null,
+                                      ),
+                                labelText: 'Promo Code',
+                                border: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
                                 ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              )),
-                          controller: promoCodeInp,
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 218, 218, 218),
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                )),
+                            controller: promoCodeInp,
 
-                          /// PromoCheck: check with every change of textfield
-                          onChanged: (value) {
-                            ///Check on length of the text to determine show the apply icon or not
-                            setState(() {
-                              _showSuffixIcon = (value.length > 3);
-                            });
-                          },
+                            /// PromoCheck: check with every change of textfield
+                            onChanged: (value) {
+                              ///Check on length of the text to determine show the apply icon or not
+                              setState(() {
+                                _showSuffixIcon = (value.length > 3);
+                              });
+                            },
 
-                          /// PromoCheck: Cancel apply if user tap on textfield again
-                          onTap: () {
-                            promocodeApplied = false;
+                            /// PromoCheck: Cancel apply if user tap on textfield again
+                            onTap: () {
+                              promocodeApplied = false;
 
-                            /// Remove the data.promo value from submetted data
-                            data.promo = null;
-                          },
+                              /// Remove the data.promo value from submetted data
+                              data.promo = null;
+                            },
+                          ),
                         ),
-                      ),
 
-                const SizedBox(
-                  height: 20,
-                ),
+                  const SizedBox(
+                    height: 20,
+                  ),
 
-                // --------------------------------------- Promo-code ------------------------------------------------------------
-                Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      // decoration: BoxDecoration(
-                      //   borderRadius:
-                      //       const BorderRadius.all(Radius.circular(10)),
-                      //   color: Theme.of(context).primaryColor,
-                      // ),
-                      color: Colors.white,
-                      // child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: const <Widget>[
-                      //       Text("Free Tickets",
-                      //           overflow: TextOverflow.ellipsis,
-                      //           style: TextStyle(
-                      //             fontSize: 18,
-                      //             fontWeight: FontWeight.w400,
-                      //           )),
-                      //     ]),
-                    ),
-                  ],
-                ),
+                  // --------------------------------------- Tickets ------------------------------------------------------------
+                  widget.eventTickets.avaliableQuantaties[0] == 0
+                      ? const SizedBox()
+                      : Container(
+                          padding: const EdgeInsets.all(10),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: const Color.fromARGB(255, 50, 100, 237)),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            color: Colors.white,
+                          ),
+                          child: Column(
+                            children: [
+                              Card(
+                                elevation: 2,
+                                color: Colors.white,
+                                margin: const EdgeInsets.all(0),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 8.0),
+                                        child: Text("Free Tickets",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w400,
+                                            )),
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          data.freeTickets == 0
+                                              ? const IconButton(
+                                                  onPressed: null,
+                                                  icon: Icon(
+                                                      Icons
+                                                          .indeterminate_check_box,
+                                                      size: 35,
+                                                      color: Color.fromARGB(
+                                                          255, 218, 218, 218)),
+                                                )
+                                              : IconButton(
+                                                  onPressed:
+                                                      decrementFreeTickets,
+                                                  icon: const Icon(
+                                                      Icons
+                                                          .indeterminate_check_box,
+                                                      size: 35,
+                                                      color: Color.fromARGB(
+                                                          255, 50, 100, 237)),
+                                                ),
+                                          Text(data.freeTickets.toString(),
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w400,
+                                              )),
+                                          data.freeTickets ==
+                                                  widget.eventTickets
+                                                      .avaliableQuantaties[0]
+                                              ? const IconButton(
+                                                  onPressed: null,
+                                                  icon: Icon(
+                                                      Icons.add_box_rounded,
+                                                      size: 35,
+                                                      color: Color.fromARGB(
+                                                          255, 218, 218, 218)),
+                                                )
+                                              : IconButton(
+                                                  onPressed:
+                                                      incrementFreeTickets,
+                                                  icon: const Icon(
+                                                      Icons.add_box_rounded,
+                                                      size: 35,
+                                                      color: Color.fromARGB(
+                                                          255, 50, 100, 237)),
+                                                ),
+                                        ],
+                                      ),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                        ),
 
-                const SizedBox(
-                  height: 20,
-                ),
+                  const SizedBox(
+                    height: 20,
+                  ),
 
-                //--------------------------------------- Check out button --------------------------------------------------------
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: TransparentButtonNoIcon(
+                  //--------------------------------------- Check out button --------------------------------------------------------
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: TransparentButtonNoIcon(
                         key: const Key("CheckoutBtn"),
                         'Check out',
                         saveForm,
-                        false,
+                        data.freeTickets + data.vipTickets == 0,
                         widget.eventId,
-                        '',
-                        ''),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ),
+      ]),
     );
     ;
   }

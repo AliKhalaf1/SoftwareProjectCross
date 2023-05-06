@@ -28,7 +28,7 @@ class EventTicketsInfo {
   // List<bool> types =
   //     List<bool>.filled(2, false); /*false: doesnt exist / true: exists */
   List<int> avaliableQuantaties = List<int>.filled(2, 0); /*Avaliable number */
-  List<String> durations = List<String>.filled(1, '');
+  List<String> durations = List<String>.filled(2, '');
   //constructor
   EventTicketsInfo(
     this.names,
