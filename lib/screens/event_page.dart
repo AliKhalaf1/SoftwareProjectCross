@@ -35,8 +35,16 @@ class EventPage extends StatefulWidget {
   // To Be: Duration can be get from getDuration function => shoof hat3ml eh feha
   // To Be: initialized  by Empty lists in all attr but i but values for teating
   // Initial values:   EventTicketsInfo eventTickets = EventTicketsInfo(['', ''], [0, 0], ['', '']);
-  EventTicketsInfo eventTickets =
-      EventTicketsInfo(['Regular', 'VIP'], [5, 5], ['10', '20']);
+  EventTicketsInfo eventTickets = EventTicketsInfo([
+    'Regular',
+    'VIP'
+  ], [
+    5,
+    2
+  ], [
+    DateTime.now().subtract(const Duration(days: 5)),
+    DateTime.now().add(const Duration(days: 5))
+  ], 50);
   bool isLoading = false;
   bool isLoadingEventApi = false;
   bool isLoadingSimilarEventsApi = false;

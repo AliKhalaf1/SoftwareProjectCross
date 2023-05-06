@@ -2,6 +2,7 @@ library BuyTicketsWidget;
 
 import 'package:Eventbrite/widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'transparent_button_no_icon.dart';
 import '../models/event_tickets.dart';
 
@@ -22,7 +23,7 @@ class SubmittedData {
   String? promo;
   int freeTickets = 0;
   int vipTickets = 0;
-  int? price;
+  int price = 0;
 }
 
 class _BuyTicketsState extends State<BuyTickets> {
@@ -106,6 +107,7 @@ class _BuyTicketsState extends State<BuyTickets> {
     if (data.vipTickets > 0) {
       setState(() {
         --data.vipTickets;
+        data.price -= widget.eventTickets.vipTicketPrice;
       });
     }
   }
@@ -114,9 +116,11 @@ class _BuyTicketsState extends State<BuyTickets> {
     if (data.vipTickets < widget.eventTickets.avaliableQuantaties[1]) {
       setState(() {
         ++data.vipTickets;
+        data.price += widget.eventTickets.vipTicketPrice;
       });
     }
   }
+
   // --------------------------------------------- Form ---------------------------------------------------------
   // void purchase(BuildContext ctx, String promo, String price) {}
 
@@ -238,6 +242,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                                                 255, 16, 191, 22),
                                           )
                                         : IconButton(
+                                            key: const Key('ApplyPromocodeBtn'),
                                             icon:
                                                 const Icon(Icons.check_circle),
                                             onPressed: addPromoCode,
@@ -245,8 +250,10 @@ class _BuyTicketsState extends State<BuyTickets> {
                                                 255, 50, 100, 237),
                                           )
                                     : const IconButton(
-                                        key: Key('ApplyPromocodeBtn'),
+                                        // key: Key('ApplyPromocodeBtn'),
                                         icon: Icon(Icons.check_circle),
+                                        color:
+                                            Color.fromARGB(255, 218, 218, 218),
                                         onPressed: null,
                                       ),
                                 labelText: 'Promo Code',
@@ -256,7 +263,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                                 ),
                                 focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 218, 218, 218),
+                                    color: Colors.grey,
                                   ),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
@@ -302,7 +309,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                           child: Column(
                             children: [
                               Card(
-                                elevation: 2,
+                                elevation: 3,
                                 color: Colors.white,
                                 margin: const EdgeInsets.all(0),
                                 child: Row(
@@ -368,6 +375,178 @@ class _BuyTicketsState extends State<BuyTickets> {
                                         ],
                                       ),
                                     ]),
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, top: 10.0, bottom: 20),
+                                      child:
+                                          // Text('Free',
+                                          //     style: TextStyle(
+                                          //         fontSize: 15,
+                                          //         fontWeight: FontWeight.w500,
+                                          //         color: Color.fromARGB(
+                                          //             255, 51, 51, 51))),
+                                          // SizedBox(
+                                          //   height: 4,
+                                          // ),
+                                          Text(
+                                              'Sales end on ${DateFormat('MMMM dd, yyyy').format(widget.eventTickets.endDates[0])}',
+                                              style: const TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color.fromARGB(
+                                                      255, 91, 90, 90))),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  widget.eventTickets.avaliableQuantaties[1] == 0
+                      ? const SizedBox()
+                      : Container(
+                          padding: const EdgeInsets.all(10),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: const Color.fromARGB(255, 50, 100, 237)),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            color: Colors.white,
+                          ),
+                          child: Column(
+                            children: [
+                              Card(
+                                elevation: 3,
+                                color: Colors.white,
+                                margin: const EdgeInsets.all(0),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 8.0),
+                                        child: Text("Vip Tickets",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w400,
+                                            )),
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          data.vipTickets == 0
+                                              ? const IconButton(
+                                                  onPressed: null,
+                                                  icon: Icon(
+                                                      Icons
+                                                          .indeterminate_check_box,
+                                                      size: 35,
+                                                      color: Color.fromARGB(
+                                                          255, 218, 218, 218)),
+                                                )
+                                              : IconButton(
+                                                  onPressed:
+                                                      decrementVipTickets,
+                                                  icon: const Icon(
+                                                      Icons
+                                                          .indeterminate_check_box,
+                                                      size: 35,
+                                                      color: Color.fromARGB(
+                                                          255, 50, 100, 237)),
+                                                ),
+                                          Text(data.vipTickets.toString(),
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w400,
+                                              )),
+                                          data.vipTickets ==
+                                                  widget.eventTickets
+                                                      .avaliableQuantaties[1]
+                                              ? const IconButton(
+                                                  onPressed: null,
+                                                  icon: Icon(
+                                                      Icons.add_box_rounded,
+                                                      size: 35,
+                                                      color: Color.fromARGB(
+                                                          255, 218, 218, 218)),
+                                                )
+                                              : IconButton(
+                                                  onPressed:
+                                                      incrementVipTickets,
+                                                  icon: const Icon(
+                                                      Icons.add_box_rounded,
+                                                      size: 35,
+                                                      color: Color.fromARGB(
+                                                          255, 50, 100, 237)),
+                                                ),
+                                        ],
+                                      ),
+                                    ]),
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, top: 10.0, bottom: 5),
+                                      child: Text(
+                                          'Sales end on ${DateFormat('MMMM dd, yyyy').format(widget.eventTickets.endDates[1])}',
+                                          style: const TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400,
+                                              color: Color.fromARGB(
+                                                  255, 91, 90, 90))),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        const SizedBox(),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                                widget
+                                                    .eventTickets.vipTicketPrice
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    fontFamily: "Neue Plak Extended",
+                                                    fontSize: 35,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Color.fromARGB(
+                                                        255, 51, 51, 51))),
+                                            const Text(' EGP',
+                                                style: TextStyle(
+                                                    fontFamily: "Neue Plak Condensed",
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Color.fromARGB(
+                                                        255, 51, 51, 51))),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ],
                           ),
