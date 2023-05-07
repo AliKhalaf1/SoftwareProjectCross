@@ -74,8 +74,8 @@ class EventPage extends StatefulWidget {
   final String eventId;
   final bool isLogged;
   // To Be: Taken from Api get event by id
-  Event loadedEvent = Event(DateTime.now(), DateTime.now(), '', '',
-      EventState.offline, false, '', [], '', '', '', EventStatus.public);
+  Event loadedEvent = Event(DateTime.now(), DateTime.now(), '', '', false,
+      false, '', [], '', '', '', false);
 
   // To Be: List of similar events to be fetched from Api search by categorey
   // It could be null as there could be no similar events
@@ -390,7 +390,7 @@ class _EventPageState extends State<EventPage> {
                             leading: const Icon(Icons.ondemand_video_outlined,
                                 size: 15),
                             title: Text(
-                              (widget.loadedEvent.state == EventState.online)
+                              (widget.loadedEvent.state == true)
                                   ? 'Online event'
                                   : 'Offline event',
                             ),
