@@ -93,7 +93,7 @@ class _TicketFormState extends State<TicketForm> {
 
   String name = '';
   int quantity = 0;
-  int price = 0;
+  double price = 0;
 
   String saveform() {
     DateTime dateTime1 = DateTime.now();
@@ -107,16 +107,15 @@ class _TicketFormState extends State<TicketForm> {
       // ...
       return "Error in your date";
     }
-    dateTime1 = DateTime(0, 0, 0, _timeFrom!.hour, _timeFrom!.minute);
-    dateTime2 = DateTime(0, 0, 0, _timeTo!.hour, _timeTo!.minute);
-    print(dateTime1);
-    print(dateTime2);
-    print(dateTime1.isAfter(dateTime2));
-    if ((_dateFrom!.isAfter(_dateTo!)) ||
-        ((_dateFrom?.day == _dateTo?.day) &&
-            ((dateTime1.isAfter(dateTime2)))) ||
-        ((_dateFrom?.day == _dateTo?.day) && (dateTime1 == dateTime2))) {
-      return "Error in your date ";
+    dateTime1 = DateTime(_dateFrom!.year, _dateFrom!.month, _dateFrom!.day,
+        _timeFrom!.hour, _timeFrom!.minute);
+    dateTime2 = DateTime(_dateTo!.year, _dateTo!.month, _dateTo!.day,
+        _timeTo!.hour, _timeTo!.minute);
+
+    if ((dateTime1.isAfter(dateTime2)) ||
+        (dateTime1.isAtSameMomentAs(dateTime2)) ||
+        DateTime.now().isAfter(dateTime1)) {
+      return "Error in your date  ";
     }
 
     return "Done";
@@ -344,25 +343,14 @@ class _TicketFormState extends State<TicketForm> {
               ),
               TextFormField(
                 validator: (value) {
-                  // if you want price with dot
-                  // if (value != null) {
-                  //   if (value.isEmpty) {
-                  //     return "Price needed ";
-                  //   } else {
-                  //     final RegExp priceRegex = RegExp(r'^\d+(\.\d{1,2})?$');
-                  //     if (!priceRegex.hasMatch(value)) {
-                  //       return 'Invalid price format';
-                  //     }
-                  //     return null;
-                  //   }
-                  // }
-                  // return 'null value';
                   if (value != null) {
                     if (value.isEmpty) {
-                      return "Title needed ";
-                    } else if (value.trim().isEmpty) {
-                      return "Title needed no string spaces allowed ";
+                      return "Price needed ";
                     } else {
+                      final RegExp priceRegex = RegExp(r'^\d+(\.\d{1,2})?$');
+                      if (!priceRegex.hasMatch(value)) {
+                        return 'Invalid price format';
+                      }
                       return null;
                     }
                   }
@@ -370,8 +358,7 @@ class _TicketFormState extends State<TicketForm> {
                 },
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
-                  // FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,1}')),
-                  FilteringTextInputFormatter.digitsOnly // Allow only digits
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,1}')),
                 ],
                 cursorColor: Colors.black,
                 cursorHeight: 18,
@@ -396,7 +383,8 @@ class _TicketFormState extends State<TicketForm> {
                   ),
                 ),
                 onSaved: (value) {
-                  price = int.parse(value!);
+                  price = double.parse(value!);
+                  print(price);
                 },
               ),
               const SizedBox(

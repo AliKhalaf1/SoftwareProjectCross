@@ -98,12 +98,13 @@ class _EventDateState extends State<EventDate> {
       // ...
       return false;
     }
-    dateTime1 = DateTime(0, 0, 0, _timeFrom!.hour, _timeFrom!.minute);
-    dateTime2 = DateTime(0, 0, 0, _timeTo!.hour, _timeTo!.minute);
-    if ((_dateFrom!.isAfter(_dateTo!)) ||
-        ((_dateFrom?.day == _dateTo?.day) &&
-            ((dateTime1.isAfter(dateTime2)))) ||
-        ((_dateFrom?.day == _dateTo?.day) && (dateTime1 == dateTime2))) {
+    dateTime1 = DateTime(_dateFrom!.year, _dateFrom!.month, _dateFrom!.day,
+        _timeFrom!.hour, _timeFrom!.minute);
+    dateTime2 = DateTime(_dateTo!.year, _dateTo!.month, _dateTo!.day,
+        _timeTo!.hour, _timeTo!.minute);
+    if ((dateTime1.isAfter(dateTime2)) ||
+        (dateTime1.isAtSameMomentAs(dateTime2)) ||
+        DateTime.now().isAfter(dateTime1)) {
       return false;
     } else {
       // All values are valid, submit
