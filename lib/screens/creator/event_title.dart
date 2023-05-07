@@ -1,3 +1,4 @@
+import 'package:Eventbrite/helper_functions/userInfo.dart';
 import 'package:Eventbrite/providers/createevent/createevent.dart';
 import 'package:Eventbrite/screens/creator/description_event.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,16 @@ class _EventTitleState extends State<EventTitle> {
   }
 
   Widget build(BuildContext context) {
+    String firstname = "";
+    String lastname = "";
     final event = Provider.of<TheEvent>(context, listen: false);
+    getFirstName().then((value) {
+      firstname = value;
+    });
+    getLastName().then((value) {
+      lastname = value;
+      event.setNameOrganizer = "$firstname $lastname";
+    });
 
     return !_showAnimation
         ? Scaffold(
@@ -58,7 +68,7 @@ class _EventTitleState extends State<EventTitle> {
               padding: const EdgeInsets.only(top: 65, left: 15, right: 15),
               child: Column(
                 children: [
-                  const FittedBox(
+                  FittedBox(
                     child: Text(
                       "Give your event a title.",
                       style: TextStyle(

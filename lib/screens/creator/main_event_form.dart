@@ -207,6 +207,7 @@ class _EventFormState extends State<EventForm> {
   }
 
   void completesubmit(String check) async {
+    bool done = true;
     if (check == 'Done') {
       final isValid = _form.currentState?.validate();
       if (!isValid!) {
@@ -234,6 +235,7 @@ class _EventFormState extends State<EventForm> {
         });
         await event.addEvent();
       } catch (error) {
+        done = false;
         await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -253,6 +255,56 @@ class _EventFormState extends State<EventForm> {
         setState(() {
           _isloading = false;
         });
+        if (done) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Row(
+                  children: [
+                    const Text(
+                      'Successfully ',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    const Text(
+                      'Posted ',
+                      style: TextStyle(color: Colors.amber),
+                    ),
+                  ],
+                ),
+                content: Row(
+                  children: [
+                    const Text(
+                      "Happy",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    const Text(
+                      " Event ",
+                      style: TextStyle(color: Colors.amber),
+                    ),
+                    const Icon(
+                      Icons.favorite_rounded,
+                      color: Colors.red,
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () {
+                      int count = 0;
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        TabBarEvents.route,
+                        (route) => count++ == 3 || route.isFirst,
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
       }
     } else {
       showDialog(
@@ -348,10 +400,10 @@ class _EventFormState extends State<EventForm> {
                               height: 200,
                               color: Color.fromRGBO(132, 128, 163, 1),
                               child: Center(
-                                  child: Icon(
+                                  child: const Icon(
                                 Icons.photo_camera,
                                 size: 45,
-                                color: const Color.fromRGBO(31, 10, 61, 1),
+                                color: Color.fromRGBO(31, 10, 61, 1),
                               )),
                             ),
                           )
@@ -368,7 +420,10 @@ class _EventFormState extends State<EventForm> {
                           ),
                     //title , username ,description
                     ListTile(
-                      leading: Icon(Icons.text_fields_outlined),
+                      leading: Icon(
+                        Icons.text_fields_outlined,
+                        color: Colors.blue[400],
+                      ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -409,7 +464,7 @@ class _EventFormState extends State<EventForm> {
                           ),
                           Text(
                             event.nameOrganizer,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: 'Neue Plak Extended',
                               fontWeight: FontWeight.w200,
                               fontSize: 12,
@@ -460,7 +515,10 @@ class _EventFormState extends State<EventForm> {
                     ),
                     //Start&End
                     ListTile(
-                      leading: Icon(Icons.calendar_month),
+                      leading: Icon(
+                        Icons.calendar_month,
+                        color: Colors.blue[400],
+                      ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -549,8 +607,10 @@ class _EventFormState extends State<EventForm> {
                     ),
                     ListTile(
                       leading: thePlace == eventPlace.Venue
-                          ? Icon((Icons.location_on_outlined))
-                          : Icon((Icons.computer_outlined)),
+                          ? Icon((Icons.location_on_outlined),
+                              color: Colors.blue[400])
+                          : Icon((Icons.computer_outlined),
+                              color: Colors.blue[400]),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -633,7 +693,8 @@ class _EventFormState extends State<EventForm> {
                       height: 10,
                     ),
                     ListTile(
-                      leading: Icon(Icons.sell_outlined),
+                      leading:
+                          Icon(Icons.sell_outlined, color: Colors.blue[400]),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -711,7 +772,8 @@ class _EventFormState extends State<EventForm> {
                         Navigator.of(context).pushNamed(All_Tickets.route);
                       },
                       child: ListTile(
-                        leading: Icon(Icons.assignment_ind_outlined),
+                        leading: Icon(Icons.assignment_ind_outlined,
+                            color: Colors.blue[400]),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -765,7 +827,8 @@ class _EventFormState extends State<EventForm> {
                         Navigator.of(context).pushNamed(AllCoupons.route);
                       },
                       child: ListTile(
-                        leading: Icon(Icons.card_giftcard_sharp),
+                        leading: Icon(Icons.card_giftcard_sharp,
+                            color: Colors.blue[400]),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -807,7 +870,7 @@ class _EventFormState extends State<EventForm> {
                       ),
                     ),
                     ListTile(
-                      leading: Icon(Icons.lock),
+                      leading: Icon(Icons.lock, color: Colors.blue[400]),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,

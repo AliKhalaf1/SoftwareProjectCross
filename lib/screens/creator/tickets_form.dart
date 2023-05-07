@@ -347,7 +347,7 @@ class _TicketFormState extends State<TicketForm> {
                     if (value.isEmpty) {
                       return "Price needed ";
                     } else {
-                      final RegExp priceRegex = RegExp(r'^\d+(\.\d{1,2})?$');
+                      final RegExp priceRegex = RegExp(r'^\d+(\.\d{1,3})?$');
                       if (!priceRegex.hasMatch(value)) {
                         return 'Invalid price format';
                       }
@@ -358,7 +358,7 @@ class _TicketFormState extends State<TicketForm> {
                 },
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,1}')),
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')),
                 ],
                 cursorColor: Colors.black,
                 cursorHeight: 18,
