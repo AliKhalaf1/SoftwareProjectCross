@@ -16,7 +16,7 @@ class Auth {
   //new comment
   //parameters of the EventCard Widget
   @Id()
-  int id = 0;
+  int mockId = 0;
 
   @Unique()
   String email;

@@ -3,6 +3,7 @@ library BuyTicketsWidget;
 import 'package:Eventbrite/widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../models/event_promocode.dart';
 import 'transparent_button_no_icon.dart';
 import '../models/event_tickets.dart';
 
@@ -11,8 +12,9 @@ class BuyTickets extends StatefulWidget {
   final String eventtitle;
   final String eventStartDate;
   final EventTicketsInfo eventTickets;
-  const BuyTickets(
-      this.eventId, this.eventtitle, this.eventStartDate, this.eventTickets,
+  final EventPromocodeInfo? eventPromocode;
+  const BuyTickets(this.eventId, this.eventtitle, this.eventStartDate,
+      this.eventTickets, this.eventPromocode,
       {super.key});
 
   @override
@@ -21,6 +23,13 @@ class BuyTickets extends StatefulWidget {
 
 class SubmittedData {
   String? promo;
+  // Ids to access apis with it
+  // To Be: shoof hatstlmhm feen
+  //-------------------//
+  String? freeTicketId;
+  String? vipTicketId;
+  String? promocodetId;
+  //-------------------//
   int freeTickets = 0;
   int vipTickets = 0;
   int totalPrice = 0;
@@ -39,12 +48,6 @@ class _BuyTicketsState extends State<BuyTickets> {
   final data = SubmittedData();
   final _form = GlobalKey<FormState>();
   final _fieldKey = GlobalKey<FormFieldState>();
-
-  // Promocode valid code
-  // validPromocode could be nullable as api can return null
-  // To Be: Get it from API return promocode valid for this event (it takes eventId)
-  // To Be: remove intialization value
-  String? validPromocode = '1234';
 
   /// Promocode checks idea
   /// promocodes alwyas checked in validator
@@ -72,6 +75,7 @@ class _BuyTicketsState extends State<BuyTickets> {
 
       /// Remove the data.promo value from submetted data
       data.promo = null;
+      data.promocodetId = null;
       return;
     }
     setState(() {
@@ -107,6 +111,20 @@ class _BuyTicketsState extends State<BuyTickets> {
     if (data.vipTickets > 0) {
       setState(() {
         --data.vipTickets;
+        // if (promocodeApplied) {
+        //   // To Be: Make sure that check is correct and it is like that is database
+        //   if (widget.eventPromocode?.type == 'value') {
+        //     data.totalPrice -= (widget.eventTickets.vipTicketPrice -
+        //         widget.eventPromocode!.discount);
+        //     if (data.totalPrice < 0) {
+        //       data.totalPrice = 0;
+        //     }
+        //   } else {
+        //     data.totalPrice -= widget.eventTickets.vipTicketPrice;
+        //   }
+        // } else {
+        //   data.totalPrice -= widget.eventTickets.vipTicketPrice;
+        // }
         data.totalPrice -= widget.eventTickets.vipTicketPrice;
       });
     }
@@ -138,8 +156,6 @@ class _BuyTicketsState extends State<BuyTickets> {
     print(data.freeTickets);
     print(data.vipTickets);
     print(data.totalPrice);
-
-    
   }
 
   @override
@@ -200,8 +216,10 @@ class _BuyTicketsState extends State<BuyTickets> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     // --------------------------------------- Promo-code ------------------------------------------------------------
-                    // if there is no promo code for this event or no Vip tickets for the event
-                    (validPromocode == null ||
+                    // if there is no promo code for this event OR no Vip tickets for the event OR promocode usage limit exceed
+                    (widget.eventPromocode == null ||
+                            (widget.eventPromocode!.isLimited &&
+                                widget.eventPromocode!.avliableAmount == 0) ||
                             widget.eventTickets.avaliableQuantaties[1] == 0)
                         ? const SizedBox()
                         : Padding(
@@ -211,13 +229,13 @@ class _BuyTicketsState extends State<BuyTickets> {
                               // autovalidateMode: AutovalidateMode.onUserInteraction,
                               //Validations
                               validator: (value) {
-                                /// PromoCheck: check that promocode validation or no promocode entered
+                                /// PromoCheck: check that promocode valid or no promocode entered
                                 if (value == null) {
                                   return null;
                                 }
                                 if (value.isEmpty ||
                                     value.length < 4 ||
-                                    value == validPromocode) {
+                                    value == widget.eventPromocode!.name) {
                                   return null;
                                 }
                                 if (checkoutClicked && !promocodeApplied) {
@@ -229,6 +247,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                               /// PromoCheck:Save value if valid and apply button clicked
                               onSaved: (newValue) {
                                 data.promo = newValue;
+                                data.promocodetId = widget.eventPromocode?.id;
                               },
                               cursorColor:
                                   const Color.fromARGB(255, 50, 100, 237),
@@ -293,8 +312,9 @@ class _BuyTicketsState extends State<BuyTickets> {
                               onTap: () {
                                 promocodeApplied = false;
 
-                                /// Remove the data.promo value from submetted data
+                                /// Remove the data.promo value from submitted data
                                 data.promo = null;
+                                data.promocodetId = null;
                               },
                             ),
                           ),
@@ -304,7 +324,15 @@ class _BuyTicketsState extends State<BuyTickets> {
                     ),
 
                     // --------------------------------------- Tickets ------------------------------------------------------------
-                    widget.eventTickets.avaliableQuantaties[0] == 0
+                    // Checks:
+                    // 1. There is avliable tickets
+                    // 2. Start selling date is before now
+                    // 2. end selling date is after now
+                    (widget.eventTickets.avaliableQuantaties[0] == 0 &&
+                            widget.eventTickets.startDates[0]
+                                .isBefore(DateTime.now()) &&
+                            widget.eventTickets.endDates[0]
+                                .isAfter(DateTime.now()))
                         ? const SizedBox()
                         : Container(
                             padding: const EdgeInsets.all(10),
@@ -428,7 +456,15 @@ class _BuyTicketsState extends State<BuyTickets> {
                       height: 20,
                     ),
 
-                    widget.eventTickets.avaliableQuantaties[1] == 0
+                    // Checks:
+                    // 1. There is avliable tickets
+                    // 2. Start selling date is before now
+                    // 2. end selling date is after now
+                    (widget.eventTickets.avaliableQuantaties[1] == 0 &&
+                            widget.eventTickets.startDates[1]
+                                .isBefore(DateTime.now()) &&
+                            widget.eventTickets.endDates[1]
+                                .isAfter(DateTime.now()))
                         ? const SizedBox()
                         : Container(
                             padding: const EdgeInsets.all(10),

@@ -57,3 +57,64 @@ Future<int> signUpApi(
   //   return 400;
   // }
 }
+
+/// {@category Helper Functions}
+
+/// <h1>This function is used to sign in the user using api's.</h1>
+
+// Future<void> signInwithGoogle(
+//     String firstname, String lastname, String email) async {
+//   var signInUri = Uri.parse('${Constants.host}/auth/login-with-google');
+
+//   // create multipart request
+
+//   //encode Map to JSON
+//   Map<String, String> reqHeaders = {
+//     'Content-Type': 'application/x-www-form-urlencoded'
+//   };
+//   Map reqData = {
+//     'username': email,
+//     'password': password,
+//   };
+//   //encode Map to JSON
+//   var reqBody = reqData;
+
+//   var response = await http.post(
+//     uri,
+//     headers: reqHeaders,
+//     encoding: Encoding.getByName('utf-8'),
+//     body: reqBody,
+//   );
+// }
+
+// Future<String> signUpwithGoogle(
+//     String firstname, String lastname, String email) {
+
+
+// Map signUpreqData = {
+//     "email": email,
+//     "password": "dummy",
+//     "firstname": firstname,
+//     "lastname": lastname,
+//   };
+
+//   var res = response.body;
+//   var resData = jsonDecode(res);
+//   //try to sign in first
+//   var signInreqBody = json.encode(reqData);
+
+//   var response = await http.post(uri,
+//       headers: {"Content-Type": "application/json"}, body: reqBody);
+
+//   int resCode = response.statusCode;
+//   return resCode;
+
+
+
+
+
+
+
+
+
+//     }

@@ -3,11 +3,13 @@ library SingleEventScreen;
 import 'dart:ui';
 
 import 'package:Eventbrite/helper_functions/event_tickets_info.dart';
+import 'package:Eventbrite/helper_functions/event_promocode_info.dart';
 import 'package:Eventbrite/widgets/title_text_1.dart';
 import 'package:Eventbrite/widgets/title_text_2.dart';
 import 'package:intl/intl.dart';
 
 // import '../helper_functions/log_in.dart';
+import '../models/event_promocode.dart';
 import '../models/event_tickets.dart';
 import '../providers/events/event.dart';
 import '../providers/events/events.dart';
@@ -32,23 +34,41 @@ import 'sign_up/sign_up_or_log_in.dart';
 /// It Know user is logged in or not from
 class EventPage extends StatefulWidget {
   // To Be: make this class take its data from API
-  // To Be: Duration can be get from getDuration function => shoof hat3ml eh feha
   // To Be: initialized  by Empty lists in all attr but i but values for teating
   // Initial values:   EventTicketsInfo eventTickets = EventTicketsInfo(['', ''], [0, 0], ['', '']);
   EventTicketsInfo eventTickets = EventTicketsInfo([
+    '0',
+    '1'
+  ], [
     'Regular',
     'VIP'
   ], [
     5,
     2
   ], [
+    DateTime.now().subtract(const Duration(days: 10)),
+    DateTime.now().add(const Duration(days: 10))
+  ], [
     DateTime.now().subtract(const Duration(days: 5)),
     DateTime.now().add(const Duration(days: 5))
   ], 50);
+
+  // To Be: make this class take its data from API
+  // To Be: Not to give initial value as it could be NULL => make sure ? is added as if no promocode it must be null
+  EventPromocodeInfo? eventPromocode = EventPromocodeInfo(
+      '0',
+      '1234',
+      true,
+      10,
+      'value',
+      40,
+      DateTime.now().subtract(const Duration(days: 10)),
+      DateTime.now().add(const Duration(days: 10)));
   bool isLoading = false;
   bool isLoadingEventApi = false;
   bool isLoadingSimilarEventsApi = false;
   bool isLoadingTicketsApi = false;
+  bool isLoadingPromoApi = false;
 
   // Data passed from navigating screen at initState()
   final String eventId;
@@ -90,6 +110,23 @@ class _EventPageState extends State<EventPage> {
     });
   }
 
+  // To Be: Get event tickets data with this function as it is called when navigate to tickets modal
+  // Hint: you can find similar function at Profile.dart
+  void getEventPromo(String eventId) {
+    getEventPrmocodeInfo(eventId).then(
+        // To Be: E3mlha beltafsel a7san men dh equal dh lef 3aka kol attr goa classes
+        // To Be: be sure that fetch code is 200 succeses to make widget.isLoadingPromoApi  = false
+        // Make sure before assign that lists length must be 2 so dont assign if not valid response ##Note## avaliableQuanitity list must be initialized by zeros
+        // example: widget.eventTickets.avaliableQuantaties = eventTicketsdata.avaliableQuantaties
+        (eventPromodata) {
+      setState(() {
+        // make it false to render the page
+        widget.isLoadingPromoApi = false;
+        // widget.eventPromocode = eventPromodata;
+      });
+    });
+  }
+
   // Open buyTickets model
   void buyTickets(BuildContext ctx) {
     showModalBottomSheet(
@@ -106,7 +143,8 @@ class _EventPageState extends State<EventPage> {
                   widget.eventId,
                   widget.loadedEvent.title,
                   '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET',
-                  widget.eventTickets));
+                  widget.eventTickets,
+                  widget.eventPromocode));
         });
   }
 
@@ -159,6 +197,7 @@ class _EventPageState extends State<EventPage> {
     widget.isLoadingEventApi = true;
     widget.isLoadingSimilarEventsApi = true;
     widget.isLoadingTicketsApi = true;
+    widget.isLoadingPromoApi = true;
 
     // To Be: eventId be used for 3 APIs here
 
@@ -171,6 +210,9 @@ class _EventPageState extends State<EventPage> {
     // 3.  Get event avaliable tickets
     getEventTickets(widget.eventId);
 
+    // 4. Get event Promocode
+    getEventPromo(widget.eventId);
+
     //Render page after fetching from Apis
     // Busy wait until all Apis finish their fetch
     // moshkeletha enha b pause application
@@ -178,9 +220,10 @@ class _EventPageState extends State<EventPage> {
     widget.isLoadingEventApi = false;
     widget.isLoadingSimilarEventsApi = false;
     widget.isLoadingTicketsApi = false;
+    widget.isLoadingPromoApi = false;
     // while (widget.isLoadingEventApi ||
     //     widget.isLoadingSimilarEventsApi ||
-    //     widget.isLoadingTicketsApi) {}
+    //     widget.isLoadingTicketsApi || widget.isLoadingPromoApi) {}
 
     widget.isLoading = false;
 

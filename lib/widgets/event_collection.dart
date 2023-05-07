@@ -69,7 +69,7 @@ class EventCollections extends StatelessWidget {
             ),
       collecionListOfEvents.isEmpty
           ? const Center(
-            key:  Key("NoCurrentEvent"),
+              key: Key("NoCurrentEvent"),
               child: Text('There is no current events',
                   style: TextStyle(color: Colors.grey)),
             )

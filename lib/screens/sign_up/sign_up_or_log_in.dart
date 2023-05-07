@@ -1,5 +1,6 @@
 library LogInOrSignUpScreen;
 
+import '../../helper_functions/api/google_signin_api.dart';
 import '../../widgets/title_text_1.dart';
 import '../../widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
@@ -60,14 +61,28 @@ class SignUpOrLogIn extends StatelessWidget {
   //   //   return const FindTickets();
   //   // }));
 
-  //   /// Route from 
+  //   /// Route from
   // }
 
   //Find Ticket with facebook function
-  void signWithFacebook() {}
+  void signWithFacebook() async {
+    await GoogleSignInApi.logout();
+  }
 
   //Find Ticket with google function
-  void signWithGoogle() {}
+  void signWithGoogle() async {
+    print("Sign in with facebook");
+    var user = await GoogleSignInApi.login();
+    if (user == null) {
+      print("Sign in failed");
+    } else {
+      print("Sign in success");
+      print(user.displayName);
+      print(user.email);
+      print(user.photoUrl);
+      print(user.serverAuthCode);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +108,8 @@ class SignUpOrLogIn extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const <Widget>[
                     // child one
-                    TitleText1(key: Key("LetsGetStartedTitle"),'Let\'s get started'),
+                    TitleText1(
+                        key: Key("LetsGetStartedTitle"), 'Let\'s get started'),
                     // child two
                     SizedBox(
                       width: 250,
