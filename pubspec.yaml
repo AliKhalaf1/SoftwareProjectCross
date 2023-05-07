@@ -58,6 +58,9 @@ dependencies:
   google_places_for_flutter: ^1.0.1
   google_maps_flutter: ^2.2.6
   search_map_location: ^0.0.6
+  change_app_package_name: ^1.1.0
+  flutter_facebook_auth: ^5.0.10
+  google_sign_in: ^6.1.0
 
  
 

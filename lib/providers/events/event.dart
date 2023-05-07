@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:objectbox/objectbox.dart';
 import '../filters/tag.dart';
 
 /// {@category Providers}
@@ -23,18 +24,22 @@ import '../filters/tag.dart';
 ///   • isFav: boolean variable check if user mark this event to its favourites or not
 ///
 
-enum EventState { online, offline }
+// enum EventState { online, offline }
 
-enum EventStatus { private, public }
+// enum EventStatus { private, public }
 
+@Entity()
 class Event with ChangeNotifier {
   //parameters of the EventCard Widget
+  @Id()
+  int mockId = 0;
+
   final String eventImg; /*event card image */
   final DateTime startDate; /*start event date*/
   final DateTime endDate; /*end event date*/
   final String description; /*event dscription*/
-  final EventState state; /*event state (online/onsite)*/
-  final EventStatus status; /*event status (private/public) */
+  final bool state; /*event state (online/onsite)*/
+  final bool status; /*event status (private/public) */
   bool isFav;
   final String categ;
   final List<String> tags;

@@ -10,7 +10,7 @@ import 'log_in.dart';
 ///
 /// Used inside EventCard widget
 ///
-/// Get token if logged user or not and event id then sent them as an arguments to naviated screen 
+/// Get token if logged user or not and event id then sent them as an arguments to naviated screen
 Future<void> selectEvent(BuildContext ctx, Event event) async {
   bool isLogged = await checkLoggedUser();
   Navigator.of(ctx).pushNamed(
