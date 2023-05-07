@@ -1,5 +1,7 @@
 library GuestHomeScreen;
 
+import 'dart:ui';
+
 import '../../helper_functions/log_in.dart';
 import '../../providers/events/event.dart';
 import '../../widgets/event_collection.dart';
@@ -133,13 +135,89 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       key: const Key("HomeScreen"),
+      appBar: AppBar(
+        toolbarHeight: 70,
+        elevation: 1,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        shadowColor: const Color.fromARGB(255, 255, 255, 255),
+        leadingWidth: double.infinity,
+        leading: Stack(children: <Widget>[
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/o3.png"),
+                
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+              child: Container(
+                color: Colors.black.withOpacity(0),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0, bottom: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text('Borto',
+                    style: TextStyle(
+                        fontFamily: "Neue Plak Text",
+                        fontSize: 27,
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromARGB(255, 55, 55, 55))),
+                Image(
+                  image: AssetImage("assets/images/icon.png"),
+                  width: 35,
+                  height: 35,
+                ),
+                Text('an ',
+                    style: TextStyle(
+                        fontFamily: "Neue Plak Text",
+                        fontSize: 27,
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromARGB(255, 55, 55, 55))),
+              ],
+            ),
+          ),
+        ]),
+        // title: Padding(
+        //   padding: const EdgeInsets.only(top: 15.0, bottom: 15),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: const [
+        //       Text('Borto',
+        //           style: TextStyle(
+        //               fontFamily: "Neue Plak Text",
+        //               fontSize: 22,
+        //               fontWeight: FontWeight.w400,
+        //               color: Color.fromARGB(255, 88, 88, 88))),
+        //       Image(
+        //         image: AssetImage("assets/images/icon.png"),
+        //         width: 30,
+        //         height: 30,
+        //       ),
+        //       Text('an ',
+        //           style: TextStyle(
+        //               fontFamily: "Neue Plak Text",
+        //               fontSize: 22,
+        //               fontWeight: FontWeight.w400,
+        //               color: Color.fromARGB(255, 88, 88, 88))),
+        //     ],
+        //   ),
+        // ),
+        // centerTitle: true,
+        // automaticallyImplyLeading: false,
+      ),
       body: SizedBox(
         height: 700,
         child: GlowingOverscrollIndicator(
           axisDirection: AxisDirection.down,
           color: const Color.fromARGB(255, 255, 72, 0),
           child: ListView.builder(
-            padding: const EdgeInsets.only(top: 40),
+            padding: const EdgeInsets.only(top: 10),
             itemCount:
                 categoryTitles.length, // substitute with collectionCounts
             itemBuilder: (ctx, index) {

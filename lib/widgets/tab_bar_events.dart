@@ -56,9 +56,9 @@ class _TabBarEventsState extends State<TabBarEvents> {
           title: const Text(
             "Events",
             style: TextStyle(
-              fontFamily: "Neue Plak Extended",
-              fontWeight: FontWeight.w600,
-            ),
+                fontFamily: "Neue Plak Extended",
+                fontWeight: FontWeight.w600,
+                color: Colors.white),
           ),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(40),

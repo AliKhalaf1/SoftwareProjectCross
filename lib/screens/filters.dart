@@ -130,7 +130,7 @@ class _FilterScreenState extends State<FilterScreen> {
                   'Apply filters (${filtersDataValues.selectedFilterCount})',
                   applyFilters,
                   widget.applyBtnState,
-                  '0','',''),
+                  '0'),
             ),
           )
         ],

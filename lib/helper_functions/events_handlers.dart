@@ -12,9 +12,14 @@ import 'log_in.dart';
 ///
 /// Get token if logged user or not and event id then sent them as an arguments to naviated screen
 Future<void> selectEvent(BuildContext ctx, Event event) async {
-  bool isLogged = await checkLoggedUser();
-  Navigator.of(ctx).pushNamed(
-    EventPage.eventPageRoute,
-    arguments: {'eventId': event.id, 'isLogged': isLogged},
-  );
+  checkLoggedUser().then((isLogged) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return EventPage(event.id, isLogged);
+    }));
+  });
+  
+  // Navigator.of(ctx).pushNamed(
+  //   EventPage.eventPageRoute,
+  //   arguments: {'eventId': event.id, 'isLogged': isLogged},
+  // );
 }

@@ -15,8 +15,6 @@ class TransparentButtonNoIcon extends StatefulWidget {
   final Function onPressed;
   bool isDiabled;
   final String eventId;
-  final String eventTitle;
-  final String eventStartDate;
 
   /// It takes:
   ///
@@ -26,8 +24,8 @@ class TransparentButtonNoIcon extends StatefulWidget {
   ///
   ///   • Button state (Activate or not)
   ///
-  TransparentButtonNoIcon(this.text, this.onPressed, this.isDiabled,
-      this.eventId, this.eventTitle, this.eventStartDate,
+  TransparentButtonNoIcon(
+      this.text, this.onPressed, this.isDiabled, this.eventId,
       {super.key});
 
   @override
@@ -48,7 +46,7 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
                 style: ButtonStyle(
                   side: MaterialStateProperty.all(
                     const BorderSide(
-                        width: 2, color: Color.fromARGB(255, 238, 238, 238)),
+                        width: 2, color: Color.fromARGB(255, 207, 207, 207)),
                   ),
                   backgroundColor: MaterialStateProperty.all(Colors.white),
                   foregroundColor: MaterialStateProperty.all(
@@ -96,15 +94,12 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
                           ),
                         ),
                       ),
-                onPressed: (widget.text == 'Tickets')
-                    ? () => widget.onPressed(context, widget.eventId,
-                        widget.eventTitle, widget.eventStartDate)
-                    : (widget.text == 'Check out')
-                        ? () => widget.onPressed(
-                              context,
-                              widget.eventId,
-                            )
-                        : () => widget.onPressed(context),
+                onPressed: (widget.text == 'Check out')
+                    ? () => widget.onPressed(
+                          context,
+                          widget.eventId,
+                        )
+                    : () => widget.onPressed(context),
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(

@@ -11,31 +11,41 @@ class TicketsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      key: key,
-      onTap: () {},
-      leading: Icon(
-        Icons.quick_contacts_mail_sharp,
-        color: Colors.amber[700],
-      ),
-      title: Text(
-        ticketTitle,
-        style: TextStyle(
-          color: Theme.of(context).cardColor,
+    return Column(
+      children: [
+        Container(
+          color: Colors.grey[200],
+          child: ListTile(
+            key: key,
+            onTap: () {},
+            leading: Icon(
+              Icons.quick_contacts_mail_sharp,
+              color: Colors.amber[700],
+            ),
+            title: Text(
+              ticketTitle,
+              style: TextStyle(
+                color: Theme.of(context).cardColor,
+              ),
+            ),
+            subtitle: Text(
+              '$ticketsTaken / $ticketsNumber Sold',
+              style: TextStyle(
+                color: Theme.of(context).cardColor,
+              ),
+            ),
+            trailing: Text(
+              ticketsType,
+              style: TextStyle(
+                color: Theme.of(context).cardColor,
+              ),
+            ),
+          ),
         ),
-      ),
-      subtitle: Text(
-        '$ticketsTaken / $ticketsNumber Sold',
-        style: TextStyle(
-          color: Theme.of(context).cardColor,
+        const SizedBox(
+          height: 10,
         ),
-      ),
-      trailing: Text(
-        ticketsType,
-        style: TextStyle(
-          color: Theme.of(context).cardColor,
-        ),
-      ),
+      ],
     );
   }
 }

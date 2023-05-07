@@ -23,7 +23,8 @@ import '../screens/sign_up/sign_up_or_log_in.dart';
 ///<strong>'EEE, MMM d • hh:mmaaa ' </strong>
 ///
 class MoreLikeEventCard extends StatefulWidget {
-  const MoreLikeEventCard({super.key});
+  Event event;
+  MoreLikeEventCard(this.event, {super.key});
 
   @override
   State<MoreLikeEventCard> createState() => _MoreLikeEventCardState();
@@ -34,21 +35,23 @@ class _MoreLikeEventCardState extends State<MoreLikeEventCard> {
   Widget build(BuildContext context) {
     //----------------------- Event provider ------------------------------
 
-    final event = Provider.of<Event>(context, listen: false);
+    // final event = Provider.of<Event>(context, listen: false);
+    // To Be: Substituted by add to fav Api
     final favsData = Provider.of<FavEvents>(context);
 
     //----------------------- Methods ------------------------------
 
+    // To Be: Call function that call api add to fav in this function
     Future<void> toggleFav(BuildContext ctx) async {
       //add to favourites list
       bool isLogged = await checkLoggedUser();
       setState(() {
         if (isLogged) {
           //Call toggleStatus function from event class
-          if (event.isFav) {
-            favsData.removeEventFromFav(event);
+          if (widget.event.isFav) {
+            favsData.removeEventFromFav(widget.event);
           } else {
-            favsData.addEventToFav(event);
+            favsData.addEventToFav(widget.event);
           }
         } else {
           Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
@@ -63,20 +66,20 @@ class _MoreLikeEventCardState extends State<MoreLikeEventCard> {
       children: [
         InkWell(
           key: const Key("MoreLikeEventCard"),
-          onTap: () => selectEvent(context, event),
+          onTap: () => selectEvent(context, widget.event),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                   width: MediaQuery.of(context).size.width * 0.65,
                   height: 130,
-                  child: event.eventImg.startsWith('http')
+                  child: widget.event.eventImg.startsWith('http')
                       ? Image.network(
-                          event.eventImg,
+                          widget.event.eventImg,
                           fit: BoxFit.cover,
                         )
                       : Image.asset(
-                          event.eventImg,
+                          widget.event.eventImg,
                           fit: BoxFit.cover,
                         )),
               const SizedBox(
@@ -85,7 +88,7 @@ class _MoreLikeEventCardState extends State<MoreLikeEventCard> {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                    '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.startDate)} EET',
+                    '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.event.startDate)} EET',
                     style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.w500,
@@ -98,7 +101,7 @@ class _MoreLikeEventCardState extends State<MoreLikeEventCard> {
                   padding: const EdgeInsets.only(left: 8.0),
                   width: 200,
                   height: 40,
-                  child: Text(event.title,
+                  child: Text(widget.event.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -114,10 +117,10 @@ class _MoreLikeEventCardState extends State<MoreLikeEventCard> {
             onPressed: () => toggleFav(context),
             icon: Icon(
               key: const Key("favIcon"),
-              !event.isFav
+              !widget.event.isFav
                   ? Icons.favorite_border_rounded
                   : Icons.favorite_sharp,
-              color: !event.isFav
+              color: !widget.event.isFav
                   ? const Color.fromRGBO(0, 0, 0, 0.7)
                   : const Color.fromARGB(255, 209, 65, 12),
             ),
