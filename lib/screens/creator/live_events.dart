@@ -4,7 +4,6 @@ import 'package:Eventbrite/providers/getevent/getevent.dart';
 import 'package:Eventbrite/screens/creator/event_title.dart';
 import 'package:Eventbrite/widgets/backgroud.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:splash_route/splash_route.dart';
 
 import '../../widgets/live_card.dart';

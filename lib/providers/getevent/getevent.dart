@@ -107,7 +107,7 @@ class totalEvents {
     List<theEvent> endItems = [];
     items.forEach((element) {
       DateTime end = DateTime.parse(element.endDate);
-      if (end.isAfter(DateTime.now())) {
+      if (end.isBefore(DateTime.now())) {
         endItems.add(element);
       }
     });
