@@ -32,11 +32,57 @@ class All_Tickets extends StatelessWidget {
               child: ListView.builder(
                 itemCount: event.totalTicketsLength,
                 itemBuilder: (context, index) {
-                  return TicketsCard(
-                      '0',
-                      ticketItems[index].name,
-                      ticketItems[index].maxquantity.toString(),
-                      ticketItems[index].type);
+                  return Dismissible(
+                    key: UniqueKey(),
+                    background: Container(
+                      color: Theme.of(context).colorScheme.error,
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.only(right: 20),
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 4,
+                      ),
+                    ),
+                    confirmDismiss: (direction) {
+                      return showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: const Text('Are you sure?'),
+                          content: const Text(
+                            'Do you want to remove the Ticket?',
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('No'),
+                              onPressed: () {
+                                Navigator.of(ctx).pop(false);
+                              },
+                            ),
+                            TextButton(
+                              child: const Text('Yes'),
+                              onPressed: () {
+                                Navigator.of(ctx).pop(true);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (direction) {
+                      event.removeTicket(index);
+                    },
+                    child: TicketsCard(
+                        '0',
+                        ticketItems[index].name,
+                        ticketItems[index].maxquantity.toString(),
+                        ticketItems[index].type),
+                  );
                 },
               ),
             )

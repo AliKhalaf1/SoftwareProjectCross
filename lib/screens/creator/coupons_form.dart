@@ -168,8 +168,8 @@ class _CouponFormState extends State<CouponForm> {
             ),
             TextFormField(
               validator: (value) {
-                if (value != null) {
-                  if (value.isEmpty) {
+                if (value != null || int.tryParse(value!) != null) {
+                  if (value.isEmpty || int.tryParse(value) == 0) {
                     return "The limit is needed ";
                   } else {
                     return null;
@@ -202,7 +202,7 @@ class _CouponFormState extends State<CouponForm> {
                 limitedTo = int.parse(value!);
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Text(
@@ -211,8 +211,8 @@ class _CouponFormState extends State<CouponForm> {
             ),
             TextFormField(
               validator: (value) {
-                if (value != null) {
-                  if (value.isEmpty) {
+                if (value != null || double.tryParse(value!) != null) {
+                  if (value.isEmpty || double.tryParse(value) == 0) {
                     return "Discount needed ";
                   } else {
                     final RegExp priceRegex = RegExp(r'^\d+(\.\d{1,2})?$');

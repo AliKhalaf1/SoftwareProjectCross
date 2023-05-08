@@ -1,7 +1,10 @@
 library PasswordCheckScreen;
 
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'dart:convert';
 
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:http/http.dart' as http;
+import '../../helper_functions/constants.dart';
 import '../../widgets/app_bar_text.dart';
 import '../../widgets/loading_spinner.dart';
 import '../../widgets/photo_and_email.dart';
@@ -257,7 +260,28 @@ class _PasswordCheckState extends State<PasswordCheck> {
                         ),
                       ),*/
                       SizedBox(
-                          child: TextLink('I forgot my password', 1, () {})),
+                          child: TextLink('I forgot my password', 1, () async {
+                        // string to uri
+                        var uri = Uri.parse(
+                            '${Constants.host}/auth/forgot-password?email=${widget.email}');
+                        var response = await http.post(uri);
+
+                        //Check Response
+                        if (response.statusCode == 200) {
+                          // user is already registered
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Reset Email sent'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Something went wrong'),
+                            ),
+                          );
+                        }
+                      })),
                     ],
                   ),
                 ),

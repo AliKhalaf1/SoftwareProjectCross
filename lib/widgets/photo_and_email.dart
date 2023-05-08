@@ -34,7 +34,6 @@ class PhotoAndEmail extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 15,
             )),
-        TextLink('Change', 1, _goBack),
       ],
     );
   }

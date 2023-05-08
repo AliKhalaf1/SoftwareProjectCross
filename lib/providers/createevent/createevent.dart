@@ -261,6 +261,16 @@ class TheEvent with ChangeNotifier {
     }
   }
 
+  void removeTicket(int index) {
+    allTickets.removeAt(index);
+    notifyListeners();
+  }
+
+  void removeCoupon(int index) {
+    allCoupon.removeAt(index);
+    notifyListeners();
+  }
+
   void reset() {
     title = "";
     nameOrganizer = "";

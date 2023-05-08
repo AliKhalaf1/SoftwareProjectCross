@@ -1,10 +1,10 @@
-library past_events;
+library DraftEventsScreen;
 
+import 'package:Eventbrite/widgets/draft_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:splash_route/splash_route.dart';
-import 'package:Eventbrite/providers/getevent/getevent.dart';
-
+import '../../providers/getevent/getevent.dart';
 import '../../widgets/backgroud.dart';
 import '../../widgets/live_card.dart';
 import 'event_title.dart';
@@ -12,23 +12,19 @@ import 'event_title.dart';
 /// {@category Creator}
 /// {@category Screens}
 ///
-/// This Page is used to display the creator's past events.
-///
-class PastEvents extends StatefulWidget {
-  const PastEvents({super.key});
-  static const route = '/Pastevents';
-
+/// This Page is used to display the creator's draft events.
+class DraftEvents extends StatefulWidget {
   @override
-  State<PastEvents> createState() => _PastEventsState();
+  State<DraftEvents> createState() => _DraftEventsState();
 }
 
-class _PastEventsState extends State<PastEvents> {
-  @override
+class _DraftEventsState extends State<DraftEvents> {
   var _isInit = true;
   var _isLoading = false;
-  List<theEvent> dataPast = [];
-  int pasteventLen = 0;
+  List<theEvent> dataAll = [];
+  int liveeventLen = 0;
   late final events;
+  @override
   void didChangeDependencies() async {
     if (_isInit) {
       setState(() {
@@ -36,9 +32,9 @@ class _PastEventsState extends State<PastEvents> {
       });
       events = Provider.of<totalEvents>(context, listen: false);
       await events.fetchAndSetEvents();
-      dataPast = events.allitemsended;
+      dataAll = events.allitems;
       setState(() {
-        pasteventLen = dataPast.length;
+        liveeventLen = dataAll.length;
         _isLoading = false;
       });
     }
@@ -51,39 +47,40 @@ class _PastEventsState extends State<PastEvents> {
       _isLoading = true;
     });
     await events.fetchAndSetEvents();
-    dataPast = events.allitemsended;
+    dataAll = events.allitems;
     setState(() {
-      pasteventLen = dataPast.length;
+      liveeventLen = dataAll.length;
       _isLoading = false;
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     Widget myWidget;
     if (_isLoading) {
-      myWidget = Center(
+      myWidget = const Center(
         child: CircularProgressIndicator(
           color: Colors.orange,
         ),
       );
-    } else if (!_isLoading && pasteventLen > 0) {
+    } else if (!_isLoading && liveeventLen > 0) {
       myWidget = Padding(
         padding: const EdgeInsets.all(15.0),
         child: ListView.builder(
-          itemCount: pasteventLen,
+          itemCount: liveeventLen,
           itemBuilder: (context, index) {
             return LiveCard(
-                dataPast[index].startDate,
-                dataPast[index].title,
-                dataPast[index].maxTickets,
-                dataPast[index].takenTickets,
-                dataPast[index].price,
-                key: Key(dataPast[index].id));
+                dataAll[index].startDate,
+                dataAll[index].title,
+                dataAll[index].maxTickets,
+                dataAll[index].takenTickets,
+                dataAll[index].price,
+                key: Key(dataAll[index].id));
           },
         ),
       );
     } else {
-      myWidget = Background("assets/images/past_events.jfif");
+      myWidget = Background("assets/images/draft_events.jfif");
     }
     return Scaffold(
       body: RefreshIndicator(
@@ -103,11 +100,8 @@ class _PastEventsState extends State<PastEvents> {
           );
         },
         tooltip: 'Increment',
-        child: Icon(
-          Icons.add,
-          key: Key("AddPastEvent"),
-        ),
         backgroundColor: Theme.of(context).primaryColor,
+        child: const Icon(Icons.add, key: Key("AddDraftEvent")),
       ),
     );
   }
