@@ -1,4 +1,4 @@
-package com.example.my_expenses
+package com.awaitanthony.eventbrite_replica
 
 import io.flutter.embedding.android.FlutterActivity
 

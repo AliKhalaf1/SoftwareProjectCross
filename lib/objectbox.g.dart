@@ -16,6 +16,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/auth.dart';
 import 'models/user.dart';
+import 'providers/events/event.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -23,14 +24,9 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 6324978119880890039),
       name: 'Auth',
-      lastPropertyId: const IdUid(3, 7958771781219981162),
+      lastPropertyId: const IdUid(5, 2163371784312554890),
       flags: 0,
       properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 2312945438362267445),
-            name: 'id',
-            type: 6,
-            flags: 1),
         ModelProperty(
             id: const IdUid(2, 3532204531777365667),
             name: 'email',
@@ -41,21 +37,21 @@ final _entities = <ModelEntity>[
             id: const IdUid(3, 7958771781219981162),
             name: 'password',
             type: 9,
-            flags: 0)
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 2163371784312554890),
+            name: 'mockId',
+            type: 6,
+            flags: 1)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(2, 4908252787234866678),
       name: 'User',
-      lastPropertyId: const IdUid(7, 7100372381637242612),
+      lastPropertyId: const IdUid(9, 6398951864244722080),
       flags: 0,
       properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 2799260197233414138),
-            name: 'id',
-            type: 6,
-            flags: 1),
         ModelProperty(
             id: const IdUid(2, 590757566030278686),
             name: 'email',
@@ -76,6 +72,85 @@ final _entities = <ModelEntity>[
             id: const IdUid(5, 7780287094472565681),
             name: 'lastName',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 6398951864244722080),
+            name: 'mockId',
+            type: 6,
+            flags: 1)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(4, 5508452468500610366),
+      name: 'Event',
+      lastPropertyId: const IdUid(13, 7073026940504869321),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 2016973110007611165),
+            name: 'mockId',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5082241329693792503),
+            name: 'eventImg',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 7102013250862503281),
+            name: 'startDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 7693361993009473706),
+            name: 'endDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 4707418279590158048),
+            name: 'description',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 4422311958945843855),
+            name: 'isFav',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 5968870262409536648),
+            name: 'categ',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 4729164772389778561),
+            name: 'tags',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 4922030173832146386),
+            name: 'id',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 9129872997020982913),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 8334308235645515459),
+            name: 'organization',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 6493024197532204526),
+            name: 'state',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 7073026940504869321),
+            name: 'status',
+            type: 1,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -102,13 +177,32 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(2, 4908252787234866678),
-      lastIndexId: const IdUid(2, 2658527413851925650),
+      lastEntityId: const IdUid(4, 5508452468500610366),
+      lastIndexId: const IdUid(3, 3425995927453799802),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [],
+      retiredEntityUids: const [4293081377155789754],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [5488245486567488427, 7100372381637242612],
+      retiredPropertyUids: const [
+        5488245486567488427,
+        7100372381637242612,
+        2312945438362267445,
+        2799260197233414138,
+        3470970142947361594,
+        333485570223091719,
+        3117369767745280882,
+        6246247013999198138,
+        2790287386267142519,
+        1958398107393670290,
+        3546888819780287214,
+        4959833791218966225,
+        6732839624408196016,
+        2161200068858155801,
+        7575698529104045696,
+        1405378043978180903,
+        447075717921643552,
+        3214205458895062553
+      ],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -119,19 +213,19 @@ ModelDefinition getObjectBoxModel() {
         model: _entities[0],
         toOneRelations: (Auth object) => [],
         toManyRelations: (Auth object) => {},
-        getId: (Auth object) => object.id,
+        getId: (Auth object) => object.mockId,
         setId: (Auth object, int id) {
-          object.id = id;
+          object.mockId = id;
         },
         objectToFB: (Auth object, fb.Builder fbb) {
           final emailOffset = fbb.writeString(object.email);
           final passwordOffset = fbb.writeString(object.password);
-          fbb.startTable(4);
-          fbb.addInt64(0, object.id);
+          fbb.startTable(6);
           fbb.addOffset(1, emailOffset);
           fbb.addOffset(2, passwordOffset);
+          fbb.addInt64(4, object.mockId);
           fbb.finish(fbb.endTable());
-          return object.id;
+          return object.mockId;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
@@ -142,7 +236,8 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 6, ''),
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 8, ''))
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+            ..mockId =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
 
           return object;
         }),
@@ -150,23 +245,23 @@ ModelDefinition getObjectBoxModel() {
         model: _entities[1],
         toOneRelations: (User object) => [],
         toManyRelations: (User object) => {},
-        getId: (User object) => object.id,
+        getId: (User object) => object.mockId,
         setId: (User object, int id) {
-          object.id = id;
+          object.mockId = id;
         },
         objectToFB: (User object, fb.Builder fbb) {
           final emailOffset = fbb.writeString(object.email);
           final imageUrlOffset = fbb.writeString(object.imageUrl);
           final firstNameOffset = fbb.writeString(object.firstName);
           final lastNameOffset = fbb.writeString(object.lastName);
-          fbb.startTable(8);
-          fbb.addInt64(0, object.id);
+          fbb.startTable(10);
           fbb.addOffset(1, emailOffset);
           fbb.addOffset(2, imageUrlOffset);
           fbb.addOffset(3, firstNameOffset);
           fbb.addOffset(4, lastNameOffset);
+          fbb.addInt64(8, object.mockId);
           fbb.finish(fbb.endTable());
-          return object.id;
+          return object.mockId;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
@@ -181,7 +276,75 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 10, ''),
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 12, ''))
-            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+            ..mockId =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+
+          return object;
+        }),
+    Event: EntityDefinition<Event>(
+        model: _entities[2],
+        toOneRelations: (Event object) => [],
+        toManyRelations: (Event object) => {},
+        getId: (Event object) => object.mockId,
+        setId: (Event object, int id) {
+          object.mockId = id;
+        },
+        objectToFB: (Event object, fb.Builder fbb) {
+          final eventImgOffset = fbb.writeString(object.eventImg);
+          final descriptionOffset = fbb.writeString(object.description);
+          final categOffset = fbb.writeString(object.categ);
+          final tagsOffset = fbb.writeList(
+              object.tags.map(fbb.writeString).toList(growable: false));
+          final idOffset = fbb.writeString(object.id);
+          final titleOffset = fbb.writeString(object.title);
+          final organizationOffset = fbb.writeString(object.organization);
+          fbb.startTable(14);
+          fbb.addInt64(0, object.mockId);
+          fbb.addOffset(1, eventImgOffset);
+          fbb.addInt64(2, object.startDate.millisecondsSinceEpoch);
+          fbb.addInt64(3, object.endDate.millisecondsSinceEpoch);
+          fbb.addOffset(4, descriptionOffset);
+          fbb.addBool(5, object.isFav);
+          fbb.addOffset(6, categOffset);
+          fbb.addOffset(7, tagsOffset);
+          fbb.addOffset(8, idOffset);
+          fbb.addOffset(9, titleOffset);
+          fbb.addOffset(10, organizationOffset);
+          fbb.addBool(11, object.state);
+          fbb.addBool(12, object.status);
+          fbb.finish(fbb.endTable());
+          return object.mockId;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Event(
+              DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+              DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false),
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, ''),
+              const fb.ListReader<String>(
+                      fb.StringReader(asciiOptimization: true),
+                      lazy: false)
+                  .vTableGet(buffer, rootOffset, 18, []),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 20, ''),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 22, ''),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 24, ''),
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 28, false))
+            ..mockId =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
         })
@@ -192,31 +355,80 @@ ModelDefinition getObjectBoxModel() {
 
 /// [Auth] entity fields to define ObjectBox queries.
 class Auth_ {
-  /// see [Auth.id]
-  static final id = QueryIntegerProperty<Auth>(_entities[0].properties[0]);
-
   /// see [Auth.email]
-  static final email = QueryStringProperty<Auth>(_entities[0].properties[1]);
+  static final email = QueryStringProperty<Auth>(_entities[0].properties[0]);
 
   /// see [Auth.password]
-  static final password = QueryStringProperty<Auth>(_entities[0].properties[2]);
+  static final password = QueryStringProperty<Auth>(_entities[0].properties[1]);
+
+  /// see [Auth.mockId]
+  static final mockId = QueryIntegerProperty<Auth>(_entities[0].properties[2]);
 }
 
 /// [User] entity fields to define ObjectBox queries.
 class User_ {
-  /// see [User.id]
-  static final id = QueryIntegerProperty<User>(_entities[1].properties[0]);
-
   /// see [User.email]
-  static final email = QueryStringProperty<User>(_entities[1].properties[1]);
+  static final email = QueryStringProperty<User>(_entities[1].properties[0]);
 
   /// see [User.imageUrl]
-  static final imageUrl = QueryStringProperty<User>(_entities[1].properties[2]);
+  static final imageUrl = QueryStringProperty<User>(_entities[1].properties[1]);
 
   /// see [User.firstName]
   static final firstName =
-      QueryStringProperty<User>(_entities[1].properties[3]);
+      QueryStringProperty<User>(_entities[1].properties[2]);
 
   /// see [User.lastName]
-  static final lastName = QueryStringProperty<User>(_entities[1].properties[4]);
+  static final lastName = QueryStringProperty<User>(_entities[1].properties[3]);
+
+  /// see [User.mockId]
+  static final mockId = QueryIntegerProperty<User>(_entities[1].properties[4]);
+}
+
+/// [Event] entity fields to define ObjectBox queries.
+class Event_ {
+  /// see [Event.mockId]
+  static final mockId = QueryIntegerProperty<Event>(_entities[2].properties[0]);
+
+  /// see [Event.eventImg]
+  static final eventImg =
+      QueryStringProperty<Event>(_entities[2].properties[1]);
+
+  /// see [Event.startDate]
+  static final startDate =
+      QueryIntegerProperty<Event>(_entities[2].properties[2]);
+
+  /// see [Event.endDate]
+  static final endDate =
+      QueryIntegerProperty<Event>(_entities[2].properties[3]);
+
+  /// see [Event.description]
+  static final description =
+      QueryStringProperty<Event>(_entities[2].properties[4]);
+
+  /// see [Event.isFav]
+  static final isFav = QueryBooleanProperty<Event>(_entities[2].properties[5]);
+
+  /// see [Event.categ]
+  static final categ = QueryStringProperty<Event>(_entities[2].properties[6]);
+
+  /// see [Event.tags]
+  static final tags =
+      QueryStringVectorProperty<Event>(_entities[2].properties[7]);
+
+  /// see [Event.id]
+  static final id = QueryStringProperty<Event>(_entities[2].properties[8]);
+
+  /// see [Event.title]
+  static final title = QueryStringProperty<Event>(_entities[2].properties[9]);
+
+  /// see [Event.organization]
+  static final organization =
+      QueryStringProperty<Event>(_entities[2].properties[10]);
+
+  /// see [Event.state]
+  static final state = QueryBooleanProperty<Event>(_entities[2].properties[11]);
+
+  /// see [Event.status]
+  static final status =
+      QueryBooleanProperty<Event>(_entities[2].properties[12]);
 }

@@ -115,9 +115,7 @@ class _EventCardState extends State<EventCard> {
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 16))),
                       Text(
-                        (event.state == EventState.online)
-                            ? 'Online'
-                            : 'Offline',
+                        (event.state == true) ? 'Online' : 'Offline',
                         style: const TextStyle(color: Colors.grey),
                       ),
                       Row(

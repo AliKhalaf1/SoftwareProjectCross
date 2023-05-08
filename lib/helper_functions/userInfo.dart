@@ -43,10 +43,33 @@ Future<User> getUserInfo(String info) async {
     currUser.lastName = data['lastname'];
     currUser.imageUrl = data['avatar_url'];
     print('avatar url: ${currUser.imageUrl}');
+    setUserinfo(currUser.firstName, currUser.lastName);
     return currUser;
   } else {}
 
   return currUser;
 }
 
+void setUserinfo(String firstname, String lastname) {
+  // var userbox = ObjectBox.userBox;
+  // var user = userbox.query(User_.email.equals(email)).build().findFirst()!;
+  // user.firstName = firstname;
+  // user.lastName = lastname;
 
+  // userbox.put(user);
+
+  SharedPreferences.getInstance().then((prefs) {
+    prefs.setString('firstname', firstname);
+    prefs.setString('lastname', lastname);
+  });
+}
+
+Future<String> getFirstName() async {
+  var cache_mem = await SharedPreferences.getInstance();
+  return cache_mem.getString('firstname') ?? "";
+}
+
+Future<String> getLastName() async {
+  var cache_mem = await SharedPreferences.getInstance();
+  return cache_mem.getString('lastname') ?? "";
+}

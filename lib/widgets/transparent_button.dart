@@ -6,22 +6,23 @@ import '../widgets/google_icon.dart';
 /// {@category Widgets}
 ///<b> TextButton() </b>
 /// with certain styling used for:
-///  
+///
 ///   • Continue with facbook button
-/// 
+///
 ///   • Continue with google button
-/// 
+///
 class TransparentButton extends StatelessWidget {
   final int id;
   final String text;
   final Function onPressed;
   final Icon icon;
-  /// It takes: 
+
+  /// It takes:
   ///
   ///   • Text to display inside button
-  /// 
+  ///
   ///   • Function handler
-  /// 
+  ///
   ///   • Icon to display
   const TransparentButton(this.id, this.text, this.onPressed, this.icon,
       {super.key});
@@ -51,7 +52,7 @@ class TransparentButton extends StatelessWidget {
                     )),
               ),
             ),
-            onPressed: () => onPressed,
+            onPressed: () => onPressed(),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

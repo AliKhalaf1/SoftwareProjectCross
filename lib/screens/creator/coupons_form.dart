@@ -18,7 +18,7 @@ class CouponForm extends StatefulWidget {
 
 String? couponName;
 int? limitedTo;
-int? discountValue;
+double? discountValue;
 final _form = GlobalKey<FormState>();
 
 class _CouponFormState extends State<CouponForm> {
@@ -213,8 +213,12 @@ class _CouponFormState extends State<CouponForm> {
               validator: (value) {
                 if (value != null) {
                   if (value.isEmpty) {
-                    return "We need Discount Value ";
+                    return "Discount needed ";
                   } else {
+                    final RegExp priceRegex = RegExp(r'^\d+(\.\d{1,2})?$');
+                    if (!priceRegex.hasMatch(value)) {
+                      return 'Invalid format';
+                    }
                     return null;
                   }
                 }
@@ -222,7 +226,7 @@ class _CouponFormState extends State<CouponForm> {
               },
               keyboardType: TextInputType.number,
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly // Allow only digits
+                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
               ],
               cursorColor: Colors.black,
               cursorHeight: 18,
@@ -242,7 +246,8 @@ class _CouponFormState extends State<CouponForm> {
                 ),
               ),
               onSaved: (value) {
-                discountValue = int.parse(value!);
+                discountValue = double.parse(value!);
+                print(discountValue);
               },
             ),
             const SizedBox(

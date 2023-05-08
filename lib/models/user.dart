@@ -19,7 +19,7 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class User {
   @Id()
-  int id = 0;
+  int mockId = 0;
   //parameters
   @Unique()
   String email;

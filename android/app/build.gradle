@@ -45,8 +45,8 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        minSdkVersion 20
-        applicationId "com.example.my_expenses"
+        minSdkVersion 21
+        applicationId "com.awaitanthony.eventbrite_replica"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
        
@@ -55,7 +55,22 @@ android {
         versionName flutterVersionName
     }
 
+
+    signingConfigs {
+        debug {
+            keyAlias 'mykey'
+            keyPassword 'ahmedsaad'
+            storeFile file('mykey.jks')
+            storePassword 'ahmedsaad'
+        }
+    }
+
     buildTypes {
+
+        debug {
+            signingConfig signingConfigs.debug
+        }
+
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
@@ -71,4 +86,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.facebook.android:facebook-login:latest.release'
+    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
+
 }

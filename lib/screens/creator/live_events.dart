@@ -1,5 +1,6 @@
 library live_events;
 
+import 'package:Eventbrite/providers/getevent/getevent.dart';
 import 'package:Eventbrite/screens/creator/event_title.dart';
 import 'package:Eventbrite/widgets/backgroud.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class LiveEvents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    totalEvents events = totalEvents();
     bool tester = true;
     String EventDesc = "event";
     return Scaffold(
@@ -51,6 +53,7 @@ class LiveEvents extends StatelessWidget {
           : Background("assets/images/live_events.jfif"),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          events.fetchAndSetProducts();
           Navigator.of(context).push(
             SplashRoute(
               targetPage: EventTitle(),
