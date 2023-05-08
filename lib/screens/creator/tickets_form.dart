@@ -298,8 +298,8 @@ class _TicketFormState extends State<TicketForm> {
               ),
               TextFormField(
                 validator: (value) {
-                  if (value != null) {
-                    if (value.isEmpty) {
+                  if (value != null || int.tryParse(value!) != null) {
+                    if (value.isEmpty || int.tryParse(value) == 0) {
                       return "Quantity needed ";
                     } else if (value == "0") {
                       return "Quantity needed ";

@@ -1,5 +1,5 @@
 import 'drawer.dart';
-import '../screens/creator/draft_events.dart';
+import '../screens/creator/all_events.dart';
 import '../screens/creator/live_events.dart';
 import '../screens/creator/past_events.dart';
 import 'package:flutter/material.dart';
