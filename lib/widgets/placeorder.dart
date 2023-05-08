@@ -126,9 +126,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            onPressed: () {
-              // To Be: Confirm End session if confirmed back to event page
-            },
+            onPressed: () => showConfirmationDialog(context),
             icon: const Icon(Icons.close, size: 15),
           ),
         ],
