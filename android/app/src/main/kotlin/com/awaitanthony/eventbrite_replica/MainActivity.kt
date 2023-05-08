@@ -1,4 +1,4 @@
-package com.awaitsaad.eventbrite_replica_demo_app
+package com.awaitanthony.eventbrite_replica
 
 import io.flutter.embedding.android.FlutterActivity
 

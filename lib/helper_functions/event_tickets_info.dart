@@ -1,15 +1,18 @@
 library EventTicketsHelperFunctions;
 
-import '../models/event_tickets.dart';
+import '../models/event_ticket.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'constants.dart';
 
 /// {@category Helper Functions}
 ///
-Future<EventTicketsInfo> getEventTicketsInfo(String eventId) async {
-  // To Be: Remove initialization
-  EventTicketsInfo eventTickets = EventTicketsInfo([], [], [], [], [], 0);
+/// To Be: first list: list of free tickets of event / second list: list of vip tickets of event
+Future<List<List<EventTicketInfo>>> getEventTicketsInfo(String eventId) async {
+  /// Notice that eventTickets is list of only 2 list one for freeTickets and one for vipTickets
+  List<List<EventTicketInfo>> eventTickets = [];
+  List<EventTicketInfo> eventFreeTicketsData = [];
+  List<EventTicketInfo> eventVipTicketsData = [];
 
   // To Be: parse API url in uri
   // var uri = Uri.parse('${Constants.host}/users/me/eventId');
@@ -37,5 +40,7 @@ Future<EventTicketsInfo> getEventTicketsInfo(String eventId) async {
   // return eventTickets;
   // } else {}
 
+  eventTickets.add(eventFreeTicketsData);
+  eventTickets.add(eventVipTicketsData);
   return eventTickets;
 }
