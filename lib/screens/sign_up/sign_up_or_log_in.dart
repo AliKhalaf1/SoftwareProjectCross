@@ -84,6 +84,7 @@ class SignUpOrLogIn extends StatelessWidget {
           "heloloo-----------------------------------------------------------------------------");
       print(result.accessToken!.token);
       print(result.accessToken!.userId);
+      print(result.accessToken!.grantedPermissions);
       print(
           "heloloo-----------------------------------------------------------------------------");
       print(

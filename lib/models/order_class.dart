@@ -1,21 +1,20 @@
-// import 'package:objectbox/objectbox.dart';
+import 'package:objectbox/objectbox.dart';
 
-// @Entity()
-// class OrderClass {
-//   @Id()
-//   int mockId = 0;
-//   final String firstName;
-//   final String lastName;
-//   final String email;
-//   bool isVip;
-//   double price;
-//   int maxQuantity;
-//   int availableQuantity = 0;
-//   DateTime startDate;
-//   DateTime endDate;
+@Entity()
+class OrderClass {
+  @Id()
+  int mockId = 0;
+  int userId = 0;
+  int eventId = 0;
 
-//   OrderClass(
-//       this.isVip, this.price, this.maxQuantity, this.startDate, this.endDate) {
-//     availableQuantity = maxQuantity;
-//   }
-// }
+  String id;
+  final String firstName;
+  final String lastName;
+  final String email;
+  double price;
+
+  DateTime creation_date;
+
+  OrderClass(this.id, this.firstName, this.lastName, this.email, this.price,
+      this.creation_date);
+}

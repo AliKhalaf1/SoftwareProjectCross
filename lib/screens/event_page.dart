@@ -106,7 +106,7 @@ class EventPage extends StatefulWidget {
 
   // Constructor of EventPage scree
   EventPage(this.eventId, this.isLogged, {super.key});
-  
+
   static const eventPageRoute = '/Event-Page';
 
   @override
@@ -421,7 +421,7 @@ class _EventPageState extends State<EventPage> {
                             leading: const Icon(Icons.ondemand_video_outlined,
                                 size: 15),
                             title: Text(
-                              (widget.loadedEvent.state == true)
+                              (widget.loadedEvent.isOnline == true)
                                   ? 'Online event'
                                   : 'Offline event',
                             ),

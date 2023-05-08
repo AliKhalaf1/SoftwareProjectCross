@@ -4,6 +4,7 @@ import 'package:objectbox/objectbox.dart';
 class TicketClass {
   @Id()
   int mockId = 0;
+  int eventId = 0;
   final String name;
   bool isVip;
   double price;
