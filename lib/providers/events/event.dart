@@ -38,8 +38,8 @@ class Event with ChangeNotifier {
   final DateTime startDate; /*start event date*/
   final DateTime endDate; /*end event date*/
   final String description; /*event dscription*/
-  final bool state; /*event state (online/onsite)*/
-  final bool status; /*event status (private/public) */
+  final bool isOnline; /*event state (online/onsite)*/
+  final bool isPrivate; /*event status (private/public) */
   bool isFav;
   final String categ;
   final List<String> tags;
@@ -53,14 +53,14 @@ class Event with ChangeNotifier {
       this.endDate,
       this.description,
       this.eventImg,
-      this.state,
+      this.isOnline,
       this.isFav,
       this.categ,
       this.tags,
       this.id,
       this.title,
       this.organization,
-      this.status);
+      this.isPrivate);
 
   /// Set isFav Value by true or false
   void _setFavValue(bool newValue) {

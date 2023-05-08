@@ -35,6 +35,7 @@ class EventPromocodeInfo {
   int idMock = 0;
   //parameters
   // @Unique()
+  String eventId = "";
   String id;
   String name;
   bool isLimited; /*true: limited / false:unlimited */
