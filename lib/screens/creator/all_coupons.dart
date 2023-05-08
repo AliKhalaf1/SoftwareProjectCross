@@ -27,7 +27,7 @@ class AllCoupons extends StatelessWidget {
       ),
       body: event.totalCouponsLength != 0
           ? Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: ListView.builder(
                 itemCount: event.totalCouponsLength,
                 itemBuilder: (context, index) {
