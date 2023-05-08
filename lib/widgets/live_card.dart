@@ -37,7 +37,6 @@ class LiveCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       child: ListTile(
         key: key,
-        onTap: () {},
         leading: CircularPercentIndicator(
           radius: 55,
           lineWidth: 3,

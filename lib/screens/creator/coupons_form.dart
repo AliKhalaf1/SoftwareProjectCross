@@ -202,7 +202,7 @@ class _CouponFormState extends State<CouponForm> {
                 limitedTo = int.parse(value!);
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Text(

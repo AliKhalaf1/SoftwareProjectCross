@@ -23,7 +23,7 @@ class theEvent {
       this.takenTickets = 0});
 }
 
-class totalEvents {
+class totalEvents with ChangeNotifier {
   List<theEvent> items = [];
 
   List<theEvent> get allitems {
@@ -43,6 +43,7 @@ class totalEvents {
     try {
       final response = await http.get(url, headers: reqHeaders);
       print(response.statusCode);
+
       print(
           "--------------------------------------------------------------------------------------------");
       // print(response.body);
@@ -114,4 +115,21 @@ class totalEvents {
 
     return endItems;
   }
+
+  // Future<void> deleteEvent(String id) async {
+  //   final url = Uri.parse('https://eventbrite-995n.onrender.com/events/id/$id');
+  //   String token = await getToken();
+  //   Map<String, String> reqHeaders = {
+  //     'Authorization': 'Bearer $token',
+  //     "Content-Type": "application/json"
+  //   };
+  //   items.removeWhere((element) => element.id == id);
+  //   notifyListeners();
+  //   try {
+  //     final response = await http.delete(url, headers: reqHeaders);
+  //     print("delete respone");
+  //     print(response.statusCode);
+  //   } catch (error) {}
+  //   notifyListeners();
+  // }
 }
