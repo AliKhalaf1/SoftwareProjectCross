@@ -20,7 +20,7 @@ class LiveCard extends StatelessWidget {
   final String dateString;
   final int ticketsNumber;
   final int ticketsTaken;
-  final int ticketPrice;
+  final double ticketPrice;
   LiveCard(this.dateString, this.liveDescription, this.ticketsNumber,
       this.ticketsTaken, this.ticketPrice,
       {required Key key});
@@ -30,7 +30,7 @@ class LiveCard extends StatelessWidget {
     DateTime dateTime = DateTime.parse(dateString);
     String formattedDate = DateFormat('EEE, MMM d, h:mm a')
         .format(dateTime); // format the DateTime object
-    double percentageTickets = ticketsTaken / ticketsNumber;
+    double percentageTickets = ticketsTaken / 1;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
