@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:Eventbrite/screens/user/ticket_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
@@ -17,177 +18,190 @@ class TicketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height * 0.01,
-          top: MediaQuery.of(context).size.height * 0.01),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  ClipPath(
-                      clipper: CardTicketClipper(),
-                      child: Container(
-                        height: MediaQuery.of(context).orientation ==
-                                Orientation.landscape
-                            ? MediaQuery.of(context).size.height * 0.3
-                            : MediaQuery.of(context).size.height * 0.15,
-                        width: MediaQuery.of(context).size.width * 0.9 * 0.6,
-                        color: col,
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => TicketsDetailsScreen(),
+          ),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(
+            bottom: MediaQuery.of(context).size.height * 0.01,
+            top: MediaQuery.of(context).size.height * 0.01),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Stack(
+                  children: [
+                    ClipPath(
+                        clipper: CardTicketClipper(),
                         child: Container(
-                          alignment: Alignment.center,
+                          height: MediaQuery.of(context).orientation ==
+                                  Orientation.landscape
+                              ? MediaQuery.of(context).size.height * 0.3
+                              : MediaQuery.of(context).size.height * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.9 * 0.6,
+                          color: col,
                           child: Container(
-                            width:
-                                MediaQuery.of(context).size.width * 0.9 * 0.5,
-                            height: MediaQuery.of(context).size.height *
-                                0.15 *
-                                0.75,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  children: [
-                                    Container(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        DateFormat.MMM().format(ticket.date),
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 15,
-                                          color: Colors.grey[700],
+                            alignment: Alignment.center,
+                            child: Container(
+                              width:
+                                  MediaQuery.of(context).size.width * 0.9 * 0.5,
+                              height: MediaQuery.of(context).size.height *
+                                  0.15 *
+                                  0.75,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Container(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          DateFormat.MMM().format(ticket.date),
+                                          style: GoogleFonts.roboto(
+                                            fontSize: 15,
+                                            color: Colors.grey[700],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        DateFormat.d().format(ticket.date),
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 30,
-                                          color: Colors.black,
+                                      Container(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          DateFormat.d().format(ticket.date),
+                                          style: GoogleFonts.roboto(
+                                            fontSize: 30,
+                                            color: Colors.black,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        DateFormat.y().format(ticket.date),
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 15,
-                                          color: Colors.grey[700],
+                                      Container(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          DateFormat.y().format(ticket.date),
+                                          style: GoogleFonts.roboto(
+                                            fontSize: 15,
+                                            color: Colors.grey[700],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.9 *
-                                          0.5 *
-                                          0.6,
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        ticket.title,
-                                        softWrap: true,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black,
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9 *
+                                                0.5 *
+                                                0.6,
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          ticket.title,
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: GoogleFonts.roboto(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.9 *
-                                          0.5 *
-                                          0.6,
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        ' ${DateFormat.E().format(ticket.date)} at ${DateFormat.jm().format(ticket.date)}',
-                                        style: GoogleFonts.roboto(
-                                          fontSize: 12,
-                                          color: Colors.grey[700],
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9 *
+                                                0.5 *
+                                                0.6,
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          ' ${DateFormat.E().format(ticket.date)} at ${DateFormat.jm().format(ticket.date)}',
+                                          style: GoogleFonts.roboto(
+                                            fontSize: 12,
+                                            color: Colors.grey[700],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )),
-                  CustomPaint(
-                    painter: CardTicketBorder(),
-                    size: MediaQuery.of(context).orientation ==
-                            Orientation.landscape
-                        ? Size(MediaQuery.of(context).size.width * 0.6 * 0.9,
-                            MediaQuery.of(context).size.height * 0.3)
-                        : Size(MediaQuery.of(context).size.width * 0.6 * 0.9,
-                            MediaQuery.of(context).size.height * 0.15),
-                  ),
-                ],
-              ),
-              Stack(
-                children: [
-                  ClipPath(
-                      clipper: ImageTicketClipper(),
-                      child: Container(
-                        height: MediaQuery.of(context).orientation ==
-                                Orientation.landscape
-                            ? MediaQuery.of(context).size.height * 0.3
-                            : MediaQuery.of(context).size.height * 0.15,
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        color: col,
+                        )),
+                    CustomPaint(
+                      painter: CardTicketBorder(),
+                      size: MediaQuery.of(context).orientation ==
+                              Orientation.landscape
+                          ? Size(MediaQuery.of(context).size.width * 0.6 * 0.9,
+                              MediaQuery.of(context).size.height * 0.3)
+                          : Size(MediaQuery.of(context).size.width * 0.6 * 0.9,
+                              MediaQuery.of(context).size.height * 0.15),
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: [
+                    ClipPath(
+                        clipper: ImageTicketClipper(),
                         child: Container(
-                          foregroundDecoration: old
-                              ? const BoxDecoration(
-                                  color: Colors.grey,
-                                  backgroundBlendMode: BlendMode.saturation,
-                                )
-                              : null,
-                          child: FadeInImage(
-                            image: ticket.eventImgUrl.isEmpty
-                                ? AssetImage('assets/images/no_image_found.png')
-                                    as ImageProvider
-                                : NetworkImage(
-                                    ticket.eventImgUrl,
-                                  ),
-                            placeholder:
-                                AssetImage("assets/images/no_image_found.png"),
-                            imageErrorBuilder: (context, error, stackTrace) {
-                              return Image.asset(
-                                  'assets/images/no_image_found.png',
-                                  fit: BoxFit.cover);
-                            },
-                            fit: BoxFit.cover,
+                          height: MediaQuery.of(context).orientation ==
+                                  Orientation.landscape
+                              ? MediaQuery.of(context).size.height * 0.3
+                              : MediaQuery.of(context).size.height * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          color: col,
+                          child: Container(
+                            foregroundDecoration: old
+                                ? const BoxDecoration(
+                                    color: Colors.grey,
+                                    backgroundBlendMode: BlendMode.saturation,
+                                  )
+                                : null,
+                            child: FadeInImage(
+                              image: ticket.eventImgUrl.isEmpty
+                                  ? AssetImage(
+                                          'assets/images/no_image_found.png')
+                                      as ImageProvider
+                                  : NetworkImage(
+                                      ticket.eventImgUrl,
+                                    ),
+                              placeholder: AssetImage(
+                                  "assets/images/no_image_found.png"),
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                    'assets/images/no_image_found.png',
+                                    fit: BoxFit.cover);
+                              },
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                      )),
-                  CustomPaint(
-                    painter: ImageTicketBorder(),
-                    size: MediaQuery.of(context).orientation ==
-                            Orientation.landscape
-                        ? Size(MediaQuery.of(context).size.width * 0.4,
-                            MediaQuery.of(context).size.height * 0.3)
-                        : Size(MediaQuery.of(context).size.width * 0.4,
-                            MediaQuery.of(context).size.height * 0.15),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+                        )),
+                    CustomPaint(
+                      painter: ImageTicketBorder(),
+                      size: MediaQuery.of(context).orientation ==
+                              Orientation.landscape
+                          ? Size(MediaQuery.of(context).size.width * 0.4,
+                              MediaQuery.of(context).size.height * 0.3)
+                          : Size(MediaQuery.of(context).size.width * 0.4,
+                              MediaQuery.of(context).size.height * 0.15),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
