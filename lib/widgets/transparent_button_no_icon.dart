@@ -68,7 +68,11 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
                 ),
               )
             : TextButton(
-                style: (widget.text == 'Tickets' || widget.text == 'Check out' || widget.text == 'Log in')
+                style: (widget.text == 'Tickets' ||
+                        widget.text == 'Check out' ||
+                        widget.text == 'Log in' ||
+                        widget.text == 'Place order' ||
+                        widget.text == 'Log in')
                     ? ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                             Theme.of(context).primaryColor),
@@ -94,12 +98,10 @@ class _TransparentButtonNoIconState extends State<TransparentButtonNoIcon> {
                           ),
                         ),
                       ),
-                onPressed: (widget.text == 'Check out')
-                    ? () => widget.onPressed(
-                          context,
-                          widget.eventId
-                        )
-                    : () => widget.onPressed(context),
+                onPressed:
+                    (widget.text == 'Check out' || widget.text == 'Place order')
+                        ? () => widget.onPressed(context, widget.eventId)
+                        : () => widget.onPressed(context),
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
