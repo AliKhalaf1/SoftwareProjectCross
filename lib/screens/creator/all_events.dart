@@ -2,6 +2,7 @@ library DraftEventsScreen;
 
 import 'package:Eventbrite/widgets/draft_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:splash_route/splash_route.dart';
 import '../../providers/getevent/getevent.dart';
 import '../../widgets/backgroud.dart';
@@ -22,13 +23,14 @@ class _DraftEventsState extends State<DraftEvents> {
   var _isLoading = false;
   List<theEvent> dataAll = [];
   int liveeventLen = 0;
-  totalEvents events = totalEvents();
+  late final events;
   @override
   void didChangeDependencies() async {
     if (_isInit) {
       setState(() {
         _isLoading = true;
       });
+      events = Provider.of<totalEvents>(context, listen: false);
       await events.fetchAndSetEvents();
       dataAll = events.allitems;
       setState(() {
@@ -40,12 +42,26 @@ class _DraftEventsState extends State<DraftEvents> {
     super.didChangeDependencies();
   }
 
+  Future<void> _refreshProducts(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+    await events.fetchAndSetEvents();
+    dataAll = events.allitems;
+    setState(() {
+      liveeventLen = dataAll.length;
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget myWidget;
     if (_isLoading) {
       myWidget = const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          color: Colors.orange,
+        ),
       );
     } else if (!_isLoading && liveeventLen > 0) {
       myWidget = Padding(
@@ -67,7 +83,11 @@ class _DraftEventsState extends State<DraftEvents> {
       myWidget = Background("assets/images/draft_events.jfif");
     }
     return Scaffold(
-      body: myWidget,
+      body: RefreshIndicator(
+        child: myWidget,
+        onRefresh: () => _refreshProducts(context),
+        color: Colors.orange,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
