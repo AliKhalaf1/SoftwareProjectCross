@@ -38,13 +38,14 @@ class EventPromocodeInfo {
   String id;
   String name;
   bool isLimited; /*true: limited / false:unlimited */
-  int avliableAmount; /*current_amount from API */
+  int availableAmount; /*current_amount from API */
   /*To Be: promocode type => % or value lesa ha3raf hoa type eh*/
-  String type;
-  int discount; /* discount_percentage OR discount_percentage depending on type */
+  bool isPercentage;
+  double
+      discount; /* discount_percentage OR discount_percentage depending on type */
   DateTime startDate;
   DateTime endDate;
 
-  EventPromocodeInfo(this.id,this.name, this.isLimited, this.avliableAmount, this.type,
-      this.discount, this.startDate, this.endDate);
+  EventPromocodeInfo(this.id, this.name, this.isLimited, this.availableAmount,
+      this.isPercentage, this.discount, this.startDate, this.endDate);
 }

@@ -8,7 +8,7 @@ import 'constants.dart';
 Future<EventPromocodeInfo> getEventPrmocodeInfo(String eventId) async {
   // To Be: Remove initialization
   EventPromocodeInfo eventPromo = EventPromocodeInfo('',
-      '', false, 0, 'value', 0, DateTime.now(), DateTime.now());
+      '', false, 0, false, 0.0, DateTime.now(), DateTime.now());
 
   // To Be: parse API url in uri
   // var uri = Uri.parse('${Constants.host}/users/me/eventId');

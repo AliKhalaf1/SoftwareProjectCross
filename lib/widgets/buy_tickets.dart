@@ -4,17 +4,19 @@ import 'package:Eventbrite/widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/event_promocode.dart';
+import 'placeorder.dart';
 import 'transparent_button_no_icon.dart';
-import '../models/event_tickets.dart';
+import '../models/event_ticket.dart';
 
 class BuyTickets extends StatefulWidget {
   final String eventId;
   final String eventtitle;
   final String eventStartDate;
-  final EventTicketsInfo eventTickets;
+  List<EventTicketInfo> eventFreeTickets;
+  List<EventTicketInfo> eventVipTickets;
   final EventPromocodeInfo? eventPromocode;
-  const BuyTickets(this.eventId, this.eventtitle, this.eventStartDate,
-      this.eventTickets, this.eventPromocode,
+  BuyTickets(this.eventId, this.eventtitle, this.eventStartDate,
+      this.eventFreeTickets, this.eventVipTickets, this.eventPromocode,
       {super.key});
 
   @override
@@ -22,17 +24,10 @@ class BuyTickets extends StatefulWidget {
 }
 
 class SubmittedData {
-  String? promo;
-  // Ids to access apis with it
-  // To Be: shoof hatstlmhm feen
-  //-------------------//
-  String? freeTicketId;
-  String? vipTicketId;
+  List<EventTicketInfo> reservedFreeTickets = [];
+  List<EventTicketInfo> reservedVipTickets = [];
   String? promocodetId;
-  //-------------------//
-  int freeTickets = 0;
-  int vipTickets = 0;
-  int totalPrice = 0;
+  double totalPrice = 0;
 }
 
 class _BuyTicketsState extends State<BuyTickets> {
@@ -45,7 +40,7 @@ class _BuyTicketsState extends State<BuyTickets> {
   //Promo code input
   final promoCodeInp = TextEditingController();
   bool _showSuffixIcon = false;
-  final data = SubmittedData();
+  SubmittedData data = SubmittedData();
   final _form = GlobalKey<FormState>();
   final _fieldKey = GlobalKey<FormFieldState>();
 
@@ -57,8 +52,7 @@ class _BuyTicketsState extends State<BuyTickets> {
   /// checkoutClicked: boolean to be true only if checkout Btn clicked
   bool promocodeApplied = false;
   bool checkoutClicked = false;
-
-  // --------------------------------------------- Tickets ---------------------------------------------------------
+  int allTicketSelectedQ = 0;
 
 //--================================================== Methods ==============================================--
 //**************************************************************************************************************** */
@@ -71,16 +65,18 @@ class _BuyTicketsState extends State<BuyTickets> {
       setState(() {
         // Entered value is not valid so Not to apply promocode
         promocodeApplied = false;
+        // To Be: et2aked ena msh hat7tago hena
+        // removePromoFromPrice();
       });
 
       /// Remove the data.promo value from submetted data
-      data.promo = null;
       data.promocodetId = null;
       return;
     }
     setState(() {
       // Entered value is valid so apply promocode
       promocodeApplied = true;
+      applyPromoOnPrice();
     });
 
     /// PromoCheck: close Textfield
@@ -90,51 +86,112 @@ class _BuyTicketsState extends State<BuyTickets> {
     _fieldKey.currentState?.save();
   }
 
+  void applyPromoOnPrice() {
+    // No VIP tickets to Apply this promo on it
+    if (data.totalPrice == 0) {
+      return;
+    }
+
+    // check on promocode type
+    // if type Value
+    if (!widget.eventPromocode!.isPercentage) {
+      // if apply  and make sure that value is greater than zero after apply
+      if (data.totalPrice - widget.eventPromocode!.discount > 0) {
+        data.totalPrice = data.totalPrice - widget.eventPromocode!.discount;
+        data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
+        return;
+      }
+      // here promo code is greater than total price
+      data.totalPrice = 0;
+    }
+    // if type percentage
+    else {
+      data.totalPrice = data.totalPrice * (1 - widget.eventPromocode!.discount);
+      data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
+    }
+  }
+
+  void removePromoFromPrice() {
+    // check on promocode type
+    // if type Value
+    if (!widget.eventPromocode!.isPercentage) {
+      // data.totalPrice =
+      //     (data.vipTickets * widget.eventTickets.vipTicketPrice).toDouble();
+      data.totalPrice = 0;
+      for (int i = 0; i < data.reservedVipTickets.length; i++) {
+        if (data.reservedVipTickets[i].selectedQuantity > 0) {
+          data.totalPrice += data.reservedVipTickets[i].selectedQuantity *
+              data.reservedVipTickets[i].ticketPrice;
+        }
+      }
+      data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
+    }
+    // if type percentage
+    else {
+      data.totalPrice = data.totalPrice / (1 - widget.eventPromocode!.discount);
+      data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
+    }
+  }
+
   // --------------------------------------------- Tickets ---------------------------------------------------------
-  void decrementFreeTickets() {
-    if (data.freeTickets > 0) {
+  void decrementFreeTickets(int ind) {
+    if (data.reservedFreeTickets[ind].selectedQuantity > 0) {
       setState(() {
-        --data.freeTickets;
+        --data.reservedFreeTickets[ind].selectedQuantity;
+        --allTicketSelectedQ;
+        if (data.reservedFreeTickets[ind].selectedQuantity == 0) {
+          data.reservedFreeTickets.remove(data.reservedFreeTickets[ind]);
+        }
       });
     }
   }
 
-  void incrementFreeTickets() {
-    if (data.freeTickets < widget.eventTickets.avaliableQuantaties[0]) {
+  void incrementFreeTickets(int ind) {
+    if (data.reservedFreeTickets[ind].selectedQuantity <
+        data.reservedFreeTickets[ind].avaliableQuantity) {
       setState(() {
-        ++data.freeTickets;
+        ++data.reservedFreeTickets[ind].selectedQuantity;
+        ++allTicketSelectedQ;
       });
     }
   }
 
-  void decrementVipTickets() {
-    if (data.vipTickets > 0) {
+  void decrementVipTickets(int ind) {
+    // if applied before remove then apply
+    if (promocodeApplied) {
+      removePromoFromPrice();
+    }
+    if (data.reservedVipTickets[ind].selectedQuantity > 0) {
       setState(() {
-        --data.vipTickets;
-        // if (promocodeApplied) {
-        //   // To Be: Make sure that check is correct and it is like that is database
-        //   if (widget.eventPromocode?.type == 'value') {
-        //     data.totalPrice -= (widget.eventTickets.vipTicketPrice -
-        //         widget.eventPromocode!.discount);
-        //     if (data.totalPrice < 0) {
-        //       data.totalPrice = 0;
-        //     }
-        //   } else {
-        //     data.totalPrice -= widget.eventTickets.vipTicketPrice;
-        //   }
-        // } else {
-        //   data.totalPrice -= widget.eventTickets.vipTicketPrice;
-        // }
-        data.totalPrice -= widget.eventTickets.vipTicketPrice;
+        --data.reservedVipTickets[ind].selectedQuantity;
+        --allTicketSelectedQ;
+        data.totalPrice -= data.reservedVipTickets[ind].ticketPrice;
+        data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
+        if (promocodeApplied) {
+          applyPromoOnPrice();
+        }
+        if (data.reservedVipTickets[ind].selectedQuantity == 0) {
+          data.reservedVipTickets.remove(data.reservedVipTickets[ind]);
+        }
       });
     }
   }
 
-  void incrementVipTickets() {
-    if (data.vipTickets < widget.eventTickets.avaliableQuantaties[1]) {
+  void incrementVipTickets(int ind) {
+    // if applied before remove then apply
+    if (promocodeApplied) {
+      removePromoFromPrice();
+    }
+    if (data.reservedVipTickets[ind].selectedQuantity <
+        data.reservedVipTickets[ind].avaliableQuantity) {
       setState(() {
-        ++data.vipTickets;
-        data.totalPrice += widget.eventTickets.vipTicketPrice;
+        ++data.reservedVipTickets[ind].selectedQuantity;
+        ++allTicketSelectedQ;
+        data.totalPrice += data.reservedVipTickets[ind].ticketPrice;
+        data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
+        if (promocodeApplied) {
+          applyPromoOnPrice();
+        }
       });
     }
   }
@@ -145,17 +202,18 @@ class _BuyTicketsState extends State<BuyTickets> {
   /// Function to be called when checkout button is clicked
   void saveForm(BuildContext ctx, String eventId) {
     checkoutClicked = true;
-    final isValid = _form.currentState?.validate();
-    if (!isValid!) {
-      return;
-    }
-    _form.currentState?.save();
-
-    print('Data is: ');
-    print(data.promo);
-    print(data.freeTickets);
-    print(data.vipTickets);
-    print(data.totalPrice);
+    showModalBottomSheet(
+        context: ctx,
+        isScrollControlled: true,
+        builder: (_) {
+          //------------------------ user input -------------------//
+          return GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
+              behavior: HitTestBehavior.opaque,
+              child: PlaceOrder(widget.eventId,data.reservedFreeTickets,data.reservedVipTickets,data.promocodetId),);
+        });
   }
 
   @override
@@ -216,11 +274,9 @@ class _BuyTicketsState extends State<BuyTickets> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     // --------------------------------------- Promo-code ------------------------------------------------------------
-                    // if there is no promo code for this event OR no Vip tickets for the event OR promocode usage limit exceed
+                    // if there is no promo code for this event OR no Vip tickets for the event
                     (widget.eventPromocode == null ||
-                            (widget.eventPromocode!.isLimited &&
-                                widget.eventPromocode!.avliableAmount == 0) ||
-                            widget.eventTickets.avaliableQuantaties[1] == 0)
+                            widget.eventVipTickets.isEmpty)
                         ? const SizedBox()
                         : Padding(
                             padding: const EdgeInsets.only(top: 10),
@@ -232,6 +288,18 @@ class _BuyTicketsState extends State<BuyTickets> {
                                 /// PromoCheck: check that promocode valid or no promocode entered
                                 if (value == null) {
                                   return null;
+                                }
+                                if (widget.eventPromocode!.startDate
+                                    .isAfter(DateTime.now())) {
+                                  return "Invalid promocode";
+                                }
+                                if ((widget.eventPromocode!.isLimited &&
+                                        widget.eventPromocode!
+                                                .availableAmount ==
+                                            0) ||
+                                    widget.eventPromocode!.endDate
+                                        .isBefore(DateTime.now())) {
+                                  return "Promocode expired";
                                 }
                                 if (value.isEmpty ||
                                     value.length < 4 ||
@@ -246,7 +314,6 @@ class _BuyTicketsState extends State<BuyTickets> {
 
                               /// PromoCheck:Save value if valid and apply button clicked
                               onSaved: (newValue) {
-                                data.promo = newValue;
                                 data.promocodetId = widget.eventPromocode?.id;
                               },
                               cursorColor:
@@ -310,10 +377,13 @@ class _BuyTicketsState extends State<BuyTickets> {
 
                               /// PromoCheck: Cancel apply if user tap on textfield again
                               onTap: () {
+                                if (promocodeApplied == true) {
+                                  // embedded remove check: check on list of vip tickets w 7ot values selected bs men 8er promomcode
+                                  removePromoFromPrice();
+                                }
                                 promocodeApplied = false;
 
                                 /// Remove the data.promo value from submitted data
-                                data.promo = null;
                                 data.promocodetId = null;
                               },
                             ),
@@ -328,128 +398,202 @@ class _BuyTicketsState extends State<BuyTickets> {
                     // 1. There is avliable tickets
                     // 2. Start selling date is before now
                     // 2. end selling date is after now
-                    (widget.eventTickets.avaliableQuantaties[0] == 0 &&
-                            widget.eventTickets.startDates[0]
-                                .isBefore(DateTime.now()) &&
-                            widget.eventTickets.endDates[0]
-                                .isAfter(DateTime.now()))
+                    (widget.eventFreeTickets.isEmpty)
                         ? const SizedBox()
-                        : Container(
-                            padding: const EdgeInsets.all(10),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:
-                                      const Color.fromARGB(255, 50, 100, 237)),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                              color: Colors.white,
-                            ),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  color: Colors.white,
-                                  margin: const EdgeInsets.all(0),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        const Padding(
-                                          padding: EdgeInsets.only(left: 8.0),
-                                          child: Text("Free Tickets",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w400,
-                                              )),
+                        : Column(
+                            children:
+                                widget.eventFreeTickets.map((eventFreeTicket) {
+                              if (eventFreeTicket.startDate
+                                      .isAfter(DateTime.now()) &&
+                                  eventFreeTicket.endDate
+                                      .isBefore(DateTime.now())) {
+                                return const SizedBox();
+                              } else {
+                                int index = data.reservedFreeTickets
+                                    .indexOf(eventFreeTicket);
+                                return Column(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: const Color.fromARGB(
+                                                255, 50, 100, 237)),
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(10),
                                         ),
-                                        Row(
-                                          children: <Widget>[
-                                            data.freeTickets == 0
-                                                ? const IconButton(
-                                                    onPressed: null,
-                                                    icon: Icon(
-                                                        Icons
-                                                            .indeterminate_check_box,
-                                                        size: 35,
-                                                        color: Color.fromARGB(
-                                                            255,
-                                                            218,
-                                                            218,
-                                                            218)),
-                                                  )
-                                                : IconButton(
-                                                    key: const Key(
-                                                        "DecrementFreeBtn"),
-                                                    onPressed:
-                                                        decrementFreeTickets,
-                                                    icon: const Icon(
-                                                        Icons
-                                                            .indeterminate_check_box,
-                                                        size: 35,
-                                                        color: Color.fromARGB(
-                                                            255, 50, 100, 237)),
-                                                  ),
-                                            Text(data.freeTickets.toString(),
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w400,
-                                                )),
-                                            data.freeTickets ==
-                                                    widget.eventTickets
-                                                        .avaliableQuantaties[0]
-                                                ? const IconButton(
-                                                    onPressed: null,
-                                                    icon: Icon(
-                                                        Icons.add_box_rounded,
-                                                        size: 35,
-                                                        color: Color.fromARGB(
-                                                            255,
-                                                            218,
-                                                            218,
-                                                            218)),
-                                                  )
-                                                : IconButton(
-                                                    key: const Key(
-                                                        "IncrementFreeBtn"),
-                                                    onPressed:
-                                                        incrementFreeTickets,
-                                                    icon: const Icon(
-                                                        Icons.add_box_rounded,
-                                                        size: 35,
-                                                        color: Color.fromARGB(
-                                                            255, 50, 100, 237)),
-                                                  ),
-                                          ],
-                                        ),
-                                      ]),
-                                ),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.0, top: 10.0, bottom: 20),
-                                        child: Text(
-                                            'Sales end on ${DateFormat('MMMM dd, yyyy').format(widget.eventTickets.endDates[0])}',
-                                            style: const TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w400,
-                                                color: Color.fromARGB(
-                                                    255, 91, 90, 90))),
+                                        color: Colors.white,
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                                      child: Column(
+                                        children: [
+                                          Card(
+                                            elevation: 3,
+                                            color: Colors.white,
+                                            margin: const EdgeInsets.all(0),
+                                            child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8.0),
+                                                    child: Text(
+                                                        eventFreeTicket.name,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: const TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        )),
+                                                  ),
+                                                  Row(
+                                                    children: <Widget>[
+                                                      // No Added tickets from this ticket
+                                                      index == -1
+                                                          ? const IconButton(
+                                                              onPressed: null,
+                                                              icon: Icon(
+                                                                  Icons
+                                                                      .indeterminate_check_box,
+                                                                  size: 35,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          218,
+                                                                          218,
+                                                                          218)),
+                                                            )
+                                                          : IconButton(
+                                                              key: Key(
+                                                                  'DecrementVipBtn${eventFreeTicket.id}'),
+                                                              onPressed: () =>
+                                                                  decrementFreeTickets(
+                                                                      index),
+                                                              icon: const Icon(
+                                                                  Icons
+                                                                      .indeterminate_check_box,
+                                                                  size: 35,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          50,
+                                                                          100,
+                                                                          237)),
+                                                            ),
+                                                      Text(
+                                                          (index == -1)
+                                                              ? '0'
+                                                              : data
+                                                                  .reservedFreeTickets[
+                                                                      index]
+                                                                  .selectedQuantity
+                                                                  .toString(),
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          )),
+                                                      (index != -1 &&
+                                                              data
+                                                                      .reservedFreeTickets[
+                                                                          index]
+                                                                      .selectedQuantity ==
+                                                                  data
+                                                                      .reservedFreeTickets[
+                                                                          index]
+                                                                      .avaliableQuantity)
+                                                          ? const IconButton(
+                                                              onPressed: null,
+                                                              icon: Icon(
+                                                                  Icons
+                                                                      .add_box_rounded,
+                                                                  size: 35,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          218,
+                                                                          218,
+                                                                          218)),
+                                                            )
+                                                          : IconButton(
+                                                              key: Key(
+                                                                  "IncrementFreeBtn${eventFreeTicket.id}"),
+                                                              onPressed: () {
+                                                                if (index ==
+                                                                    -1) {
+                                                                  setState(() {
+                                                                    data.reservedFreeTickets
+                                                                        .add(
+                                                                            eventFreeTicket);
+                                                                    index = data
+                                                                        .reservedFreeTickets
+                                                                        .indexOf(
+                                                                            eventFreeTicket);
+                                                                  });
+                                                                }
+                                                                incrementFreeTickets(
+                                                                    index);
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons
+                                                                      .add_box_rounded,
+                                                                  size: 35,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          50,
+                                                                          100,
+                                                                          237)),
+                                                            ),
+                                                    ],
+                                                  ),
+                                                ]),
+                                          ),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0,
+                                                          top: 10.0,
+                                                          bottom: 20),
+                                                  child: Text(
+                                                      'Sales end on ${DateFormat('MMMM dd, yyyy').format(eventFreeTicket.endDate)}',
+                                                      style: const TextStyle(
+                                                          fontSize: 13,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              91,
+                                                              90,
+                                                              90))),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                );
+                              }
+                            }).toList(),
                           ),
 
                     const SizedBox(
@@ -458,159 +602,240 @@ class _BuyTicketsState extends State<BuyTickets> {
 
                     // Checks:
                     // 1. There is avliable tickets
-                    // 2. Start selling date is before now
-                    // 2. end selling date is after now
-                    (widget.eventTickets.avaliableQuantaties[1] == 0 &&
-                            widget.eventTickets.startDates[1]
-                                .isBefore(DateTime.now()) &&
-                            widget.eventTickets.endDates[1]
-                                .isAfter(DateTime.now()))
+                    // 2. Start selling date is after now
+                    // 2. end selling date is before now
+                    (widget.eventVipTickets.isEmpty)
                         ? const SizedBox()
-                        : Container(
-                            padding: const EdgeInsets.all(10),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:
-                                      const Color.fromARGB(255, 50, 100, 237)),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                              color: Colors.white,
-                            ),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  color: Colors.white,
-                                  margin: const EdgeInsets.all(0),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        const Padding(
-                                          padding: EdgeInsets.only(left: 8.0),
-                                          child: Text("Vip Tickets",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w400,
-                                              )),
+                        : Column(
+                            children:
+                                widget.eventVipTickets.map((eventVipTicket) {
+                              if (eventVipTicket.startDate
+                                      .isAfter(DateTime.now()) ||
+                                  eventVipTicket.endDate
+                                      .isBefore(DateTime.now())) {
+                                return const SizedBox();
+                              } else {
+                                int index = data.reservedVipTickets
+                                    .indexOf(eventVipTicket);
+                                return Column(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: const Color.fromARGB(
+                                                255, 50, 100, 237)),
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(10),
                                         ),
-                                        Row(
-                                          children: <Widget>[
-                                            data.vipTickets == 0
-                                                ? const IconButton(
-                                                    onPressed: null,
-                                                    icon: Icon(
-                                                        Icons
-                                                            .indeterminate_check_box,
-                                                        size: 35,
-                                                        color: Color.fromARGB(
-                                                            255,
-                                                            218,
-                                                            218,
-                                                            218)),
-                                                  )
-                                                : IconButton(
-                                                    key: const Key(
-                                                        "DecrementVipBtn"),
-                                                    onPressed:
-                                                        decrementVipTickets,
-                                                    icon: const Icon(
-                                                        Icons
-                                                            .indeterminate_check_box,
-                                                        size: 35,
-                                                        color: Color.fromARGB(
-                                                            255, 50, 100, 237)),
-                                                  ),
-                                            Text(data.vipTickets.toString(),
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w400,
-                                                )),
-                                            data.vipTickets ==
-                                                    widget.eventTickets
-                                                        .avaliableQuantaties[1]
-                                                ? const IconButton(
-                                                    onPressed: null,
-                                                    icon: Icon(
-                                                        Icons.add_box_rounded,
-                                                        size: 35,
-                                                        color: Color.fromARGB(
-                                                            255,
-                                                            218,
-                                                            218,
-                                                            218)),
-                                                  )
-                                                : IconButton(
-                                                    key: const Key(
-                                                        "IncrementVipBtn"),
-                                                    onPressed:
-                                                        incrementVipTickets,
-                                                    icon: const Icon(
-                                                        Icons.add_box_rounded,
-                                                        size: 35,
-                                                        color: Color.fromARGB(
-                                                            255, 50, 100, 237)),
-                                                  ),
-                                          ],
-                                        ),
-                                      ]),
-                                ),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.0, top: 10.0, bottom: 5),
-                                        child: Text(
-                                            'Sales end on ${DateFormat('MMMM dd, yyyy').format(widget.eventTickets.endDates[1])}',
-                                            style: const TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w400,
-                                                color: Color.fromARGB(
-                                                    255, 91, 90, 90))),
+                                        color: Colors.white,
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                      child: Column(
                                         children: [
-                                          Text(
-                                              widget.eventTickets.vipTicketPrice
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                  fontFamily:
-                                                      "Neue Plak Extended",
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Color.fromARGB(
-                                                      255, 51, 51, 51))),
-                                          const Text(' EGP',
-                                              style: TextStyle(
-                                                  fontFamily:
-                                                      "Neue Plak Condensed",
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color.fromARGB(
-                                                      255, 51, 51, 51))),
+                                          Card(
+                                            elevation: 3,
+                                            color: Colors.white,
+                                            margin: const EdgeInsets.all(0),
+                                            child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8.0),
+                                                    child: Text(
+                                                        eventVipTicket.name,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: const TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        )),
+                                                  ),
+                                                  Row(
+                                                    children: <Widget>[
+                                                      // No Added tickets from this ticket
+                                                      index == -1
+                                                          ? const IconButton(
+                                                              onPressed: null,
+                                                              icon: Icon(
+                                                                  Icons
+                                                                      .indeterminate_check_box,
+                                                                  size: 35,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          218,
+                                                                          218,
+                                                                          218)),
+                                                            )
+                                                          : IconButton(
+                                                              key: Key(
+                                                                  'DecrementVipBtn${eventVipTicket.id}'),
+                                                              onPressed: () =>
+                                                                  decrementVipTickets(
+                                                                      index),
+                                                              icon: const Icon(
+                                                                  Icons
+                                                                      .indeterminate_check_box,
+                                                                  size: 35,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          50,
+                                                                          100,
+                                                                          237)),
+                                                            ),
+                                                      Text(
+                                                          (index == -1)
+                                                              ? '0'
+                                                              : data
+                                                                  .reservedVipTickets[
+                                                                      index]
+                                                                  .selectedQuantity
+                                                                  .toString(),
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          )),
+                                                      (index != -1 &&
+                                                              data
+                                                                      .reservedVipTickets[
+                                                                          index]
+                                                                      .selectedQuantity ==
+                                                                  data
+                                                                      .reservedVipTickets[
+                                                                          index]
+                                                                      .avaliableQuantity)
+                                                          ? const IconButton(
+                                                              onPressed: null,
+                                                              icon: Icon(
+                                                                  Icons
+                                                                      .add_box_rounded,
+                                                                  size: 35,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          218,
+                                                                          218,
+                                                                          218)),
+                                                            )
+                                                          : IconButton(
+                                                              key: Key(
+                                                                  'IncrementVipBtn${eventVipTicket.id}'),
+                                                              onPressed: () {
+                                                                if (index ==
+                                                                    -1) {
+                                                                  setState(() {
+                                                                    data.reservedVipTickets
+                                                                        .add(
+                                                                            eventVipTicket);
+                                                                    index = data
+                                                                        .reservedVipTickets
+                                                                        .indexOf(
+                                                                            eventVipTicket);
+                                                                  });
+                                                                }
+                                                                incrementVipTickets(
+                                                                    index);
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons
+                                                                      .add_box_rounded,
+                                                                  size: 35,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          50,
+                                                                          100,
+                                                                          237)),
+                                                            ),
+                                                    ],
+                                                  ),
+                                                ]),
+                                          ),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0,
+                                                          top: 10.0,
+                                                          bottom: 5),
+                                                  child: Text(
+                                                      'Sales end on ${DateFormat('MMMM dd, yyyy').format(eventVipTicket.endDate)}',
+                                                      style: const TextStyle(
+                                                          fontSize: 13,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              91,
+                                                              90,
+                                                              90))),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                        eventVipTicket
+                                                            .ticketPrice
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                            fontFamily:
+                                                                "Neue Plak Extended",
+                                                            fontSize: 17,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    51,
+                                                                    51,
+                                                                    51))),
+                                                    const Text(' EGP',
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                "Neue Plak Condensed",
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    51,
+                                                                    51,
+                                                                    51))),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                  ],
+                                );
+                              }
+                            }).toList(),
                           ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
 
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
@@ -664,6 +889,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                                 width: 10,
                               ),
                               Text(data.totalPrice.toString(),
+                                  overflow: TextOverflow.clip,
                                   style: const TextStyle(
                                       fontFamily: "Neue Plak Extended",
                                       fontSize: 20,
@@ -686,7 +912,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                               key: const Key("CheckoutBtn"),
                               'Check out',
                               saveForm,
-                              data.freeTickets + data.vipTickets == 0,
+                              allTicketSelectedQ == 0,
                               widget.eventId,
                             ),
                           ),
@@ -701,8 +927,5 @@ class _BuyTicketsState extends State<BuyTickets> {
         ]),
       ),
     );
-    ;
   }
 }
-
-class EventTicketsInf {}

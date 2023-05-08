@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 
 // import '../helper_functions/log_in.dart';
 import '../models/event_promocode.dart';
-import '../models/event_tickets.dart';
+import '../models/event_ticket.dart';
 import '../providers/events/event.dart';
 import '../providers/events/events.dart';
 import 'package:flutter/material.dart';
@@ -34,24 +34,47 @@ import 'sign_up/sign_up_or_log_in.dart';
 /// It Know user is logged in or not from
 class EventPage extends StatefulWidget {
   // To Be: make this class take its data from API
-  // To Be: initialized  by Empty lists in all attr but i but values for teating
-  // Initial values:   EventTicketsInfo eventTickets = EventTicketsInfo(['', ''], [0, 0], ['', '']);
-  EventTicketsInfo eventTickets = EventTicketsInfo([
-    '0',
-    '1'
-  ], [
-    'Regular',
-    'VIP'
-  ], [
-    5,
-    2
-  ], [
-    DateTime.now().subtract(const Duration(days: 10)),
-    DateTime.now().add(const Duration(days: 10))
-  ], [
-    DateTime.now().subtract(const Duration(days: 5)),
-    DateTime.now().add(const Duration(days: 5))
-  ], 50);
+  // To Be: initialized by Empty list in all attr but i but values for testing
+  // Initial values:   List<EventTicketInfo> eventFreeTickets = [];
+  List<EventTicketInfo> eventFreeTickets = [
+    EventTicketInfo(
+        '000000',
+        'regular',
+        'Ana Ticket Gamda',
+        0,
+        DateTime.now().subtract(const Duration(days: 10)),
+        DateTime.now().add(const Duration(days: 10)),
+        5),
+    EventTicketInfo(
+        '0111111',
+        'regular',
+        'Ana Ticket Gamda',
+        0,
+        DateTime.now().subtract(const Duration(days: 10)),
+        DateTime.now().add(const Duration(days: 10)),
+        5),
+  ];
+
+  // To Be: initialized by Empty list in all attr but i but values for testing
+  // Initial values:   List<EventTicketInfo> eventVipTickets = [];
+  List<EventTicketInfo> eventVipTickets = [
+    EventTicketInfo(
+        '00000',
+        'vip',
+        'Ana Ticket Gamda VIP',
+        50,
+        DateTime.now().subtract(const Duration(days: 10)),
+        DateTime.now().add(const Duration(days: 10)),
+        5),
+    EventTicketInfo(
+        '0111',
+        'vip',
+        'Ana Ticket Gamda VIP',
+        50,
+        DateTime.now().subtract(const Duration(days: 10)),
+        DateTime.now().add(const Duration(days: 10)),
+        5)
+  ];
 
   // To Be: make this class take its data from API
   // To Be: Not to give initial value as it could be NULL => make sure ? is added as if no promocode it must be null
@@ -60,8 +83,8 @@ class EventPage extends StatefulWidget {
       '1234',
       true,
       10,
-      'value',
-      40,
+      true,
+      0.2,
       DateTime.now().subtract(const Duration(days: 10)),
       DateTime.now().add(const Duration(days: 10)));
   bool isLoading = false;
@@ -83,7 +106,7 @@ class EventPage extends StatefulWidget {
 
   // Constructor of EventPage scree
   EventPage(this.eventId, this.isLogged, {super.key});
-
+  
   static const eventPageRoute = '/Event-Page';
 
   @override
@@ -99,13 +122,13 @@ class _EventPageState extends State<EventPage> {
     getEventTicketsInfo(eventId).then(
         // To Be: E3mlha beltafsel a7san men dh equal dh lef 3aka kol attr goa classes
         // To Be: be sure that fetch code is 200 succeses to make widget.isLoadingTicketsApi  = false
-        // Make sure before assign that lists length must be 2 so dont assign if not valid response ##Note## avaliableQuanitity list must be initialized by zeros
-        // example: widget.eventTickets.avaliableQuantaties = eventTicketsdata.avaliableQuantaties
+        // Assign list of free tickets ( widget.eventFreeTickets)  and event vip tickets (widget.eventVipTickets)
         (eventTicketsdata) {
       setState(() {
         // make it false to render the page
         widget.isLoadingTicketsApi = false;
-        // widget.eventTickets = eventTicketsdata;
+        // widget.eventFreeTickets = eventTicketsdata[0];
+        // widget.eventVipTickets = eventTicketsdata[1];
       });
     });
   }
@@ -143,9 +166,17 @@ class _EventPageState extends State<EventPage> {
                   widget.eventId,
                   widget.loadedEvent.title,
                   '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET',
-                  widget.eventTickets,
+                  widget.eventFreeTickets,
+                  widget.eventVipTickets,
                   widget.eventPromocode));
         });
+  }
+
+  // If user not loged in so apper login Btn to show tickets after login
+  Future<void> logInNavigate(BuildContext ctx) async {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return const SignUpOrLogIn();
+    }));
   }
 
   //Get duration
@@ -556,11 +587,23 @@ class _EventPageState extends State<EventPage> {
               // 1. is logged user
               // 2. is event before now
               // 3. To Be: is there is avliable tickets (avaliable tickets > 0)
-              if (!widget.isLogged ||
-                  widget.loadedEvent.startDate.toUtc().isBefore(
+              if (!widget.isLogged)
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: TransparentButtonNoIcon(
+                        key: const Key("BuyTicketsBtn"),
+                        'Log in',
+                        logInNavigate,
+                        false,
+                        '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET'),
+                  ),
+                )
+              else if (widget.loadedEvent.startDate.toUtc().isBefore(
                       DateTime.now().add(const Duration(hours: 1)).toUtc()) ||
-                  (widget.eventTickets.avaliableQuantaties[0] +
-                          widget.eventTickets.avaliableQuantaties[1]) ==
+                  (widget.eventFreeTickets.length +
+                          widget.eventVipTickets.length) ==
                       0)
                 Align(
                   alignment: Alignment.bottomCenter,
