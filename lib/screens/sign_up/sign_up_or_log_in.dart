@@ -1,12 +1,16 @@
 library LogInOrSignUpScreen;
 
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
 import '../../helper_functions/api/google_signin_api.dart';
+import '../../helper_functions/sign_up.dart';
 import '../../widgets/title_text_1.dart';
 import '../../widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/log_in_btn.dart';
 import '../sign_in/email_check.dart';
 import '../../widgets/transparent_button.dart';
+import '../tab_bar.dart';
 
 /// {@category Sign Up}
 /// {@category Screens}
@@ -65,22 +69,64 @@ class SignUpOrLogIn extends StatelessWidget {
   // }
 
   //Find Ticket with facebook function
-  void signWithFacebook() async {
-    await GoogleSignInApi.logout();
+  void signUpwithFacebook(BuildContext ctx) async {
+    final LoginResult result = await FacebookAuth.instance
+        .login(); // by default we request the email and the public profile
+// or FacebookAuth.i.login()
+    if (result.status == LoginStatus.success) {
+      // you are logged
+      final AccessToken accessToken = result.accessToken!;
+      print(
+          "heloloo-----------------------------------------------------------------------------");
+      print(
+          "heloloo-----------------------------------------------------------------------------");
+      print(
+          "heloloo-----------------------------------------------------------------------------");
+      print(result.accessToken!.token);
+      print(result.accessToken!.userId);
+      print(
+          "heloloo-----------------------------------------------------------------------------");
+      print(
+          "heloloo-----------------------------------------------------------------------------");
+      print(
+          "heloloo-----------------------------------------------------------------------------");
+    } else {
+      print(result.status);
+      print(result.message);
+    }
   }
 
-  //Find Ticket with google function
-  void signWithGoogle() async {
-    print("Sign in with facebook");
+  void signUpwithGoogle(BuildContext ctx) async {
     var user = await GoogleSignInApi.login();
     if (user == null) {
-      print("Sign in failed");
+      return;
+    }
+    String firstname = user.displayName!.split(" ")[0] ?? "john";
+    String lastname = user.displayName!.split(" ")[1] ?? "doe";
+    print(user.email);
+    print(firstname);
+    print(lastname);
+    int res = await signInHelper(user.email, firstname, lastname);
+    print(res);
+    if (res == 200) {
+      //setLoggedIn(userEmail, "Dummy Token");
+      Navigator.of(ctx).popUntil((route) => route.isFirst);
+      Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+        return TabBarScreen(title: 'Profile', tabBarIndex: 4);
+      }));
+    } else if (res == 401) {
+      Navigator.of(ctx).pop();
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        const SnackBar(
+          content: Text('Please verify your email and login again'),
+        ),
+      );
     } else {
-      print("Sign in success");
-      print(user.displayName);
-      print(user.email);
-      print(user.photoUrl);
-      print(user.serverAuthCode);
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        const SnackBar(
+          content: Text('Something went wrong'),
+        ),
+      );
     }
   }
 
@@ -138,7 +184,7 @@ class SignUpOrLogIn extends StatelessWidget {
                     key: const Key('LogInWithFacebookBtn'),
                     0,
                     'Continue With Facebook',
-                    signWithFacebook,
+                    () => signUpwithFacebook(context),
                     facebook,
                   ),
 
@@ -147,7 +193,7 @@ class SignUpOrLogIn extends StatelessWidget {
                     key: const Key('LogInWithGoogleBtn'),
                     1,
                     'Continue With Google',
-                    signWithGoogle,
+                    () => signUpwithGoogle(context),
                     facebook,
                   ),
 

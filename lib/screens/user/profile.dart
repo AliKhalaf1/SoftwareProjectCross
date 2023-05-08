@@ -8,6 +8,7 @@ import 'package:Eventbrite/screens/user/account_settings.dart';
 import 'package:Eventbrite/widgets/loading_spinner.dart';
 import 'package:provider/provider.dart';
 
+import '../../helper_functions/api/google_signin_api.dart';
 import '../../helper_functions/log_out.dart';
 import '../../helper_functions/organizer_view.dart';
 import '../../helper_functions/userInfo.dart';
@@ -62,6 +63,13 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   void logOutLogic(BuildContext ctx) {
     setLoggedOut();
+
+    GoogleSignInApi.isSignedIn().then((value) {
+      if (value == true) {
+        GoogleSignInApi.logout();
+      }
+    });
+
     widget.logOut();
   }
 
