@@ -1,5 +1,5 @@
 import 'drawer.dart';
-import '../screens/creator/draft_events.dart';
+import '../screens/creator/all_events.dart';
 import '../screens/creator/live_events.dart';
 import '../screens/creator/past_events.dart';
 import 'package:flutter/material.dart';
@@ -16,34 +16,15 @@ class TabBarEvents extends StatefulWidget {
 
 class _TabBarEventsState extends State<TabBarEvents> {
   int _selectedTabIndex = 0;
-  late bool _isLoading;
-  void initState() {
-    super.initState();
-    _isLoading = true;
-    // Set a delay to simulate loading
-    Future.delayed(Duration(seconds: 1), () {
-      setState(() {
-        _isLoading = false;
-      });
-    });
-  }
 
   void _handleTabSelection(int index) {
     if (index != _selectedTabIndex) {
       setState(
         () {
           _selectedTabIndex = index;
-          _isLoading = true;
         },
       );
     }
-
-    // Set a delay to simulate loading
-    Future.delayed(Duration(seconds: 1), () {
-      setState(() {
-        _isLoading = false;
-      });
-    });
   }
 
   @override
@@ -84,7 +65,7 @@ class _TabBarEventsState extends State<TabBarEvents> {
                   ),
                   Tab(
                     child: Text(
-                      "Draft",
+                      "All",
                       style: TextStyle(
                         color: Theme.of(context).cardColor,
                       ),
@@ -105,30 +86,13 @@ class _TabBarEventsState extends State<TabBarEvents> {
           ],
         ),
         drawer: EventDrawer(),
-        body: !_isLoading
-            ? TabBarView(
-                children: [
-                  LiveEvents(),
-                  PastEvents(),
-                  DraftEvents(),
-                ],
-              )
-            : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    LoadingAnimationWidget.discreteCircle(
-                        secondRingColor: Colors.grey,
-                        thirdRingColor: Colors.grey,
-                        color: Colors.grey,
-                        size: 60),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text("Loading")
-                  ],
-                ),
-              ),
+        body: TabBarView(
+          children: [
+            LiveEvents(),
+            PastEvents(),
+            DraftEvents(),
+          ],
+        ),
       ),
     );
   }

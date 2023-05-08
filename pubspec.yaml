@@ -112,6 +112,7 @@ flutter:
     - assets/images/images1.jfif
     - assets/images/camera.jfif
     - assets/images/camera2.jfif
+    - assets/images/tickets.jfif
     - assets/images/no_user_found.jfif
     - assets/images/no_image_found.png
     - assets/images/yla.png

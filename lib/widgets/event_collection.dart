@@ -9,6 +9,7 @@ import '../providers/filters/filter_selection_values.dart';
 import '../providers/filters/tags.dart';
 import '../widgets/event_card.dart';
 import '../providers/events/event.dart';
+import 'title_text_2.dart';
 
 /// {@category Widgets}
 /// Collection of events with similar categorey.
@@ -70,8 +71,9 @@ class EventCollections extends StatelessWidget {
       collecionListOfEvents.isEmpty
           ? const Center(
               key: Key("NoCurrentEvent"),
-              child: Text('There is no current events',
-                  style: TextStyle(color: Colors.grey)),
+              child: TitleText2(
+                'There is no current events',
+              ),
             )
           : Column(
               children: collecionListOfEvents.map((e) {
