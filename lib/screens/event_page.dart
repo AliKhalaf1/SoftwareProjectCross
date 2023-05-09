@@ -371,20 +371,22 @@ class _EventPageState extends State<EventPage> {
           leadingWidth: double.infinity,
           leading: Stack(children: <Widget>[
             Container(
-              decoration: (widget.loadedEvent.eventImg == null ||
-                      widget.loadedEvent.eventImg == "")
-                  ? const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/o3.png"),
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  : BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(widget.loadedEvent.eventImg),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+              decoration:
+                  // (widget.loadedEvent.eventImg == null ||
+                  //         widget.loadedEvent.eventImg == "")
+                  //     ?
+                  const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/o3.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              // : BoxDecoration(
+              //     image: DecorationImage(
+              //       image: NetworkImage(widget.loadedEvent.eventImg),
+              //       fit: BoxFit.cover,
+              //     ),
+              //   ),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
