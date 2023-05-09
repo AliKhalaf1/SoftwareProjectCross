@@ -109,7 +109,6 @@ class _ProfileState extends State<Profile> {
       var favEventsData = Provider.of<FavEvents>(context, listen: false);
       getUserInfo(value).then((currUser) {
         setState(() {
-          widget.isLoading = false;
           widget.email = currUser.email;
           widget.firstName = currUser.firstName;
           widget.lastName = currUser.lastName;

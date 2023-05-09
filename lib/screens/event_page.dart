@@ -45,7 +45,7 @@ class EventPage extends StatefulWidget {
 
   // To Be: make this class take its data from API
   // To Be: Not to give initial value as it could be NULL => make sure ? is added as if no promocode it must be null
-  EventPromocodeInfo? eventPromocode;
+  List<EventPromocodeInfo>? eventPromocodes = [];
   bool isLoading = true;
 
   // Data passed from navigating screen at initState()
@@ -157,7 +157,7 @@ class _EventPageState extends State<EventPage> {
         // Make sure before assign that lists length must be 2 so dont assign if not valid response ##Note## avaliableQuanitity list must be initialized by zeros
         // example: widget.eventTickets.avaliableQuantaties = eventTicketsdata.avaliableQuantaties
         (eventPromodata) {
-      widget.eventPromocode = eventPromodata;
+      widget.eventPromocodes = eventPromodata;
       /////////////////////////////////////////////////////////////////
       // widget.eventPromocode = EventPromocodeInfo(
       //     '0',
@@ -199,25 +199,25 @@ class _EventPageState extends State<EventPage> {
 
   // Open buyTickets model
   void buyTickets(BuildContext ctx) {
-    showModalBottomSheet(
-        context: ctx,
-        isScrollControlled: true,
-        enableDrag: false,
-        builder: (_) {
-          //------------------------ user input -------------------//
-          return GestureDetector(
-              // onTap: () {
-              //   // FocusScope.of(context).requestFocus(FocusNode());
-              // },
-              behavior: HitTestBehavior.opaque,
-              child: BuyTickets(
-                  widget.eventId,
-                  widget.loadedEvent.title,
-                  '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET',
-                  widget.eventFreeTickets,
-                  widget.eventVipTickets,
-                  widget.eventPromocode));
-        });
+    // showModalBottomSheet(
+    //     context: ctx,
+    //     isScrollControlled: true,
+    //     enableDrag: false,
+    //     builder: (_) {
+    //       //------------------------ user input -------------------//
+    //       return GestureDetector(
+    //           // onTap: () {
+    //           //   // FocusScope.of(context).requestFocus(FocusNode());
+    //           // },
+    //           behavior: HitTestBehavior.opaque,
+    //           child: BuyTickets(
+    //               widget.eventId,
+    //               widget.loadedEvent.title,
+    //               '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET',
+    //               widget.eventFreeTickets,
+    //               widget.eventVipTickets,
+    //               widget.eventPromocode));
+    //     });
   }
 
   // If user not loged in so apper login Btn to show tickets after login
