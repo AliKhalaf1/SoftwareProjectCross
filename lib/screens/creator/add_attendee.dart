@@ -1,7 +1,19 @@
+library AddAttendee;
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// {@category creator}
+/// {@category Screens}
+/// 
+/// 
+/// Flutter widget that renders a form to collect attendee data. The form includes
+/// fields for the attendee's email, ticket type, first name, and last name
+/// 
+/// It also includes validation for each field to ensure that the user has entered
+/// a value and the email address is valid.
+/// 
 enum ticketType {
   regular,
   vip,

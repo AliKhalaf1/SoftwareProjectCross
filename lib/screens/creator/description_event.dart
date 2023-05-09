@@ -1,9 +1,14 @@
+library DescriptionfforEvent;
 import 'package:Eventbrite/widgets/arc_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/createevent/createevent.dart';
 import 'event_start_end_date.dart';
+/// {@category Creator}
+/// {@category Screens}
+/// 
+/// screen allows the user to enter a brief summary of their event, with a maximum length of 140 characters.
 
 class Event_Description extends StatefulWidget {
   const Event_Description({super.key});

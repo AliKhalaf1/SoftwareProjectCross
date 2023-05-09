@@ -1,9 +1,17 @@
+library EventTitle;
+
 import 'package:Eventbrite/helper_functions/userInfo.dart';
 import 'package:Eventbrite/providers/createevent/createevent.dart';
 import 'package:Eventbrite/screens/creator/add_attendee.dart';
 import 'package:Eventbrite/screens/creator/description_event.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+/// {@category Creator}
+/// {@category Screens}
+///
+/// Flutter widget called EventTitle that extends the StatefulWidget class.
+/// It is used to create an event title page in an app.
 
 class EventTitle extends StatefulWidget {
   const EventTitle({super.key});

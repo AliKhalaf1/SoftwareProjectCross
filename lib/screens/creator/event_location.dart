@@ -1,3 +1,5 @@
+library EventLocation;
+
 import 'package:Eventbrite/screens/creator/main_event_form.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,6 +10,12 @@ import 'package:provider/provider.dart';
 import '../../providers/createevent/createevent.dart';
 import '../../widgets/arc_painter.dart';
 
+/// {@category Creator}
+/// {@category Screens}
+///
+/// EventLocation widget is a StatefulWidget that displays a screen where
+/// the user can select the location of an event.
+/// The location can be either a physical venue or an online event.
 enum eventPlace {
   Venue,
   Online,
