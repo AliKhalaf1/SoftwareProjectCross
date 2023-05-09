@@ -9,6 +9,7 @@ import 'package:splash_route/splash_route.dart';
 import '../../providers/getevent/getevent.dart';
 import '../../widgets/backgroud.dart';
 import '../../widgets/live_card.dart';
+import 'event_dashboard.dart';
 import 'event_title.dart';
 
 import 'dart:io';
@@ -99,13 +100,19 @@ class _DraftEventsState extends State<DraftEvents> {
         child: ListView.builder(
           itemCount: liveeventLen,
           itemBuilder: (context, index) {
-            return LiveCard(
-                dataAll[index].startDate,
-                dataAll[index].title,
-                dataAll[index].maxTickets,
-                dataAll[index].takenTickets,
-                dataAll[index].price,
-                key: Key(dataAll[index].id));
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(EventsDashboard.route,
+                    arguments: {'event': dataAll[index]});
+              },
+              child: LiveCard(
+                  dataAll[index].startDate,
+                  dataAll[index].title,
+                  dataAll[index].maxTickets,
+                  dataAll[index].takenTickets,
+                  dataAll[index].price,
+                  key: Key(dataAll[index].id)),
+            );
           },
         ),
       );
