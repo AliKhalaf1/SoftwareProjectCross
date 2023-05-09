@@ -1,7 +1,12 @@
 library FavouritesPage;
 
+import 'package:Eventbrite/helper_functions/Likes_functions.dart';
+import 'package:Eventbrite/models/liked_event_card_model.dart';
+import 'package:Eventbrite/providers/getevent/getevent.dart';
 import 'package:Eventbrite/widgets/app_bar_text.dart';
+import 'package:Eventbrite/widgets/fav_event_card.dart';
 import 'package:Eventbrite/widgets/fav_event_collection.dart';
+import 'package:Eventbrite/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +21,9 @@ import '../../providers/events/fav_events.dart';
 ///
 /// It uses the [FavEventCollection] widget to display the events.
 class Favourites extends StatefulWidget {
-  const Favourites({super.key});
-
+  Favourites({super.key});
+  List<LikedEventCardModel> LikedEvents = [];
+  bool isLoading = false;
   @override
   State<Favourites> createState() => _FavouritesState();
 }
@@ -48,11 +54,29 @@ List<List<Event>> sortAndSplitByDate(List<Event> list) {
 }
 
 class _FavouritesState extends State<Favourites> {
+  void Refresh() {
+    setState(() {
+      widget.isLoading = true;
+    });
+
+    getLikedEvents().then(
+      (value) {
+        setState(() {
+          widget.LikedEvents = value;
+          widget.isLoading = false;
+        });
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    Refresh();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final favsData = Provider.of<FavEvents>(context);
-    final favourites = favsData.favs;
-    //final sortedFavs = sortAndSplitByDate(favourites);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -60,53 +84,49 @@ class _FavouritesState extends State<Favourites> {
         foregroundColor: Colors.black,
         title: const AppBarText('Favourites'),
       ),
-      body: SizedBox(
-        height: 700,
-        child: favourites.length == 0
-            ? Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.05,
-                    left: MediaQuery.of(context).size.width * 0.05,
-                    right: MediaQuery.of(context).size.width * 0.05,
-                    bottom: MediaQuery.of(context).size.height * 0.05),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'No liked events Yet',
-                      style: TextStyle(
-                        color: Colors.blueGrey[800],
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
+      body: widget.isLoading
+          ? const LoadingSpinner()
+          : SizedBox(
+              height: 700,
+              child: widget.LikedEvents.length == 0
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.05,
+                          left: MediaQuery.of(context).size.width * 0.05,
+                          right: MediaQuery.of(context).size.width * 0.05,
+                          bottom: MediaQuery.of(context).size.height * 0.05),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'No liked events Yet',
+                            style: TextStyle(
+                              color: Colors.blueGrey[800],
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                          Text(
+                            'You have not added any events to your favourites yet.',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey[800],
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.02,
-                    ),
-                    Text(
-                      'You have not added any events to your favourites yet.',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey[800],
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : ListView.builder(
-                padding: const EdgeInsets.only(top: 40),
-                itemCount: 1, // substitute with collectionCounts
-                itemBuilder: (ctx, index) {
-                  return FavEventCollection(
-                    DateFormat.yMEd().format(favourites[0].startDate),
-                    favourites,
-                    key: Key('fav_event_${index}'),
-                  );
-                },
-              ),
-      ),
+                    )
+                  : ListView.builder(
+                      itemCount: widget.LikedEvents.length,
+                      itemBuilder: (context, index) {
+                        return FavouriteEventCard(widget.LikedEvents[index]);
+                      }),
+            ),
     );
   }
 }

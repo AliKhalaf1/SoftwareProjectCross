@@ -75,7 +75,7 @@ class TabBarScreenState extends State<TabBarScreen> {
         pages = [
           Home(),
           const Search(),
-          const Favourites(),
+          Favourites(),
           TicketsTabBar(),
           Profile(
             checkLoggedUser,

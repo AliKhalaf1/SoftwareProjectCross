@@ -1,5 +1,6 @@
 library EventsHelperFunctions;
 
+import 'package:Eventbrite/models/liked_event_card_model.dart';
 import 'package:flutter/material.dart';
 import '../screens/event_page.dart';
 import '../providers/events/event.dart';
@@ -17,9 +18,17 @@ Future<void> selectEvent(BuildContext ctx, Event event) async {
       return EventPage(event.id, isLogged);
     }));
   });
-  
+
   // Navigator.of(ctx).pushNamed(
   //   EventPage.eventPageRoute,
   //   arguments: {'eventId': event.id, 'isLogged': isLogged},
   // );
+}
+
+Future<void> selectFavEvent(BuildContext ctx, LikedEventCardModel event) async {
+  checkLoggedUser().then((isLogged) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return EventPage(event.id, isLogged);
+    }));
+  });
 }

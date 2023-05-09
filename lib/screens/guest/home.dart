@@ -2,6 +2,9 @@ library GuestHomeScreen;
 
 import 'dart:ui';
 
+import 'package:Eventbrite/helper_functions/Search.dart';
+import 'package:Eventbrite/providers/getevent/getevent.dart';
+
 import '../../helper_functions/log_in.dart';
 import '../../providers/events/event.dart';
 import '../../widgets/event_collection.dart';
@@ -124,12 +127,12 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final eventsData = Provider.of<Events>(context);
-    final events = eventsData.events;
+    // final eventsData = Provider.of<Events>(context);
+    // final events = eventsData.events;
 
-    if (checkLoggedUser() == false) {
-      eventsData.unFavouriteAll();
-    }
+    // if (checkLoggedUser() == false) {
+    //   eventsData.unFavouriteAll();
+    // }
 
     // final cats = Provider.of<Categories>(context);
 
@@ -146,7 +149,6 @@ class _HomeState extends State<Home> {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/images/o3.png"),
-                
                 fit: BoxFit.cover,
               ),
             ),
@@ -221,6 +223,20 @@ class _HomeState extends State<Home> {
             itemCount:
                 categoryTitles.length, // substitute with collectionCounts
             itemBuilder: (ctx, index) {
+              List<Event> events = [];
+              final category = categoryTitles[index];
+              search(
+                "",
+                "",
+                "",
+                "",
+                DateTime(2100, 1, 1),
+                DateTime(2100, 1, 1),
+                category,
+              ).then((value) {
+                events = value;
+              });
+
               List<Event> matchedEvents = events
                   .where(
                       (eventItem) => eventItem.categ == categoryTitles[index])
