@@ -79,7 +79,7 @@ Future<List<List<EventTicketInfo>>> getEventTicketsInfo(String eventId) async {
 
 Future<bool> postEventTicketInfo(String ticketd, int quantity) async {
   var uri = Uri.parse(
-      '${Constants.host}/tickets/ticket_id/$ticketd/quantity/{quantity}?=-${quantity}');
+      '${Constants.host}/tickets/ticket_id/$ticketd/quantity/${-quantity}');
   print(uri);
   var response = await http.put(
     uri,

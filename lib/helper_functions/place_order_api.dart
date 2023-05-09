@@ -6,14 +6,8 @@ import 'package:http/http.dart' as http;
 import 'constants.dart';
 import 'log_in.dart';
 
-Future<String> postOrder(
-    String eventId,
-    String firstName,
-    String lasttName,
-    String email,
-    String creationDate,
-    double totalPrice,
-    String eventImg) async {
+Future<String> postOrder(String eventId, String firstName, String lasttName,
+    String email, String creationDate, int totalPrice, String eventImg) async {
   var uri = Uri.parse('${Constants.host}/orders/$eventId/add_order');
   print(uri);
   String token = await getToken();

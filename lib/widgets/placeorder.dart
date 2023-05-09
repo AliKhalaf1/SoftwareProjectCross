@@ -43,7 +43,8 @@ class SubmittedData {
   String promocodetId = "";
   double totalPrice = 0;
   String email = '';
-  String creationDate = DateFormat('yyyy-MM-dd - kk:mm').format(DateTime.now());
+  String creationDate =
+      DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
   // changed
   String firstName = '';
   String lastname = '';
@@ -201,16 +202,24 @@ class _PlaceOrderState extends State<PlaceOrder> {
   void saveForm(BuildContext ctx, String eventId) {
     final isValid = _form.currentState?.validate();
     if (!isValid!) {
+      print(
+          "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
       return;
     }
     _form.currentState?.save();
     // ====================== call Apis =====================
     String orderId;
     postOrder(eventId, data.firstName, data.lastname, data.email,
-            data.creationDate, data.totalPrice, widget.eventImg)
+            data.creationDate, data.totalPrice.toInt(), widget.eventImg)
         .then((value) => {
               if (value == "1000")
-                {showFail(context)}
+                {
+                  print('order fail'),
+                  print(data.creationDate),
+                  print(
+                      "++++++++++++++++++//////////////////////////////////++++++++++++++++++++"),
+                  showFail(context),
+                }
               else
                 {
                   orderId = value,
@@ -219,7 +228,13 @@ class _PlaceOrderState extends State<PlaceOrder> {
                       postEventTicketInfo(data.reservedFreeTickets[i].id,
                               data.reservedFreeTickets[i].selectedQuantity)
                           .then((value) => {
-                                if (!value) {showFail(context)}
+                                if (!value)
+                                  {
+                                    print(
+                                        "------------------------------//////////////////////////////////------------------"),
+                                    print('free tick fail'),
+                                    showFail(context),
+                                  }
                               })
                     },
                   for (int i = 0; i < data.reservedVipTickets.length; i++)
@@ -229,7 +244,10 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           .then((value) => {
                                 if (!value)
                                   {
-                                    showFail(context),
+                                    print(
+                                        "------------------------------------------------"),
+                                    print('vip tick fail'),
+                                    showFail(context)
                                   }
                               })
                     },
@@ -244,6 +262,9 @@ class _PlaceOrderState extends State<PlaceOrder> {
                         eventId,
                       ).then((value) {
                         if (!value) {
+                          print('free Atendee fail');
+                          print(
+                              "***********************Freeeeeeeeee*************************************");
                           showFail(context);
                         }
                       })
@@ -259,14 +280,20 @@ class _PlaceOrderState extends State<PlaceOrder> {
                         eventId,
                       ).then((value) {
                         if (!value) {
+                          print('vip Atendee fail');
+                          print(
+                              "***********************Viiiiiiiiiiiiiiiiiiip*************************************");
                           showFail(context);
                         }
                       })
                     },
                   if (data.promocodetId == "")
-                    {showFail(context)}
+                    {}
                   else
-                    {postEventPrmocodeInfo(data.promocodetId)}
+                    {
+                      postEventPrmocodeInfo(data.promocodetId),
+                      print("*&^###%^^&"),
+                    }
                 }
             });
 

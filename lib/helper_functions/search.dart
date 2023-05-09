@@ -58,8 +58,8 @@ Future<List<Event>> search(
 
   var resCode = response.statusCode;
   print('-----------------');
-  print("ResCode:");
-  print(resCode);
+  // print("ResCode:");
+  // print(resCode);
   print('-----------------');
   if (resCode == 200) {
     var resBody = response.body;
