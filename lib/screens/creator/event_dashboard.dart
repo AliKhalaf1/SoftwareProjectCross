@@ -98,6 +98,17 @@ class _EventsDashboardState extends State<EventsDashboard> {
               height: 5,
             ),
             DashCard("ALL TICKETS", Event.maxTickets, Event.takenTickets),
+            const SizedBox(
+              height: 5,
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/add_Attendee', arguments: {
+                    'eventID': Event.id,
+                    'eventIDMock': Event.mockId
+                  });
+                },
+                child: const Text("Add Attendee"))
           ],
         ),
       ),

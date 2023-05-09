@@ -9,6 +9,7 @@ enum ticketType {
 
 class AttendeeForm extends StatefulWidget {
   static const route = '/add_Attendee';
+
   AttendeeForm({super.key});
 
   @override
@@ -24,10 +25,13 @@ class _AttendeeFormState extends State<AttendeeForm> {
     String fname = "";
     String lname = "";
     ticketType typeofTickets = ticketType.regular;
-    // final routearg =
-    //     ModalRoute.of(context)?.settings.arguments as Map<String, String>;
-    // String? eventid = routearg['eventID'];
-    // String? eventidmock = routearg['eventIDMock'];
+    final routearg =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    String? eventid = routearg['eventID'];
+    int? eventidmock = routearg['eventIDMock'];
+
+    print(eventid);
+    print(eventidmock);
 
     void submit() {
       final isValid = _form.currentState?.validate();
