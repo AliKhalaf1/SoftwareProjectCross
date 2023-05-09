@@ -26,7 +26,7 @@ import '../screens/sign_up/sign_up_or_log_in.dart';
 ///
 class FavouriteEventCard extends StatefulWidget {
   //event to be shown in the card
-  final LikedEventCardModel event;
+  final Event event;
   bool isFav = true;
   //constructor
   FavouriteEventCard(this.event, {super.key});
@@ -58,7 +58,7 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                 SizedBox(
                     width: 100,
                     height: 100,
-                    child: widget.event.eventImageUrl.startsWith('http')
+                    child: widget.event.eventImg.startsWith('http')
                         ? FadeInImage(
                             placeholder: const AssetImage(
                                 'assets/images/no_image_found.png'),
@@ -68,11 +68,11 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                                   'assets/images/no_image_found.png'),
                               fit: BoxFit.cover,
                             ),
-                            image: NetworkImage(widget.event.eventImageUrl),
+                            image: NetworkImage(widget.event.eventImg),
                             fit: BoxFit.cover,
                           )
                         : Image.asset(
-                            widget.event.eventImageUrl,
+                            widget.event.eventImg,
                             fit: BoxFit.cover,
                           )),
                 Container(
