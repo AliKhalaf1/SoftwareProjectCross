@@ -67,7 +67,7 @@
     },
     {
       "id": "4:5508452468500610366",
-      "lastPropertyId": "15:7035098969218285509",
+      "lastPropertyId": "16:7895381826733041736",
       "name": "Event",
       "properties": [
         {
@@ -135,6 +135,11 @@
           "id": "15:7035098969218285509",
           "name": "isPrivate",
           "type": 1
+        },
+        {
+          "id": "16:7895381826733041736",
+          "name": "price",
+          "type": 8
         }
       ],
       "relations": []
@@ -461,9 +466,48 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "12:2067669968815746106",
+      "lastPropertyId": "6:7463573043435195910",
+      "name": "LikedEventCardModel",
+      "properties": [
+        {
+          "id": "1:5705283141748395259",
+          "name": "mockId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:470352315121987329",
+          "name": "id",
+          "type": 9
+        },
+        {
+          "id": "3:1933707016045911043",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:8536462134536752101",
+          "name": "startDate",
+          "type": 10
+        },
+        {
+          "id": "5:1475975273384285378",
+          "name": "eventImageUrl",
+          "type": 9
+        },
+        {
+          "id": "6:7463573043435195910",
+          "name": "isOnline",
+          "type": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "11:3804690194136939675",
+  "lastEntityId": "12:2067669968815746106",
   "lastIndexId": "3:3425995927453799802",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

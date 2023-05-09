@@ -49,6 +49,7 @@ class Event with ChangeNotifier {
 
   ///Constructor
   Event(
+      this.id,
       this.startDate,
       this.endDate,
       this.description,
@@ -57,7 +58,6 @@ class Event with ChangeNotifier {
       this.isFav,
       this.categ,
       this.tags,
-      this.id,
       this.title,
       this.organization,
       this.isPrivate);

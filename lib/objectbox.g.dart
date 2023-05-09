@@ -18,6 +18,7 @@ import 'models/Ticket_attendee.dart';
 import 'models/auth.dart';
 import 'models/event_promocode.dart';
 import 'models/event_ticket.dart';
+import 'models/liked_event_card_model.dart';
 import 'models/order_class.dart';
 import 'models/ticket_class.dart';
 import 'models/user.dart';
@@ -91,7 +92,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(4, 5508452468500610366),
       name: 'Event',
-      lastPropertyId: const IdUid(15, 7035098969218285509),
+      lastPropertyId: const IdUid(16, 7895381826733041736),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -158,6 +159,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(15, 7035098969218285509),
             name: 'isPrivate',
             type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 7895381826733041736),
+            name: 'price',
+            type: 8,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -484,6 +490,45 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(12, 2067669968815746106),
+      name: 'LikedEventCardModel',
+      lastPropertyId: const IdUid(6, 7463573043435195910),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 5705283141748395259),
+            name: 'mockId',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 470352315121987329),
+            name: 'id',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 1933707016045911043),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 8536462134536752101),
+            name: 'startDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 1475975273384285378),
+            name: 'eventImageUrl',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 7463573043435195910),
+            name: 'isOnline',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -507,7 +552,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(11, 3804690194136939675),
+      lastEntityId: const IdUid(12, 2067669968815746106),
       lastIndexId: const IdUid(3, 3425995927453799802),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -630,7 +675,7 @@ ModelDefinition getObjectBoxModel() {
           final idOffset = fbb.writeString(object.id);
           final titleOffset = fbb.writeString(object.title);
           final organizationOffset = fbb.writeString(object.organization);
-          fbb.startTable(16);
+          fbb.startTable(17);
           fbb.addInt64(0, object.mockId);
           fbb.addOffset(1, eventImgOffset);
           fbb.addInt64(2, object.startDate.millisecondsSinceEpoch);
@@ -644,6 +689,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(10, organizationOffset);
           fbb.addBool(13, object.isOnline);
           fbb.addBool(14, object.isPrivate);
+          fbb.addFloat64(15, object.price);
           fbb.finish(fbb.endTable());
           return object.mockId;
         },
@@ -674,12 +720,14 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 22, ''),
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 24, ''),
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 32, false))
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 32, false),
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 34, 0))
             ..mockId =
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
-          return object;
-        }),
+    // return object;
+    // }
+    // ),
     EventPromocodeInfo: EntityDefinition<EventPromocodeInfo>(
         model: _entities[3],
         toOneRelations: (EventPromocodeInfo object) => [],
@@ -986,6 +1034,47 @@ ModelDefinition getObjectBoxModel() {
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
+        }),
+    LikedEventCardModel: EntityDefinition<LikedEventCardModel>(
+        model: _entities[10],
+        toOneRelations: (LikedEventCardModel object) => [],
+        toManyRelations: (LikedEventCardModel object) => {},
+        getId: (LikedEventCardModel object) => object.mockId,
+        setId: (LikedEventCardModel object, int id) {
+          object.mockId = id;
+        },
+        objectToFB: (LikedEventCardModel object, fb.Builder fbb) {
+          final idOffset = fbb.writeString(object.id);
+          final titleOffset = fbb.writeString(object.title);
+          final eventImageUrlOffset = fbb.writeString(object.eventImageUrl);
+          fbb.startTable(7);
+          fbb.addInt64(0, object.mockId);
+          fbb.addOffset(1, idOffset);
+          fbb.addOffset(2, titleOffset);
+          fbb.addInt64(3, object.startDate.millisecondsSinceEpoch);
+          fbb.addOffset(4, eventImageUrlOffset);
+          fbb.addBool(5, object.isOnline);
+          fbb.finish(fbb.endTable());
+          return object.mockId;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = LikedEventCardModel(
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false))
+            ..mockId =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
         })
   };
 
@@ -1071,6 +1160,9 @@ class Event_ {
   /// see [Event.isPrivate]
   static final isPrivate =
       QueryBooleanProperty<Event>(_entities[2].properties[12]);
+
+  /// see [Event.price]
+  static final price = QueryDoubleProperty<Event>(_entities[2].properties[13]);
 }
 
 /// [EventPromocodeInfo] entity fields to define ObjectBox queries.
@@ -1297,4 +1389,31 @@ class UserLikesEvents_ {
   /// see [UserLikesEvents.eventId]
   static final eventId =
       QueryIntegerProperty<UserLikesEvents>(_entities[9].properties[2]);
+}
+
+/// [LikedEventCardModel] entity fields to define ObjectBox queries.
+class LikedEventCardModel_ {
+  /// see [LikedEventCardModel.mockId]
+  static final mockId =
+      QueryIntegerProperty<LikedEventCardModel>(_entities[10].properties[0]);
+
+  /// see [LikedEventCardModel.id]
+  static final id =
+      QueryStringProperty<LikedEventCardModel>(_entities[10].properties[1]);
+
+  /// see [LikedEventCardModel.title]
+  static final title =
+      QueryStringProperty<LikedEventCardModel>(_entities[10].properties[2]);
+
+  /// see [LikedEventCardModel.startDate]
+  static final startDate =
+      QueryIntegerProperty<LikedEventCardModel>(_entities[10].properties[3]);
+
+  /// see [LikedEventCardModel.eventImageUrl]
+  static final eventImageUrl =
+      QueryStringProperty<LikedEventCardModel>(_entities[10].properties[4]);
+
+  /// see [LikedEventCardModel.isOnline]
+  static final isOnline =
+      QueryBooleanProperty<LikedEventCardModel>(_entities[10].properties[5]);
 }

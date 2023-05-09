@@ -1,5 +1,7 @@
 library FavouriteEventCard;
 
+import 'package:Eventbrite/helper_functions/Likes_functions.dart';
+import 'package:Eventbrite/models/liked_event_card_model.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,11 +26,10 @@ import '../screens/sign_up/sign_up_or_log_in.dart';
 ///
 class FavouriteEventCard extends StatefulWidget {
   //event to be shown in the card
-  // Event event;
-
+  final LikedEventCardModel event;
+  bool isFav = true;
   //constructor
-  // EventCard(this.event, {super.key});
-
+  FavouriteEventCard(this.event, {super.key});
   @override
   State<FavouriteEventCard> createState() => _FavouriteEventCardState();
 }
@@ -36,37 +37,18 @@ class FavouriteEventCard extends StatefulWidget {
 class _FavouriteEventCardState extends State<FavouriteEventCard> {
   @override
   Widget build(BuildContext context) {
-    //----------------------- Event provider ------------------------------
+    // //----------------------- Event provider ------------------------------
 
-    final event = Provider.of<Event>(context, listen: false);
-    final favsData = Provider.of<FavEvents>(context);
+    // final event = Provider.of<Event>(context, listen: false);
+    // final favsData = Provider.of<FavEvents>(context);
 
-    //----------------------- Methods ------------------------------
-
-    Future<void> toggleFav(BuildContext ctx) async {
-      //add to favourites list
-      bool isLogged = await checkLoggedUser();
-      setState(() {
-        if (isLogged) {
-          //Call toggleStatus function from event class
-          if (event.isFav) {
-            favsData.removeEventFromFav(event);
-          } else {
-            favsData.addEventToFav(event);
-          }
-        } else {
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-            return const SignUpOrLogIn();
-          }));
-        }
-      });
-    }
+    // //----------------------- Methods ------------------------------
 
     return Stack(
       fit: StackFit.loose,
       children: [
         InkWell(
-          onTap: () => selectEvent(context, event),
+          // onTap: () => selectFavEvent(context, widget.event),
           child: Padding(
             padding: const EdgeInsets.only(top: 15, left: 15, bottom: 15),
             child: Row(
@@ -76,13 +58,21 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                 SizedBox(
                     width: 100,
                     height: 100,
-                    child: event.eventImg.startsWith('http')
-                        ? Image.network(
-                            event.eventImg,
+                    child: widget.event.eventImageUrl.startsWith('http')
+                        ? FadeInImage(
+                            placeholder: const AssetImage(
+                                'assets/images/no_image_found.png'),
+                            imageErrorBuilder: (context, error, stackTrace) =>
+                                const Image(
+                              image: AssetImage(
+                                  'assets/images/no_image_found.png'),
+                              fit: BoxFit.cover,
+                            ),
+                            image: NetworkImage(widget.event.eventImageUrl),
                             fit: BoxFit.cover,
                           )
                         : Image.asset(
-                            event.eventImg,
+                            widget.event.eventImageUrl,
                             fit: BoxFit.cover,
                           )),
                 Container(
@@ -93,14 +83,14 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.startDate)} EET',
+                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.event.startDate)} EET',
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w500,
                               fontSize: 14)),
                       SizedBox(
                           width: 200,
-                          child: Text(event.description,
+                          child: Text(widget.event.title,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -109,22 +99,6 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                   ),
                 )
               ],
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 2,
-          right: 10,
-          child: IconButton(
-            onPressed: () => toggleFav(context),
-            icon: Icon(
-              key: const Key("fav"),
-              !event.isFav
-                  ? Icons.favorite_border_rounded
-                  : Icons.favorite_sharp,
-              color: !event.isFav
-                  ? const Color.fromRGBO(0, 0, 0, 0.7)
-                  : const Color.fromARGB(255, 209, 65, 12),
             ),
           ),
         ),

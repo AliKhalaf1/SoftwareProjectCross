@@ -68,9 +68,7 @@ class _CheckBoxState extends State<CheckBox> {
                 checkColor: Colors.white,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
                 // activeColor: const Color.fromARGB(255, 29, 82, 215),
-                value: widget.title == 'Price'
-                    ? filtersDataValues.price
-                    : filtersDataValues.organizer,
+                value: filtersDataValues.price,
                 onChanged: (bool? value) {
                   setState(() {
                     if (widget.title == 'Price') {
@@ -81,12 +79,12 @@ class _CheckBoxState extends State<CheckBox> {
                         filtersDataValues.selectedFilterCount--;
                       }
                     } else {
-                      filtersDataValues.setOrg(!filtersDataValues.organizer);
-                      if (filtersDataValues.organizer) {
-                        filtersDataValues.selectedFilterCount++;
-                      } else {
-                        filtersDataValues.selectedFilterCount--;
-                      }
+                      // filtersDataValues.setOrg(!filtersDataValues.organizer);
+                      // if (filtersDataValues.organizer) {
+                      //   filtersDataValues.selectedFilterCount++;
+                      // } else {
+                      //   filtersDataValues.selectedFilterCount--;
+                      // }
                     }
                     widget.buttonState = true;
                   });
