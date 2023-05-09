@@ -1,9 +1,17 @@
+library BarLocation;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:search_map_location/utils/google_search/place.dart';
 import 'package:search_map_location/widget/search_widget.dart';
 
 import '../../providers/createevent/createevent.dart';
+
+/// {@category Creator}
+/// {@category Screens}
+/// 
+///BarLocation is a StatelessWidget that represents the screen for selecting a location for an event.
+
+
 
 class BarLocation extends StatelessWidget {
   static const route = '/barLocation';

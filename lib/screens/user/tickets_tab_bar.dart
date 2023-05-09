@@ -7,6 +7,15 @@ import 'package:Eventbrite/widgets/loading_spinner.dart';
 
 import 'package:flutter/material.dart';
 
+/// {@category user}
+/// {@category Screens}
+///
+///TicketsTabBar class is a StatefulWidget that represents the tickets screen in the application.
+///
+/// It contains a TabBar with two tabs, one for "Upcoming" and the other for "Past tickets".
+///
+/// It also contains a TabBarView that displays the corresponding content for the selected tab.
+
 class TicketsTabBar extends StatefulWidget {
   static const route = '/Tabbarevents';
   bool _isLoading = false;

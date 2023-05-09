@@ -1,3 +1,5 @@
+
+library AttendeeReport;
 import 'package:Eventbrite/helper_functions/constants.dart';
 import 'package:Eventbrite/models/Ticket_attendee.dart';
 import 'package:Eventbrite/models/ticket_class.dart';
@@ -5,6 +7,12 @@ import 'package:Eventbrite/widgets/app_bar_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+
+/// {@category Creator}
+/// {@category Screens}
+///
+///Flutter class called AttendeeReport that extends StatefulWidget.
+/// It is used to display a list of ticket attendees for a particular event.
 
 class AttendeeReport extends StatefulWidget {
   final String eventID;

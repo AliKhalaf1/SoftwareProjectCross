@@ -1,5 +1,4 @@
-library DraftEventsScreen;
-
+library AllEventsScreen;
 import 'package:Eventbrite/providers/events/event.dart';
 import 'package:Eventbrite/widgets/draft_card.dart';
 import 'package:csv/csv.dart';
@@ -21,7 +20,8 @@ import 'package:url_launcher/url_launcher.dart';
 /// {@category Creator}
 /// {@category Screens}
 ///
-/// This Page is used to display the creator's draft events.
+///
+/// This Page is used to display the creator's All events.
 class DraftEvents extends StatefulWidget {
   @override
   State<DraftEvents> createState() => _DraftEventsState();

@@ -1,3 +1,5 @@
+library Eventstartandend;
+
 import 'package:Eventbrite/screens/creator/event_location.dart';
 import 'package:Eventbrite/widgets/from_to_date.dart';
 import 'package:intl/intl.dart';
@@ -5,6 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/createevent/createevent.dart';
 import '../../widgets/arc_painter.dart';
+
+/// {@category Creator}
+/// {@category Screens}
+///
+/// screen that allows the user to set the date and time of an event.
+///
+/// The user can select the date and time using date and time pickers.
+///
+/// The code checks if the selected dates and times are valid and if they are,
+///
+/// sets them in the provider and navigates to the next screen.
 
 class EventDate extends StatefulWidget {
   const EventDate({Key? key});
