@@ -1,4 +1,12 @@
+library DayandTime;
+
 import 'package:flutter/material.dart';
+
+/// {@category Widgets}
+///
+///DayandTime widget is a stateless widget that displays a row with an icon and text for both a selected day and time.
+///
+///
 
 class DayandTime extends StatelessWidget {
   final Function _showDatePicker;

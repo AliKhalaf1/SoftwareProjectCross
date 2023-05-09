@@ -1,5 +1,11 @@
+library TicketDetails;
+
 import 'package:flutter/material.dart';
 import 'package:ticket_widget/ticket_widget.dart';
+
+/// {@category Widgets}
+///
+/// Code for displaying a ticket details card UI.
 
 class TicketDetailsCard extends StatelessWidget {
   const TicketDetailsCard({Key? key}) : super(key: key);

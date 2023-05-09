@@ -16,6 +16,11 @@ import '../screens/event_page.dart';
 import 'transparent_button_no_icon.dart';
 import '../models/event_ticket.dart';
 
+/// {@category Widgets}
+///
+///StatefulWidget in Flutter, named PlaceOrder.
+///
+///It's used to display a form for placing an order for event tickets.
 class PlaceOrder extends StatefulWidget {
   final String eventId;
   final String eventImg;

@@ -1,4 +1,8 @@
+library TicketList;
 import 'package:flutter/material.dart';
+/// {@category Widgets}
+/// 
+///A card widget representing a ticket, displaying the title, number of tickets sold and the ticket type.
 
 class TicketsCard extends StatelessWidget {
   final String ticketTitle;
