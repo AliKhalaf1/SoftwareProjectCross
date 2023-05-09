@@ -90,7 +90,9 @@ class _SearchState extends State<Search> {
       filtersDataValues.nameSearch,
       duration[0],
       duration[1],
-      "",
+      filtersDataValues.cat.value == "Anything"
+          ? ""
+          : filtersDataValues.cat.value,
     ).then((value) {
       if (value.isEmpty) {
         events = [];
