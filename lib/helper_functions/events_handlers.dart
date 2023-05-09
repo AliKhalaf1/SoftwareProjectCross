@@ -17,10 +17,10 @@ Future<void> selectEvent(BuildContext ctx, Event event) async {
     //   return EventPage(event.id, isLogged);
     // }));
 
-    Map<String, String> args = {
+    Map<String, dynamic> args = {
       'eventId': event.id,
       'isLogged': isLogged == true ? "1" : "0",
-      'eventIdMock': event.mockId.toString(),
+      'eventIdMock': event.mockId,
     };
 
     Navigator.of(ctx).pushNamed(
