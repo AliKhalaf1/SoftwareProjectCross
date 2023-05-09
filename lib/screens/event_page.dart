@@ -407,13 +407,23 @@ class _EventPageState extends State<EventPage> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(15.0),
                               child: SizedBox(
-                                height: 200,
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                child: Image.network(
-                                  widget.loadedEvent.eventImg,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                                  height: 200,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  child: FadeInImage(
+                                    placeholder: const AssetImage(
+                                        'assets/images/no_image_found.png'),
+                                    imageErrorBuilder:
+                                        (context, error, stackTrace) =>
+                                            const Image(
+                                      image: AssetImage(
+                                          'assets/images/no_image_found.png'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    image: NetworkImage(
+                                        widget.loadedEvent.eventImg),
+                                    fit: BoxFit.cover,
+                                  )),
                             ),
 
                             // -------------------- Event Name --------------------

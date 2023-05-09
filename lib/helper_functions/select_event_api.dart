@@ -46,13 +46,13 @@ Future<Event> selectEventApi(String id) async {
         DateTime.parse(resData['date_and_time']['end_date_time']),
         resData['description'],
         resData['image_link'],
-        resData['location']['is_online'] == 'false' ? false : true,
+        resData['location']['is_online'],
         false,
         resData['basic_info']['category'],
         [],
         resData['basic_info']['title'],
         resData['basic_info']['organizer'],
-        resData['state']['is_public'] == 'false' ? false : true);
+        resData['state']['is_public']);
     // print('Length is :   ${categoreyEvents.length}');
   } else {
     return Event('', DateTime.now(), DateTime.now(), '', '', false, false, '',
