@@ -48,7 +48,7 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
       fit: StackFit.loose,
       children: [
         InkWell(
-          onTap: () => selectFavEvent(context, widget.event),
+          // onTap: () => selectFavEvent(context, widget.event),
           child: Padding(
             padding: const EdgeInsets.only(top: 15, left: 15, bottom: 15),
             child: Row(

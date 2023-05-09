@@ -17,6 +17,10 @@ Future<List<Event>> search(
     DateTime start_date,
     DateTime end_date,
     String Category) async {
+  // Events of certein categorey
+  List<Event> categoreyEvents = [];
+  // Event catEvent = Event('', DateTime(2100, 1, 1), DateTime(2100, 1, 1), '', '',
+  //     false, false, '', [], '', '', false, 0);
   String params = "city=";
 
   if (isOnline != "") {
@@ -47,18 +51,49 @@ Future<List<Event>> search(
   );
 
   var resCode = response.statusCode;
-  var resBody = response.body;
-  var resData = jsonDecode(resBody);
-  print("hello");
+  print('-----------------');
+  print("ResCode:");
   print(resCode);
-  print(resData);
+  print('-----------------');
   if (resCode == 200) {
+    var resBody = response.body;
+    var resData = jsonDecode(resBody);
     print(resData.length);
-    for (int i = 0; i < resData.length; i++) {
-      print(resData[i]['id']);
-      print(resData[i]['basic_info']['title']);
+    if (resData.length > 0) {
+      for (int i = 0; i < resData.length; i++) {
+        // print('**************************************************************');
+        // print(resData[i]['id']);
+        // print(resData[i]['date_and_time']['start_date_time']);
+        // print(resData[i]['date_and_time']['end_date_time']);
+        // print(resData[i]['date_and_time']['end_date_time']);
+        // print(resData[i]['description']);
+        // print(resData[i]['image_link']);
+        // print(resData[i]['location']['is_online']);
+        // print(resData[i]['location']['is_online']);
+        // print(resData[i]['basic_info']['category']);
+        // print(resData[i]['basic_info']['title']);
+        // print(resData[i]['basic_info']['organizer']);
+        // print(resData[i]['state']['is_public']);
+        // print('**************************************************************');
+        categoreyEvents.add(Event(
+            resData[i]['id'],
+            DateTime.parse(resData[i]['date_and_time']['start_date_time']),
+            DateTime.parse(resData[i]['date_and_time']['end_date_time']),
+            resData[i]['description'],
+            resData[i]['image_link'],
+            resData[i]['location']['is_online'] == 'false' ? false : true,
+            false,
+            resData[i]['basic_info']['category'],
+            [],
+            resData[i]['basic_info']['title'],
+            resData[i]['basic_info']['organizer'],
+            resData[i]['state']['is_public'] == 'false' ? false : true));
+        // print('Length is :   ${categoreyEvents.length}');
+      }
+    } else {
+      return [];
     }
-    return [];
+    return categoreyEvents;
   } else {
     return [];
   }

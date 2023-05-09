@@ -613,73 +613,74 @@ ModelDefinition getObjectBoxModel() {
 
           return object;
         }),
-    Event: EntityDefinition<Event>(
-        model: _entities[2],
-        toOneRelations: (Event object) => [],
-        toManyRelations: (Event object) => {},
-        getId: (Event object) => object.mockId,
-        setId: (Event object, int id) {
-          object.mockId = id;
-        },
-        objectToFB: (Event object, fb.Builder fbb) {
-          final eventImgOffset = fbb.writeString(object.eventImg);
-          final descriptionOffset = fbb.writeString(object.description);
-          final categOffset = fbb.writeString(object.categ);
-          final tagsOffset = fbb.writeList(
-              object.tags.map(fbb.writeString).toList(growable: false));
-          final idOffset = fbb.writeString(object.id);
-          final titleOffset = fbb.writeString(object.title);
-          final organizationOffset = fbb.writeString(object.organization);
-          fbb.startTable(16);
-          fbb.addInt64(0, object.mockId);
-          fbb.addOffset(1, eventImgOffset);
-          fbb.addInt64(2, object.startDate.millisecondsSinceEpoch);
-          fbb.addInt64(3, object.endDate.millisecondsSinceEpoch);
-          fbb.addOffset(4, descriptionOffset);
-          fbb.addBool(5, object.isFav);
-          fbb.addOffset(6, categOffset);
-          fbb.addOffset(7, tagsOffset);
-          fbb.addOffset(8, idOffset);
-          fbb.addOffset(9, titleOffset);
-          fbb.addOffset(10, organizationOffset);
-          fbb.addBool(13, object.isOnline);
-          fbb.addBool(14, object.isPrivate);
-          fbb.finish(fbb.endTable());
-          return object.mockId;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
+    // Event: EntityDefinition<Event>(
+    //   model: _entities[2],
+    //   toOneRelations: (Event object) => [],
+    //   toManyRelations: (Event object) => {},
+    //   getId: (Event object) => object.mockId,
+    //   setId: (Event object, int id) {
+    //     object.mockId = id;
+    //   },
+    //   objectToFB: (Event object, fb.Builder fbb) {
+    //     final eventImgOffset = fbb.writeString(object.eventImg);
+    //     final descriptionOffset = fbb.writeString(object.description);
+    //     final categOffset = fbb.writeString(object.categ);
+    //     final tagsOffset = fbb.writeList(
+    //         object.tags.map(fbb.writeString).toList(growable: false));
+    //     final idOffset = fbb.writeString(object.id);
+    //     final titleOffset = fbb.writeString(object.title);
+    //     final organizationOffset = fbb.writeString(object.organization);
+    //     fbb.startTable(16);
+    //     fbb.addInt64(0, object.mockId);
+    //     fbb.addOffset(1, eventImgOffset);
+    //     fbb.addInt64(2, object.startDate.millisecondsSinceEpoch);
+    //     fbb.addInt64(3, object.endDate.millisecondsSinceEpoch);
+    //     fbb.addOffset(4, descriptionOffset);
+    //     fbb.addBool(5, object.isFav);
+    //     fbb.addOffset(6, categOffset);
+    //     fbb.addOffset(7, tagsOffset);
+    //     fbb.addOffset(8, idOffset);
+    //     fbb.addOffset(9, titleOffset);
+    //     fbb.addOffset(10, organizationOffset);
+    //     fbb.addBool(13, object.isOnline);
+    //     fbb.addBool(14, object.isPrivate);
+    //     fbb.finish(fbb.endTable());
+    //     return object.mockId;
+    //   },
+    // objectFromFB: (Store store, ByteData fbData) {
+    //   final buffer = fb.BufferContext(fbData);
+    //   final rootOffset = buffer.derefObject(0);
 
-          final object = Event(
-              DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
-              DateTime.fromMillisecondsSinceEpoch(
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 30, false),
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 16, ''),
-              const fb.ListReader<String>(
-                      fb.StringReader(asciiOptimization: true),
-                      lazy: false)
-                  .vTableGet(buffer, rootOffset, 18, []),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 20, ''),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 22, ''),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 24, ''),
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 32, false))
-            ..mockId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+    // final object = Event(
+    //     const fb.StringReader(asciiOptimization: true)
+    //         .vTableGet(buffer, rootOffset, 20, ''),
+    //     DateTime.fromMillisecondsSinceEpoch(
+    //         const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
+    //     DateTime.fromMillisecondsSinceEpoch(
+    //         const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0)),
+    //     const fb.StringReader(asciiOptimization: true)
+    //         .vTableGet(buffer, rootOffset, 12, ''),
+    //     const fb.StringReader(asciiOptimization: true)
+    //         .vTableGet(buffer, rootOffset, 6, ''),
+    //     const fb.BoolReader().vTableGet(buffer, rootOffset, 30, false),
+    //     const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false),
+    //     const fb.StringReader(asciiOptimization: true)
+    //         .vTableGet(buffer, rootOffset, 16, ''),
+    //     const fb.ListReader<String>(
+    //             fb.StringReader(asciiOptimization: true),
+    //             lazy: false)
+    //         .vTableGet(buffer, rootOffset, 18, []),
+    //     const fb.StringReader(asciiOptimization: true)
+    //         .vTableGet(buffer, rootOffset, 22, ''),
+    //     const fb.StringReader(asciiOptimization: true)
+    //         .vTableGet(buffer, rootOffset, 24, ''),
+    //     const fb.BoolReader().vTableGet(buffer, rootOffset, 32, false),
+    //   ..mockId =
+    //       const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
-          return object;
-        }),
+    // return object;
+    // }
+    // ),
     EventPromocodeInfo: EntityDefinition<EventPromocodeInfo>(
         model: _entities[3],
         toOneRelations: (EventPromocodeInfo object) => [],
