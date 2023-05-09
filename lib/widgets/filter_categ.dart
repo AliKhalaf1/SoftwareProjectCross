@@ -32,7 +32,7 @@ class _FilterCategState extends State<FilterCateg> {
           return const FilterType(1, 'What categories are you interested in?');
         }
       } else {
-        return const NearbyEvents();
+        return const NearbyEvents(0);
       }
     }));
   }
@@ -65,7 +65,9 @@ class _FilterCategState extends State<FilterCateg> {
             Text(
               widget.id == 0
                   ? filtersDataValues.date.value
-                  : (widget.id == 1 ? 'Online' : filtersDataValues.cat.value),
+                  : (widget.id == 1
+                      ? filtersDataValues.location
+                      : filtersDataValues.cat.value),
               style: const TextStyle(
                   fontSize: 22,
                   height: 0.9,

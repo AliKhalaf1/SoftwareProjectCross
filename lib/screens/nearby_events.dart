@@ -3,6 +3,9 @@ library NearbyEventsScreen;
 import 'package:Eventbrite/helper_functions/location_services.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/filters/filter_selection_values.dart';
 
 import 'filters.dart';
 
@@ -13,7 +16,8 @@ import 'filters.dart';
 /// This Page is used to display the nearby events.
 
 class NearbyEvents extends StatefulWidget {
-  const NearbyEvents({super.key});
+  final parent;
+  const NearbyEvents(this.parent, {super.key});
 
   @override
   State<NearbyEvents> createState() => _NearbyEventsState();
@@ -22,19 +26,44 @@ class NearbyEvents extends StatefulWidget {
 class _NearbyEventsState extends State<NearbyEvents> {
   @override
   Widget build(BuildContext context) {
+    final filtersDataValues = Provider.of<FilterSelectionValues>(context);
+
     /* Method handler to return back after select browsing in what */
-    void selectLocation(BuildContext ctx) {}
+    void selectLocation(BuildContext ctx) {
+      setState(() {
+        if (!filtersDataValues.locSelectedBefore
+            // && filtersDataValues.location != 'Online events'    // check that value toggeled
+            ) {
+          filtersDataValues.selectedFilterCount++;
+        }
+        // Set value by new value
+        // filtersDataValues.setLoc('Online events');
+        filtersDataValues.locSelectedBefore = true;
+      });
+    }
 
     void getLocation(BuildContext ctx) {
-      // Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      //   return FilterScreen();
-      // }));
-
       determinePosition().then((value) {
         placemarkFromCoordinates(value.latitude, value.longitude).then((loc) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(
-                  "Your location is ${loc[0].locality}, ${loc[0].subAdministrativeArea}, ${loc[0].administrativeArea}, ${loc[0].country} ")));
+          setState(() {
+            if (loc[0].administrativeArea != null) {
+              if (!filtersDataValues.locSelectedBefore &&
+                  filtersDataValues.location != loc[0].administrativeArea!) {
+                filtersDataValues.selectedFilterCount++;
+              }
+              filtersDataValues
+                  .setLoc(loc[0].administrativeArea!.split(' ')[0]);
+              filtersDataValues.locSelectedBefore = true;
+            } else {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Failed")));
+            }
+            Navigator.pop(ctx);
+          });
+          // Pop back to filters screen
+          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          //     content: Text(
+          //         "Your location is ${loc[0].locality}, ${loc[0].subAdministrativeArea}, ${loc[0].administrativeArea}, ${loc[0].country} ")));
         });
       }).catchError((error) {
         String error_text = error.toString();
@@ -155,7 +184,18 @@ class _NearbyEventsState extends State<NearbyEvents> {
                     ),
                     InkWell(
                       key: const Key("SelectBrowsingIn"),
-                      onTap: () => selectLocation(context),
+                      onTap: () => {
+                        setState(() {
+                          if (!filtersDataValues.locSelectedBefore &&
+                              filtersDataValues.location != 'Online events') {
+                            filtersDataValues.selectedFilterCount++;
+                          }
+                          filtersDataValues.setLoc('Online events');
+                          filtersDataValues.locSelectedBefore = true;
+                        }),
+                        // Pop back to filters screen
+                        Navigator.pop(context),
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

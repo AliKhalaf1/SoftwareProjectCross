@@ -159,11 +159,6 @@ final _entities = <ModelEntity>[
             id: const IdUid(15, 7035098969218285509),
             name: 'isPrivate',
             type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(16, 7895381826733041736),
-            name: 'price',
-            type: 8,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -578,7 +573,8 @@ ModelDefinition getObjectBoxModel() {
         447075717921643552,
         3214205458895062553,
         6493024197532204526,
-        7073026940504869321
+        7073026940504869321,
+        7895381826733041736
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -689,7 +685,6 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(10, organizationOffset);
           fbb.addBool(13, object.isOnline);
           fbb.addBool(14, object.isPrivate);
-          fbb.addFloat64(15, object.price);
           fbb.finish(fbb.endTable());
           return object.mockId;
         },
@@ -698,6 +693,8 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = Event(
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 20, ''),
               DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
               DateTime.fromMillisecondsSinceEpoch(
@@ -715,19 +712,15 @@ ModelDefinition getObjectBoxModel() {
                       lazy: false)
                   .vTableGet(buffer, rootOffset, 18, []),
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 20, ''),
-              const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 22, ''),
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 24, ''),
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 32, false),
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 34, 0))
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 32, false))
             ..mockId =
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
-    // return object;
-    // }
-    // ),
+          return object;
+        }),
     EventPromocodeInfo: EntityDefinition<EventPromocodeInfo>(
         model: _entities[3],
         toOneRelations: (EventPromocodeInfo object) => [],
@@ -1160,9 +1153,6 @@ class Event_ {
   /// see [Event.isPrivate]
   static final isPrivate =
       QueryBooleanProperty<Event>(_entities[2].properties[12]);
-
-  /// see [Event.price]
-  static final price = QueryDoubleProperty<Event>(_entities[2].properties[13]);
 }
 
 /// [EventPromocodeInfo] entity fields to define ObjectBox queries.

@@ -30,9 +30,11 @@ class FilterSelectionValues with ChangeNotifier {
   Tag _cat = Tag('Anything', true, 'field', 'Anything');
   String _location = "Online events";
   bool _price = false;
+  String _nameSearch = "";
   // bool _organizer = false;
   // int _sortBy = 0;
   int selectedFilterCount = 0;
+  bool locSelectedBefore = false;
 
   ///Reset values to default
   void resetSelectionValues() {
@@ -40,6 +42,7 @@ class FilterSelectionValues with ChangeNotifier {
     _cat = Tag('Anything', true, 'field', 'Anything');
     _location = "Online events";
     _price = false;
+    _nameSearch = "";
     // _organizer = false;
     // _sortBy = 0;
     selectedFilterCount = 0;
@@ -56,6 +59,11 @@ class FilterSelectionValues with ChangeNotifier {
     // _sortBy = temp.sortBy;
     selectedFilterCount = temp.selectedFilterCount;
     notifyListeners();
+  }
+
+  ///Get data value
+  String get nameSearch {
+    return _nameSearch;
   }
 
   ///Get data value
@@ -87,6 +95,18 @@ class FilterSelectionValues with ChangeNotifier {
   // int get sortBy {
   //   return _sortBy;
   // }
+
+  ///Set SearchByName
+  void setSearchByName(String searchTitle) {
+    _nameSearch = searchTitle;
+    notifyListeners();
+  }
+
+  ///Set SearchByName
+  void clearSearchByName() {
+    _nameSearch = "";
+    notifyListeners();
+  }
 
   ///Set Date
   void setDate(Tag d) {

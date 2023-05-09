@@ -25,7 +25,6 @@ import '../../widgets/loading_spinner.dart';
 /// it contains a list of events in a column
 /// andeach event is in a card
 ///
-///DUMMY DATA to be substituted after linking with Apis and database.
 ///
 ///<b>ListView</b>
 ///
@@ -78,7 +77,6 @@ class _HomeState extends State<Home> {
     "Holiday",
     "Hobbies",
     "Food & Drink",
-
   ];
 
   // list of list<Event> of all static categories
@@ -126,11 +124,6 @@ class _HomeState extends State<Home> {
     fetchAllEvents().then((value) {
       setState(() {
         widget.isLoading = false;
-        print(
-            '**********************************************************************');
-        print(widget.isLoading);
-        print(
-            '**********************************************************************');
       });
     });
     super.initState();
