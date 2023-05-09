@@ -168,8 +168,7 @@ class _EventDateState extends State<EventDate> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: const Text('Error'),
-                  content: const Text(
-                      'The Start date must be earlier than the End date'),
+                  content: const Text('Error in your date'),
                   actions: [
                     TextButton(
                       child: const Text('OK'),

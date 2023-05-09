@@ -15,6 +15,7 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:csv/csv.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// {@category Creator}
 /// {@category Screens}
@@ -83,45 +84,6 @@ class _DraftEventsState extends State<DraftEvents> {
     });
   }
 
-  Future<void> exportToCsv() async {
-    final directory = await getExternalStorageDirectory();
-
-    List<List<String>> csvData = [
-      [
-        'Event Title',
-        'Start Date',
-        'End Date',
-        'Price',
-        'Max Tickets',
-        'Taken Tickets'
-      ]
-    ];
-
-    dataAll.forEach((element) {
-      List<String> row = [
-        element.title,
-        element.startDate,
-        element.endDate,
-        element.price.toString(),
-        element.maxTickets.toString(),
-        element.takenTickets.toString()
-      ];
-      csvData.add(row);
-    });
-
-    print(csvData.length);
-
-    String csv = const ListToCsvConverter().convert(csvData);
-
-    String filename = '${directory!.path}/events.csv';
-
-    final file = File(filename);
-    await file.writeAsString(csv);
-    print("directionnnn");
-    print(filename);
-    
-  }
-
   @override
   Widget build(BuildContext context) {
     Widget myWidget;
@@ -158,7 +120,6 @@ class _DraftEventsState extends State<DraftEvents> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          exportToCsv();
           Navigator.of(context).push(
             SplashRoute(
               targetPage: EventTitle(),
