@@ -13,14 +13,24 @@ class theEvent {
   double price;
   int maxTickets;
   int takenTickets;
-  theEvent(
-      {this.id = "",
-      this.title = "",
-      this.startDate = " ",
-      this.endDate = "",
-      this.price = 0,
-      this.maxTickets = 0,
-      this.takenTickets = 0});
+  int maxTicketsVip;
+  int takenTicketsVip;
+  int maxTicketsRegular;
+  int takenTicketsRegular;
+
+  theEvent({
+    this.id = "",
+    this.title = "",
+    this.startDate = "",
+    this.endDate = "",
+    this.price = 0,
+    this.maxTickets = 0,
+    this.takenTickets = 0,
+    this.maxTicketsVip = 0,
+    this.takenTicketsVip = 0,
+    this.maxTicketsRegular = 0,
+    this.takenTicketsRegular = 0,
+  });
 }
 
 class totalEvents with ChangeNotifier {
@@ -65,8 +75,11 @@ class totalEvents with ChangeNotifier {
       for (var element in items) {
         int available = 0;
         int takenTickets = 0;
-
         double price = 0;
+        int vipmax = 0;
+        int viptaken = 0;
+        int regularmax = 0;
+        int regulartaken = 0;
         final uri = Uri.parse(
             'https://eventbrite-995n.onrender.com/tickets/event_id/${element.id}');
 
@@ -75,6 +88,17 @@ class totalEvents with ChangeNotifier {
         final List<dynamic> extractedDataTickets = json.decode(response2.body);
         extractedDataTickets.forEach((ticket) {
           available += ticket["max_quantity"] as int;
+
+          if (ticket["type"] == "regular") {
+            regularmax += ticket["max_quantity"] as int;
+            regulartaken +=
+                (ticket["max_quantity"] - ticket["available_quantity"]) as int;
+          } else {
+            vipmax += ticket["max_quantity"] as int;
+            viptaken +=
+                (ticket["max_quantity"] - ticket["available_quantity"]) as int;
+          }
+
           price += (ticket["max_quantity"] - ticket["available_quantity"]) *
               ticket["price"];
           takenTickets +=
@@ -83,6 +107,11 @@ class totalEvents with ChangeNotifier {
         element.price = price;
         element.maxTickets = available;
         element.takenTickets = takenTickets;
+
+        element.maxTicketsRegular = regularmax;
+        element.maxTicketsVip = vipmax;
+        element.takenTicketsRegular = regulartaken;
+        element.takenTicketsVip = viptaken;
       }
     } catch (error) {
       print(error);

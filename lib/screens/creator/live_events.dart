@@ -2,6 +2,7 @@ library live_events;
 
 import 'package:Eventbrite/providers/createevent/createevent.dart';
 import 'package:Eventbrite/providers/getevent/getevent.dart';
+import 'package:Eventbrite/screens/creator/event_dashboard.dart';
 import 'package:Eventbrite/screens/creator/event_title.dart';
 import 'package:Eventbrite/widgets/backgroud.dart';
 import 'package:flutter/material.dart';
@@ -46,8 +47,7 @@ class _LiveEventsState extends State<LiveEvents> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('Error'),
-              content: const Text(
-                  'The Start date must be earlier than the End date'),
+              content: const Text('error in fetching catched'),
               actions: [
                 TextButton(
                   child: const Text('OK'),
@@ -98,13 +98,19 @@ class _LiveEventsState extends State<LiveEvents> {
         child: ListView.builder(
           itemCount: liveeventLen,
           itemBuilder: (context, index) {
-            return LiveCard(
-                dataLive[index].startDate,
-                dataLive[index].title,
-                dataLive[index].maxTickets,
-                dataLive[index].takenTickets,
-                dataLive[index].price,
-                key: Key(dataLive[index].id));
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(EventsDashboard.route,
+                    arguments: {'event': dataLive[index]});
+              },
+              child: LiveCard(
+                  dataLive[index].startDate,
+                  dataLive[index].title,
+                  dataLive[index].maxTickets,
+                  dataLive[index].takenTickets,
+                  dataLive[index].price,
+                  key: Key(dataLive[index].id)),
+            );
           },
         ),
       );
