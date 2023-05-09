@@ -1,5 +1,5 @@
+library MainEventForm;
 import 'dart:io';
-
 import 'package:Eventbrite/screens/creator/all_coupons.dart';
 import 'package:Eventbrite/screens/creator/all_tickets.dart';
 import 'package:Eventbrite/screens/creator/bar_location.dart';
@@ -15,6 +15,10 @@ import '../../widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/tab_bar_Events.dart';
+
+/// {@category Creator}
+/// {@category Screens}
+/// 
 
 enum eventPlace {
   Venue,
@@ -148,7 +152,7 @@ class _EventFormState extends State<EventForm> {
   String? url = null;
   Future pickImage() async {
     try {
-      image = await ImagePicker().pickImage(source: ImageSource.camera);
+      image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (File(image!.path) == null) return;
       final String imageurl = await UploadImage.uploadImage(File(image!.path));
       setState(() {

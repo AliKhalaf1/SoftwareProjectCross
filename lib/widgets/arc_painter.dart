@@ -1,6 +1,11 @@
+library ArcPainter;
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 
+/// {@category Widgets}
+///
+/// custom painter that draws an arc shape with specified start angle, sweep angle, color and stroke width.
 class ArcPainter extends CustomPainter {
   final double startAngle;
   final double sweepAngle;

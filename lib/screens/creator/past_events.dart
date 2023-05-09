@@ -7,6 +7,7 @@ import 'package:Eventbrite/providers/getevent/getevent.dart';
 
 import '../../widgets/backgroud.dart';
 import '../../widgets/live_card.dart';
+import 'event_dashboard.dart';
 import 'event_title.dart';
 
 /// {@category Creator}
@@ -92,13 +93,19 @@ class _PastEventsState extends State<PastEvents> {
         child: ListView.builder(
           itemCount: pasteventLen,
           itemBuilder: (context, index) {
-            return LiveCard(
-                dataPast[index].startDate,
-                dataPast[index].title,
-                dataPast[index].maxTickets,
-                dataPast[index].takenTickets,
-                dataPast[index].price,
-                key: Key(dataPast[index].id));
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(EventsDashboard.route,
+                    arguments: {'event': dataPast[index]});
+              },
+              child: LiveCard(
+                  dataPast[index].startDate,
+                  dataPast[index].title,
+                  dataPast[index].maxTickets,
+                  dataPast[index].takenTickets,
+                  dataPast[index].price,
+                  key: Key(dataPast[index].id)),
+            );
           },
         ),
       );

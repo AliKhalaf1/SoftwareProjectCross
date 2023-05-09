@@ -1,4 +1,13 @@
+library CouponCard;
+
 import 'package:flutter/material.dart';
+
+/// {@category Widgets}
+/// A card widget that displays information about a coupon.
+///
+/// The CouponCard widget can be used to display the following information:
+///
+/// Coupon name Limited usage Discount type Discount value
 
 class CouponCard extends StatelessWidget {
   final String couponName;

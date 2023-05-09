@@ -1,5 +1,4 @@
-library DraftEventsScreen;
-
+library AllEventsScreen;
 import 'package:Eventbrite/providers/events/event.dart';
 import 'package:Eventbrite/widgets/draft_card.dart';
 import 'package:csv/csv.dart';
@@ -9,17 +8,20 @@ import 'package:splash_route/splash_route.dart';
 import '../../providers/getevent/getevent.dart';
 import '../../widgets/backgroud.dart';
 import '../../widgets/live_card.dart';
+import 'event_dashboard.dart';
 import 'event_title.dart';
 
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:csv/csv.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// {@category Creator}
 /// {@category Screens}
 ///
-/// This Page is used to display the creator's draft events.
+///
+/// This Page is used to display the creator's All events.
 class DraftEvents extends StatefulWidget {
   @override
   State<DraftEvents> createState() => _DraftEventsState();
@@ -83,44 +85,6 @@ class _DraftEventsState extends State<DraftEvents> {
     });
   }
 
-  Future<void> exportToCsv() async {
-    final directory = await getExternalStorageDirectory();
-
-    List<List<String>> csvData = [
-      [
-        'Event Title',
-        'Start Date',
-        'End Date',
-        'Price',
-        'Max Tickets',
-        'Taken Tickets'
-      ]
-    ];
-
-    dataAll.forEach((element) {
-      List<String> row = [
-        element.title,
-        element.startDate,
-        element.endDate,
-        element.price.toString(),
-        element.maxTickets.toString(),
-        element.takenTickets.toString()
-      ];
-      csvData.add(row);
-    });
-
-    print(csvData.length);
-
-    String csv = const ListToCsvConverter().convert(csvData);
-
-    String filename = '${directory!.path}/events.csv';
-
-    final file = File(filename);
-    await file.writeAsString(csv);
-    print("directionnnn");
-    print(filename);
-  }
-
   @override
   Widget build(BuildContext context) {
     Widget myWidget;
@@ -136,13 +100,19 @@ class _DraftEventsState extends State<DraftEvents> {
         child: ListView.builder(
           itemCount: liveeventLen,
           itemBuilder: (context, index) {
-            return LiveCard(
-                dataAll[index].startDate,
-                dataAll[index].title,
-                dataAll[index].maxTickets,
-                dataAll[index].takenTickets,
-                dataAll[index].price,
-                key: Key(dataAll[index].id));
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(EventsDashboard.route,
+                    arguments: {'event': dataAll[index]});
+              },
+              child: LiveCard(
+                  dataAll[index].startDate,
+                  dataAll[index].title,
+                  dataAll[index].maxTickets,
+                  dataAll[index].takenTickets,
+                  dataAll[index].price,
+                  key: Key(dataAll[index].id)),
+            );
           },
         ),
       );
@@ -157,7 +127,6 @@ class _DraftEventsState extends State<DraftEvents> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // exportToCsv();
           Navigator.of(context).push(
             SplashRoute(
               targetPage: EventTitle(),

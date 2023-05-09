@@ -1,3 +1,5 @@
+library AllTicketsScreen;
+
 import 'package:Eventbrite/screens/creator/tickets_form.dart';
 import 'package:Eventbrite/widgets/ticket_card.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,13 @@ import 'package:provider/provider.dart';
 import '../../providers/createevent/createevent.dart';
 import '../../widgets/backgroud.dart';
 import '../../widgets/tickets_list.dart';
+
+/// {@category Creator}
+/// {@category Screens}
+///
+///class called All_Tickets that extends StatelessWidget.
+///It displays a list of tickets for an event and allows the user to add or delete tickets.
+///It uses the Provider package to manage state and retrieve data from a TheEvent object.
 
 class All_Tickets extends StatelessWidget {
   static const route = '/eventsAllTickets';

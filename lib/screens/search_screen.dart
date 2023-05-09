@@ -85,12 +85,14 @@ class _SearchState extends State<Search> {
       filtersDataValues.location == "Online events"
           ? ""
           : filtersDataValues.location,
-      filtersDataValues.location == "Online events" ? "true" : "false",
+      filtersDataValues.location == "Online events" ? "" : "false",
       filtersDataValues.price ? "true" : "false",
       filtersDataValues.nameSearch,
       duration[0],
       duration[1],
-      "",
+      filtersDataValues.cat.value == "Anything"
+          ? ""
+          : filtersDataValues.cat.value,
     ).then((value) {
       if (value.isEmpty) {
         events = [];

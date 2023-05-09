@@ -199,6 +199,28 @@ class _EventPageState extends State<EventPage> {
 
   // Open buyTickets model
   void buyTickets(BuildContext ctx) {
+    List<EventTicketInfo> evTF = [];
+    List<EventTicketInfo> evTV = [];
+    for (int i = 0; i < widget.eventFreeTickets.length; i++) {
+      evTF.add(EventTicketInfo(
+          widget.eventFreeTickets[i].id,
+          widget.eventFreeTickets[i].type,
+          widget.eventFreeTickets[i].name,
+          widget.eventFreeTickets[i].ticketPrice,
+          widget.eventFreeTickets[i].startDate,
+          widget.eventFreeTickets[i].endDate,
+          widget.eventFreeTickets[i].avaliableQuantity));
+    }
+    for (int i = 0; i < widget.eventVipTickets.length; i++) {
+      evTV.add(EventTicketInfo(
+          widget.eventVipTickets[i].id,
+          widget.eventVipTickets[i].type,
+          widget.eventVipTickets[i].name,
+          widget.eventVipTickets[i].ticketPrice,
+          widget.eventVipTickets[i].startDate,
+          widget.eventVipTickets[i].endDate,
+          widget.eventVipTickets[i].avaliableQuantity));
+    }
     showModalBottomSheet(
         context: ctx,
         isScrollControlled: true,
@@ -214,9 +236,9 @@ class _EventPageState extends State<EventPage> {
                   widget.eventId,
                   widget.loadedEvent.title,
                   '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET',
-                  widget.eventFreeTickets,
-                  widget.eventVipTickets,
-                  widget.eventPromocodes));
+                  evTF,
+                  evTV,
+                  widget.eventPromocodes, widget.loadedEvent.eventImg));
         });
   }
 
@@ -267,7 +289,12 @@ class _EventPageState extends State<EventPage> {
 
   // @override
   // void initState() {
-
+  //   // Render Page After finish
+  //   fetchEventApis().then((value) {
+  //     setState(() {
+  //       widget.isLoading = false;
+  //     });
+  //   });
   //   super.initState();
   // }
 
@@ -279,15 +306,15 @@ class _EventPageState extends State<EventPage> {
   @override
   void didChangeDependencies() {
     // --------------- Args Passed from parent widget ---------------------------
-    Map<String, String> args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    Map<String, dynamic> args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     if (args['eventId'] == null ||
         args['isLogged'] == null ||
         args['eventIdMock'] == null) {
       Navigator.of(context).pop();
     }
     widget.eventId = args['eventId'] as String;
-    widget.eventIdMock = int.parse(args['eventIdMock'] as String);
+    widget.eventIdMock = (args['eventIdMock'] as int);
     widget.isLogged = args['isLogged'] == '0' ? false : true;
 
     // Render Page After finish
@@ -344,12 +371,22 @@ class _EventPageState extends State<EventPage> {
           leadingWidth: double.infinity,
           leading: Stack(children: <Widget>[
             Container(
-              decoration: BoxDecoration(
+              decoration:
+                  // (widget.loadedEvent.eventImg == null ||
+                  //         widget.loadedEvent.eventImg == "")
+                  //     ?
+                  const BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(widget.loadedEvent.eventImg),
+                  image: AssetImage("assets/images/o3.png"),
                   fit: BoxFit.cover,
                 ),
               ),
+              // : BoxDecoration(
+              //     image: DecorationImage(
+              //       image: NetworkImage(widget.loadedEvent.eventImg),
+              //       fit: BoxFit.cover,
+              //     ),
+              //   ),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(

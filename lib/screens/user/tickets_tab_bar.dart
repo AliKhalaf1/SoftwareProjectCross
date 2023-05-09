@@ -1,9 +1,5 @@
 library TicketsTabBar;
 
-import 'dart:convert';
-
-import 'package:Eventbrite/helper_functions/log_in.dart';
-import 'package:Eventbrite/providers/tickets/tickets.dart';
 import 'package:Eventbrite/screens/user/past_tickets_page.dart';
 import 'package:Eventbrite/screens/user/upcoming_tickets_page.dart';
 import 'package:Eventbrite/widgets/app_bar_text.dart';
@@ -11,16 +7,19 @@ import 'package:Eventbrite/widgets/loading_spinner.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../helper_functions/constants.dart';
-import '../../providers/tickets/ticket.dart';
-import 'package:http/http.dart' as http;
+/// {@category user}
+/// {@category Screens}
+///
+///TicketsTabBar class is a StatefulWidget that represents the tickets screen in the application.
+///
+/// It contains a TabBar with two tabs, one for "Upcoming" and the other for "Past tickets".
+///
+/// It also contains a TabBarView that displays the corresponding content for the selected tab.
 
 class TicketsTabBar extends StatefulWidget {
   static const route = '/Tabbarevents';
   bool _isLoading = false;
   int _selectedTabIndex = 0;
-  List<Ticket> oldtickets = [];
-  List<Ticket> newtickets = [];
   TicketsTabBar({super.key});
 
   @override
@@ -30,57 +29,6 @@ class TicketsTabBar extends StatefulWidget {
 class _TicketsTabBarState extends State<TicketsTabBar> {
   void initState() {
     super.initState();
-    getOrders();
-  }
-
-  void getOrders() async {
-    setState(() {
-      widget._isLoading = true;
-    });
-
-    if (Constants.MockServer == false) {
-      print("I'm here1");
-      // string to uri
-      var uri = Uri.parse('${Constants.host}/orders/myorders/');
-      print(uri);
-      //create multipart request
-      String token = await getToken();
-
-      Map<String, String> reqHeaders = {
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer $token',
-      };
-
-      var response = await http.get(uri, headers: reqHeaders);
-
-      var res = response.body;
-      var resData = jsonDecode(res);
-      if (res.length == 0) {
-        widget.oldtickets = [];
-        widget.newtickets = [];
-      } else {
-        widget.oldtickets = [];
-        widget.newtickets = [];
-        for (int i = 0; i < resData.length; i++) {
-          DateTime DateTimesss = DateTime.parse(resData[i]['created_date']);
-          Ticket newticket = Ticket(
-            resData[i]['image_link'],
-            DateTime.parse(resData[i]['created_date']),
-            '${resData[i]['first_name']} ${resData[i]['last_name']}',
-          );
-          newticket.OrderId = resData[i]['id'];
-          if (DateTimesss.isBefore(DateTime.now())) {
-            widget.oldtickets.add(newticket);
-          } else {
-            widget.newtickets.add(newticket);
-          }
-        }
-      }
-    } else {}
-
-    setState(() {
-      widget._isLoading = false;
-    });
   }
 
   void _handleTabSelection(int index) {
@@ -139,8 +87,8 @@ class _TicketsTabBarState extends State<TicketsTabBar> {
           body: !widget._isLoading
               ? TabBarView(
                   children: [
-                    UpcomingTicketsPage(widget.oldtickets),
-                    PastTicketsPage(widget.newtickets),
+                    UpcomingTicketsPage(),
+                    PastTicketsPage(),
                   ],
                 )
               : const LoadingSpinner()),

@@ -1,9 +1,16 @@
+library TicketsForm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/createevent/createevent.dart';
+
+/// {@category Creator}
+/// {@category Screens}
+/// 
+/// 
+/// 
 
 enum ticketType {
   regular,

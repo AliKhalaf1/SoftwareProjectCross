@@ -1,9 +1,17 @@
+library DashBoard;
+
 import 'package:Eventbrite/providers/getevent/getevent.dart';
 import 'package:Eventbrite/widgets/dashboard_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Attendee_report.dart';
+/// {@category Creator}
+/// {@category Screens}
+///
+/// EventsDashboard that extends StatefulWidget.
+/// The purpose of this widget is to display information about an event,
+/// including the event title, gross sales,
+/// and the number of available and taken tickets for different types of tickets.
 
 class EventsDashboard extends StatefulWidget {
   const EventsDashboard({super.key});
@@ -110,16 +118,7 @@ class _EventsDashboardState extends State<EventsDashboard> {
                     'eventIDMock': Event.mockId
                   });
                 },
-                child: const Text("Add Attendee")),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AttendeeReport(
-                            Event.id,
-                            Event.mockId,
-                          )));
-                },
-                child: const Text(" Attendee Report")),
+                child: const Text("Add Attendee"))
           ],
         ),
       ),

@@ -1,6 +1,14 @@
+library TicketDetails;
+
 import 'package:Eventbrite/widgets/app_bar_text.dart';
 import 'package:Eventbrite/widgets/ticket_details.dart';
 import 'package:flutter/material.dart';
+/// {@category user}
+/// {@category Screens}
+///
+/// A screen that displays the details of a ticket.
+/// This screen contains a list of [TicketDetailsCard] widgets that display
+/// information about the ticket such as the seat number, section, and price.
 
 class TicketsDetailsScreen extends StatefulWidget {
   String OrderId;

@@ -1,9 +1,18 @@
+library AddCoupons;
+
 import 'package:Eventbrite/screens/creator/coupons_form.dart';
 import 'package:Eventbrite/widgets/coupon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/createevent/createevent.dart';
 import '../../widgets/backgroud.dart';
+/// {@category creator}
+/// {@category Screens}
+/// 
+/// 
+/// class named AllCoupons that extends StatelessWidget. 
+/// It represents a screen  that displays a list of coupons for an event to collect the coupon information.
+
 
 class AllCoupons extends StatelessWidget {
   bool found = true;

@@ -6,10 +6,6 @@ import 'package:http/http.dart' as http;
 import 'constants.dart';
 
 Future<List<EventPromocodeInfo>> getEventPrmocodeInfo(String eventId) async {
-  // To Be: Remove initialization
-  // EventPromocodeInfo eventPromo = EventPromocodeInfo(
-  //     '', '', false, 0, false, 0.0, DateTime.now(), DateTime.now());
-
   List<EventPromocodeInfo> eventPromos = <EventPromocodeInfo>[];
   var uri = Uri.parse('${Constants.host}/promocodes/event_id/$eventId');
   print(uri);
@@ -39,7 +35,6 @@ Future<List<EventPromocodeInfo>> getEventPrmocodeInfo(String eventId) async {
         );
         eventPromos.add(newpromo);
       }
-
       return eventPromos;
     } else {
       return [];
@@ -47,4 +42,23 @@ Future<List<EventPromocodeInfo>> getEventPrmocodeInfo(String eventId) async {
   } else {
     return [];
   }
+}
+
+Future<bool> postEventPrmocodeInfo(String promoId) async {
+  var uri = Uri.parse(
+      '${Constants.host}/promocodes/promocode_id/$promoId/quantity/{quantity}?amount=-1');
+  print(uri);
+  var response = await http.put(
+    uri,
+  );
+
+  var resCode = response.statusCode;
+  print('-----------------');
+  print("ResCode:");
+  print(resCode);
+  print('-----------------');
+  if (resCode == 200) {
+    return true;
+  }
+  return false;
 }

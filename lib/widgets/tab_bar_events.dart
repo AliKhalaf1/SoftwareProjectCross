@@ -1,3 +1,5 @@
+library TabBarEvent;
+
 import '../helper_functions/userInfo.dart';
 import 'drawer.dart';
 import '../screens/creator/all_events.dart';
@@ -5,6 +7,14 @@ import '../screens/creator/live_events.dart';
 import '../screens/creator/past_events.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+/// {@category Widgets}
+///
+///abBarEvents widget that contains a DefaultTabController widget and a FutureBuilder widget.
+///
+///The DefaultTabController widget creates a tabbed layout with three tabs: "Live", "Past", and "All".
+///
+/// The FutureBuilder widget fetches the first name and last name of the user and displays them in the EventDrawer widget.
 
 class TabBarEvents extends StatefulWidget {
   static const route = '/Tabbarevents';

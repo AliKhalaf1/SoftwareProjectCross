@@ -1,9 +1,14 @@
+library CouponsForm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/createevent/createevent.dart';
 
+/// {@category Creator}
+/// {@category Screens}
+/// 
+///  A form that allows the user to create a new coupon with a name, type (percentage or amount), a limit, and a discount value.
 enum discountType {
   percentage,
   amount,
@@ -246,6 +251,11 @@ class _CouponFormState extends State<CouponForm> {
                     if (!priceRegex.hasMatch(value)) {
                       return 'Invalid format';
                     }
+                    if (couponType == discountType.percentage &&
+                        double.tryParse(value)! > 100) {
+                      return " range from 0 to 100";
+                    }
+
                     return null;
                   }
                 }

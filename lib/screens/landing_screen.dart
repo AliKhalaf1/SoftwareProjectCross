@@ -1,3 +1,5 @@
+library LandingScreen;
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -6,6 +8,10 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:splash_route/splash_route.dart';
 
 import 'tab_bar.dart';
+/// {@category user}
+/// {@category Screens}
+///
+///Flutter code for a landing screen that displays a logo for a certain duration before redirecting the user to a target page.
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({super.key});

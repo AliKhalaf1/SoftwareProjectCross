@@ -8,18 +8,33 @@ import 'package:Eventbrite/widgets/title_text_2.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../helper_functions/event_promocode_info.dart';
+import '../helper_functions/event_tickets_info.dart';
+import '../helper_functions/place_order_api.dart';
 import '../models/event_promocode.dart';
+import '../screens/event_page.dart';
 import 'transparent_button_no_icon.dart';
 import '../models/event_ticket.dart';
 
+/// {@category Widgets}
+///
+///StatefulWidget in Flutter, named PlaceOrder.
+///
+///It's used to display a form for placing an order for event tickets.
 class PlaceOrder extends StatefulWidget {
   final String eventId;
+  final String eventImg;
   final List<EventTicketInfo> reservedFreeTickets;
   final List<EventTicketInfo> reservedVipTickets;
   final String? promocodetId;
   final double totalPrice;
-  const PlaceOrder(this.eventId, this.reservedFreeTickets,
-      this.reservedVipTickets, this.promocodetId, this.totalPrice,
+  const PlaceOrder(
+      this.eventId,
+      this.reservedFreeTickets,
+      this.reservedVipTickets,
+      this.promocodetId,
+      this.totalPrice,
+      this.eventImg,
       {super.key});
 
   @override
@@ -30,7 +45,7 @@ class SubmittedData {
   //constants
   List<EventTicketInfo> reservedFreeTickets = [];
   List<EventTicketInfo> reservedVipTickets = [];
-  String? promocodetId;
+  String promocodetId = "";
   double totalPrice = 0;
   String email = '';
   String creationDate = DateFormat('yyyy-MM-dd - kk:mm').format(DateTime.now());
@@ -82,9 +97,15 @@ class _PlaceOrderState extends State<PlaceOrder> {
             TextButton(
               child: const Text('Leave'),
               onPressed: () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.pushNamed(context, '/Event-Page',
-                    arguments: {'eventId': widget.eventId, 'isLogged': '1'});
+                Map<String, dynamic> args = {
+                  'eventId': widget.eventId,
+                  'isLogged': "1",
+                  'eventIdMock': 0,
+                };
+                Navigator.of(context).pushNamed(
+                  EventPage.eventPageRoute,
+                  arguments: args,
+                );
               },
             ),
           ],
@@ -106,9 +127,45 @@ class _PlaceOrderState extends State<PlaceOrder> {
             TextButton(
               child: const Text('Back to Event'),
               onPressed: () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.pushNamed(context, '/Event-Page',
-                    arguments: {'eventId': widget.eventId, 'isLogged': '1'});
+                Map<String, dynamic> args = {
+                  'eventId': widget.eventId,
+                  'isLogged': "1",
+                  'eventIdMock': 0,
+                };
+                Navigator.of(context).pushNamed(
+                  EventPage.eventPageRoute,
+                  arguments: args,
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showFail(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Order failed'),
+          content: const Text('Faild to place your order'),
+          actions: [
+            TextButton(
+              child: const Text('Back to Event'),
+              onPressed: () {
+                stopTimer();
+                Map<String, dynamic> args = {
+                  'eventId': widget.eventId,
+                  'isLogged': "1",
+                  'eventIdMock': 0,
+                };
+                Navigator.of(context).pushNamed(
+                  EventPage.eventPageRoute,
+                  arguments: args,
+                );
               },
             ),
           ],
@@ -153,13 +210,84 @@ class _PlaceOrderState extends State<PlaceOrder> {
     }
     _form.currentState?.save();
     // ====================== call Apis =====================
+    String orderId;
+    postOrder(eventId, data.firstName, data.lastname, data.email,
+            data.creationDate, data.totalPrice, widget.eventImg)
+        .then((value) => {
+              if (value == "1000")
+                {showFail(context)}
+              else
+                {
+                  orderId = value,
+                  for (int i = 0; i < data.reservedFreeTickets.length; i++)
+                    {
+                      postEventTicketInfo(data.reservedFreeTickets[i].id,
+                              data.reservedFreeTickets[i].selectedQuantity)
+                          .then((value) => {
+                                if (!value) {showFail(context)}
+                              })
+                    },
+                  for (int i = 0; i < data.reservedVipTickets.length; i++)
+                    {
+                      postEventTicketInfo(data.reservedVipTickets[i].id,
+                              data.reservedVipTickets[i].selectedQuantity)
+                          .then((value) => {
+                                if (!value)
+                                  {
+                                    showFail(context),
+                                  }
+                              })
+                    },
+                  for (int i = 0; i < data.fnamesFree.length; i++)
+                    {
+                      addAtendee(
+                        data.fnamesFree[i],
+                        data.lnamesFree[i],
+                        data.emailsFree[i],
+                        "regular",
+                        orderId,
+                        eventId,
+                      ).then((value) {
+                        if (!value) {
+                          showFail(context);
+                        }
+                      })
+                    },
+                  for (int i = 0; i < data.fnamesVip.length; i++)
+                    {
+                      addAtendee(
+                        data.fnamesVip[i],
+                        data.lnamesVip[i],
+                        data.emailsVip[i],
+                        "vip",
+                        orderId,
+                        eventId,
+                      ).then((value) {
+                        if (!value) {
+                          showFail(context);
+                        }
+                      })
+                    },
+                  if (data.promocodetId == "")
+                    {showFail(context)}
+                  else
+                    {postEventPrmocodeInfo(data.promocodetId)}
+                }
+            });
 
     // ====================== navigate ======================
     // To Be:
     stopTimer();
-    Navigator.of(context).popUntil((route) => route.isFirst);
-    Navigator.pushNamed(context, '/Event-Page',
-        arguments: {'eventId': eventId, 'isLogged': '1'});
+
+    Map<String, dynamic> args = {
+      'eventId': widget.eventId,
+      'isLogged': "1",
+      'eventIdMock': 0,
+    };
+    Navigator.of(context).pushNamed(
+      EventPage.eventPageRoute,
+      arguments: args,
+    );
   }
 
   @override
@@ -171,7 +299,11 @@ class _PlaceOrderState extends State<PlaceOrder> {
   @override
   void initState() {
     getEmail().then((value) => data.email = value);
-    data.promocodetId = widget.promocodetId;
+    if (widget.promocodetId == null) {
+      data.promocodetId = "";
+    } else {
+      data.promocodetId = widget.promocodetId!;
+    }
     data.reservedFreeTickets = widget.reservedFreeTickets;
     data.reservedVipTickets = widget.reservedVipTickets;
     data.totalPrice = widget.totalPrice;
@@ -602,7 +734,6 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                         if (value == null || value.isEmpty) {
                                           return "Enter ticket owner email";
                                         }
-                                        // To Be: check regix mail
                                         if (!EmailValidator.validate(value)) {
                                           return "Enter valid email";
                                         }
@@ -822,7 +953,6 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                         if (value == null || value.isEmpty) {
                                           return "Enter ticket owner email";
                                         }
-                                        // To Be: check regix mail
                                         if (!EmailValidator.validate(value)) {
                                           return "Enter valid email";
                                         }
