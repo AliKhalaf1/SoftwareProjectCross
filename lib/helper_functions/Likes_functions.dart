@@ -62,14 +62,6 @@ Future<List<Event>> getLikedEvents() async {
 
     var user = userbox.query(User_.email.equals(email)).build().findFirst();
 
-    ///////////for testing///////////////////
-    var firstevent = eventsbox.get(1);
-    var newlike = UserLikesEvents(user!.mockId, firstevent!.mockId);
-    if (likesbox.isEmpty()) {
-      likesbox.put(newlike);
-    }
-    ///////////for testing///////////////////
-
     var likedevents = likesbox
         .query(UserLikesEvents_.userId.equals(user!.mockId))
         .build()
