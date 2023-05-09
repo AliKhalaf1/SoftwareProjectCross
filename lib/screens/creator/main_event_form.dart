@@ -148,7 +148,7 @@ class _EventFormState extends State<EventForm> {
   String? url = null;
   Future pickImage() async {
     try {
-      image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      image = await ImagePicker().pickImage(source: ImageSource.camera);
       if (File(image!.path) == null) return;
       final String imageurl = await UploadImage.uploadImage(File(image!.path));
       setState(() {
