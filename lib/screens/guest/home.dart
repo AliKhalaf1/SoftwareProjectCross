@@ -118,15 +118,19 @@ class _HomeState extends State<Home> {
     } else {
       var eventsbox = ObjectBox.eventBox;
       for (int i = 0; i < categoryTitles.length; i++) {
-        var events = eventsbox
+        var fetchedevents = eventsbox
             .query(Event_.categ.equals(categoryTitles[i]))
             .build()
             .find();
-
-        if (events.isEmpty) {
-          this.events.add([]);
+        if (fetchedevents.isEmpty) {
+          print(categoryTitles[i]);
+          print('empty');
+          events.add([]);
         } else {
-          this.events.add(events);
+          print(categoryTitles[i]);
+          print('not empty');
+          print(fetchedevents[0].title);
+          events.add(fetchedevents);
         }
       }
     }
