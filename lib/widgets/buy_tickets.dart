@@ -13,13 +13,14 @@ class BuyTickets extends StatefulWidget {
   final String eventId;
   final String eventtitle;
   final String eventStartDate;
+  final String eventImg;
   List<EventTicketInfo> eventFreeTickets;
   List<EventTicketInfo> eventVipTickets;
   List<EventTicketInfo> eventFreeTicketsRender = [];
   List<EventTicketInfo> eventVipTicketsRender = [];
   List<EventPromocodeInfo> eventPromocodes = [];
   BuyTickets(this.eventId, this.eventtitle, this.eventStartDate,
-      this.eventFreeTickets, this.eventVipTickets, this.eventPromocodes,
+      this.eventFreeTickets, this.eventVipTickets, this.eventPromocodes,this.eventImg,
       {super.key});
 
   @override
@@ -276,7 +277,9 @@ class _BuyTicketsState extends State<BuyTickets> {
                 widget.eventFreeTicketsRender,
                 widget.eventVipTicketsRender,
                 data.promocodetId,
-                data.totalPrice),
+                data.totalPrice,
+                widget.eventImg
+                ),
           );
         });
   }
