@@ -35,7 +35,27 @@ class _PastEventsState extends State<PastEvents> {
         _isLoading = true;
       });
       events = Provider.of<totalEvents>(context, listen: false);
-      await events.fetchAndSetEvents();
+      try {
+        await events.fetchAndSetEvents();
+      } catch (error) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: const Text('error in fetching catched'),
+              actions: [
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
       dataPast = events.allitemsended;
       setState(() {
         pasteventLen = dataPast.length;
