@@ -65,6 +65,7 @@ dependencies:
   circle_progress_bar: ^0.1.2
   flutter_ticket_widget: ^0.0.1
   csv: ^5.0.2
+  url_launcher: ^6.1.11
 
  
 

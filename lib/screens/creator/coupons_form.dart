@@ -246,6 +246,11 @@ class _CouponFormState extends State<CouponForm> {
                     if (!priceRegex.hasMatch(value)) {
                       return 'Invalid format';
                     }
+                    if (couponType == discountType.percentage &&
+                        double.tryParse(value)! > 100) {
+                      return " range from 0 to 100";
+                    }
+
                     return null;
                   }
                 }
