@@ -4,6 +4,7 @@ import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/providers/filters/tags.dart';
 import 'package:Eventbrite/providers/filters/temp_tags.dart';
 import 'package:Eventbrite/providers/getevent/getevent.dart';
+import 'package:Eventbrite/screens/creator/add_attendee.dart';
 import 'package:Eventbrite/screens/creator/all_coupons.dart';
 import 'package:Eventbrite/screens/creator/all_tickets.dart';
 import 'package:Eventbrite/screens/creator/bar_location.dart';
@@ -115,7 +116,7 @@ class _MainAppState extends State<MainApp> {
           AccountSettings.accountSettingsRoute: (ctx) =>
               AccountSettings("", "", "", ""),
           EventDate.route: (ctx) => EventDate(),
-          EventPage.eventPageRoute: (ctx) => EventPage("",false),
+          EventPage.eventPageRoute: (ctx) => EventPage("", false),
           // EventPage.eventPageRoute: (ctx) => EventPage(),
           EventLocation.route: (ctx) => const EventLocation(),
           Home.homePageRoute: (ctx) => Home(),
@@ -127,6 +128,7 @@ class _MainAppState extends State<MainApp> {
           AllCoupons.route: (ctx) => AllCoupons(),
           CouponForm.route: (ctx) => CouponForm(),
           EventsDashboard.route: (ctx) => EventsDashboard(),
+          AttendeeForm.route: (ctx) => AttendeeForm(),
         },
       ),
     );
