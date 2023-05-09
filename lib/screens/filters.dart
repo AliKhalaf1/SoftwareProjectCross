@@ -40,6 +40,7 @@ class _FilterScreenState extends State<FilterScreen> {
   //---------------- Methods -----------------//
   //Apply filters
   void applyFilters(BuildContext ctx) {
+    Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return TabBarScreen(title: 'Search', tabBarIndex: 1);
     }));
