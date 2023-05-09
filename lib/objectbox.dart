@@ -1,6 +1,10 @@
 import 'package:Eventbrite/models/db_mock.dart';
+import 'package:Eventbrite/models/user_likes_event.dart';
+import 'package:Eventbrite/providers/events/event.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'models/auth.dart';
 import 'models/user.dart';
 import 'objectbox.g.dart'; // created by `flutter pub run build_runner build`
@@ -14,10 +18,14 @@ class ObjectBox {
   /// This is used to store the user's data.
   static late Box<User> userBox;
   static late Box<Auth> authBox;
+  static late Box<Event> eventBox;
+  static late Box<UserLikesEvents> likesBox;
 
   ObjectBox._create(this.store) {
     userBox = store.box<User>();
     authBox = store.box<Auth>();
+    eventBox = store.box<Event>();
+    likesBox = store.box<UserLikesEvents>();
 
     if (userBox.isEmpty()) {
       userBox.putMany(DBMock.users);
@@ -25,6 +33,9 @@ class ObjectBox {
 
     if (authBox.isEmpty()) {
       authBox.putMany(DBMock.auths);
+    }
+    if (eventBox.isEmpty()) {
+      eventBox.putMany(DBMock.events);
     }
     // Add any additional setup code, e.g. build queries.
   }

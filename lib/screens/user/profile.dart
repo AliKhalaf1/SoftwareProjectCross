@@ -1,5 +1,6 @@
 library UserProfileScreen;
 
+import 'package:Eventbrite/helper_functions/constants.dart';
 import 'package:Eventbrite/helper_functions/log_in.dart';
 
 import 'package:Eventbrite/providers/events/fav_events.dart';
@@ -93,16 +94,18 @@ class _ProfileState extends State<Profile> {
   }
 
   void Refresh() {
-    widget.isLoading = true;
-    // Future<String> token = getEmail();
-    Future<String> token = getToken();
+    setState(() {
+      widget.isLoading = true;
+    });
+
+    Future<String> token;
+    if (Constants.MockServer == true) {
+      token = getEmail();
+    } else {
+      token = getToken();
+    }
 
     token.then((value) {
-      // var userbox = ObjectBox.userBox;
-      // User currUser =
-      //     userbox.query(User_.email.equals(value)).build().findFirst()!;
-
-      // // User currUser = DBMock.getUserData(value);
       var favEventsData = Provider.of<FavEvents>(context, listen: false);
       getUserInfo(value).then((currUser) {
         setState(() {
@@ -115,6 +118,9 @@ class _ProfileState extends State<Profile> {
           widget.myTicketsCount = 0;
           widget.followingCount = 0;
         });
+      });
+      setState(() {
+        widget.isLoading = false;
       });
     });
   }

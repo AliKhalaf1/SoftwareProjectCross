@@ -3,6 +3,8 @@ library EditPassPage;
 import 'dart:convert';
 
 import 'package:Eventbrite/helper_functions/log_in.dart';
+import 'package:Eventbrite/main.dart';
+import 'package:Eventbrite/models/auth.dart';
 import 'package:Eventbrite/screens/sign_in/email_check.dart';
 import 'package:Eventbrite/screens/user/account_settings.dart';
 import 'package:Eventbrite/widgets/app_bar_text.dart';
@@ -12,11 +14,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:objectbox/objectbox.dart';
 
 import '../../helper_functions/constants.dart';
 import '../../helper_functions/log_out.dart';
 import '../../models/db_mock.dart';
 import 'package:http/http.dart' as http;
+
+import '../../models/user.dart';
+import '../../objectbox.dart';
+import '../../objectbox.g.dart';
 
 /// {@category user}
 /// {@category Screens}
@@ -365,41 +372,59 @@ class _UpdatePassPageState extends State<UpdatePassPage> {
                             setState(() {
                               widget._isLoading = true;
                             });
-                            // getEmail().then((value) {
-                            //   DBMock.updateUserName(
-                            //       value,
-                            //       widget.firstNameText.text,
-                            //       widget.lastNameText.text);
+                            int responseCode = 200;
+                            if (Constants.MockServer == true) {
+                              await getEmail().then((value) {
+                                var authbox = ObjectBox.authBox;
+                                var userbox = ObjectBox.userBox;
+                                Query<Auth> query = authbox
+                                    .query(Auth_.email.equals(value) &
+                                        Auth_.password.equals(
+                                            widget.oldPassController.text))
+                                    .build();
+                                Auth? auth = query.findFirst();
+                                if (auth == null) {
+                                  responseCode = 401;
+                                } else if (auth.password !=
+                                    widget.oldPassController.text) {
+                                  responseCode = 401;
+                                } else {
+                                  print(auth.password);
+                                  responseCode = 200;
+                                  auth.password = widget.newPassController.text;
+                                  authbox.put(auth);
+                                }
+                                setState(() {
+                                  widget._isLoading = false;
+                                });
+                              });
+                            } else {
+                              String token = await getToken();
+                              var uri = Uri.parse(
+                                  '${Constants.host}/auth/update-password');
 
-                            //   Navigator.of(context).pop();
-                            //   Navigator.of(context).pop(true);
-                            // });
+                              //create multipart request
+                              Map<String, String> reqHeaders = {
+                                "Content-type": "application/json",
+                                'Authorization': 'Bearer $token',
+                              };
 
-                            String token = await getToken();
-                            var uri = Uri.parse(
-                                '${Constants.host}/auth/update-password');
+                              Map<String, String> body = {
+                                "old_password": widget.oldPassController.text,
+                                "new_password": widget.newPassController.text,
+                              };
 
-                            //create multipart request
-                            Map<String, String> reqHeaders = {
-                              "Content-type": "application/json",
-                              'Authorization': 'Bearer $token',
-                            };
-
-                            Map<String, String> body = {
-                              "old_password": widget.oldPassController.text,
-                              "new_password": widget.newPassController.text,
-                            };
-
-                            var reqbody = json.encode(body);
-                            var response = await http.put(
-                              uri,
-                              headers: reqHeaders,
-                              body: reqbody,
-                            );
-                            int responseCode = response.statusCode;
-                            setState(() {
-                              widget._isLoading = false;
-                            });
+                              var reqbody = json.encode(body);
+                              var response = await http.put(
+                                uri,
+                                headers: reqHeaders,
+                                body: reqbody,
+                              );
+                              responseCode = response.statusCode;
+                              setState(() {
+                                widget._isLoading = false;
+                              });
+                            }
                             print(responseCode);
                             if (responseCode == 200) {
                               setLoggedOut();
