@@ -222,8 +222,7 @@ class _HomeState extends State<Home> {
                 color: const Color.fromARGB(255, 255, 72, 0),
                 child: ListView.builder(
                   padding: const EdgeInsets.only(top: 10),
-                  itemCount:
-                      categoryTitles.length, // substitute with collectionCounts
+                  itemCount: categoryTitles.length,
                   itemBuilder: (ctx, index) {
                     // List<Event> events = [];
                     // search(
@@ -250,13 +249,13 @@ class _HomeState extends State<Home> {
                     //     print(events[0].organization);
                     //   }
                     // });
-                    EventCollections(
-                        categoryTitles[index], true, events[index]);
 
                     // List<Event> matchedEvents = events
                     //     .where(
                     //         (eventItem) => eventItem.categ == categoryTitles[index])
                     //     .toList();
+                    return EventCollections(
+                        categoryTitles[index], true, events[index]);
                   },
                 ),
               ),
