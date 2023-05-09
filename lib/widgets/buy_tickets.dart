@@ -4,6 +4,7 @@ import 'package:Eventbrite/widgets/title_text_2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/event_promocode.dart';
+import '../screens/event_page.dart';
 import 'placeorder.dart';
 import 'transparent_button_no_icon.dart';
 import '../models/event_ticket.dart';
@@ -331,8 +332,15 @@ class _BuyTicketsState extends State<BuyTickets> {
             onPressed: () {
               // dispose();
               Navigator.of(context).popUntil((route) => route.isFirst);
-              Navigator.pushNamed(context, '/Event-Page',
-                  arguments: {'eventId': widget.eventId, 'isLogged': '1'});
+              Map<String, dynamic> args = {
+                'eventId': widget.eventId,
+                'isLogged': "1",
+                'eventIdMock': 0,
+              };
+              Navigator.of(context).pushNamed(
+                EventPage.eventPageRoute,
+                arguments: args,
+              );
             },
             icon: const Icon(Icons.close, size: 15),
           ),

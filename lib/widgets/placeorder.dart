@@ -9,6 +9,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/event_promocode.dart';
+import '../screens/event_page.dart';
 import 'transparent_button_no_icon.dart';
 import '../models/event_ticket.dart';
 
@@ -82,9 +83,15 @@ class _PlaceOrderState extends State<PlaceOrder> {
             TextButton(
               child: const Text('Leave'),
               onPressed: () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.pushNamed(context, '/Event-Page',
-                    arguments: {'eventId': widget.eventId, 'isLogged': '1'});
+                Map<String, dynamic> args = {
+                  'eventId': widget.eventId,
+                  'isLogged': "1",
+                  'eventIdMock': 0,
+                };
+                Navigator.of(context).pushNamed(
+                  EventPage.eventPageRoute,
+                  arguments: args,
+                );
               },
             ),
           ],
@@ -106,9 +113,15 @@ class _PlaceOrderState extends State<PlaceOrder> {
             TextButton(
               child: const Text('Back to Event'),
               onPressed: () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.pushNamed(context, '/Event-Page',
-                    arguments: {'eventId': widget.eventId, 'isLogged': '1'});
+                Map<String, dynamic> args = {
+                  'eventId': widget.eventId,
+                  'isLogged': "1",
+                  'eventIdMock': 0,
+                };
+                Navigator.of(context).pushNamed(
+                  EventPage.eventPageRoute,
+                  arguments: args,
+                );
               },
             ),
           ],
@@ -157,9 +170,16 @@ class _PlaceOrderState extends State<PlaceOrder> {
     // ====================== navigate ======================
     // To Be:
     stopTimer();
-    Navigator.of(context).popUntil((route) => route.isFirst);
-    Navigator.pushNamed(context, '/Event-Page',
-        arguments: {'eventId': eventId, 'isLogged': '1'});
+
+    Map<String, dynamic> args = {
+      'eventId': widget.eventId,
+      'isLogged': "1",
+      'eventIdMock': 0,
+    };
+    Navigator.of(context).pushNamed(
+      EventPage.eventPageRoute,
+      arguments: args,
+    );
   }
 
   @override
@@ -602,7 +622,6 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                         if (value == null || value.isEmpty) {
                                           return "Enter ticket owner email";
                                         }
-                                        // To Be: check regix mail
                                         if (!EmailValidator.validate(value)) {
                                           return "Enter valid email";
                                         }
@@ -822,7 +841,6 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                         if (value == null || value.isEmpty) {
                                           return "Enter ticket owner email";
                                         }
-                                        // To Be: check regix mail
                                         if (!EmailValidator.validate(value)) {
                                           return "Enter valid email";
                                         }

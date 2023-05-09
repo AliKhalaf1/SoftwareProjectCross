@@ -85,8 +85,8 @@ class _SearchState extends State<Search> {
       filtersDataValues.location == "Online events"
           ? ""
           : filtersDataValues.location,
-      filtersDataValues.location == "Online events" ? "true" : "false",
-      filtersDataValues.price ? "true" : "false",
+      filtersDataValues.location == "Online events" ? "" : "false",
+      filtersDataValues.price ? "" : "false",
       filtersDataValues.nameSearch,
       duration[0],
       duration[1],

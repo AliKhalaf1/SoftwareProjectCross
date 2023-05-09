@@ -81,13 +81,13 @@ Future<List<Event>> search(
             DateTime.parse(resData[i]['date_and_time']['end_date_time']),
             resData[i]['description'],
             resData[i]['image_link'],
-            resData[i]['location']['is_online'] == 'false' ? false : true,
+            resData[i]['location']['is_online'],
             false,
             resData[i]['basic_info']['category'],
             [],
             resData[i]['basic_info']['title'],
             resData[i]['basic_info']['organizer'],
-            resData[i]['state']['is_public'] == 'false' ? false : true));
+            resData[i]['state']['is_public']));
         // print('Length is :   ${categoreyEvents.length}');
       }
     } else {
