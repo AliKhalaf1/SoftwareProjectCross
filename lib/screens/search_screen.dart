@@ -9,6 +9,7 @@ import '../providers/filters/filter_selection_values.dart';
 import '../providers/filters/tag.dart';
 import '../providers/filters/temp_selected_filter_values.dart';
 import '../widgets/event_collection.dart';
+import '../widgets/title_text_2.dart';
 import 'filters.dart';
 import 'package:provider/provider.dart';
 import '../providers/events/events.dart';
@@ -22,7 +23,10 @@ import 'nearby_events.dart';
 class Search extends StatefulWidget {
   static const searchPageRoute = '/search';
 
-  const Search({super.key});
+  // To Be: false if response from server doesnt exist
+  bool renderSearch = false;
+
+  Search({super.key});
 
   @override
   State<Search> createState() => _SearchState();
@@ -235,21 +239,29 @@ class _SearchState extends State<Search> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 350,
-                  child: GlowingOverscrollIndicator(
-                    axisDirection: AxisDirection.down,
-                    color: Colors.orange.shade900,
-                    child: ListView.builder(
-                      padding: const EdgeInsets.only(top: 40),
-                      itemCount: 1, // substitute with collectionCounts
-                      itemBuilder: (ctx, index) {
-                        return EventCollections(
-                            "${events.length} events", false, events);
-                      },
-                    ),
-                  ),
-                ),
+                widget.renderSearch
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: const TitleText2('No events match'),
+                        ),
+                      )
+                    : SizedBox(
+                        height: 350,
+                        child: GlowingOverscrollIndicator(
+                          axisDirection: AxisDirection.down,
+                          color: Colors.orange.shade900,
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(top: 40),
+                            itemCount: 1, // substitute with collectionCounts
+                            itemBuilder: (ctx, index) {
+                              return EventCollections(
+                                  "${events.length} events", false, events);
+                            },
+                          ),
+                        ),
+                      ),
               ],
             ),
           ),

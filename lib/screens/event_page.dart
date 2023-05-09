@@ -56,7 +56,7 @@ class EventPage extends StatefulWidget {
   bool isLogged;
   // To Be: Taken from Api get event by id
   Event loadedEvent = Event(DateTime.now(), DateTime.now(), '', '', false,
-      false, '', [], '', '', '', false);
+      false, '', [], '', '', '', false,100.0);
 
   // To Be: List of similar events to be fetched from Api search by categorey
   // It could be null as there could be no similar events

@@ -30,8 +30,8 @@ class FilterSelectionValues with ChangeNotifier {
   Tag _cat = Tag('Anything', true, 'field', 'Anything');
   String _location = "Online events";
   bool _price = false;
-  bool _organizer = false;
-  int _sortBy = 0;
+  // bool _organizer = false;
+  // int _sortBy = 0;
   int selectedFilterCount = 0;
 
   ///Reset values to default
@@ -40,8 +40,8 @@ class FilterSelectionValues with ChangeNotifier {
     _cat = Tag('Anything', true, 'field', 'Anything');
     _location = "Online events";
     _price = false;
-    _organizer = false;
-    _sortBy = 0;
+    // _organizer = false;
+    // _sortBy = 0;
     selectedFilterCount = 0;
     notifyListeners();
   }
@@ -52,8 +52,8 @@ class FilterSelectionValues with ChangeNotifier {
     _cat = temp.cat;
     _location = temp.location;
     _price = temp.price;
-    _organizer = temp.organizer;
-    _sortBy = temp.sortBy;
+    // _organizer = temp.organizer;
+    // _sortBy = temp.sortBy;
     selectedFilterCount = temp.selectedFilterCount;
     notifyListeners();
   }
@@ -79,14 +79,14 @@ class FilterSelectionValues with ChangeNotifier {
   }
 
   ///Get organizer(From which I follow /  not)
-  bool get organizer {
-    return _organizer;
-  }
+  // bool get organizer {
+  //   return _organizer;
+  // }
 
   ///Get sort by
-  int get sortBy {
-    return _sortBy;
-  }
+  // int get sortBy {
+  //   return _sortBy;
+  // }
 
   ///Set Date
   void setDate(Tag d) {
@@ -113,16 +113,16 @@ class FilterSelectionValues with ChangeNotifier {
   }
 
   ///Set organizer
-  void setOrg(bool o) {
-    _organizer = o;
-    notifyListeners();
-  }
+  // void setOrg(bool o) {
+  //   _organizer = o;
+  //   notifyListeners();
+  // }
 
   ///Set organizer
-  void setSortingBy(int sb) {
-    _sortBy = sb;
-    notifyListeners();
-  }
+  // void setSortingBy(int sb) {
+  //   _sortBy = sb;
+  //   notifyListeners();
+  // }
 
   ///Increment filter count
   void incSelecFiltersCount() {

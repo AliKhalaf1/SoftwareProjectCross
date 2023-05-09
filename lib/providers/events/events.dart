@@ -20,7 +20,7 @@ class Events with ChangeNotifier {
         '0',
         'Ancara messi ancara messi',
         'Amin',
-        false),
+        false,100.0),
     Event(
         DateTime.now().add(const Duration(hours: 3)),
         DateTime.now().add(const Duration(days: 16)),
@@ -33,7 +33,7 @@ class Events with ChangeNotifier {
         '1',
         'Ancara messi ancara messi',
         'Megs',
-        false),
+        false,100.0),
     Event(
         DateTime.now().add(const Duration(hours: 3)),
         DateTime.now().add(const Duration(days: 9)),
@@ -46,7 +46,7 @@ class Events with ChangeNotifier {
         '2',
         'Ancara messi ancara messi',
         'Saad',
-        false),
+        false,100.0),
     Event(
         DateTime.now().add(const Duration(hours: 3)),
         DateTime.now().add(const Duration(days: 6)),
@@ -59,7 +59,7 @@ class Events with ChangeNotifier {
         '8',
         'Ancara messi ancara messi',
         'Gilany',
-        false),
+        false,100.0),
     Event(
         DateTime.now().add(const Duration(hours: 3)),
         DateTime.now().add(const Duration(days: 33)),
@@ -72,7 +72,7 @@ class Events with ChangeNotifier {
         '6',
         'Ancara messi ancara messi',
         'Amaar',
-        false),
+        false,100.0),
     Event(
         DateTime.now().add(const Duration(hours: 3)),
         DateTime.now().add(const Duration(minutes: 30, hours: 5)),
@@ -85,7 +85,7 @@ class Events with ChangeNotifier {
         '12',
         'Ancara messi ancara messi',
         'Hazem',
-        false),
+        false,100.0),
     Event(
         DateTime.now(),
         DateTime.now().add(const Duration(days: 7)),
@@ -98,7 +98,7 @@ class Events with ChangeNotifier {
         '20',
         'Ancara messi ancara messi',
         'Mahmoud',
-        false),
+        false,100.0),
     Event(
         DateTime.now().add(const Duration(days: 1)),
         DateTime.now().add(const Duration(days: 4)),
@@ -111,7 +111,7 @@ class Events with ChangeNotifier {
         '21',
         'Ancara messi ancara messi',
         'Ali',
-        false),
+        false,100.0),
     Event(
         DateTime.now().add(const Duration(hours: 2)),
         DateTime.now().add(const Duration(minutes: 30, hours: 4)),
@@ -124,7 +124,7 @@ class Events with ChangeNotifier {
         '11',
         'Ancara messi ancara messi',
         'Ziad',
-        false),
+        false,100.0),
     Event(
         DateTime.now().add(const Duration(hours: 1)),
         DateTime.now().add(const Duration(hours: 2)),
@@ -137,7 +137,7 @@ class Events with ChangeNotifier {
         '10',
         'Ancara messi ancara messi',
         'Abdelhameed',
-        false),
+        false,100.0),
   ];
 
   ///Get events

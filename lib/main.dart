@@ -121,7 +121,7 @@ class _MainAppState extends State<MainApp> {
           EventForm.route: (ctx) => const EventForm(),
           All_Tickets.route: (ctx) => All_Tickets(),
           TicketForm.route: (ctx) => TicketForm(),
-          Search.searchPageRoute: (ctx) => const Search(),
+          Search.searchPageRoute: (ctx) => Search(),
           BarLocation.route: (ctx) => BarLocation(),
           AllCoupons.route: (ctx) => AllCoupons(),
           CouponForm.route: (ctx) => CouponForm(),
