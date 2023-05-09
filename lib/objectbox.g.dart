@@ -92,7 +92,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(4, 5508452468500610366),
       name: 'Event',
-      lastPropertyId: const IdUid(16, 7895381826733041736),
+      lastPropertyId: const IdUid(18, 1266951468127446804),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -159,6 +159,16 @@ final _entities = <ModelEntity>[
             id: const IdUid(15, 7035098969218285509),
             name: 'isPrivate',
             type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(17, 2276175339021954406),
+            name: 'creatorId',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 1266951468127446804),
+            name: 'city',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -166,7 +176,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(5, 5525868233582948149),
       name: 'EventPromocodeInfo',
-      lastPropertyId: const IdUid(10, 7037553644394949172),
+      lastPropertyId: const IdUid(11, 8200120566905106095),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -218,6 +228,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(10, 7037553644394949172),
             name: 'endDate',
             type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 8200120566905106095),
+            name: 'eventIdMock',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -411,7 +426,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(10, 8200917204386437970),
       name: 'TicketClass',
-      lastPropertyId: const IdUid(9, 914962434125441347),
+      lastPropertyId: const IdUid(10, 2432142119261522732),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -458,6 +473,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(9, 914962434125441347),
             name: 'endDate',
             type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 2432142119261522732),
+            name: 'id',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -671,7 +691,8 @@ ModelDefinition getObjectBoxModel() {
           final idOffset = fbb.writeString(object.id);
           final titleOffset = fbb.writeString(object.title);
           final organizationOffset = fbb.writeString(object.organization);
-          fbb.startTable(17);
+          final cityOffset = fbb.writeString(object.city);
+          fbb.startTable(19);
           fbb.addInt64(0, object.mockId);
           fbb.addOffset(1, eventImgOffset);
           fbb.addInt64(2, object.startDate.millisecondsSinceEpoch);
@@ -685,6 +706,8 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(10, organizationOffset);
           fbb.addBool(13, object.isOnline);
           fbb.addBool(14, object.isPrivate);
+          fbb.addInt64(16, object.creatorId);
+          fbb.addOffset(17, cityOffset);
           fbb.finish(fbb.endTable());
           return object.mockId;
         },
@@ -717,7 +740,11 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 24, ''),
               const fb.BoolReader().vTableGet(buffer, rootOffset, 32, false))
             ..mockId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..creatorId =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0)
+            ..city = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 38, '');
 
           return object;
         }),
@@ -733,7 +760,7 @@ ModelDefinition getObjectBoxModel() {
           final eventIdOffset = fbb.writeString(object.eventId);
           final idOffset = fbb.writeString(object.id);
           final nameOffset = fbb.writeString(object.name);
-          fbb.startTable(11);
+          fbb.startTable(12);
           fbb.addInt64(0, object.idMock);
           fbb.addOffset(1, eventIdOffset);
           fbb.addOffset(2, idOffset);
@@ -744,6 +771,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(7, object.discount);
           fbb.addInt64(8, object.startDate.millisecondsSinceEpoch);
           fbb.addInt64(9, object.endDate.millisecondsSinceEpoch);
+          fbb.addInt64(10, object.eventIdMock);
           fbb.finish(fbb.endTable());
           return object.idMock;
         },
@@ -767,7 +795,9 @@ ModelDefinition getObjectBoxModel() {
             ..idMock =
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
             ..eventId = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 6, '');
+                .vTableGet(buffer, rootOffset, 6, '')
+            ..eventIdMock =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0);
 
           return object;
         }),
@@ -964,7 +994,8 @@ ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (TicketClass object, fb.Builder fbb) {
           final nameOffset = fbb.writeString(object.name);
-          fbb.startTable(10);
+          final idOffset = fbb.writeString(object.id);
+          fbb.startTable(11);
           fbb.addInt64(0, object.mockId);
           fbb.addInt64(1, object.eventId);
           fbb.addOffset(2, nameOffset);
@@ -974,6 +1005,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(6, object.availableQuantity);
           fbb.addInt64(7, object.startDate.millisecondsSinceEpoch);
           fbb.addInt64(8, object.endDate.millisecondsSinceEpoch);
+          fbb.addOffset(9, idOffset);
           fbb.finish(fbb.endTable());
           return object.mockId;
         },
@@ -982,6 +1014,8 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = TicketClass(
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 22, ''),
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 8, ''),
               const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false),
@@ -1153,6 +1187,13 @@ class Event_ {
   /// see [Event.isPrivate]
   static final isPrivate =
       QueryBooleanProperty<Event>(_entities[2].properties[12]);
+
+  /// see [Event.creatorId]
+  static final creatorId =
+      QueryIntegerProperty<Event>(_entities[2].properties[13]);
+
+  /// see [Event.city]
+  static final city = QueryStringProperty<Event>(_entities[2].properties[14]);
 }
 
 /// [EventPromocodeInfo] entity fields to define ObjectBox queries.
@@ -1196,6 +1237,10 @@ class EventPromocodeInfo_ {
   /// see [EventPromocodeInfo.endDate]
   static final endDate =
       QueryIntegerProperty<EventPromocodeInfo>(_entities[3].properties[9]);
+
+  /// see [EventPromocodeInfo.eventIdMock]
+  static final eventIdMock =
+      QueryIntegerProperty<EventPromocodeInfo>(_entities[3].properties[10]);
 }
 
 /// [EventTicketInfo] entity fields to define ObjectBox queries.
@@ -1364,6 +1409,10 @@ class TicketClass_ {
   /// see [TicketClass.endDate]
   static final endDate =
       QueryIntegerProperty<TicketClass>(_entities[8].properties[8]);
+
+  /// see [TicketClass.id]
+  static final id =
+      QueryStringProperty<TicketClass>(_entities[8].properties[9]);
 }
 
 /// [UserLikesEvents] entity fields to define ObjectBox queries.

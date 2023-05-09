@@ -67,7 +67,7 @@
     },
     {
       "id": "4:5508452468500610366",
-      "lastPropertyId": "16:7895381826733041736",
+      "lastPropertyId": "18:1266951468127446804",
       "name": "Event",
       "properties": [
         {
@@ -135,13 +135,23 @@
           "id": "15:7035098969218285509",
           "name": "isPrivate",
           "type": 1
+        },
+        {
+          "id": "17:2276175339021954406",
+          "name": "creatorId",
+          "type": 6
+        },
+        {
+          "id": "18:1266951468127446804",
+          "name": "city",
+          "type": 9
         }
       ],
       "relations": []
     },
     {
       "id": "5:5525868233582948149",
-      "lastPropertyId": "10:7037553644394949172",
+      "lastPropertyId": "11:8200120566905106095",
       "name": "EventPromocodeInfo",
       "properties": [
         {
@@ -194,6 +204,11 @@
           "id": "10:7037553644394949172",
           "name": "endDate",
           "type": 10
+        },
+        {
+          "id": "11:8200120566905106095",
+          "name": "eventIdMock",
+          "type": 6
         }
       ],
       "relations": []
@@ -386,7 +401,7 @@
     },
     {
       "id": "10:8200917204386437970",
-      "lastPropertyId": "9:914962434125441347",
+      "lastPropertyId": "10:2432142119261522732",
       "name": "TicketClass",
       "properties": [
         {
@@ -434,6 +449,11 @@
           "id": "9:914962434125441347",
           "name": "endDate",
           "type": 10
+        },
+        {
+          "id": "10:2432142119261522732",
+          "name": "id",
+          "type": 9
         }
       ],
       "relations": []

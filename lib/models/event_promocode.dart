@@ -33,6 +33,7 @@ import '../widgets/buy_tickets.dart';
 class EventPromocodeInfo {
   @Id()
   int idMock = 0;
+  int eventIdMock = 0;
   //parameters
   // @Unique()
   String eventId = "";
