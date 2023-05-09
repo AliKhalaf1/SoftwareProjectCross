@@ -110,17 +110,7 @@ class _DraftEventsState extends State<DraftEvents> {
     });
 
     print(csvData.length);
-    int index = 1;
-    dataAll.forEach((element) {
-      csvData[index].add(element.title);
-      csvData[index].add(element.startDate);
-      csvData[index].add(element.endDate);
-      csvData[index].add(element.price.toString());
-      csvData[index].add(element.maxTickets.toString());
-      csvData[index].add(element.takenTickets.toString());
-      // index++;
-    });
-    print("ss");
+
     String csv = const ListToCsvConverter().convert(csvData);
 
     String filename = '${directory!.path}/events.csv';
@@ -129,6 +119,7 @@ class _DraftEventsState extends State<DraftEvents> {
     await file.writeAsString(csv);
     print("directionnnn");
     print(filename);
+    
   }
 
   @override
