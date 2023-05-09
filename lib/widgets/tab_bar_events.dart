@@ -1,3 +1,4 @@
+import '../helper_functions/userInfo.dart';
 import 'drawer.dart';
 import '../screens/creator/all_events.dart';
 import '../screens/creator/live_events.dart';
@@ -31,68 +32,83 @@ class _TabBarEventsState extends State<TabBarEvents> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(31, 10, 61, 1),
-          title: const Text(
-            "Events",
-            style: TextStyle(
-                fontFamily: "Neue Plak Extended",
-                fontWeight: FontWeight.w600,
-                color: Colors.white),
-          ),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(40),
-            child: Container(
-              color: Colors.white,
-              child: TabBar(
-                tabs: [
-                  Tab(
-                    child: Text(
-                      "Live",
-                      style: TextStyle(
-                        color: Theme.of(context).cardColor,
-                      ),
+      child: FutureBuilder(
+        future: Future.wait([getFirstName(), getLastName()]),
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            String firstname = "";
+            String lastname = "";
+            if (!snapshot.hasError) {
+              firstname = snapshot.data![0];
+              lastname = snapshot.data![1];
+            }
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: const Color.fromRGBO(31, 10, 61, 1),
+                title: const Text(
+                  "Events",
+                  style: TextStyle(
+                      fontFamily: "Neue Plak Extended",
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(40),
+                  child: Container(
+                    color: Colors.white,
+                    child: TabBar(
+                      tabs: [
+                        Tab(
+                          child: Text(
+                            "Live",
+                            style: TextStyle(
+                              color: Theme.of(context).cardColor,
+                            ),
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            "Past",
+                            style: TextStyle(
+                              color: Theme.of(context).cardColor,
+                            ),
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            "All",
+                            style: TextStyle(
+                              color: Theme.of(context).cardColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                      onTap: _handleTabSelection,
+                      indicatorColor: Colors.blue[600],
+                      labelPadding: EdgeInsets.zero,
                     ),
                   ),
-                  Tab(
-                    child: Text(
-                      "Past",
-                      style: TextStyle(
-                        color: Theme.of(context).cardColor,
-                      ),
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      "All",
-                      style: TextStyle(
-                        color: Theme.of(context).cardColor,
-                      ),
-                    ),
+                ),
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.search),
                   ),
                 ],
-                onTap: _handleTabSelection,
-                indicatorColor: Colors.blue[600],
-                labelPadding: EdgeInsets.zero,
               ),
-            ),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.search),
-            ),
-          ],
-        ),
-        drawer: EventDrawer(),
-        body: TabBarView(
-          children: [
-            LiveEvents(),
-            PastEvents(),
-            DraftEvents(),
-          ],
-        ),
+              drawer: EventDrawer(userName: "$firstname $lastname"),
+              body: TabBarView(
+                children: [
+                  LiveEvents(),
+                  PastEvents(),
+                  DraftEvents(),
+                ],
+              ),
+            );
+          }
+        },
       ),
     );
   }

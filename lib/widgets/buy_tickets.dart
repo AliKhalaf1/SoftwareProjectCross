@@ -14,6 +14,8 @@ class BuyTickets extends StatefulWidget {
   final String eventStartDate;
   List<EventTicketInfo> eventFreeTickets;
   List<EventTicketInfo> eventVipTickets;
+  List<EventTicketInfo> eventFreeTicketsRender = [];
+  List<EventTicketInfo> eventVipTicketsRender = [];
   final EventPromocodeInfo? eventPromocode;
   BuyTickets(this.eventId, this.eventtitle, this.eventStartDate,
       this.eventFreeTickets, this.eventVipTickets, this.eventPromocode,
@@ -80,7 +82,7 @@ class _BuyTicketsState extends State<BuyTickets> {
     });
 
     /// PromoCheck: close Textfield
-    FocusScope.of(context).requestFocus(FocusNode());
+    // FocusScope.of(context).requestFocus(FocusNode());
 
     /// _fieldKey.currentState?.save(): save the value into submitted data class by calling onsave:
     _fieldKey.currentState?.save();
@@ -202,19 +204,49 @@ class _BuyTicketsState extends State<BuyTickets> {
   /// Function to be called when checkout button is clicked
   void saveForm(BuildContext ctx, String eventId) {
     checkoutClicked = true;
+    for (int i = 0; i < data.reservedFreeTickets.length; i++) {
+      for (int j = 0; j < data.reservedFreeTickets[i].selectedQuantity; j++) {
+        widget.eventFreeTicketsRender.add(data.reservedFreeTickets[i]);
+      }
+    }
+
+    for (int i = 0; i < data.reservedVipTickets.length; i++) {
+      for (int j = 0; j < data.reservedVipTickets[i].selectedQuantity; j++) {
+        widget.eventVipTicketsRender.add(data.reservedVipTickets[i]);
+      }
+    }
     showModalBottomSheet(
         context: ctx,
         isScrollControlled: true,
+        enableDrag: false,
         builder: (_) {
           //------------------------ user input -------------------//
           return GestureDetector(
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
-              behavior: HitTestBehavior.opaque,
-              child: PlaceOrder(widget.eventId,data.reservedFreeTickets,data.reservedVipTickets,data.promocodetId),);
+            onTap: () {
+              // FocusScope.of(context).requestFocus(FocusNode());
+            },
+            behavior: HitTestBehavior.opaque,
+            child: PlaceOrder(
+                widget.eventId,
+                widget.eventFreeTicketsRender,
+                widget.eventVipTicketsRender,
+                data.promocodetId,
+                data.totalPrice),
+          );
         });
   }
+
+  // @override
+  // void dispose() {
+  //   data.promocodetId = null;
+  //   data.reservedFreeTickets = [];
+  //   data.reservedVipTickets = [];
+  //   data.totalPrice = 0;
+  //   promocodeApplied = false;
+  //   checkoutClicked = false;
+  //   allTicketSelectedQ = 0;
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -253,7 +285,10 @@ class _BuyTicketsState extends State<BuyTickets> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              // dispose();
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.pushNamed(context, '/Event-Page',
+                  arguments: {'eventId': widget.eventId, 'isLogged': '1'});
             },
             icon: const Icon(Icons.close, size: 15),
           ),
@@ -436,7 +471,12 @@ class _BuyTicketsState extends State<BuyTickets> {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: <Widget>[
-                                                  Padding(
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.5,
                                                     padding:
                                                         const EdgeInsets.only(
                                                             left: 8.0),

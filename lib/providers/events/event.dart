@@ -46,6 +46,7 @@ class Event with ChangeNotifier {
   final String id;
   final String title;
   final String organization;
+  double price;
 
   ///Constructor
   Event(
@@ -60,7 +61,8 @@ class Event with ChangeNotifier {
       this.id,
       this.title,
       this.organization,
-      this.isPrivate);
+      this.isPrivate,
+      this.price);
 
   /// Set isFav Value by true or false
   void _setFavValue(bool newValue) {

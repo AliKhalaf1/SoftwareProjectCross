@@ -70,8 +70,8 @@ class TempFilterSelectionValues with ChangeNotifier {
     _cat = temp.cat;
     _location = temp.location;
     _price = temp.price;
-    _organizer = temp.organizer;
-    _sortBy = temp.sortBy;
+    // _organizer = temp.organizer;
+    // _sortBy = temp.sortBy;
     selectedFilterCount = temp.selectedFilterCount;
     notifyListeners();
   }

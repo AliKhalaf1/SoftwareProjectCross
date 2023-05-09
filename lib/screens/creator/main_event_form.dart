@@ -379,7 +379,7 @@ class _EventFormState extends State<EventForm> {
                   )
                 ],
               ),
-        drawer: EventDrawer(),
+        drawer: EventDrawer(userName: event.nameOrganizer,),
         body: _isloading
             ? const Center(
                 child: CircularProgressIndicator(

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../helper_functions/log_out.dart';
 import '../models/user.dart';
 import '../screens/tab_bar.dart';
+import 'package:Eventbrite/helper_functions/userInfo.dart';
 
 /// {@category Creator}
 /// {@category Widgets}
@@ -15,7 +16,8 @@ import '../screens/tab_bar.dart';
 ///
 
 class EventDrawer extends StatefulWidget {
-  EventDrawer({super.key});
+  final String userName;
+  EventDrawer({required this.userName});
   var email = '';
   var Name = '';
 
@@ -127,7 +129,7 @@ class _EventDrawerState extends State<EventDrawer> {
           const SizedBox(
             height: 20,
           ),
-          buildlistview(widget.Name, Icons.business_center_rounded, 0, () {
+          buildlistview(widget.userName, Icons.business_center_rounded, 0, () {
             iconHandler(0);
           }, key: const Key("UserName")),
           buildlistview('Events', Icons.date_range_rounded, 1, () {
