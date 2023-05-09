@@ -7,6 +7,7 @@ import 'package:Eventbrite/helper_functions/event_promocode_info.dart';
 import 'package:Eventbrite/widgets/title_text_1.dart';
 import 'package:Eventbrite/widgets/title_text_2.dart';
 import 'package:intl/intl.dart';
+import 'dart:async';
 
 // import '../helper_functions/log_in.dart';
 import '../models/event_promocode.dart';
@@ -36,57 +37,14 @@ class EventPage extends StatefulWidget {
   // To Be: make this class take its data from API
   // To Be: initialized by Empty list in all attr but i but values for testing
   // Initial values:   List<EventTicketInfo> eventFreeTickets = [];
-  List<EventTicketInfo> eventFreeTickets = [
-    EventTicketInfo(
-        '000000',
-        'regular',
-        'Ana Ticket Gamda',
-        0,
-        DateTime.now().subtract(const Duration(days: 10)),
-        DateTime.now().add(const Duration(days: 10)),
-        5),
-    EventTicketInfo(
-        '0111111',
-        'regular',
-        'Ana Ticket Gamda',
-        0,
-        DateTime.now().subtract(const Duration(days: 10)),
-        DateTime.now().add(const Duration(days: 10)),
-        5),
-  ];
-
+  List<EventTicketInfo> eventFreeTickets = [];
   // To Be: initialized by Empty list in all attr but i but values for testing
   // Initial values:   List<EventTicketInfo> eventVipTickets = [];
-  List<EventTicketInfo> eventVipTickets = [
-    EventTicketInfo(
-        '00000',
-        'vip',
-        'Ana Ticket Gamda VIP',
-        50,
-        DateTime.now().subtract(const Duration(days: 10)),
-        DateTime.now().add(const Duration(days: 10)),
-        5),
-    EventTicketInfo(
-        '0111',
-        'vip',
-        'Ana Ticket Gamda VIP',
-        50,
-        DateTime.now().subtract(const Duration(days: 10)),
-        DateTime.now().add(const Duration(days: 10)),
-        5)
-  ];
+  List<EventTicketInfo> eventVipTickets = [];
 
   // To Be: make this class take its data from API
   // To Be: Not to give initial value as it could be NULL => make sure ? is added as if no promocode it must be null
-  EventPromocodeInfo? eventPromocode = EventPromocodeInfo(
-      '0',
-      '1234',
-      true,
-      10,
-      true,
-      0.2,
-      DateTime.now().subtract(const Duration(days: 10)),
-      DateTime.now().add(const Duration(days: 10)));
+  EventPromocodeInfo? eventPromocode;
   bool isLoading = false;
   bool isLoadingEventApi = false;
   bool isLoadingSimilarEventsApi = false;
@@ -94,8 +52,8 @@ class EventPage extends StatefulWidget {
   bool isLoadingPromoApi = false;
 
   // Data passed from navigating screen at initState()
-  final String eventId;
-  final bool isLogged;
+  String eventId;
+  bool isLogged;
   // To Be: Taken from Api get event by id
   Event loadedEvent = Event(DateTime.now(), DateTime.now(), '', '', false,
       false, '', [], '', '', '', false);
@@ -129,6 +87,45 @@ class _EventPageState extends State<EventPage> {
         widget.isLoadingTicketsApi = false;
         // widget.eventFreeTickets = eventTicketsdata[0];
         // widget.eventVipTickets = eventTicketsdata[1];
+
+        ////////////////////////////////////////////////////////////
+        widget.eventFreeTickets = [
+          EventTicketInfo(
+              '000000',
+              'regular',
+              'Ana Ticket Gamda',
+              0,
+              DateTime.now().subtract(const Duration(days: 10)),
+              DateTime.now().add(const Duration(days: 10)),
+              5),
+          EventTicketInfo(
+              '0111111',
+              'regular',
+              'Ana Ticket Gamda',
+              0,
+              DateTime.now().subtract(const Duration(days: 10)),
+              DateTime.now().add(const Duration(days: 10)),
+              5),
+        ];
+        widget.eventVipTickets = [
+          EventTicketInfo(
+              '00000',
+              'vip',
+              'Ana Ticket Gamda VIP',
+              50,
+              DateTime.now().subtract(const Duration(days: 10)),
+              DateTime.now().add(const Duration(days: 10)),
+              5),
+          EventTicketInfo(
+              '0111',
+              'vip',
+              'Ana Ticket Gamda VIP',
+              50,
+              DateTime.now().subtract(const Duration(days: 10)),
+              DateTime.now().add(const Duration(days: 10)),
+              5)
+        ];
+        ////////////////////////////////////////////////////////////
       });
     });
   }
@@ -146,6 +143,17 @@ class _EventPageState extends State<EventPage> {
         // make it false to render the page
         widget.isLoadingPromoApi = false;
         // widget.eventPromocode = eventPromodata;
+        /////////////////////////////////////////////////////////////////
+        widget.eventPromocode = EventPromocodeInfo(
+            '0',
+            '1234',
+            true,
+            10,
+            true,
+            0.2,
+            DateTime.now().subtract(const Duration(days: 10)),
+            DateTime.now().add(const Duration(days: 10)));
+        /////////////////////////////////////////////////////////////////
       });
     });
   }
@@ -155,12 +163,13 @@ class _EventPageState extends State<EventPage> {
     showModalBottomSheet(
         context: ctx,
         isScrollControlled: true,
+        enableDrag: false,
         builder: (_) {
           //------------------------ user input -------------------//
           return GestureDetector(
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
+              // onTap: () {
+              //   // FocusScope.of(context).requestFocus(FocusNode());
+              // },
               behavior: HitTestBehavior.opaque,
               child: BuyTickets(
                   widget.eventId,
@@ -223,6 +232,10 @@ class _EventPageState extends State<EventPage> {
   // 3. Get event avaliable tickets
   @override
   void initState() {
+    // Map<String, String> args =
+    //     ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+    // widget.eventId = args['id'] as String;
+    // widget.isLogged = args['islogged'] == '0' ? false : true;
     //Make screen to be in in loading state
     widget.isLoading = true;
     widget.isLoadingEventApi = true;
@@ -259,6 +272,18 @@ class _EventPageState extends State<EventPage> {
     widget.isLoading = false;
 
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    Map<String, String> args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    if (args['eventId'] == null || args['isLogged'] == null) {
+      Navigator.of(context).pop();
+    }
+    widget.eventId = args['eventId'] as String;
+    widget.isLogged = args['isLogged'] == '0' ? false : true;
+    super.didChangeDependencies();
   }
 
   @override
