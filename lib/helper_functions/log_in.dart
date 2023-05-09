@@ -86,146 +86,143 @@ Future<String> getToken() async {
 /// It takes the email of the user as a parameter.
 ///
 Future<void> emailCheck(BuildContext ctx, String email) async {
-  // string to uri
-  var uri = Uri.parse('${Constants.host}/users/email/info/avatar?email=$email');
-  print(uri);
-  //create multipart request
+  if (Constants.MockServer == false) {
+    print("I'm here");
+    // string to uri
+    var uri =
+        Uri.parse('${Constants.host}/users/email/info/avatar?email=$email');
+    print(uri);
+    //create multipart request
 
-  var response = await http.get(uri);
+    var response = await http.get(uri);
 
-  var res = response.body;
-  var resData = jsonDecode(res);
+    var res = response.body;
+    var resData = jsonDecode(res);
 
-  //Check Response
-  if (response.statusCode == 200) {
-    // user is already registered
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return PasswordCheck(email, resData["avatar_url"] ?? "");
-    }));
-  } else if (response.statusCode == 404) {
-    // user is not registered
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return SignUpForm(email);
-    }));
+    //Check Response
+    if (response.statusCode == 200) {
+      // user is already registered
+      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+        return PasswordCheck(email, resData["avatar_url"] ?? "");
+      }));
+    } else if (response.statusCode == 404) {
+      // user is not registered
+      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+        return SignUpForm(email);
+      }));
+    } else {
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        const SnackBar(
+          content: Text('Something went wrong'),
+        ),
+      );
+    }
   } else {
-    ScaffoldMessenger.of(ctx).showSnackBar(
-      const SnackBar(
-        content: Text('Something went wrong'),
-      ),
-    );
+    var authbox = ObjectBox.authBox;
+    var userbox = ObjectBox.userBox;
+
+    var authQuery =
+        authbox.query(Auth_.email.equals(email)).build().findFirst();
+    if (authQuery != null) {
+      var userQuery =
+          userbox.query(User_.email.equals(email)).build().findFirst();
+
+      User user = userQuery!;
+
+      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+        return PasswordCheck(email, user.imageUrl);
+      }));
+    } else {
+      Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+        return SignUpForm(email);
+      }));
+    }
   }
-
-  // if (DBMock.checkEmail(email)) {
-  //   User user1 = DBMock.getUserData(email);
-  //   Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-  //     return PasswordCheck(email, user1.imageUrl);
-  //   }));
-  // } else {
-  //   Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-  //     return SignUpForm(email);
-  //   }));
-  // }
-
-  // var authbox = ObjectBox.authBox;
-  // var userbox = ObjectBox.userBox;
-
-  // var authQuery = authbox.query(Auth_.email.equals(email)).build().findFirst();
-  // if (authQuery != null) {
-  //   var userQuery =
-  //       userbox.query(User_.email.equals(email)).build().findFirst();
-
-  //   User user = userQuery!;
-
-  //   Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-  //     return PasswordCheck(email, user.imageUrl);
-  //   }));
-  // } else {
-  //   Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-  //     return SignUpForm(email);
-  //   }));
-  // }
 }
 
 Future<void> passCheck(BuildContext ctx, String password, String email) async {
-  var uri = Uri.parse('${Constants.host}/auth/login');
+  if (Constants.MockServer == false) {
+    var uri = Uri.parse('${Constants.host}/auth/login');
 
-  // create multipart request
+    // create multipart request
 
-  Map<String, String> reqHeaders = {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  };
-  Map reqData = {
-    'username': email,
-    'password': password,
-  };
-  //encode Map to JSON
-  var reqBody = reqData;
+    Map<String, String> reqHeaders = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+    Map reqData = {
+      'username': email,
+      'password': password,
+    };
+    //encode Map to JSON
+    var reqBody = reqData;
 
-  var response = await http.post(
-    uri,
-    headers: reqHeaders,
-    encoding: Encoding.getByName('utf-8'),
-    body: reqBody,
-  );
+    var response = await http.post(
+      uri,
+      headers: reqHeaders,
+      encoding: Encoding.getByName('utf-8'),
+      body: reqBody,
+    );
 
-  var res = response.body;
-  var resData = jsonDecode(res);
+    var res = response.body;
+    var resData = jsonDecode(res);
 
-  // Check Response
-  if (response.statusCode == 200) {
-    // user is already registered
-    String token = resData['access_token'];
+    // Check Response
+    if (response.statusCode == 200) {
+      // user is already registered
+      String token = resData['access_token'];
 
-    //String tokenType = resData['token_type'];
-    setLoggedIn(email, token);
-    Navigator.of(ctx).popUntil((route) => route.isFirst);
-    Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
-      return TabBarScreen(title: 'Profile', tabBarIndex: 4);
-    }));
-  } else if (response.statusCode == 401) {
-    // user is already registered
-    ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
-      content: Text(resData['detail']),
-    ));
-  } else if (response.statusCode == 404) {
-    // user is already registered
-    Navigator.of(ctx).pop();
-    ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
-      content: Text('Email doesn\'t exist'),
-    ));
+      //String tokenType = resData['token_type'];
+      setLoggedIn(email, token);
+      Navigator.of(ctx).popUntil((route) => route.isFirst);
+      Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+        return TabBarScreen(title: 'Profile', tabBarIndex: 4);
+      }));
+    } else if (response.statusCode == 401) {
+      // user is already registered
+      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+        content: Text(resData['detail']),
+      ));
+    } else if (response.statusCode == 404) {
+      // user is already registered
+      Navigator.of(ctx).pop();
+      ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
+        content: Text('Email doesn\'t exist'),
+      ));
+    } else {
+      ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
+        content: Text('Something went wrong'),
+      ));
+    }
+
+    print(response.statusCode);
+    print(resData);
+
+    if (DBMock.checkAuth(email, password)) {
+      setLoggedIn(email, 'Dummy Token');
+      Navigator.of(ctx).popUntil((route) => route.isFirst);
+      Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+        return TabBarScreen(title: 'Profile', tabBarIndex: 4);
+      }));
+    } else {
+      ScaffoldMessenger.of(ctx)
+          .showSnackBar(const SnackBar(content: Text('Wrong password')));
+    }
   } else {
-    ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
-      content: Text('Something went wrong'),
-    ));
+    var authbox = ObjectBox.authBox;
+
+    var authQuery =
+        authbox.query(Auth_.email.equals(email)).build().findFirst();
+    if (authQuery != null) {
+      if (authQuery.password == password) {
+        setLoggedIn(email, 'Dummy Token');
+        Navigator.of(ctx).popUntil((route) => route.isFirst);
+        Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+          return TabBarScreen(title: 'Profile', tabBarIndex: 4);
+        }));
+      } else {
+        ScaffoldMessenger.of(ctx)
+            .showSnackBar(const SnackBar(content: Text('Wrong password')));
+      }
+    }
   }
-
-  print(response.statusCode);
-  print(resData);
-
-  // if (DBMock.checkAuth(email, password)) {
-  //   setLoggedIn(email, 'Dummy Token');
-  //   Navigator.of(ctx).popUntil((route) => route.isFirst);
-  //   Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
-  //     return TabBarScreen(title: 'Profile', tabBarIndex: 4);
-  //   }));
-  // } else {
-  //   ScaffoldMessenger.of(ctx)
-  //       .showSnackBar(const SnackBar(content: Text('Wrong password')));
-  // }
-
-  // var authbox = ObjectBox.authBox;
-
-  // var authQuery = authbox.query(Auth_.email.equals(email)).build().findFirst();
-  // if (authQuery != null) {
-  //   if (authQuery.password == password) {
-  //     setLoggedIn(email, 'Dummy Token');
-  //     Navigator.of(ctx).popUntil((route) => route.isFirst);
-  //     Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
-  //       return TabBarScreen(title: 'Profile', tabBarIndex: 4);
-  //     }));
-  //   } else {
-  //     ScaffoldMessenger.of(ctx)
-  //         .showSnackBar(const SnackBar(content: Text('Wrong password')));
-  //   }
-  // }
 }

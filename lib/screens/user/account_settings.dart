@@ -93,32 +93,39 @@ class _AccountSettingsState extends State<AccountSettings> {
               url = await UploadImage.uploadImage(File(image!.path));
 
               // DBMock.updateUserImage(widget.email, url);
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
               //mock server implementation
-              // var userbox = ObjectBox.userBox;
-              // var user = userbox
-              //     .query(User_.email.equals(widget.email))
-              //     .build()
-              //     .findFirst();
-              // user!.imageUrl = url;
-              // userbox.put(user);
-              // int responseCode = 200
+              int responseCode = 200;
+              if (Constants.MockServer == true) {
+                var userbox = ObjectBox.userBox;
+                var user = userbox
+                    .query(User_.email.equals(widget.email))
+                    .build()
+                    .findFirst();
+                user!.imageUrl = url;
+                userbox.put(user);
+                Navigator.of(context).pop(true);
+                responseCode = 200;
+              } else {
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //api implementation
+                String token = await getToken();
+                var uri = Uri.parse(
+                    '${Constants.host}/users/me/edit?avatar_url=$url');
 
-              String token = await getToken();
-              var uri =
-                  Uri.parse('${Constants.host}/users/me/edit?avatar_url=$url');
+                //create multipart request
+                Map<String, String> reqHeaders = {
+                  'Authorization': 'Bearer ${token}',
+                };
+                var response = await http.put(
+                  uri,
+                  headers: reqHeaders,
+                );
+                int responseCode = response.statusCode;
 
-              //create multipart request
-              Map<String, String> reqHeaders = {
-                'Authorization': 'Bearer ${token}',
-              };
-              var response = await http.put(
-                uri,
-                headers: reqHeaders,
-              );
-              int responseCode = response.statusCode;
-
-              Navigator.of(context).pop(true);
+                Navigator.of(context).pop(true);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+              }
               print(responseCode);
               if (responseCode != 200) {
                 ScaffoldMessenger.of(context).showSnackBar(

@@ -22,7 +22,7 @@ import '../../providers/events/fav_events.dart';
 /// It uses the [FavEventCollection] widget to display the events.
 class Favourites extends StatefulWidget {
   Favourites({super.key});
-  List<LikedEventCardModel> LikedEvents = [];
+  List<Event> LikedEvents = [];
   bool isLoading = false;
   @override
   State<Favourites> createState() => _FavouritesState();

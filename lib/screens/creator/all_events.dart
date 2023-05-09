@@ -31,7 +31,27 @@ class _DraftEventsState extends State<DraftEvents> {
         _isLoading = true;
       });
       events = Provider.of<totalEvents>(context, listen: false);
-      await events.fetchAndSetEvents();
+      try {
+        await events.fetchAndSetEvents();
+      } catch (error) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: const Text('error in fetching catched'),
+              actions: [
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
       dataAll = events.allitems;
       setState(() {
         liveeventLen = dataAll.length;

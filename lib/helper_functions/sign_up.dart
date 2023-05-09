@@ -22,40 +22,42 @@ import 'log_in.dart';
 ///
 Future<int> signUpApi(
     String firstname, String lastname, String email, String password) async {
-  var uri = Uri.parse('${Constants.host}/auth/signup');
+  if (Constants.MockServer == false) {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    var uri = Uri.parse('${Constants.host}/auth/signup');
 
-  // create multipart request
+    // create multipart request
 
-  Map reqData = {
-    "email": email,
-    "password": password,
-    "firstname": firstname,
-    "lastname": lastname,
-  };
-  //encode Map to JSON
-  var reqBody = json.encode(reqData);
+    Map reqData = {
+      "email": email,
+      "password": password,
+      "firstname": firstname,
+      "lastname": lastname,
+    };
+    //encode Map to JSON
+    var reqBody = json.encode(reqData);
 
-  var response = await http.post(uri,
-      headers: {"Content-Type": "application/json"}, body: reqBody);
+    var response = await http.post(uri,
+        headers: {"Content-Type": "application/json"}, body: reqBody);
 
-  int resCode = response.statusCode;
-  return resCode;
+    int resCode = response.statusCode;
+    return resCode;
+////////////////////////////////////////////////////////////////////////////////////////////////////
+  } else {
+    Auth auth = Auth(email, password);
+    User user1 = User(email, "", firstname, lastname);
+    var authbox = ObjectBox.authBox;
+    var userbox = ObjectBox.userBox;
 
-  //Check Response
-
-  // Auth auth = Auth(email, password);
-  // User user1 = User(email, "", firstname, lastname);
-  // var authbox = ObjectBox.authBox;
-  // var userbox = ObjectBox.userBox;
-
-  // var authQuery = authbox.query(Auth_.email.equals(email)).build();
-  // if (authQuery.count() == 0) {
-  //   authbox.put(auth);
-  //   userbox.put(user1);
-  //   return 200;
-  // } else {
-  //   return 400;
-  // }
+    var authQuery = authbox.query(Auth_.email.equals(email)).build();
+    if (authQuery.count() == 0) {
+      authbox.put(auth);
+      userbox.put(user1);
+      return 200;
+    } else {
+      return 400;
+    }
+  }
 }
 
 /// {@category Helper Functions}
@@ -64,70 +66,104 @@ Future<int> signUpApi(
 
 Future<int> signInHelper(
     String email, String firstname, String lastname) async {
-  var signInUri = Uri.parse('${Constants.host}/auth/login-with-google');
+  /////////////////////////////////////////////////////////////////////////////////////////
+  if (Constants.MockServer == false) {
+    var signInUri = Uri.parse('${Constants.host}/auth/login-with-google');
 
-  //encode Map to JSON
-  Map<String, String> reqHeaders = {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  };
-  Map reqData = {
-    'username': email,
-    'password': "dummy",
-  };
-  //encode Map to JSON
-  var reqBody = reqData;
+    //encode Map to JSON
+    Map<String, String> reqHeaders = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+    Map reqData = {
+      'username': email,
+      'password': "dummy",
+    };
+    //encode Map to JSON
+    var reqBody = reqData;
 
-  var response = await http.post(
-    signInUri,
-    headers: reqHeaders,
-    encoding: Encoding.getByName('utf-8'),
-    body: reqBody,
-  );
+    var response = await http.post(
+      signInUri,
+      headers: reqHeaders,
+      encoding: Encoding.getByName('utf-8'),
+      body: reqBody,
+    );
 
-  var res = response.body;
-  var resData = jsonDecode(res);
-  var resCode = response.statusCode;
-  print(resData);
-  print("resCode: $resCode");
-  if (resCode == 200) {
-    String token = resData['access_token'];
+    var res = response.body;
+    var resData = jsonDecode(res);
+    var resCode = response.statusCode;
+    print(resData);
+    print("resCode: $resCode");
+    if (resCode == 200) {
+      String token = resData['access_token'];
 
-    //String tokenType = resData['token_type'];
-    setLoggedIn(email, token);
-    return 200;
-  } else if (resCode == 404) {
-    return signUpHelper(firstname, lastname, email);
-  } else if (resCode == 401) {
-    return 401;
+      //String tokenType = resData['token_type'];
+      setLoggedIn(email, token);
+      return 200;
+    } else if (resCode == 404) {
+      return signUpHelper(firstname, lastname, email);
+    } else if (resCode == 401) {
+      return 401;
+    } else {
+      return 500;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////
+    ///
   } else {
-    return 500;
+    var authbox = ObjectBox.authBox;
+
+    var authQuery =
+        authbox.query(Auth_.email.equals(email)).build().findFirst();
+    if (authQuery != null) {
+      setLoggedIn(email, "dummy");
+      return 200;
+    } else {
+      return signUpHelper(firstname, lastname, email);
+    }
   }
 }
 
 Future<int> signUpHelper(
     String firstname, String lastname, String email) async {
-  var uri = Uri.parse('${Constants.host}/auth/signup');
+  if (Constants.MockServer == false) {
+    //////////////////////////////////////////////////////////////////
+    var uri = Uri.parse('${Constants.host}/auth/signup');
 
-  // create multipart request
+    // create multipart request
 
-  //encode Map to JSON
-  Map signUpreqData = {
-    "email": email,
-    "password": "dummy",
-    "firstname": firstname,
-    "lastname": lastname,
-  };
+    //encode Map to JSON
+    Map signUpreqData = {
+      "email": email,
+      "password": "dummy",
+      "firstname": firstname,
+      "lastname": lastname,
+    };
 
-  //try to sign in first
-  var signUpreqBody = json.encode(signUpreqData);
+    //try to sign in first
+    var signUpreqBody = json.encode(signUpreqData);
 
-  var response = await http.post(uri,
-      headers: {"Content-Type": "application/json"}, body: signUpreqBody);
+    var response = await http.post(uri,
+        headers: {"Content-Type": "application/json"}, body: signUpreqBody);
 
-  int resCode = response.statusCode;
-  if (resCode == 200) {
-    return 401;
+    int resCode = response.statusCode;
+    if (resCode == 200) {
+      return 401;
+    } else {
+      return 500;
+    }
+    //////////////////////////////////////////////////////////////////
   } else {
-    return 500;
+    Auth auth = Auth(email, "dummy");
+    User user1 = User(email, "", firstname, lastname);
+    var authbox = ObjectBox.authBox;
+    var userbox = ObjectBox.userBox;
+
+    var authQuery = authbox.query(Auth_.email.equals(email)).build();
+    if (authQuery.count() == 0) {
+      authbox.put(auth);
+      userbox.put(user1);
+      return 401;
+    } else {
+      return 500;
+    }
   }
 }

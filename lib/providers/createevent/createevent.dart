@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:Eventbrite/helper_functions/log_in.dart';
 import 'package:http/http.dart' as http;
@@ -254,10 +255,14 @@ class TheEvent with ChangeNotifier {
 
     try {
       final response = await http.post(url, headers: reqHeaders, body: body);
+
       print(response.statusCode);
+      if (response.statusCode != 200) {
+        throw HttpException('Error fetching data: ${response.statusCode}');
+      }
     } catch (error) {
       print(error);
-      throw error;
+      throw HttpException('Error fetching data: ');
     }
   }
 

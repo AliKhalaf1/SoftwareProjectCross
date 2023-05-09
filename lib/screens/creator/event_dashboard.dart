@@ -97,6 +97,10 @@ class _EventsDashboardState extends State<EventsDashboard> {
             ),
             DashCard("REGULAR TICKETS", Event.maxTicketsRegular,
                 Event.takenTicketsRegular),
+            const SizedBox(
+              height: 5,
+            ),
+            DashCard("ALL TICKETS", Event.maxTickets, Event.takenTickets),
           ],
         ),
       ),
