@@ -118,15 +118,19 @@ class _HomeState extends State<Home> {
     } else {
       var eventsbox = ObjectBox.eventBox;
       for (int i = 0; i < categoryTitles.length; i++) {
-        var events = eventsbox
+        var fetchedevents = eventsbox
             .query(Event_.categ.equals(categoryTitles[i]))
             .build()
             .find();
-
-        if (events.isEmpty) {
-          this.events.add([]);
+        if (fetchedevents.isEmpty) {
+          print(categoryTitles[i]);
+          print('empty');
+          events.add([]);
         } else {
-          this.events.add(events);
+          print(categoryTitles[i]);
+          print('not empty');
+          print(fetchedevents[0].title);
+          events.add(fetchedevents);
         }
       }
     }
@@ -218,8 +222,7 @@ class _HomeState extends State<Home> {
                 color: const Color.fromARGB(255, 255, 72, 0),
                 child: ListView.builder(
                   padding: const EdgeInsets.only(top: 10),
-                  itemCount:
-                      categoryTitles.length, // substitute with collectionCounts
+                  itemCount: categoryTitles.length,
                   itemBuilder: (ctx, index) {
                     // List<Event> events = [];
                     // search(
@@ -246,13 +249,13 @@ class _HomeState extends State<Home> {
                     //     print(events[0].organization);
                     //   }
                     // });
-                    EventCollections(
-                        categoryTitles[index], true, events[index]);
 
                     // List<Event> matchedEvents = events
                     //     .where(
                     //         (eventItem) => eventItem.categ == categoryTitles[index])
                     //     .toList();
+                    return EventCollections(
+                        categoryTitles[index], true, events[index]);
                   },
                 ),
               ),

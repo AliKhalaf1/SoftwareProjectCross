@@ -4,6 +4,7 @@ import '../models/event_ticket.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'constants.dart';
+import 'log_in.dart';
 
 /// {@category Helper Functions}
 ///
@@ -14,31 +15,62 @@ Future<List<List<EventTicketInfo>>> getEventTicketsInfo(String eventId) async {
   List<EventTicketInfo> eventFreeTicketsData = [];
   List<EventTicketInfo> eventVipTicketsData = [];
 
-  // To Be: parse API url in uri
-  // var uri = Uri.parse('${Constants.host}/users/me/eventId');
+  var uri = Uri.parse('${Constants.host}/tickets/event_id/$eventId');
+  var token = await getToken();
+  print(uri);
+  var response = await http.get(
+    uri,
+  );
 
-  // To Be: Put reqHeaders
-  //create multipart request
-  // Map<String, String> reqHeaders = {
-  //   'Authorization': 'Bearer ${eventId}',
-  // };
-  // var response = await http.get(
-  //   uri,
-  //   headers: reqHeaders,
-  // );
-
-  // print(response.statusCode);
-
-  // To Be: if response is 200 get data and put it in class eventTickets
-  // To Be: Dont forget to parse the end_date of ticket from string to DateTime
-  // if (response.statusCode == 200) {
-  // var data = json.decode(response.body);
-  // eventTickets.names = /*list of names */;
-  // eventTickets.types = /*list of types */;
-  // eventTickets.avaliableQuantaties = /*list of quantaties */;
-  // eventTickets.durations = /*list of durations */;
-  // return eventTickets;
-  // } else {}
+  var resCode = response.statusCode;
+  print('-----------------');
+  print("ResCode:");
+  print(resCode);
+  print('-----------------');
+  if (resCode == 200) {
+    var resBody = response.body;
+    var resData = jsonDecode(resBody);
+    // print('**************************************************************');
+    // print(resData[i]['id']);
+    // print(resData[i]['date_and_time']['start_date_time']);
+    // print(resData[i]['date_and_time']['end_date_time']);
+    // print(resData[i]['date_and_time']['end_date_time']);
+    // print(resData[i]['description']);
+    // print(resData[i]['image_link']);
+    // print(resData[i]['location']['is_online']);
+    // print(resData[i]['location']['is_online']);
+    // print(resData[i]['basic_info']['category']);
+    // print(resData[i]['basic_info']['title']);
+    // print(resData[i]['basic_info']['organizer']);
+    // print(resData[i]['state']['is_public']);
+    // print('**************************************************************');
+    if (resData.length > 0) {
+      for (int i = 0; i < resData.length; i++) {
+        // If free
+        if (resData[i]['type'] == "regular") {
+          eventFreeTicketsData.add(EventTicketInfo(
+              resData[i]['id'],
+              resData[i]['type'],
+              resData[i]['name'],
+              resData[i]['price'],
+              DateTime.parse(resData[i]['sales_start_date_time']),
+              DateTime.parse(resData[i]['sales_end_date_time']),
+              resData[i]['available_quantity']));
+        }
+        // If Vip
+        else {
+          eventVipTicketsData.add(EventTicketInfo(
+              resData[i]['id'],
+              resData[i]['type'],
+              resData[i]['name'],
+              resData[i]['price'],
+              DateTime.parse(resData[i]['sales_start_date_time']),
+              DateTime.parse(resData[i]['sales_end_date_time']),
+              resData[i]['available_quantity']));
+        }
+      }
+    }
+  } else {}
 
   eventTickets.add(eventFreeTicketsData);
   eventTickets.add(eventVipTicketsData);

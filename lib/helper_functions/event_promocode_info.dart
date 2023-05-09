@@ -5,35 +5,46 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'constants.dart';
 
-Future<EventPromocodeInfo> getEventPrmocodeInfo(String eventId) async {
+Future<List<EventPromocodeInfo>> getEventPrmocodeInfo(String eventId) async {
   // To Be: Remove initialization
-  EventPromocodeInfo eventPromo = EventPromocodeInfo('',
-      '', false, 0, false, 0.0, DateTime.now(), DateTime.now());
+  // EventPromocodeInfo eventPromo = EventPromocodeInfo(
+  //     '', '', false, 0, false, 0.0, DateTime.now(), DateTime.now());
 
-  // To Be: parse API url in uri
-  // var uri = Uri.parse('${Constants.host}/users/me/eventId');
+  List<EventPromocodeInfo> eventPromos = <EventPromocodeInfo>[];
+  var uri = Uri.parse('${Constants.host}/promocodes/event_id/$eventId');
+  print(uri);
+  var response = await http.get(
+    uri,
+  );
 
-  // To Be: Put reqHeaders
-  //create multipart request
-  // Map<String, String> reqHeaders = {
-  //   'Authorization': 'Bearer ${eventId}',
-  // };
-  // var response = await http.get(
-  //   uri,
-  //   headers: reqHeaders,
-  // );
+  var resCode = response.statusCode;
+  print('-----------------');
+  print("ResCode:");
+  print(resCode);
+  print('-----------------');
+  if (resCode == 200) {
+    var resBody = response.body;
+    var resData = jsonDecode(resBody);
+    if (resData.length > 0) {
+      for (int i = 0; i < resData.length; i++) {
+        EventPromocodeInfo newpromo = EventPromocodeInfo(
+          resData[i]['id'],
+          resData[i]['name'],
+          resData[i]['is_limited'],
+          resData[i]['current_amount'],
+          resData[i]['is_percentage'],
+          resData[i]['discount_amount'],
+          DateTime.parse(resData[i]['start_date_time']),
+          DateTime.parse(resData[i]['end_date_time']),
+        );
+        eventPromos.add(newpromo);
+      }
 
-  // print(response.statusCode);
-
-  // To Be: if response is 200 get data and put it in class eventTickets
-  // To Be: Dont forget to parse the end_date of ticket from string to DateTime
-  // if (response.statusCode == 200) {
-  // var data = json.decode(response.body);
-  // eventTickets.names = /*list of names */;
-  // eventTickets.types = /*list of types */;
-  // eventTickets.avaliableQuantaties = /*list of quantaties */;
-  // eventTickets.durations = /*list of durations */;
-  // return eventTickets;
-  // } else {}
-  return eventPromo;
+      return eventPromos;
+    } else {
+      return [];
+    }
+  } else {
+    return [];
+  }
 }

@@ -49,7 +49,8 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
       fit: StackFit.loose,
       children: [
         InkWell(
-          // onTap: () => selectFavEvent(context, widget.event),
+          key: const Key("EventsCard"),
+          onTap: () => selectEvent(context, widget.event),
           child: Padding(
             padding: const EdgeInsets.only(top: 15, left: 15, bottom: 15),
             child: Row(
@@ -81,7 +82,7 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                   padding: const EdgeInsets.only(left: 10, top: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                           '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.event.startDate)} EET',
@@ -96,6 +97,28 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 16))),
+                      Text(
+                        (widget.event.isOnline == true) ? 'Online' : 'Offline',
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            key: Key("person"),
+                            Icons.person_outline_outlined,
+                            color: Color.fromRGBO(0, 0, 0, 0.7),
+                          ),
+                          SizedBox(
+                            width: 130,
+                            child: Text(widget.event.organization,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(0, 0, 0, 0.7),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500)),
+                          )
+                        ],
+                      )
                     ],
                   ),
                 )
@@ -109,11 +132,10 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
           child: IconButton(
             key: const Key("AddToFavBtn"),
             onPressed: () {
+              UnlikeEvent(context, widget.event.id, widget.event.mockId);
               setState(() {
                 widget.isFav = !widget.isFav;
               });
-
-              UnlikeEvent(context, widget.event.id, widget.event.mockId);
             },
             icon: Icon(
               key: const Key("favIcon"),

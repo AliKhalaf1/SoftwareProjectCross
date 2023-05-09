@@ -1,5 +1,6 @@
 library EventCard;
 
+import 'package:Eventbrite/helper_functions/Likes_functions.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,23 +44,26 @@ class _EventCardState extends State<EventCard> {
 
     //----------------------- Methods ------------------------------
 
-    Future<void> toggleFav(BuildContext ctx) async {
+    Future<void> toggleFav(
+        BuildContext ctx, String eventid, int eventmockId) async {
       //add to favourites list
       bool isLogged = await checkLoggedUser();
       setState(() {
-        if (isLogged) {
-          //Call toggleStatus function from event class
-          if (event.isFav) {
-            favsData.removeEventFromFav(event);
-          } else {
-            favsData.addEventToFav(event);
-          }
-        } else {
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-            return const SignUpOrLogIn();
-          }));
-        }
+        event.isFav = !event.isFav;
       });
+
+      if (isLogged) {
+        //Call toggleStatus function from event class
+        if (event.isFav) {
+          bool asd = await UnlikeEventHelper(eventid, eventmockId);
+        } else {
+          bool asd = await likeEventHelper(eventid, eventmockId);
+        }
+      } else {
+        Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+          return const SignUpOrLogIn();
+        }));
+      }
     }
 
     return Stack(
@@ -148,7 +152,7 @@ class _EventCardState extends State<EventCard> {
           right: 10,
           child: IconButton(
             key: const Key("AddToFavBtn"),
-            onPressed: () => toggleFav(context),
+            onPressed: () => toggleFav(context, event.id, event.mockId),
             icon: Icon(
               key: const Key("favIcon"),
               !event.isFav

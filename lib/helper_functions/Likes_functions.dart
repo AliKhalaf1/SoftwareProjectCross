@@ -43,9 +43,24 @@ Future<List<Event>> getLikedEvents() async {
       var resBody = response.body;
       var resData = jsonDecode(resBody);
       List<Event> LikedEvents = <Event>[];
-      print(resData.length);
+      for (int i = 0; i < resData.length; i++) {
+        var event = Event(
+            resData[i]['id'],
+            DateTime.parse(resData[i]['start_date_time']),
+            DateTime(2001, 1, 1),
+            "",
+            resData[i]['image_link'],
+            resData[i]['is_online'],
+            false,
+            "",
+            [],
+            resData[i]['title'],
+            "",
+            false);
+        LikedEvents.add(event);
+      }
       //Maping logic
-      return [];
+      return LikedEvents;
     } else {
       return [];
     }
@@ -92,8 +107,6 @@ Future<bool> UnlikeEventHelper(String id, int eventid) async {
       headers: reqHeaders,
     );
     var resCode = response.statusCode;
-    var resBody = response.body;
-    var resData = jsonDecode(resBody);
     return (resCode == 200);
   }
   ///////////////////////////////////////////////////////////
@@ -109,6 +122,38 @@ Future<bool> UnlikeEventHelper(String id, int eventid) async {
         .build()
         .findFirst();
     userLikesBox.remove(userlike!.mockId);
+    return true;
+  }
+}
+
+Future<bool> likeEventHelper(String id, int eventid) async {
+  ///////////////////////////////////////////////////////////
+  ///api
+  ///
+  if (Constants.MockServer == false) {
+    var uri = Uri.parse('${Constants.host}/users/me/event/${id}/like');
+    var token = await getToken();
+    //encode Map to JSON
+    Map<String, String> reqHeaders = {
+      'Authorization': 'Bearer $token',
+    };
+    //encode Map to JSON
+    var response = await http.post(
+      uri,
+      headers: reqHeaders,
+    );
+    var resCode = response.statusCode;
+    return (resCode == 200);
+  }
+  ///////////////////////////////////////////////////////////
+  //mock
+  else {
+    var userLikesBox = ObjectBox.likesBox;
+    var userbox = ObjectBox.userBox;
+    String email = await getEmail();
+    var user = userbox.query(User_.email.equals(email)).build().findFirst();
+    var userlike = UserLikesEvents(user!.mockId, eventid);
+    userLikesBox.put(userlike);
     return true;
   }
 }

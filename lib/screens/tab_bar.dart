@@ -2,6 +2,7 @@ library BottomNavBar;
 
 import 'package:Eventbrite/helper_functions/constants.dart';
 import 'package:Eventbrite/helper_functions/log_in.dart';
+import 'package:Eventbrite/screens/creator/Attendee_report.dart';
 import 'package:Eventbrite/screens/user/favourites.dart';
 import 'package:Eventbrite/screens/user/tickets_tab_bar.dart';
 import 'package:Eventbrite/widgets/loading_spinner.dart';
@@ -99,7 +100,7 @@ class TabBarScreenState extends State<TabBarScreen> {
         pages = [
           Home(),
           Search(),
-          const FavouritesSignUp(),
+          AttendeeReport("", 12),
           const TicketsSignUp(),
           const ProfileSignUp(),
         ];

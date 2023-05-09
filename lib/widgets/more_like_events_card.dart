@@ -74,8 +74,16 @@ class _MoreLikeEventCardState extends State<MoreLikeEventCard> {
                   width: MediaQuery.of(context).size.width * 0.65,
                   height: 130,
                   child: widget.event.eventImg.startsWith('http')
-                      ? Image.network(
-                          widget.event.eventImg,
+                      ? FadeInImage(
+                          placeholder: const AssetImage(
+                              'assets/images/no_image_found.png'),
+                          imageErrorBuilder: (context, error, stackTrace) =>
+                              const Image(
+                            image:
+                                AssetImage('assets/images/no_image_found.png'),
+                            fit: BoxFit.cover,
+                          ),
+                          image: NetworkImage(widget.event.eventImg),
                           fit: BoxFit.cover,
                         )
                       : Image.asset(

@@ -36,6 +36,8 @@ class TicketAttendee {
   int eventId = 0;
   int orderId = 0;
   String id;
+  String eventid = "";
+  String orderid = "";
   bool isVip;
   String firstName;
   String lastName;
