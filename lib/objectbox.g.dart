@@ -387,13 +387,13 @@ final _entities = <ModelEntity>[
             flags: 1),
         ModelProperty(
             id: const IdUid(2, 4151188518359849841),
-            name: 'eventId',
-            type: 6,
+            name: 'eventid',
+            type: 9,
             flags: 0),
         ModelProperty(
             id: const IdUid(3, 1867367640587303365),
-            name: 'orderId',
-            type: 6,
+            name: 'orderid',
+            type: 9,
             flags: 0),
         ModelProperty(
             id: const IdUid(4, 352664110196945194),
@@ -945,14 +945,16 @@ ModelDefinition getObjectBoxModel() {
           object.mockId = id;
         },
         objectToFB: (TicketAttendee object, fb.Builder fbb) {
+          final eventidOffset = fbb.writeString(object.eventid);
+          final orderidOffset = fbb.writeString(object.orderid);
           final idOffset = fbb.writeString(object.id);
           final firstNameOffset = fbb.writeString(object.firstName);
           final lastNameOffset = fbb.writeString(object.lastName);
           final emailOffset = fbb.writeString(object.email);
           fbb.startTable(9);
           fbb.addInt64(0, object.mockId);
-          fbb.addInt64(1, object.eventId);
-          fbb.addInt64(2, object.orderId);
+          fbb.addOffset(1, eventidOffset);
+          fbb.addOffset(2, orderidOffset);
           fbb.addOffset(3, idOffset);
           fbb.addBool(4, object.isVip);
           fbb.addOffset(5, firstNameOffset);
@@ -977,10 +979,10 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 18, ''))
             ..mockId =
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..eventId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)
-            ..orderId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+            ..eventid = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 6, '')
+            ..orderid = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 8, '');
 
           return object;
         }),
@@ -1343,13 +1345,13 @@ class TicketAttendee_ {
   static final mockId =
       QueryIntegerProperty<TicketAttendee>(_entities[7].properties[0]);
 
-  /// see [TicketAttendee.eventId]
-  static final eventId =
-      QueryIntegerProperty<TicketAttendee>(_entities[7].properties[1]);
+  /// see [TicketAttendee.eventid]
+  static final eventid =
+      QueryStringProperty<TicketAttendee>(_entities[7].properties[1]);
 
-  /// see [TicketAttendee.orderId]
-  static final orderId =
-      QueryIntegerProperty<TicketAttendee>(_entities[7].properties[2]);
+  /// see [TicketAttendee.orderid]
+  static final orderid =
+      QueryStringProperty<TicketAttendee>(_entities[7].properties[2]);
 
   /// see [TicketAttendee.id]
   static final id =
