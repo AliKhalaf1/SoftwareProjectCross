@@ -20,9 +20,9 @@ class _AttendeeFormState extends State<AttendeeForm> {
 
   @override
   Widget build(BuildContext context) {
-    String email = "sss";
-    String fname = "sss";
-    String lname = "sss";
+    String email = "";
+    String fname = "";
+    String lname = "";
     ticketType typeofTickets = ticketType.regular;
     // final routearg =
     //     ModalRoute.of(context)?.settings.arguments as Map<String, String>;

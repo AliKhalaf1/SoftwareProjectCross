@@ -137,9 +137,6 @@ class _EventTitleState extends State<EventTitle> {
                 ? FloatingActionButton(
                     onPressed: () {
                       _saveForm();
-                      // Navigator.of(context).pushNamed(
-                      //   AttendeeForm.route,
-                      // );
                     },
                     backgroundColor: Colors.white,
                     child: const Icon(
