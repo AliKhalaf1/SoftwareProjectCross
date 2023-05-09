@@ -725,8 +725,9 @@ ModelDefinition getObjectBoxModel() {
             ..mockId =
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
-          return object;
-        }),
+    // return object;
+    // }
+    // ),
     EventPromocodeInfo: EntityDefinition<EventPromocodeInfo>(
         model: _entities[3],
         toOneRelations: (EventPromocodeInfo object) => [],

@@ -44,7 +44,7 @@ class EventCollections extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Column(children: [
       parent
           ? Padding(
               padding: const EdgeInsets.only(left: 15, top: 15, bottom: 5),
@@ -69,14 +69,18 @@ class EventCollections extends StatelessWidget {
               ),
             ),
       collecionListOfEvents.isEmpty
-          ? const Center(
-              key: Key("NoCurrentEvent"),
-              child: TitleText2(
-                'There is no current events',
-              ),
-            )
+          ?
+          // const Padding(
+          //   padding: EdgeInsets.only(left: 70.0),
+          //   child: TitleText2(
+          //     'There is no current events',
+          //   ),
+          // )
+          const SizedBox()
           : Column(
               children: collecionListOfEvents.map((e) {
+                print(
+                    '%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ana da5alt %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
                 return ChangeNotifierProvider.value(
                     value: e, child: EventCard());
               }).toList(),
