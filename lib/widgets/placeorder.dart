@@ -8,6 +8,9 @@ import 'package:Eventbrite/widgets/title_text_2.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../helper_functions/event_promocode_info.dart';
+import '../helper_functions/event_tickets_info.dart';
+import '../helper_functions/place_order_api.dart';
 import '../models/event_promocode.dart';
 import '../screens/event_page.dart';
 import 'transparent_button_no_icon.dart';
@@ -15,12 +18,18 @@ import '../models/event_ticket.dart';
 
 class PlaceOrder extends StatefulWidget {
   final String eventId;
+  final String eventImg;
   final List<EventTicketInfo> reservedFreeTickets;
   final List<EventTicketInfo> reservedVipTickets;
   final String? promocodetId;
   final double totalPrice;
-  const PlaceOrder(this.eventId, this.reservedFreeTickets,
-      this.reservedVipTickets, this.promocodetId, this.totalPrice,
+  const PlaceOrder(
+      this.eventId,
+      this.reservedFreeTickets,
+      this.reservedVipTickets,
+      this.promocodetId,
+      this.totalPrice,
+      this.eventImg,
       {super.key});
 
   @override
@@ -31,7 +40,7 @@ class SubmittedData {
   //constants
   List<EventTicketInfo> reservedFreeTickets = [];
   List<EventTicketInfo> reservedVipTickets = [];
-  String? promocodetId;
+  String promocodetId = "";
   double totalPrice = 0;
   String email = '';
   String creationDate = DateFormat('yyyy-MM-dd - kk:mm').format(DateTime.now());
@@ -130,6 +139,35 @@ class _PlaceOrderState extends State<PlaceOrder> {
     );
   }
 
+  void showFail(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Order failed'),
+          content: const Text('Faild to use place your order'),
+          actions: [
+            TextButton(
+              child: const Text('Back to Event'),
+              onPressed: () {
+                Map<String, dynamic> args = {
+                  'eventId': widget.eventId,
+                  'isLogged': "1",
+                  'eventIdMock': 0,
+                };
+                Navigator.of(context).pushNamed(
+                  EventPage.eventPageRoute,
+                  arguments: args,
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void stopTimer() {
     if (_timer != null) {
       _timer!.cancel();
@@ -167,6 +205,27 @@ class _PlaceOrderState extends State<PlaceOrder> {
     _form.currentState?.save();
     // ====================== call Apis =====================
 
+    postOrder(eventId, data.firstName, data.lastname, data.email,
+            data.creationDate, data.totalPrice, widget.eventImg)
+        .then((value) => {
+              for (int i = 0; i < data.reservedFreeTickets.length; i++)
+                {
+                  postEventTicketInfo(data.reservedFreeTickets[i].id,
+                          data.reservedFreeTickets[i].selectedQuantity)
+                      .then((value) => {
+                            if (!value) {showFail(context)},
+                            if (data.promocodetId != "")
+                              {
+                                postEventPrmocodeInfo(data.promocodetId).then(
+                                  (value) => {
+                                    if (!value) {showFail(context)}
+                                  },
+                                )
+                              }
+                          })
+                }
+            });
+
     // ====================== navigate ======================
     // To Be:
     stopTimer();
@@ -191,7 +250,11 @@ class _PlaceOrderState extends State<PlaceOrder> {
   @override
   void initState() {
     getEmail().then((value) => data.email = value);
-    data.promocodetId = widget.promocodetId;
+    if (widget.promocodetId == null) {
+      data.promocodetId = "";
+    } else {
+      data.promocodetId = widget.promocodetId!;
+    }
     data.reservedFreeTickets = widget.reservedFreeTickets;
     data.reservedVipTickets = widget.reservedVipTickets;
     data.totalPrice = widget.totalPrice;

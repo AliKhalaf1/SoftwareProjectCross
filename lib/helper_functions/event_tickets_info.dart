@@ -76,3 +76,22 @@ Future<List<List<EventTicketInfo>>> getEventTicketsInfo(String eventId) async {
   eventTickets.add(eventVipTicketsData);
   return eventTickets;
 }
+
+Future<bool> postEventTicketInfo(String ticketd, int quantity) async {
+  var uri = Uri.parse(
+      '${Constants.host}/tickets/ticket_id/$ticketd/quantity/{quantity}?=-${quantity}');
+  print(uri);
+  var response = await http.post(
+    uri,
+  );
+
+  var resCode = response.statusCode;
+  print('-----------------');
+  print("ResCode:");
+  print(resCode);
+  print('-----------------');
+  if (resCode == 200) {
+    return true;
+  }
+  return false;
+}

@@ -238,7 +238,7 @@ class _EventPageState extends State<EventPage> {
                   '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET',
                   evTF,
                   evTV,
-                  widget.eventPromocodes));
+                  widget.eventPromocodes, widget.loadedEvent.eventImg));
         });
   }
 
