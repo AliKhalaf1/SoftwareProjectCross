@@ -21,7 +21,13 @@ Future<List<Event>> search(
   List<Event> categoreyEvents = [];
   // Event catEvent = Event('', DateTime(2100, 1, 1), DateTime(2100, 1, 1), '', '',
   //     false, false, '', [], '', '', false, 0);
+
   String params = "city=";
+  if (city != "") {
+    params += "$city";
+  } else {
+    params += "Cairo";
+  }
 
   if (isOnline != "") {
     params += "&online=$isOnline";
