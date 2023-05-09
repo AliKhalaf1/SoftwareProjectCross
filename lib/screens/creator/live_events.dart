@@ -126,7 +126,6 @@ class _LiveEventsState extends State<LiveEvents> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          events.fetchAndSetEvents();
           Navigator.of(context).push(
             SplashRoute(
               targetPage: EventTitle(),
