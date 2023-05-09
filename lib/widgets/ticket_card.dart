@@ -20,11 +20,11 @@ class TicketCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (ctx) => TicketsDetailsScreen(),
-          ),
-        );
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (ctx) => TicketsDetailsScreen(),
+        //   ),
+        // );
       },
       child: Container(
         margin: EdgeInsets.only(

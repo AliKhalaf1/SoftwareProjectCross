@@ -3,7 +3,8 @@ import 'package:Eventbrite/widgets/ticket_details.dart';
 import 'package:flutter/material.dart';
 
 class TicketsDetailsScreen extends StatefulWidget {
-  const TicketsDetailsScreen({super.key});
+  String OrderId;
+  TicketsDetailsScreen(this.OrderId, {super.key});
 
   @override
   State<TicketsDetailsScreen> createState() => _TicketsDetailsScreenState();

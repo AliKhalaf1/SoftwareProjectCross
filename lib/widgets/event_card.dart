@@ -147,23 +147,23 @@ class _EventCardState extends State<EventCard> {
             ),
           ),
         ),
-        Positioned(
-          bottom: 2,
-          right: 10,
-          child: IconButton(
-            key: const Key("AddToFavBtn"),
-            onPressed: () => toggleFav(context, event.id, event.mockId),
-            icon: Icon(
-              key: const Key("favIcon"),
-              !event.isFav
-                  ? Icons.favorite_border_rounded
-                  : Icons.favorite_sharp,
-              color: !event.isFav
-                  ? const Color.fromRGBO(0, 0, 0, 0.7)
-                  : const Color.fromARGB(255, 209, 65, 12),
-            ),
-          ),
-        ),
+        // Positioned(
+        //   bottom: 2,
+        //   right: 10,
+        //   child: IconButton(
+        //     key: const Key("AddToFavBtn"),
+        //     onPressed: () => toggleFav(context, event.id, event.mockId),
+        //     icon: Icon(
+        //       key: const Key("favIcon"),
+        //       !event.isFav
+        //           ? Icons.favorite_border_rounded
+        //           : Icons.favorite_sharp,
+        //       color: !event.isFav
+        //           ? const Color.fromRGBO(0, 0, 0, 0.7)
+        //           : const Color.fromARGB(255, 209, 65, 12),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

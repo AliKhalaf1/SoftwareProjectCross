@@ -3,6 +3,8 @@ import 'package:Eventbrite/widgets/dashboard_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'Attendee_report.dart';
+
 class EventsDashboard extends StatefulWidget {
   const EventsDashboard({super.key});
   static const route = '/eventsDashboard';
@@ -108,7 +110,16 @@ class _EventsDashboardState extends State<EventsDashboard> {
                     'eventIDMock': Event.mockId
                   });
                 },
-                child: const Text("Add Attendee"))
+                child: const Text("Add Attendee")),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => AttendeeReport(
+                            Event.id,
+                            Event.mockId,
+                          )));
+                },
+                child: const Text(" Attendee Report")),
           ],
         ),
       ),
