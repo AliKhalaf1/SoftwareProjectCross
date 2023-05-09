@@ -24,8 +24,53 @@ final _form = GlobalKey<FormState>();
 class _CouponFormState extends State<CouponForm> {
   @override
   discountType couponType = discountType.percentage;
+  final _focusNode1 = FocusNode();
+  final _focusNode2 = FocusNode();
+  final _focusNode3 = FocusNode();
+
+  void dispose() {
+    _focusNode1.dispose();
+    _focusNode2.dispose();
+    _focusNode3.dispose();
+
+    super.dispose();
+  }
+
+  late TheEvent event;
+  void submit() {
+    final isValid = _form.currentState?.validate();
+    if (!isValid!) {
+      return;
+    }
+    _form.currentState?.save();
+    event.addCoupon(couponName!, limitedTo!,
+        couponType.toString().split('.').last, discountValue!);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Successfully Added'),
+          content: const Text('Your Coupon is Successfully added'),
+          actions: [
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                int count = 0;
+                Navigator.popUntil(
+                  context,
+                  (route) => count++ == 2 || route.isFirst,
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget build(BuildContext context) {
-    final event = Provider.of<TheEvent>(context, listen: false);
+    event = Provider.of<TheEvent>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(31, 10, 61, 1),
@@ -39,35 +84,7 @@ class _CouponFormState extends State<CouponForm> {
         actions: [
           IconButton(
               onPressed: () {
-                final isValid = _form.currentState?.validate();
-                if (!isValid!) {
-                  return;
-                }
-                _form.currentState?.save();
-                event.addCoupon(couponName!, limitedTo!,
-                    couponType.toString().split('.').last, discountValue!);
-
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Successfully Added'),
-                      content: const Text('Your Coupon is Successfully added'),
-                      actions: [
-                        TextButton(
-                          child: const Text('OK'),
-                          onPressed: () {
-                            int count = 0;
-                            Navigator.popUntil(
-                              context,
-                              (route) => count++ == 2 || route.isFirst,
-                            );
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
+                submit();
               },
               icon: const Icon(
                 Icons.add_task,
@@ -123,6 +140,11 @@ class _CouponFormState extends State<CouponForm> {
                 couponName = value;
               },
               autofocus: true,
+              focusNode: _focusNode1,
+              onFieldSubmitted: (value) {
+                _focusNode1.unfocus();
+                FocusScope.of(context).requestFocus(_focusNode2);
+              },
             ),
             Text(
               "Type of coupon",
@@ -198,6 +220,11 @@ class _CouponFormState extends State<CouponForm> {
                   color: Colors.blueGrey.withOpacity(0.8),
                 ),
               ),
+              focusNode: _focusNode2,
+              onFieldSubmitted: (value) {
+                _focusNode2.unfocus();
+                FocusScope.of(context).requestFocus(_focusNode3);
+              },
               onSaved: (value) {
                 limitedTo = int.parse(value!);
               },
@@ -245,6 +272,10 @@ class _CouponFormState extends State<CouponForm> {
                   color: Colors.blueGrey.withOpacity(0.8),
                 ),
               ),
+              focusNode: _focusNode3,
+              onFieldSubmitted: (value) {
+                submit();
+              },
               onSaved: (value) {
                 discountValue = double.parse(value!);
                 print(discountValue);

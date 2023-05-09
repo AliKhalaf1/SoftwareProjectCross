@@ -12,7 +12,7 @@ class BarLocation extends StatelessWidget {
     final event = Provider.of<TheEvent>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-          title: Text("Location"),
+          title: const Text("Location"),
           backgroundColor: const Color.fromRGBO(31, 10, 61, 1)),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
