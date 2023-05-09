@@ -126,6 +126,12 @@ class _BuyTicketsState extends State<BuyTickets> {
               data.reservedVipTickets[i].ticketPrice;
         }
       }
+      for (int i = 0; i < data.reservedFreeTickets.length; i++) {
+        if (data.reservedFreeTickets[i].selectedQuantity > 0) {
+          data.totalPrice += data.reservedFreeTickets[i].selectedQuantity *
+              data.reservedFreeTickets[i].ticketPrice;
+        }
+      }
       data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
     }
     // if type percentage
@@ -137,10 +143,18 @@ class _BuyTicketsState extends State<BuyTickets> {
 
   // --------------------------------------------- Tickets ---------------------------------------------------------
   void decrementFreeTickets(int ind) {
+    if (promocodeApplied) {
+      removePromoFromPrice();
+    }
     if (data.reservedFreeTickets[ind].selectedQuantity > 0) {
       setState(() {
         --data.reservedFreeTickets[ind].selectedQuantity;
         --allTicketSelectedQ;
+        data.totalPrice -= data.reservedFreeTickets[ind].ticketPrice;
+        data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
+        if (promocodeApplied) {
+          applyPromoOnPrice();
+        }
         if (data.reservedFreeTickets[ind].selectedQuantity == 0) {
           data.reservedFreeTickets.remove(data.reservedFreeTickets[ind]);
         }
@@ -149,11 +163,20 @@ class _BuyTicketsState extends State<BuyTickets> {
   }
 
   void incrementFreeTickets(int ind) {
+    // if applied before remove then apply
+    if (promocodeApplied) {
+      removePromoFromPrice();
+    }
     if (data.reservedFreeTickets[ind].selectedQuantity <
         data.reservedFreeTickets[ind].avaliableQuantity) {
       setState(() {
         ++data.reservedFreeTickets[ind].selectedQuantity;
         ++allTicketSelectedQ;
+        data.totalPrice += data.reservedFreeTickets[ind].ticketPrice;
+        data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
+        if (promocodeApplied) {
+          applyPromoOnPrice();
+        }
       });
     }
   }
@@ -311,7 +334,8 @@ class _BuyTicketsState extends State<BuyTickets> {
                     // --------------------------------------- Promo-code ------------------------------------------------------------
                     // if there is no promo code for this event OR no Vip tickets for the event
                     (widget.eventPromocode == null ||
-                            widget.eventVipTickets.isEmpty)
+                            (widget.eventVipTickets.isEmpty &&
+                                widget.eventFreeTickets.isEmpty))
                         ? const SizedBox()
                         : Padding(
                             padding: const EdgeInsets.only(top: 10),
@@ -620,6 +644,41 @@ class _BuyTicketsState extends State<BuyTickets> {
                                                               91,
                                                               90,
                                                               90))),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                        eventFreeTicket
+                                                            .ticketPrice
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                            fontFamily:
+                                                                "Neue Plak Extended",
+                                                            fontSize: 17,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    51,
+                                                                    51,
+                                                                    51))),
+                                                    const Text(' EGP',
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                "Neue Plak Condensed",
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    51,
+                                                                    51,
+                                                                    51))),
+                                                  ],
                                                 ),
                                               ],
                                             ),

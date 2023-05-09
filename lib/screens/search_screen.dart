@@ -38,6 +38,7 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   final _controller = TextEditingController();
+
   ///Navigate to Nearby events page
   void goToBearby(BuildContext ctx) {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
@@ -89,9 +90,7 @@ class _SearchState extends State<Search> {
       filtersDataValues.nameSearch,
       duration[0],
       duration[1],
-      filtersDataValues.cat.value == 'Anything'
-          ? ""
-          : filtersDataValues.cat.value,
+      "",
     ).then((value) {
       if (value.isEmpty) {
         events = [];

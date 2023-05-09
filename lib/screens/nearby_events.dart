@@ -6,6 +6,8 @@ import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/filters/filter_selection_values.dart';
+import 'package:search_map_location/utils/google_search/place.dart';
+import 'package:search_map_location/widget/search_widget.dart';
 
 import 'filters.dart';
 
@@ -29,17 +31,20 @@ class _NearbyEventsState extends State<NearbyEvents> {
     final filtersDataValues = Provider.of<FilterSelectionValues>(context);
 
     /* Method handler to return back after select browsing in what */
-    void selectLocation(BuildContext ctx) {
+    void selectLocation(BuildContext ctx, String loc) {
       setState(() {
-        if (!filtersDataValues.locSelectedBefore
-            // && filtersDataValues.location != 'Online events'    // check that value toggeled
+        if (!filtersDataValues.locSelectedBefore &&
+                filtersDataValues.location != loc // check that value toggeled
             ) {
           filtersDataValues.selectedFilterCount++;
         }
         // Set value by new value
-        // filtersDataValues.setLoc('Online events');
+        filtersDataValues.setLoc(loc);
         filtersDataValues.locSelectedBefore = true;
       });
+      Navigator.pop(
+        context,
+      );
     }
 
     void getLocation(BuildContext ctx) {
@@ -93,28 +98,50 @@ class _NearbyEventsState extends State<NearbyEvents> {
           child: Column(
             children: <Widget>[
               //-------- 1st child ---------
-              const TextField(
-                key: Key("FindNearbyEventsTextField"),
-                cursorWidth: 0.5,
-                cursorColor: Colors.grey,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 67, 96, 244),
-                ),
-                decoration: InputDecoration(
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  hintText: 'Find events in...',
-                  hintStyle:
-                      TextStyle(color: Color.fromARGB(255, 147, 147, 147)),
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(229, 41, 41, 41), width: 2.0),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 67, 96, 244), width: 2.0),
-                  ),
+              // const TextField(
+              //   key: Key("FindNearbyEventsTextField"),
+              //   cursorWidth: 0.5,
+              //   cursorColor: Colors.grey,
+              //   style: TextStyle(
+              //     fontSize: 20,
+              //     fontWeight: FontWeight.bold,
+              //     color: Color.fromARGB(255, 67, 96, 244),
+              //   ),
+              //   decoration: InputDecoration(
+              //     floatingLabelBehavior: FloatingLabelBehavior.never,
+              //     hintText: 'Find events in...',
+              //     hintStyle:
+              //         TextStyle(color: Color.fromARGB(255, 147, 147, 147)),
+              //     border: UnderlineInputBorder(
+              //       borderSide: BorderSide(
+              //           color: Color.fromARGB(229, 41, 41, 41), width: 2.0),
+              //     ),
+              //     focusedBorder: UnderlineInputBorder(
+              //       borderSide: BorderSide(
+              //           color: Color.fromARGB(255, 67, 96, 244), width: 2.0),
+              //     ),
+              //   ),
+              // ),
+
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: SizedBox(
+                  height: 300,
+                  child: ListView(children: [
+                    SearchLocation(
+                      iconColor: Theme.of(context).primaryColor,
+                      placeholder: 'Find events in...',
+                      apiKey: 'AIzaSyBQu5amJNSA0nVm4T32R74z9jUWKu5mg5c',
+                      onSelected: (Place place) {
+                        selectLocation(
+                            context,
+                            place.description
+                                .split(' ')[0]
+                                .replaceAll(',', ""));
+                      },
+                      country: 'EG',
+                    ),
+                  ]),
                 ),
               ),
 
@@ -206,19 +233,21 @@ class _NearbyEventsState extends State<NearbyEvents> {
                                 fontSize: 19,
                                 fontWeight: FontWeight.w600),
                           ),
-                          Container(
-                            height: 30,
-                            width: 30,
-                            decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 240, 240, 240),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: const Icon(
-                              Icons.check,
-                              color: Color.fromARGB(255, 82, 82, 83),
-                              size: 20,
-                            ),
-                          ),
+                          filtersDataValues.location != "Online events"
+                              ? const SizedBox()
+                              : Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 240, 240, 240),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: const Icon(
+                                    Icons.check,
+                                    color: Color.fromARGB(255, 82, 82, 83),
+                                    size: 20,
+                                  ),
+                                ),
                         ],
                       ),
                     ),
