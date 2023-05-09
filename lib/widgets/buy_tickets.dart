@@ -16,9 +16,9 @@ class BuyTickets extends StatefulWidget {
   List<EventTicketInfo> eventVipTickets;
   List<EventTicketInfo> eventFreeTicketsRender = [];
   List<EventTicketInfo> eventVipTicketsRender = [];
-  final EventPromocodeInfo? eventPromocode;
+  List<EventPromocodeInfo> eventPromocodes = [];
   BuyTickets(this.eventId, this.eventtitle, this.eventStartDate,
-      this.eventFreeTickets, this.eventVipTickets, this.eventPromocode,
+      this.eventFreeTickets, this.eventVipTickets, this.eventPromocodes,
       {super.key});
 
   @override
@@ -94,12 +94,23 @@ class _BuyTicketsState extends State<BuyTickets> {
       return;
     }
 
+    EventPromocodeInfo? eventPromocode;
+    for (int i = 0; i < widget.eventPromocodes.length; i++) {
+      if (data.promocodetId == widget.eventPromocodes[i].id) {
+        eventPromocode = widget.eventPromocodes[i];
+      }
+    }
+
+    if (eventPromocode == null) {
+      return;
+    }
+
     // check on promocode type
     // if type Value
-    if (!widget.eventPromocode!.isPercentage) {
+    if (!eventPromocode.isPercentage) {
       // if apply  and make sure that value is greater than zero after apply
-      if (data.totalPrice - widget.eventPromocode!.discount > 0) {
-        data.totalPrice = data.totalPrice - widget.eventPromocode!.discount;
+      if (data.totalPrice - eventPromocode.discount > 0) {
+        data.totalPrice = data.totalPrice - eventPromocode.discount;
         data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
         return;
       }
@@ -108,15 +119,25 @@ class _BuyTicketsState extends State<BuyTickets> {
     }
     // if type percentage
     else {
-      data.totalPrice = data.totalPrice * (1 - widget.eventPromocode!.discount);
+      data.totalPrice = data.totalPrice * (1 - eventPromocode.discount);
       data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
     }
   }
 
   void removePromoFromPrice() {
     // check on promocode type
+    EventPromocodeInfo? eventPromocode;
+    for (int i = 0; i < widget.eventPromocodes.length; i++) {
+      if (data.promocodetId == widget.eventPromocodes[i].id) {
+        eventPromocode = widget.eventPromocodes[i];
+      }
+    }
+    if (eventPromocode == null) {
+      return;
+    }
+
     // if type Value
-    if (!widget.eventPromocode!.isPercentage) {
+    if (!eventPromocode.isPercentage) {
       // data.totalPrice =
       //     (data.vipTickets * widget.eventTickets.vipTicketPrice).toDouble();
       data.totalPrice = 0;
@@ -136,7 +157,7 @@ class _BuyTicketsState extends State<BuyTickets> {
     }
     // if type percentage
     else {
-      data.totalPrice = data.totalPrice / (1 - widget.eventPromocode!.discount);
+      data.totalPrice = data.totalPrice / (1 - eventPromocode.discount);
       data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
     }
   }
@@ -333,7 +354,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                   children: <Widget>[
                     // --------------------------------------- Promo-code ------------------------------------------------------------
                     // if there is no promo code for this event OR no Vip tickets for the event
-                    (widget.eventPromocode == null ||
+                    (widget.eventPromocodes.isEmpty ||
                             (widget.eventVipTickets.isEmpty &&
                                 widget.eventFreeTickets.isEmpty))
                         ? const SizedBox()
@@ -348,22 +369,30 @@ class _BuyTicketsState extends State<BuyTickets> {
                                 if (value == null) {
                                   return null;
                                 }
-                                if (widget.eventPromocode!.startDate
-                                    .isAfter(DateTime.now())) {
-                                  return "Invalid promocode";
-                                }
-                                if ((widget.eventPromocode!.isLimited &&
-                                        widget.eventPromocode!
-                                                .availableAmount ==
-                                            0) ||
-                                    widget.eventPromocode!.endDate
-                                        .isBefore(DateTime.now())) {
-                                  return "Promocode expired";
-                                }
-                                if (value.isEmpty ||
-                                    value.length < 4 ||
-                                    value == widget.eventPromocode!.name) {
-                                  return null;
+                                for (int i = 0;
+                                    i < widget.eventPromocodes.length;
+                                    i++) {
+                                  if (value == widget.eventPromocodes[i].name) {
+                                    if (widget.eventPromocodes[i].startDate
+                                        .isAfter(DateTime.now())) {
+                                      return "Invalid promocode";
+                                    }
+
+                                    if ((widget.eventPromocodes[i].isLimited &&
+                                            widget.eventPromocodes[i]
+                                                    .availableAmount ==
+                                                0) ||
+                                        widget.eventPromocodes[i].endDate
+                                            .isBefore(DateTime.now())) {
+                                      return "Promocode expired";
+                                    }
+                                  }
+
+                                  if (value.isEmpty ||
+                                      value.length < 4 ||
+                                      value == widget.eventPromocodes[i].name) {
+                                    return null;
+                                  }
                                 }
                                 if (checkoutClicked && !promocodeApplied) {
                                   return null;
@@ -373,7 +402,15 @@ class _BuyTicketsState extends State<BuyTickets> {
 
                               /// PromoCheck:Save value if valid and apply button clicked
                               onSaved: (newValue) {
-                                data.promocodetId = widget.eventPromocode?.id;
+                                for (int i = 0;
+                                    i < widget.eventPromocodes.length;
+                                    i++) {
+                                  if (data.promocodetId ==
+                                      widget.eventPromocodes[i].id) {
+                                    data.promocodetId =
+                                        widget.eventPromocodes[i].id;
+                                  }
+                                }
                               },
                               cursorColor:
                                   const Color.fromARGB(255, 50, 100, 237),
