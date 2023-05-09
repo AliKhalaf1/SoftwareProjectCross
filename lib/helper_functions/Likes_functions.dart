@@ -14,8 +14,11 @@ Future<List<LikedEventCardModel>> getLikedEvents() async {
 ///////////////////////////////////////////////////////////
   ///api
   ///
+  print(
+      "I'm in ---------------------------------------------------------------------");
   var uri = Uri.parse('${Constants.host}/users/me/event/liked');
   var token = await getToken();
+  print(token);
   //encode Map to JSON
   Map<String, String> reqHeaders = {
     'Authorization': 'Bearer $token',
@@ -25,14 +28,15 @@ Future<List<LikedEventCardModel>> getLikedEvents() async {
     uri,
     headers: reqHeaders,
   );
-
   var resCode = response.statusCode;
-  var resBody = response.body;
-  var resData = jsonDecode(resBody);
+
   print("hello");
   print(resCode);
-  print(resData);
+
   if (resCode == 200) {
+    var resBody = response.body;
+    var resData = jsonDecode(resBody);
+    //List<LikedEventCardModel> LikedEvents = <LikedEventCardModel>[];
     print(resData.length);
     return [];
   } else {
