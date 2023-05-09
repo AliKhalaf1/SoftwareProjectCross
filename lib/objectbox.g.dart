@@ -375,55 +375,6 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(9, 2329366862256821098),
-      name: 'TicketAttendee',
-      lastPropertyId: const IdUid(8, 8854794003904852627),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 1338969490856261255),
-            name: 'mockId',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 4151188518359849841),
-            name: 'eventid',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 1867367640587303365),
-            name: 'orderid',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 352664110196945194),
-            name: 'id',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 5322786395524993649),
-            name: 'isVip',
-            type: 1,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 1327959378613592614),
-            name: 'firstName',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 6182300656885291160),
-            name: 'lastName',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 8854794003904852627),
-            name: 'email',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
       id: const IdUid(10, 8200917204386437970),
       name: 'TicketClass',
       lastPropertyId: const IdUid(10, 2432142119261522732),
@@ -544,6 +495,65 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(13, 939543582948794085),
+      name: 'TicketAttendee',
+      lastPropertyId: const IdUid(10, 2591500730910463390),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 5148015034356525215),
+            name: 'mockId',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 7862359614652500250),
+            name: 'eventMockId',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 3019878326367378166),
+            name: 'orderMockId',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 6125820165508046979),
+            name: 'id',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 6359757392398011238),
+            name: 'eventid',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 3773358504010801126),
+            name: 'orderid',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 6265562615389511321),
+            name: 'isVip',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 7163285883100840764),
+            name: 'firstName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 7618915800121057651),
+            name: 'lastName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 2591500730910463390),
+            name: 'email',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -567,11 +577,11 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(12, 2067669968815746106),
+      lastEntityId: const IdUid(13, 939543582948794085),
       lastIndexId: const IdUid(3, 3425995927453799802),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [4293081377155789754],
+      retiredEntityUids: const [4293081377155789754, 2329366862256821098],
       retiredIndexUids: const [],
       retiredPropertyUids: const [
         5488245486567488427,
@@ -594,7 +604,17 @@ ModelDefinition getObjectBoxModel() {
         3214205458895062553,
         6493024197532204526,
         7073026940504869321,
-        7895381826733041736
+        7895381826733041736,
+        1338969490856261255,
+        4151188518359849841,
+        1867367640587303365,
+        352664110196945194,
+        5322786395524993649,
+        1327959378613592614,
+        6182300656885291160,
+        8854794003904852627,
+        1111742592663004915,
+        6605078193810181580
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -936,58 +956,8 @@ ModelDefinition getObjectBoxModel() {
 
           return object;
         }),
-    TicketAttendee: EntityDefinition<TicketAttendee>(
-        model: _entities[7],
-        toOneRelations: (TicketAttendee object) => [],
-        toManyRelations: (TicketAttendee object) => {},
-        getId: (TicketAttendee object) => object.mockId,
-        setId: (TicketAttendee object, int id) {
-          object.mockId = id;
-        },
-        objectToFB: (TicketAttendee object, fb.Builder fbb) {
-          final eventidOffset = fbb.writeString(object.eventid);
-          final orderidOffset = fbb.writeString(object.orderid);
-          final idOffset = fbb.writeString(object.id);
-          final firstNameOffset = fbb.writeString(object.firstName);
-          final lastNameOffset = fbb.writeString(object.lastName);
-          final emailOffset = fbb.writeString(object.email);
-          fbb.startTable(9);
-          fbb.addInt64(0, object.mockId);
-          fbb.addOffset(1, eventidOffset);
-          fbb.addOffset(2, orderidOffset);
-          fbb.addOffset(3, idOffset);
-          fbb.addBool(4, object.isVip);
-          fbb.addOffset(5, firstNameOffset);
-          fbb.addOffset(6, lastNameOffset);
-          fbb.addOffset(7, emailOffset);
-          fbb.finish(fbb.endTable());
-          return object.mockId;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = TicketAttendee(
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 12, false),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 16, ''),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 18, ''))
-            ..mockId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..eventid = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 6, '')
-            ..orderid = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 8, '');
-
-          return object;
-        }),
     TicketClass: EntityDefinition<TicketClass>(
-        model: _entities[8],
+        model: _entities[7],
         toOneRelations: (TicketClass object) => [],
         toManyRelations: (TicketClass object) => {},
         getId: (TicketClass object) => object.mockId,
@@ -1037,7 +1007,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     UserLikesEvents: EntityDefinition<UserLikesEvents>(
-        model: _entities[9],
+        model: _entities[8],
         toOneRelations: (UserLikesEvents object) => [],
         toManyRelations: (UserLikesEvents object) => {},
         getId: (UserLikesEvents object) => object.mockId,
@@ -1065,7 +1035,7 @@ ModelDefinition getObjectBoxModel() {
           return object;
         }),
     LikedEventCardModel: EntityDefinition<LikedEventCardModel>(
-        model: _entities[10],
+        model: _entities[9],
         toOneRelations: (LikedEventCardModel object) => [],
         toManyRelations: (LikedEventCardModel object) => {},
         getId: (LikedEventCardModel object) => object.mockId,
@@ -1102,6 +1072,62 @@ ModelDefinition getObjectBoxModel() {
               const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false))
             ..mockId =
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
+        }),
+    TicketAttendee: EntityDefinition<TicketAttendee>(
+        model: _entities[10],
+        toOneRelations: (TicketAttendee object) => [],
+        toManyRelations: (TicketAttendee object) => {},
+        getId: (TicketAttendee object) => object.mockId,
+        setId: (TicketAttendee object, int id) {
+          object.mockId = id;
+        },
+        objectToFB: (TicketAttendee object, fb.Builder fbb) {
+          final idOffset = fbb.writeString(object.id);
+          final eventidOffset = fbb.writeString(object.eventid);
+          final orderidOffset = fbb.writeString(object.orderid);
+          final firstNameOffset = fbb.writeString(object.firstName);
+          final lastNameOffset = fbb.writeString(object.lastName);
+          final emailOffset = fbb.writeString(object.email);
+          fbb.startTable(11);
+          fbb.addInt64(0, object.mockId);
+          fbb.addInt64(1, object.eventMockId);
+          fbb.addInt64(2, object.orderMockId);
+          fbb.addOffset(3, idOffset);
+          fbb.addOffset(4, eventidOffset);
+          fbb.addOffset(5, orderidOffset);
+          fbb.addBool(6, object.isVip);
+          fbb.addOffset(7, firstNameOffset);
+          fbb.addOffset(8, lastNameOffset);
+          fbb.addOffset(9, emailOffset);
+          fbb.finish(fbb.endTable());
+          return object.mockId;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = TicketAttendee(
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 16, false),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 20, ''),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 22, ''),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''))
+            ..mockId =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..eventMockId =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)
+            ..orderMockId =
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
 
           return object;
         })
@@ -1339,122 +1365,130 @@ class Ticket_ {
   static final title = QueryStringProperty<Ticket>(_entities[6].properties[3]);
 }
 
-/// [TicketAttendee] entity fields to define ObjectBox queries.
-class TicketAttendee_ {
-  /// see [TicketAttendee.mockId]
-  static final mockId =
-      QueryIntegerProperty<TicketAttendee>(_entities[7].properties[0]);
-
-  /// see [TicketAttendee.eventid]
-  static final eventid =
-      QueryStringProperty<TicketAttendee>(_entities[7].properties[1]);
-
-  /// see [TicketAttendee.orderid]
-  static final orderid =
-      QueryStringProperty<TicketAttendee>(_entities[7].properties[2]);
-
-  /// see [TicketAttendee.id]
-  static final id =
-      QueryStringProperty<TicketAttendee>(_entities[7].properties[3]);
-
-  /// see [TicketAttendee.isVip]
-  static final isVip =
-      QueryBooleanProperty<TicketAttendee>(_entities[7].properties[4]);
-
-  /// see [TicketAttendee.firstName]
-  static final firstName =
-      QueryStringProperty<TicketAttendee>(_entities[7].properties[5]);
-
-  /// see [TicketAttendee.lastName]
-  static final lastName =
-      QueryStringProperty<TicketAttendee>(_entities[7].properties[6]);
-
-  /// see [TicketAttendee.email]
-  static final email =
-      QueryStringProperty<TicketAttendee>(_entities[7].properties[7]);
-}
-
 /// [TicketClass] entity fields to define ObjectBox queries.
 class TicketClass_ {
   /// see [TicketClass.mockId]
   static final mockId =
-      QueryIntegerProperty<TicketClass>(_entities[8].properties[0]);
+      QueryIntegerProperty<TicketClass>(_entities[7].properties[0]);
 
   /// see [TicketClass.eventId]
   static final eventId =
-      QueryIntegerProperty<TicketClass>(_entities[8].properties[1]);
+      QueryIntegerProperty<TicketClass>(_entities[7].properties[1]);
 
   /// see [TicketClass.name]
   static final name =
-      QueryStringProperty<TicketClass>(_entities[8].properties[2]);
+      QueryStringProperty<TicketClass>(_entities[7].properties[2]);
 
   /// see [TicketClass.isVip]
   static final isVip =
-      QueryBooleanProperty<TicketClass>(_entities[8].properties[3]);
+      QueryBooleanProperty<TicketClass>(_entities[7].properties[3]);
 
   /// see [TicketClass.price]
   static final price =
-      QueryDoubleProperty<TicketClass>(_entities[8].properties[4]);
+      QueryDoubleProperty<TicketClass>(_entities[7].properties[4]);
 
   /// see [TicketClass.maxQuantity]
   static final maxQuantity =
-      QueryIntegerProperty<TicketClass>(_entities[8].properties[5]);
+      QueryIntegerProperty<TicketClass>(_entities[7].properties[5]);
 
   /// see [TicketClass.availableQuantity]
   static final availableQuantity =
-      QueryIntegerProperty<TicketClass>(_entities[8].properties[6]);
+      QueryIntegerProperty<TicketClass>(_entities[7].properties[6]);
 
   /// see [TicketClass.startDate]
   static final startDate =
-      QueryIntegerProperty<TicketClass>(_entities[8].properties[7]);
+      QueryIntegerProperty<TicketClass>(_entities[7].properties[7]);
 
   /// see [TicketClass.endDate]
   static final endDate =
-      QueryIntegerProperty<TicketClass>(_entities[8].properties[8]);
+      QueryIntegerProperty<TicketClass>(_entities[7].properties[8]);
 
   /// see [TicketClass.id]
   static final id =
-      QueryStringProperty<TicketClass>(_entities[8].properties[9]);
+      QueryStringProperty<TicketClass>(_entities[7].properties[9]);
 }
 
 /// [UserLikesEvents] entity fields to define ObjectBox queries.
 class UserLikesEvents_ {
   /// see [UserLikesEvents.mockId]
   static final mockId =
-      QueryIntegerProperty<UserLikesEvents>(_entities[9].properties[0]);
+      QueryIntegerProperty<UserLikesEvents>(_entities[8].properties[0]);
 
   /// see [UserLikesEvents.userId]
   static final userId =
-      QueryIntegerProperty<UserLikesEvents>(_entities[9].properties[1]);
+      QueryIntegerProperty<UserLikesEvents>(_entities[8].properties[1]);
 
   /// see [UserLikesEvents.eventId]
   static final eventId =
-      QueryIntegerProperty<UserLikesEvents>(_entities[9].properties[2]);
+      QueryIntegerProperty<UserLikesEvents>(_entities[8].properties[2]);
 }
 
 /// [LikedEventCardModel] entity fields to define ObjectBox queries.
 class LikedEventCardModel_ {
   /// see [LikedEventCardModel.mockId]
   static final mockId =
-      QueryIntegerProperty<LikedEventCardModel>(_entities[10].properties[0]);
+      QueryIntegerProperty<LikedEventCardModel>(_entities[9].properties[0]);
 
   /// see [LikedEventCardModel.id]
   static final id =
-      QueryStringProperty<LikedEventCardModel>(_entities[10].properties[1]);
+      QueryStringProperty<LikedEventCardModel>(_entities[9].properties[1]);
 
   /// see [LikedEventCardModel.title]
   static final title =
-      QueryStringProperty<LikedEventCardModel>(_entities[10].properties[2]);
+      QueryStringProperty<LikedEventCardModel>(_entities[9].properties[2]);
 
   /// see [LikedEventCardModel.startDate]
   static final startDate =
-      QueryIntegerProperty<LikedEventCardModel>(_entities[10].properties[3]);
+      QueryIntegerProperty<LikedEventCardModel>(_entities[9].properties[3]);
 
   /// see [LikedEventCardModel.eventImageUrl]
   static final eventImageUrl =
-      QueryStringProperty<LikedEventCardModel>(_entities[10].properties[4]);
+      QueryStringProperty<LikedEventCardModel>(_entities[9].properties[4]);
 
   /// see [LikedEventCardModel.isOnline]
   static final isOnline =
-      QueryBooleanProperty<LikedEventCardModel>(_entities[10].properties[5]);
+      QueryBooleanProperty<LikedEventCardModel>(_entities[9].properties[5]);
+}
+
+/// [TicketAttendee] entity fields to define ObjectBox queries.
+class TicketAttendee_ {
+  /// see [TicketAttendee.mockId]
+  static final mockId =
+      QueryIntegerProperty<TicketAttendee>(_entities[10].properties[0]);
+
+  /// see [TicketAttendee.eventMockId]
+  static final eventMockId =
+      QueryIntegerProperty<TicketAttendee>(_entities[10].properties[1]);
+
+  /// see [TicketAttendee.orderMockId]
+  static final orderMockId =
+      QueryIntegerProperty<TicketAttendee>(_entities[10].properties[2]);
+
+  /// see [TicketAttendee.id]
+  static final id =
+      QueryStringProperty<TicketAttendee>(_entities[10].properties[3]);
+
+  /// see [TicketAttendee.eventid]
+  static final eventid =
+      QueryStringProperty<TicketAttendee>(_entities[10].properties[4]);
+
+  /// see [TicketAttendee.orderid]
+  static final orderid =
+      QueryStringProperty<TicketAttendee>(_entities[10].properties[5]);
+
+  /// see [TicketAttendee.isVip]
+  static final isVip =
+      QueryBooleanProperty<TicketAttendee>(_entities[10].properties[6]);
+
+  /// see [TicketAttendee.firstName]
+  static final firstName =
+      QueryStringProperty<TicketAttendee>(_entities[10].properties[7]);
+
+  /// see [TicketAttendee.lastName]
+  static final lastName =
+      QueryStringProperty<TicketAttendee>(_entities[10].properties[8]);
+
+  /// see [TicketAttendee.email]
+  static final email =
+      QueryStringProperty<TicketAttendee>(_entities[10].properties[9]);
 }

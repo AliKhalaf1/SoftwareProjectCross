@@ -8,7 +8,8 @@ import 'package:Eventbrite/providers/events/event.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:path_provider/path_provider.dart';
+import 'package:csv/csv.dart';
 import '../../models/event_promocode.dart';
 import '../../models/ticket_class.dart';
 import '../../objectbox.dart';
@@ -214,6 +215,39 @@ class totalEvents with ChangeNotifier {
     });
 
     return endItems;
+  }
+
+  Future<void> exportToCsv() async {
+    print("ss");
+    final directory = await getExternalStorageDirectory();
+
+    List<List<String>> csvData = [
+      [
+        'Event Title',
+        'Start Date',
+        'End Date',
+        'Price',
+        'Max Tickets',
+        'Taken Tickets'
+      ],
+    ];
+    int index = 1;
+    items.forEach((element) {
+      csvData[index][0] = element.title;
+      csvData[index][1] = element.startDate;
+      csvData[index][2] = element.endDate;
+      csvData[index][3] = element.price.toString();
+      csvData[index][4] = element.maxTickets.toString();
+      csvData[index][5] = element.takenTickets.toString();
+      index++;
+    });
+    String csv = const ListToCsvConverter().convert(csvData);
+
+    String filename = '${directory!.path}/events.csv';
+    final File file = File(filename);
+    await file.writeAsString(csv);
+    print("directionnnn");
+    print(filename);
   }
 
   // Future<void> deleteEvent(String id) async {
