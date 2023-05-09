@@ -1,4 +1,12 @@
+library ProfilePicture;
+
 import 'package:flutter/material.dart';
+
+/// {@category Widgets}
+///  A widget that displays a user's profile picture.
+///
+/// The profile picture is displayed as a circular avatar with a transparent
+///
 
 class ProfilePicture extends StatelessWidget {
   final String imageurl;

@@ -1,3 +1,5 @@
+library TicketCard;
+
 import 'dart:ui';
 
 import 'package:Eventbrite/screens/user/ticket_details_screen.dart';
@@ -8,6 +10,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../providers/tickets/ticket.dart';
+
+/// {@category Widgets}
+///
+///TicketCard widget that displays information about a ticket and an image associated with it.
+///
+///The widget is defined using the StatelessWidget class.
 
 class TicketCard extends StatelessWidget {
   Ticket ticket;
@@ -20,11 +28,11 @@ class TicketCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (ctx) => TicketsDetailsScreen(),
-          ),
-        );
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (ctx) => TicketsDetailsScreen(),
+        //   ),
+        // );
       },
       child: Container(
         margin: EdgeInsets.only(

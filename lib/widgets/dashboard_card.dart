@@ -1,7 +1,16 @@
+library DashboarCard;
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+/// {@category Widgets}
+///
+/// A widget that displays a card with information about a specific type of ticket in a dashboard format.
+///
+/// The card displays the percentage of taken tickets from the total tickets,
+///
+/// along with the actual number of taken tickets and the total number of tickets.
 class DashCard extends StatelessWidget {
   final String ticketType;
   final int ticketsNumber;

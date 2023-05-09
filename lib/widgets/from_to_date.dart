@@ -1,6 +1,16 @@
+library DateManagement;
+
 import 'package:flutter/material.dart';
 
 import 'dayandtime.dart';
+
+/// {@category Widgets}
+///
+/// A widget that displays two columns of date and time pickers for selecting a start and end date and time.
+///
+/// This widget contains two instances of the [DayandTime] widget for selecting a start date and time
+///
+///  and an end date and time respectively.
 
 class DateColumn extends StatelessWidget {
   final Function _showDatePickerFrom;

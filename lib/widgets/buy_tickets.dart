@@ -9,6 +9,11 @@ import 'placeorder.dart';
 import 'transparent_button_no_icon.dart';
 import '../models/event_ticket.dart';
 
+/// {@category Widgets}
+///
+/// stateful widget that represents a form for buying tickets to an event.
+///
+/// The widget has variables and methods for handling the form inputs and outputs.
 class BuyTickets extends StatefulWidget {
   final String eventId;
   final String eventtitle;
@@ -19,8 +24,14 @@ class BuyTickets extends StatefulWidget {
   List<EventTicketInfo> eventFreeTicketsRender = [];
   List<EventTicketInfo> eventVipTicketsRender = [];
   List<EventPromocodeInfo> eventPromocodes = [];
-  BuyTickets(this.eventId, this.eventtitle, this.eventStartDate,
-      this.eventFreeTickets, this.eventVipTickets, this.eventPromocodes,this.eventImg,
+  BuyTickets(
+      this.eventId,
+      this.eventtitle,
+      this.eventStartDate,
+      this.eventFreeTickets,
+      this.eventVipTickets,
+      this.eventPromocodes,
+      this.eventImg,
       {super.key});
 
   @override
@@ -278,8 +289,7 @@ class _BuyTicketsState extends State<BuyTickets> {
                 widget.eventVipTicketsRender,
                 data.promocodetId,
                 data.totalPrice,
-                widget.eventImg
-                ),
+                widget.eventImg),
           );
         });
   }

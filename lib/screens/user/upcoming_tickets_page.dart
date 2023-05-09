@@ -14,8 +14,8 @@ import '../../providers/tickets/ticket.dart';
 ///
 /// This Page is used to display the user's tickets.
 class UpcomingTicketsPage extends StatefulWidget {
-  UpcomingTicketsPage({super.key});
-  List<Ticket> tickets = [];
+  UpcomingTicketsPage(this.tickets, {super.key});
+  List<Ticket> tickets;
 
   @override
   State<UpcomingTicketsPage> createState() => _UpcomingTicketsPageState();
@@ -29,8 +29,6 @@ class _UpcomingTicketsPageState extends State<UpcomingTicketsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final tickets_prov = Provider.of<Tickets>(context, listen: false);
-    widget.tickets = tickets_prov.upcomingTickets;
     return ListView.builder(
       itemBuilder: (ctx, index) {
         return TicketCard(

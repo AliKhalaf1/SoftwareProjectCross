@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 /// information about the ticket such as the seat number, section, and price.
 
 class TicketsDetailsScreen extends StatefulWidget {
-  const TicketsDetailsScreen({super.key});
+  String OrderId;
+  TicketsDetailsScreen(this.OrderId, {super.key});
 
   @override
   State<TicketsDetailsScreen> createState() => _TicketsDetailsScreenState();
