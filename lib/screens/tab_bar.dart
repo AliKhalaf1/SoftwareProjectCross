@@ -1,5 +1,6 @@
 library BottomNavBar;
 
+import 'package:Eventbrite/helper_functions/constants.dart';
 import 'package:Eventbrite/helper_functions/log_in.dart';
 import 'package:Eventbrite/screens/user/favourites.dart';
 import 'package:Eventbrite/screens/user/tickets_tab_bar.dart';
@@ -61,14 +62,25 @@ class TabBarScreen extends StatefulWidget {
 class TabBarScreenState extends State<TabBarScreen> {
   Future<void> checkLoggedUser() async {
     widget.isLoading = true;
-    String token = await getToken();
+    bool isLoggedIn = false;
+    if (Constants.MockServer == false) {
+      //////////////////////////////////////////////////////////////////////////////////////////////
+      String token = await getToken();
 
-    print('tab_bar token: $token');
+      print('tab_bar token: $token');
 
-    bool isLoggedIn = await checkToken(token);
-    widget.isLoading = false;
+      isLoggedIn = await checkToken(token);
+      widget.isLoading = false;
+      //////////////////////////////////////////////////////////////////////////////////////////////
+    } else {
+      String email = await getEmail();
+      isLoggedIn = email.isNotEmpty;
+      //////////////////////////////////////////////////////////////////////////////////////////////
+      widget.isLoading = false;
+    }
     //bool isLoggedIn = token.isNotEmpty;
     print('tab_bar isLoggedIn: $isLoggedIn');
+
     if (isLoggedIn) {
       setState(() {
         widget.tabBarIndex = 4;

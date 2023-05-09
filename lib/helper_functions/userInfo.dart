@@ -21,31 +21,36 @@ import 'constants.dart';
 ///
 Future<User> getUserInfo(String info) async {
   User currUser = new User("", "", "", "");
-  // var userbox = ObjectBox.userBox;
-  // currUser = userbox.query(User_.email.equals(info)).build().findFirst()!;
-  var uri = Uri.parse('${Constants.host}/users/me/info');
+  if (Constants.MockServer == true) {
+    var userbox = ObjectBox.userBox;
+    currUser = userbox.query(User_.email.equals(info)).build().findFirst()!;
+  } else {
+    //////////////////////////////////////////////////////////////////////////////////
+    var uri = Uri.parse('${Constants.host}/users/me/info');
 
-  //create multipart request
-  Map<String, String> reqHeaders = {
-    'Authorization': 'Bearer ${info}',
-  };
-  var response = await http.get(
-    uri,
-    headers: reqHeaders,
-  );
+    //create multipart request
+    Map<String, String> reqHeaders = {
+      'Authorization': 'Bearer ${info}',
+    };
+    var response = await http.get(
+      uri,
+      headers: reqHeaders,
+    );
 
-  print(response.statusCode);
+    print(response.statusCode);
 
-  if (response.statusCode == 200) {
-    var data = json.decode(response.body);
-    currUser.email = data['email'];
-    currUser.firstName = data['firstname'];
-    currUser.lastName = data['lastname'];
-    currUser.imageUrl = data['avatar_url'];
-    print('avatar url: ${currUser.imageUrl}');
-    setUserinfo(currUser.firstName, currUser.lastName);
-    return currUser;
-  } else {}
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      currUser.email = data['email'];
+      currUser.firstName = data['firstname'];
+      currUser.lastName = data['lastname'];
+      currUser.imageUrl = data['avatar_url'];
+      print('avatar url: ${currUser.imageUrl}');
+      setUserinfo(currUser.firstName, currUser.lastName);
+      return currUser;
+    } else {}
+  }
+  ////////////////////////////////////////////////////////////////////////////////////
 
   return currUser;
 }

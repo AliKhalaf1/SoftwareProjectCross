@@ -12,6 +12,9 @@ import '../../helper_functions/constants.dart';
 import '../../models/db_mock.dart';
 import 'package:http/http.dart' as http;
 
+import '../../objectbox.dart';
+import '../../objectbox.g.dart';
+
 /// {@category user}
 /// {@category Screens}
 ///
@@ -203,41 +206,53 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
                             setState(() {
                               widget._isLoading = true;
                             });
-                            // getEmail().then((value) {
-                            //   DBMock.updateUserName(
-                            //       value,
-                            //       widget.firstNameText.text,
-                            //       widget.lastNameText.text);
+                            ///////////////////////////////////////////////////////////////////////////////////////
+                            if (Constants.MockServer == true) {
+                              getEmail().then((value) {
+                                var userbox = ObjectBox.userBox;
+                                var user = userbox
+                                    .query(User_.email.equals(value))
+                                    .build()
+                                    .findFirst();
+                                user!.firstName = widget.firstNameText.text;
+                                user.lastName = widget.lastNameText.text;
 
-                            //   Navigator.of(context).pop();
-                            //   Navigator.of(context).pop(true);
-                            // });
-                            String token = await getToken();
-                            var uri = Uri.parse(
-                                '${Constants.host}/users/me/edit?firstname=${widget.firstNameText.text}&lastname=${widget.lastNameText.text}');
+                                userbox.put(user);
 
-                            //create multipart request
-                            Map<String, String> reqHeaders = {
-                              'Authorization': 'Bearer $token',
-                            };
-                            var response = await http.put(
-                              uri,
-                              headers: reqHeaders,
-                            );
-                            int responseCode = response.statusCode;
-                            setState(() {
-                              widget._isLoading = false;
-                            });
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop(true);
-                            print(responseCode);
-                            if (responseCode != 200) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Error updating info'),
-                                ),
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop(true);
+                              });
+                            } else {
+                              ///////////////////////////////////////////////////////////////////////////////////////
+                              /// api implementation
+                              String token = await getToken();
+                              var uri = Uri.parse(
+                                  '${Constants.host}/users/me/edit?firstname=${widget.firstNameText.text}&lastname=${widget.lastNameText.text}');
+
+                              //create multipart request
+                              Map<String, String> reqHeaders = {
+                                'Authorization': 'Bearer $token',
+                              };
+                              var response = await http.put(
+                                uri,
+                                headers: reqHeaders,
                               );
+                              int responseCode = response.statusCode;
+                              setState(() {
+                                widget._isLoading = false;
+                              });
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop(true);
+                              print(responseCode);
+                              if (responseCode != 200) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Error updating info'),
+                                  ),
+                                );
+                              }
                             }
+                            ///////////////////////////////////////////////////////////////////////////////////////
                           }
                         : () => {},
                     child: const Text(
