@@ -81,7 +81,7 @@ Future<bool> postEventTicketInfo(String ticketd, int quantity) async {
   var uri = Uri.parse(
       '${Constants.host}/tickets/ticket_id/$ticketd/quantity/{quantity}?=-${quantity}');
   print(uri);
-  var response = await http.post(
+  var response = await http.put(
     uri,
   );
 

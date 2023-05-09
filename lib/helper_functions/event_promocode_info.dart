@@ -48,7 +48,7 @@ Future<bool> postEventPrmocodeInfo(String promoId) async {
   var uri = Uri.parse(
       '${Constants.host}/promocodes/promocode_id/$promoId/quantity/{quantity}?amount=-1');
   print(uri);
-  var response = await http.post(
+  var response = await http.put(
     uri,
   );
 

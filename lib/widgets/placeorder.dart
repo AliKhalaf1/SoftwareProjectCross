@@ -146,11 +146,12 @@ class _PlaceOrderState extends State<PlaceOrder> {
       builder: (context) {
         return AlertDialog(
           title: const Text('Order failed'),
-          content: const Text('Faild to use place your order'),
+          content: const Text('Faild to place your order'),
           actions: [
             TextButton(
               child: const Text('Back to Event'),
               onPressed: () {
+                stopTimer();
                 Map<String, dynamic> args = {
                   'eventId': widget.eventId,
                   'isLogged': "1",
@@ -204,25 +205,68 @@ class _PlaceOrderState extends State<PlaceOrder> {
     }
     _form.currentState?.save();
     // ====================== call Apis =====================
-
+    String orderId;
     postOrder(eventId, data.firstName, data.lastname, data.email,
             data.creationDate, data.totalPrice, widget.eventImg)
         .then((value) => {
-              for (int i = 0; i < data.reservedFreeTickets.length; i++)
+              if (value == "1000")
+                {showFail(context)}
+              else
                 {
-                  postEventTicketInfo(data.reservedFreeTickets[i].id,
-                          data.reservedFreeTickets[i].selectedQuantity)
-                      .then((value) => {
-                            if (!value) {showFail(context)},
-                            if (data.promocodetId != "")
-                              {
-                                postEventPrmocodeInfo(data.promocodetId).then(
-                                  (value) => {
-                                    if (!value) {showFail(context)}
-                                  },
-                                )
-                              }
-                          })
+                  orderId = value,
+                  for (int i = 0; i < data.reservedFreeTickets.length; i++)
+                    {
+                      postEventTicketInfo(data.reservedFreeTickets[i].id,
+                              data.reservedFreeTickets[i].selectedQuantity)
+                          .then((value) => {
+                                if (!value) {showFail(context)}
+                              })
+                    },
+                  for (int i = 0; i < data.reservedVipTickets.length; i++)
+                    {
+                      postEventTicketInfo(data.reservedVipTickets[i].id,
+                              data.reservedVipTickets[i].selectedQuantity)
+                          .then((value) => {
+                                if (!value)
+                                  {
+                                    showFail(context),
+                                  }
+                              })
+                    },
+                  for (int i = 0; i < data.fnamesFree.length; i++)
+                    {
+                      addAtendee(
+                        data.fnamesFree[i],
+                        data.lnamesFree[i],
+                        data.emailsFree[i],
+                        "regular",
+                        orderId,
+                        eventId,
+                      ).then((value) {
+                        if (!value) {
+                          showFail(context);
+                        }
+                      })
+                    },
+                  for (int i = 0; i < data.fnamesVip.length; i++)
+                    {
+                      addAtendee(
+                        data.fnamesVip[i],
+                        data.lnamesVip[i],
+                        data.emailsVip[i],
+                        "vip",
+                        orderId,
+                        eventId,
+                      ).then((value) {
+                        if (!value) {
+                          showFail(context);
+                        }
+                      })
+                    },
+                  if (data.promocodetId == "")
+                    {showFail(context)}
+                  else
+                    {postEventPrmocodeInfo(data.promocodetId)}
                 }
             });
 
