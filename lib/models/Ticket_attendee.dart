@@ -33,11 +33,11 @@ import '../widgets/buy_tickets.dart';
 class TicketAttendee {
   @Id()
   int mockId = 0;
-  int eventId = 0;
-  int orderId = 0;
+  int eventMockId = 0;
+  int orderMockId = 0;
   String id;
-  String eventid = "";
-  String orderid = "";
+  String eventid;
+  String orderid;
   bool isVip;
   String firstName;
   String lastName;
@@ -50,5 +50,7 @@ class TicketAttendee {
     this.firstName,
     this.lastName,
     this.email,
+    this.eventid,
+    this.orderid,
   );
 }

@@ -1,3 +1,4 @@
+import 'package:Eventbrite/helper_functions/constants.dart';
 import 'package:Eventbrite/models/Ticket_attendee.dart';
 import 'package:Eventbrite/models/ticket_class.dart';
 import 'package:Eventbrite/widgets/app_bar_text.dart';
@@ -17,6 +18,62 @@ class AttendeeReport extends StatefulWidget {
 }
 
 class _AttendeeReportState extends State<AttendeeReport> {
+  List<DataRow> TicketsToDataRows() {
+    List<DataRow> dataRows = [];
+    if (Constants.MockServer == false) {
+      for (var ticket in widget.tickets) {
+        dataRows.add(DataRow(
+          cells: <DataCell>[
+            DataCell(
+              Text(ticket.orderid),
+            ),
+            DataCell(
+              Text(ticket.id),
+            ),
+            DataCell(
+              Text(ticket.isVip ? "VIP" : "Regular"),
+            ),
+            DataCell(
+              Text(ticket.firstName),
+            ),
+            DataCell(
+              Text(ticket.lastName),
+            ),
+            DataCell(
+              Text(ticket.email),
+            ),
+          ],
+        ));
+      }
+    } else {
+      for (var ticket in widget.tickets) {
+        dataRows.add(DataRow(
+          cells: <DataCell>[
+            DataCell(
+              Text(ticket.orderMockId.toString()),
+            ),
+            DataCell(
+              Text(ticket.mockId.toString()),
+            ),
+            DataCell(
+              Text(ticket.isVip ? "VIP" : "Regular"),
+            ),
+            DataCell(
+              Text(ticket.firstName),
+            ),
+            DataCell(
+              Text(ticket.lastName),
+            ),
+            DataCell(
+              Text(ticket.email),
+            ),
+          ],
+        ));
+      }
+    }
+    return dataRows;
+  }
+
   void Refresh() {
     setState(() {
       widget.isLoading = true;
@@ -30,7 +87,20 @@ class _AttendeeReportState extends State<AttendeeReport> {
   @override
   void initState() {
     super.initState();
-    widget.tickets = [];
+    widget.tickets = [
+      TicketAttendee("id1", true, "ahmed", "saad", "ahmedsaad_2009@live.com",
+          "eventid1", "orderid1"),
+      TicketAttendee("id2", true, "ahmed", "saad", "ahmedsaad_2009@live.com",
+          "eventid1", "orderid1"),
+      TicketAttendee("id3", false, "ahmedv", "saad", "ahmedsaad_2009@live.com",
+          "eventid1", "orderid1"),
+      TicketAttendee("id4", false, "ahmedv2", "saad", "ahmedsaad_2009@live.com",
+          "eventid1", "orderid1"),
+      TicketAttendee("id5", true, "ahmed", "saad", "ahmedsaad_2009@live.com",
+          "eventid1", "orderid1"),
+      TicketAttendee("id6", true, "ahmed", "saad", "ahmedsaad_2009@live.com",
+          "eventid1", "orderid1"),
+    ];
   }
 
   @override
@@ -52,7 +122,7 @@ class _AttendeeReportState extends State<AttendeeReport> {
                   columns: const <DataColumn>[
                     DataColumn(
                       label: Text(
-                        'Sr.No',
+                        'OrderId',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -60,7 +130,7 @@ class _AttendeeReportState extends State<AttendeeReport> {
                     ),
                     DataColumn(
                       label: Text(
-                        'Sr.No',
+                        'Ticket ID',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -68,7 +138,7 @@ class _AttendeeReportState extends State<AttendeeReport> {
                     ),
                     DataColumn(
                       label: Text(
-                        'Sr.No',
+                        'Ticket Type',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -76,7 +146,7 @@ class _AttendeeReportState extends State<AttendeeReport> {
                     ),
                     DataColumn(
                       label: Text(
-                        'Website',
+                        'First Name',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -84,7 +154,7 @@ class _AttendeeReportState extends State<AttendeeReport> {
                     ),
                     DataColumn(
                       label: Text(
-                        'Tutorial',
+                        'Last Name',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -92,389 +162,14 @@ class _AttendeeReportState extends State<AttendeeReport> {
                     ),
                     DataColumn(
                       label: Text(
-                        'Review',
+                        'Email',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ],
-                  rows: const <DataRow>[
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('1'),
-                        ),
-                        DataCell(
-                          Text('https://flutterr.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('2'),
-                        ),
-                        DataCell(
-                          Text('https://dart.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Dart'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                    DataRow(
-                      cells: <DataCell>[
-                        DataCell(
-                          Text('3'),
-                        ),
-                        DataCell(
-                          Text('https://pub.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('https://flutter.dev/'),
-                        ),
-                        DataCell(
-                          Text('Flutter Packages'),
-                        ),
-                        DataCell(
-                          Text('5*'),
-                        ),
-                      ],
-                    ),
-                  ],
+                  rows: TicketsToDataRows(),
                 ),
               ),
             ),
