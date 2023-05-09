@@ -3,6 +3,7 @@ library FavouriteEventCard;
 import 'package:Eventbrite/helper_functions/Likes_functions.dart';
 import 'package:Eventbrite/models/liked_event_card_model.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
+import 'package:Eventbrite/screens/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../helper_functions/events_handlers.dart';
@@ -102,7 +103,48 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
             ),
           ),
         ),
+        Positioned(
+          bottom: 2,
+          right: 10,
+          child: IconButton(
+            key: const Key("AddToFavBtn"),
+            onPressed: () {
+              setState(() {
+                widget.isFav = !widget.isFav;
+              });
+
+              UnlikeEvent(context, widget.event.id, widget.event.mockId);
+            },
+            icon: Icon(
+              key: const Key("favIcon"),
+              widget.isFav == false
+                  ? Icons.favorite_border_rounded
+                  : Icons.favorite_sharp,
+              color: const Color.fromARGB(255, 209, 65, 12),
+            ),
+          ),
+        ),
       ],
     );
+  }
+}
+
+void UnlikeEvent(
+  BuildContext context,
+  String eventId,
+  int eventmockID,
+) async {
+  // Navigator.of(context).pop();
+  bool state = await UnlikeEventHelper(eventId, eventmockID);
+
+  Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => TabBarScreen(
+            title: "Favourites",
+            tabBarIndex: 2,
+          )));
+  if (state != true) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Something Wrong Happened"),
+    ));
   }
 }

@@ -83,23 +83,40 @@ Future<List<Event>> getLikedEvents() async {
   return LikedEvents;
 }
 
-Future<bool> UnlikeEvent(String id, int eventid) async {
+Future<bool> UnlikeEventHelper(String id, int eventid) async {
   ///////////////////////////////////////////////////////////
   ///api
   ///
-  var uri = Uri.parse('${Constants.host}/users/me/event/${id}/unlike');
-  var token = await getToken();
-  //encode Map to JSON
-  Map<String, String> reqHeaders = {
-    'Authorization': 'Bearer $token',
-  };
-  //encode Map to JSON
-  var response = await http.delete(
-    uri,
-    headers: reqHeaders,
-  );
-  var resCode = response.statusCode;
-  var resBody = response.body;
-  var resData = jsonDecode(resBody);
-  return (resCode == 200);
+  if (Constants.MockServer == false) {
+    var uri = Uri.parse('${Constants.host}/users/me/event/${id}/unlike');
+    var token = await getToken();
+    //encode Map to JSON
+    Map<String, String> reqHeaders = {
+      'Authorization': 'Bearer $token',
+    };
+    //encode Map to JSON
+    var response = await http.delete(
+      uri,
+      headers: reqHeaders,
+    );
+    var resCode = response.statusCode;
+    var resBody = response.body;
+    var resData = jsonDecode(resBody);
+    return (resCode == 200);
+  }
+  ///////////////////////////////////////////////////////////
+  //mock
+  else {
+    var userLikesBox = ObjectBox.likesBox;
+    var userbox = ObjectBox.userBox;
+    String email = await getEmail();
+    var user = userbox.query(User_.email.equals(email)).build().findFirst();
+    var userlike = userLikesBox
+        .query(UserLikesEvents_.userId.equals(user!.mockId) &
+            UserLikesEvents_.eventId.equals(eventid))
+        .build()
+        .findFirst();
+    userLikesBox.remove(userlike!.mockId);
+    return true;
+  }
 }
