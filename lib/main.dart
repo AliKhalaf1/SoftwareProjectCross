@@ -9,6 +9,7 @@ import 'package:Eventbrite/screens/creator/all_tickets.dart';
 import 'package:Eventbrite/screens/creator/bar_location.dart';
 import 'package:Eventbrite/screens/creator/coupons_form.dart';
 import 'package:Eventbrite/screens/creator/description_event.dart';
+import 'package:Eventbrite/screens/creator/event_dashboard.dart';
 import 'package:Eventbrite/screens/creator/event_location.dart';
 import 'package:Eventbrite/screens/creator/event_start_end_date.dart';
 import 'package:Eventbrite/screens/creator/event_title.dart';
@@ -124,6 +125,7 @@ class _MainAppState extends State<MainApp> {
           BarLocation.route: (ctx) => BarLocation(),
           AllCoupons.route: (ctx) => AllCoupons(),
           CouponForm.route: (ctx) => CouponForm(),
+          EventsDashboard.route: (ctx) => EventsDashboard(),
         },
       ),
     );
