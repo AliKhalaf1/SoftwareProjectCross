@@ -1,9 +1,6 @@
 import 'package:Eventbrite/providers/getevent/getevent.dart';
 import 'package:Eventbrite/widgets/dashboard_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:circle_progress_bar/circle_progress_bar.dart';
 import 'package:provider/provider.dart';
 
 class EventsDashboard extends StatefulWidget {
@@ -74,7 +71,7 @@ class _EventsDashboardState extends State<EventsDashboard> {
             ),
             Text(
               " \$${Event.price}",
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: "Neue Plak Extended",
                   fontWeight: FontWeight.w800,
                   color: Color.fromRGBO(31, 10, 61, 1),
@@ -101,6 +98,17 @@ class _EventsDashboardState extends State<EventsDashboard> {
               height: 5,
             ),
             DashCard("ALL TICKETS", Event.maxTickets, Event.takenTickets),
+            const SizedBox(
+              height: 5,
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/add_Attendee', arguments: {
+                    'eventID': Event.id,
+                    'eventIDMock': Event.mockId
+                  });
+                },
+                child: const Text("Add Attendee"))
           ],
         ),
       ),

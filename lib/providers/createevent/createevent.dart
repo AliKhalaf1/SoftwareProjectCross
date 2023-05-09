@@ -1,10 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:Eventbrite/helper_functions/constants.dart';
 import 'package:Eventbrite/helper_functions/log_in.dart';
+import 'package:Eventbrite/models/ticket_class.dart';
+import 'package:Eventbrite/objectbox.dart';
+import 'package:Eventbrite/screens/creator/all_tickets.dart';
+import 'package:Eventbrite/screens/creator/event_location.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../../models/event_promocode.dart';
+import '../../objectbox.g.dart';
+import '../events/event.dart';
 
 class TheTicket {
   String name;
@@ -173,96 +182,166 @@ class TheEvent with ChangeNotifier {
         startofEvent!.day, startofEventClock!.hour, startofEventClock!.minute);
     DateTime dateTime2 = DateTime(endofEvent!.year, endofEvent!.month,
         endofEvent!.day, endofEventClock!.hour, endofEventClock!.minute);
+    if (Constants.MockServer == false) {
+      String formattedStart =
+          DateFormat('yyyy-MM-ddTHH:mm:ss').format(dateTime1);
 
-    String formattedStart = DateFormat('yyyy-MM-ddTHH:mm:ss').format(dateTime1);
+      String formattedend = DateFormat('yyyy-MM-ddTHH:mm:ss').format(dateTime2);
 
-    String formattedend = DateFormat('yyyy-MM-ddTHH:mm:ss').format(dateTime2);
+      List<Map<String, dynamic>> mapsofTickets = allTickets.map((ticket) {
+        DateTime dateTime3 = DateTime(
+            ticket.startDate.year,
+            ticket.startDate.month,
+            ticket.startDate.day,
+            ticket.startofEventClock.hour,
+            ticket.startofEventClock.minute);
+        DateTime dateTime4 = DateTime(
+            ticket.endDate.year,
+            ticket.endDate.month,
+            ticket.endDate.day,
+            ticket.endofEventClock.hour,
+            ticket.endofEventClock.minute);
+        String formattedStart3 =
+            DateFormat('yyyy-MM-ddTHH:mm:ss').format(dateTime3);
 
-    List<Map<String, dynamic>> mapsofTickets = allTickets.map((ticket) {
-      DateTime dateTime3 = DateTime(
-          ticket.startDate.year,
-          ticket.startDate.month,
-          ticket.startDate.day,
-          ticket.startofEventClock.hour,
-          ticket.startofEventClock.minute);
-      DateTime dateTime4 = DateTime(
-          ticket.endDate.year,
-          ticket.endDate.month,
-          ticket.endDate.day,
-          ticket.endofEventClock.hour,
-          ticket.endofEventClock.minute);
-      String formattedStart3 =
-          DateFormat('yyyy-MM-ddTHH:mm:ss').format(dateTime3);
+        String formattedend4 =
+            DateFormat('yyyy-MM-ddTHH:mm:ss').format(dateTime4);
+        return {
+          "type": ticket.type,
+          "name": ticket.name,
+          "max_quantity": ticket.maxquantity,
+          'price': ticket.price,
+          'sales_start_date_time': formattedStart3,
+          'sales_end_date_time': formattedend4,
+        };
+      }).toList();
 
-      String formattedend4 =
-          DateFormat('yyyy-MM-ddTHH:mm:ss').format(dateTime4);
-      return {
-        "type": ticket.type,
-        "name": ticket.name,
-        "max_quantity": ticket.maxquantity,
-        'price': ticket.price,
-        'sales_start_date_time': formattedStart3,
-        'sales_end_date_time': formattedend4,
-      };
-    }).toList();
-
-    List<Map<String, dynamic>> mapsofCoupons = allCoupon.map((coupon) {
-      return {
-        "name": coupon.name,
-        "is_limited": true,
-        "limited_amount": coupon.limitedTo,
-        "current_amount": coupon.limitedTo,
-        "is_percentage": coupon.discountType == "percentage" ? true : false,
-        "discount_amount": coupon.discountValue,
-        "start_date_time": formattedStart,
-        "end_date_time": formattedend,
-      };
-    }).toList();
-
-    String token = await getToken();
-    Map<String, String> reqHeaders = {
-      'Authorization': 'Bearer $token',
-      "Content-Type": "application/json"
-    };
-
-    final url = Uri.parse('https://eventbrite-995n.onrender.com/events/create');
-
-    var body = json.encode(
-      {
-        "basic_info": {
-          "title": title,
-          "organizer": nameOrganizer,
-          "category": eventCategory,
-          "sub_category": eventCategory,
-        },
-        "image_link": imageUrl,
-        "summary": description,
-        "description": description,
-        "state": {"is_public": isPublic, "publish_date_time": formattedStart},
-        "date_and_time": {
+      List<Map<String, dynamic>> mapsofCoupons = allCoupon.map((coupon) {
+        return {
+          "name": coupon.name,
+          "is_limited": true,
+          "limited_amount": coupon.limitedTo,
+          "current_amount": coupon.limitedTo,
+          "is_percentage": coupon.discountType == "percentage" ? true : false,
+          "discount_amount": coupon.discountValue,
           "start_date_time": formattedStart,
           "end_date_time": formattedend,
-          "is_display_start_date": false,
-          "is_display_end_date": false,
-          "time_zone": "US/Pacific",
-          "event_page_language": "en-US"
+        };
+      }).toList();
+
+      String token = await getToken();
+      Map<String, String> reqHeaders = {
+        'Authorization': 'Bearer $token',
+        "Content-Type": "application/json"
+      };
+
+      final url =
+          Uri.parse('https://eventbrite-995n.onrender.com/events/create');
+
+      var body = json.encode(
+        {
+          "basic_info": {
+            "title": title,
+            "organizer": nameOrganizer,
+            "category": eventCategory,
+            "sub_category": eventCategory,
+          },
+          "image_link": imageUrl,
+          "summary": description,
+          "description": description,
+          "state": {"is_public": isPublic, "publish_date_time": formattedStart},
+          "date_and_time": {
+            "start_date_time": formattedStart,
+            "end_date_time": formattedend,
+            "is_display_start_date": false,
+            "is_display_end_date": false,
+            "time_zone": "US/Pacific",
+            "event_page_language": "en-US"
+          },
+          "location": {"is_online": isOnline, "city": city},
+          "tickets": mapsofTickets,
+          "promocodes": mapsofCoupons,
         },
-        "location": {"is_online": isOnline, "city": city},
-        "tickets": mapsofTickets,
-        "promocodes": mapsofCoupons,
-      },
-    ); //body
+      ); //body
 
-    try {
-      final response = await http.post(url, headers: reqHeaders, body: body);
+      try {
+        final response = await http.post(url, headers: reqHeaders, body: body);
 
-      print(response.statusCode);
-      if (response.statusCode != 200) {
-        throw HttpException('Error fetching data: ${response.statusCode}');
+        print(response.statusCode);
+        if (response.statusCode != 200) {
+          throw HttpException('Error fetching data: ${response.statusCode}');
+        }
+      } catch (error) {
+        print(error);
+        throw HttpException('Error fetching data: ');
       }
-    } catch (error) {
-      print(error);
-      throw HttpException('Error fetching data: ');
+    } else {
+      String email = await getEmail();
+      var userbox = ObjectBox.userBox;
+      var user = userbox.query(User_.email.equals(email)).build().findFirst();
+
+      Event newevent = Event(
+        "",
+        dateTime1,
+        dateTime2,
+        description,
+        imageUrl,
+        isOnline,
+        false,
+        eventCategory,
+        [],
+        title,
+        nameOrganizer,
+        !isPublic,
+      );
+      newevent.city = city!;
+      newevent.creatorId = user!.mockId;
+
+      var eventbox = ObjectBox.eventBox;
+      int eventid = eventbox.put(newevent);
+
+      for (int i = 0; i < allTickets.length; i++) {
+        DateTime dateTime3 = DateTime(
+            allTickets[i].startDate.year,
+            allTickets[i].startDate.month,
+            allTickets[i].startDate.day,
+            allTickets[i].startofEventClock.hour,
+            allTickets[i].startofEventClock.minute);
+        DateTime dateTime4 = DateTime(
+            allTickets[i].endDate.year,
+            allTickets[i].endDate.month,
+            allTickets[i].endDate.day,
+            allTickets[i].endofEventClock.hour,
+            allTickets[i].endofEventClock.minute);
+
+        TicketClass newticket = TicketClass(
+          "",
+          allTickets[i].name,
+          (allTickets[i].type == "vip"),
+          allTickets[i].price,
+          allTickets[i].maxquantity,
+          dateTime3,
+          dateTime4,
+        );
+        newticket.eventId = eventid;
+        var ticketbox = ObjectBox.ticketClassBox;
+        ticketbox.put(newticket);
+      }
+      for (int i = 0; i < allCoupon.length; i++) {
+        EventPromocodeInfo newPromocode = EventPromocodeInfo(
+          "",
+          allCoupon[i].name,
+          true,
+          allCoupon[i].limitedTo,
+          allCoupon[i].discountType == "percentage" ? true : false,
+          allCoupon[i].discountValue,
+          dateTime1,
+          dateTime2,
+        );
+        newPromocode.eventIdMock = eventid;
+        var promocodeBox = ObjectBox.eventPromocodeBox;
+        promocodeBox.put(newPromocode);
+      }
     }
   }
 

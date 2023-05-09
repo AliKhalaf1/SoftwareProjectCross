@@ -65,7 +65,7 @@ class _EventFormState extends State<EventForm> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2015),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2035),
     ).then((value) {
       setState(() {
@@ -78,7 +78,7 @@ class _EventFormState extends State<EventForm> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2015),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2035),
     ).then((value) {
       setState(() {
@@ -148,7 +148,7 @@ class _EventFormState extends State<EventForm> {
   String? url = null;
   Future pickImage() async {
     try {
-      image = await ImagePicker().pickImage(source: ImageSource.camera);
+      image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (File(image!.path) == null) return;
       final String imageurl = await UploadImage.uploadImage(File(image!.path));
       setState(() {
@@ -379,7 +379,9 @@ class _EventFormState extends State<EventForm> {
                   )
                 ],
               ),
-        drawer: EventDrawer(userName: event.nameOrganizer,),
+        drawer: EventDrawer(
+          userName: event.nameOrganizer,
+        ),
         body: _isloading
             ? const Center(
                 child: CircularProgressIndicator(

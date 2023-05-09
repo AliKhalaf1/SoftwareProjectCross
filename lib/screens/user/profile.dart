@@ -2,8 +2,7 @@ library UserProfileScreen;
 
 import 'package:Eventbrite/helper_functions/constants.dart';
 import 'package:Eventbrite/helper_functions/log_in.dart';
-import 'package:Eventbrite/models/db_mock.dart';
-import 'package:Eventbrite/providers/events/event.dart';
+
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/screens/user/account_settings.dart';
 import 'package:Eventbrite/widgets/loading_spinner.dart';
@@ -13,17 +12,14 @@ import '../../helper_functions/api/google_signin_api.dart';
 import '../../helper_functions/log_out.dart';
 import '../../helper_functions/organizer_view.dart';
 import '../../helper_functions/userInfo.dart';
-import '../../models/user.dart';
-import '../../objectbox.dart';
-import '../../objectbox.g.dart';
-import '../../providers/events/events.dart';
+
 import '../../widgets/button_notificatin.dart';
 import '../../widgets/grey_area.dart';
 import '../../widgets/profile_layer.dart';
 import '../../widgets/round_profile_image.dart';
 import '../../widgets/verticaldivider.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../widgets/button_find_things.dart';
 import '../../widgets/button_link.dart';
 import '../../widgets/counter_button.dart';
@@ -205,10 +201,6 @@ class _ProfileState extends State<Profile> {
                                         CounterButton(
                                             "My tickets", widget.myTicketsCount,
                                             key: const Key('Mytickets')),
-                                        const VDivider(),
-                                        CounterButton(
-                                            "Following", widget.followingCount,
-                                            key: const Key('Following')),
                                       ],
                                     ),
                                   ),
@@ -263,8 +255,8 @@ class _ProfileState extends State<Profile> {
                     height: 80,
                     padding: const EdgeInsetsDirectional.only(top: 15),
                     width: double.infinity,
-                    child: GreyButtonLogout(logOutLogic, 'Log out'),
                     key: const Key("LogOut"),
+                    child: GreyButtonLogout(logOutLogic, 'Log out'),
                   ),
                 ],
               ),

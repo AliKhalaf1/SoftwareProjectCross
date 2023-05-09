@@ -3,9 +3,12 @@ library GuestHomeScreen;
 import 'dart:ui';
 
 import 'package:Eventbrite/helper_functions/Search.dart';
+import 'package:Eventbrite/helper_functions/constants.dart';
+import 'package:Eventbrite/objectbox.dart';
 import 'package:Eventbrite/providers/getevent/getevent.dart';
 
 import '../../helper_functions/log_in.dart';
+import '../../objectbox.g.dart';
 import '../../providers/events/event.dart';
 import '../../widgets/event_collection.dart';
 import '../../providers/categories/categories.dart';
@@ -86,30 +89,46 @@ class _HomeState extends State<Home> {
     setState(() {
       widget.isLoading = true;
     });
-    for (int i = 0; i < categoryTitles.length; i++) {
-      await search(
-        "",
-        "",
-        "",
-        "",
-        DateTime(2100, 1, 1),
-        DateTime(2100, 1, 1),
-        categoryTitles[i],
-      ).then((value) {
-        if (value.isEmpty) {
-          events.add([]);
+    if (Constants.MockServer == false) {
+      for (int i = 0; i < categoryTitles.length; i++) {
+        await search(
+          "",
+          "",
+          "",
+          "",
+          DateTime(2100, 1, 1),
+          DateTime(2100, 1, 1),
+          categoryTitles[i],
+        ).then((value) {
+          if (value.isEmpty) {
+            events.add([]);
+          } else {
+            // print('Database sucess');
+            events.add(value);
+            // print('success');
+            // print(events.last[0].categ);
+            // print(events.last[0].description);
+            // print(events.last[0].id);
+            // print(events.last[0].eventImg);
+            // print(events.last[0].isFav);
+            // print(events.last[0].organization);
+          }
+        });
+      }
+    } else {
+      var eventsbox = ObjectBox.eventBox;
+      for (int i = 0; i < categoryTitles.length; i++) {
+        var events = eventsbox
+            .query(Event_.categ.equals(categoryTitles[i]))
+            .build()
+            .find();
+
+        if (events.isEmpty) {
+          this.events.add([]);
         } else {
-          // print('Database sucess');
-          events.add(value);
-          // print('success');
-          // print(events.last[0].categ);
-          // print(events.last[0].description);
-          // print(events.last[0].id);
-          // print(events.last[0].eventImg);
-          // print(events.last[0].isFav);
-          // print(events.last[0].organization);
+          this.events.add(events);
         }
-      });
+      }
     }
   }
 

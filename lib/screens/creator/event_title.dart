@@ -1,5 +1,6 @@
 import 'package:Eventbrite/helper_functions/userInfo.dart';
 import 'package:Eventbrite/providers/createevent/createevent.dart';
+import 'package:Eventbrite/screens/creator/add_attendee.dart';
 import 'package:Eventbrite/screens/creator/description_event.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

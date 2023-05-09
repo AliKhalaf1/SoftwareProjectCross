@@ -1,12 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:Eventbrite/helper_functions/constants.dart';
 import 'package:Eventbrite/helper_functions/log_in.dart';
+import 'package:Eventbrite/objectbox.g.dart';
+import 'package:Eventbrite/providers/events/event.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../models/event_promocode.dart';
+import '../../models/ticket_class.dart';
+import '../../objectbox.dart';
+
 class theEvent {
+  int mockId = 0;
   String id;
   String title;
   String startDate;
@@ -43,84 +51,142 @@ class totalEvents with ChangeNotifier {
 
   Future<void> fetchAndSetEvents() async {
     items = [];
-    String token = await getToken();
-    Map<String, String> reqHeaders = {
-      'Authorization': 'Bearer $token',
-      "Content-Type": "application/json"
-    };
+    if (Constants.MockServer == false) {
+      String token = await getToken();
+      Map<String, String> reqHeaders = {
+        'Authorization': 'Bearer $token',
+        "Content-Type": "application/json"
+      };
 
-    final url = Uri.parse(
-        'https://eventbrite-995n.onrender.com/users/me/created/events');
-    try {
-      final response = await http.get(url, headers: reqHeaders);
-      print(response.statusCode);
-      if (response.statusCode != 200) {
-        throw HttpException('Error fetching data: ${response.statusCode}');
-      }
+      final url = Uri.parse(
+          'https://eventbrite-995n.onrender.com/users/me/created/events');
+      try {
+        final response = await http.get(url, headers: reqHeaders);
+        print(response.statusCode);
+        if (response.statusCode != 200) {
+          throw HttpException('Error fetching data: ${response.statusCode}');
+        }
 
-      print(
-          "--------------------------------------------------------------------------------------------");
-      // print(response.body);
-      final List<dynamic> extractedData = json.decode(response.body);
-      print(extractedData);
+        print(
+            "--------------------------------------------------------------------------------------------");
+        // print(response.body);
+        final List<dynamic> extractedData = json.decode(response.body);
+        print(extractedData);
 
-      if (extractedData == null) {
-        return;
-      }
+        if (extractedData == null) {
+          return;
+        }
 
-      extractedData.forEach((element) {
-        items.add(theEvent(
-          id: element["id"],
-          title: element["basic_info"]["title"],
-          startDate: element["date_and_time"]["start_date_time"],
-          endDate: element["date_and_time"]["end_date_time"],
-        ));
-      });
-      for (var element in items) {
-        int available = 0;
-        int takenTickets = 0;
-        double price = 0;
-        int vipmax = 0;
-        int viptaken = 0;
-        int regularmax = 0;
-        int regulartaken = 0;
-        final uri = Uri.parse(
-            'https://eventbrite-995n.onrender.com/tickets/event_id/${element.id}');
-
-        final response2 = await http.get(uri, headers: reqHeaders);
-
-        final List<dynamic> extractedDataTickets = json.decode(response2.body);
-        extractedDataTickets.forEach((ticket) {
-          available += ticket["max_quantity"] as int;
-
-          if (ticket["type"] == "regular") {
-            regularmax += ticket["max_quantity"] as int;
-            regulartaken +=
-                (ticket["max_quantity"] - ticket["available_quantity"]) as int;
-          } else {
-            vipmax += ticket["max_quantity"] as int;
-            viptaken +=
-                (ticket["max_quantity"] - ticket["available_quantity"]) as int;
-          }
-
-          price += (ticket["max_quantity"] - ticket["available_quantity"]) *
-              ticket["price"];
-          takenTickets +=
-              (ticket["max_quantity"] - ticket["available_quantity"]) as int;
+        extractedData.forEach((element) {
+          items.add(theEvent(
+            id: element["id"],
+            title: element["basic_info"]["title"],
+            startDate: element["date_and_time"]["start_date_time"],
+            endDate: element["date_and_time"]["end_date_time"],
+          ));
         });
-        element.price = price;
-        element.maxTickets = available;
-        element.takenTickets = takenTickets;
+        for (var element in items) {
+          int available = 0;
+          int takenTickets = 0;
+          double price = 0;
+          int vipmax = 0;
+          int viptaken = 0;
+          int regularmax = 0;
+          int regulartaken = 0;
+          final uri = Uri.parse(
+              'https://eventbrite-995n.onrender.com/tickets/event_id/${element.id}');
 
-        element.maxTicketsRegular = regularmax;
-        element.maxTicketsVip = vipmax;
-        element.takenTicketsRegular = regulartaken;
-        element.takenTicketsVip = viptaken;
+          final response2 = await http.get(uri, headers: reqHeaders);
+
+          final List<dynamic> extractedDataTickets =
+              json.decode(response2.body);
+          extractedDataTickets.forEach((ticket) {
+            available += ticket["max_quantity"] as int;
+
+            if (ticket["type"] == "regular") {
+              regularmax += ticket["max_quantity"] as int;
+              regulartaken += (ticket["max_quantity"] -
+                  ticket["available_quantity"]) as int;
+            } else {
+              vipmax += ticket["max_quantity"] as int;
+              viptaken += (ticket["max_quantity"] -
+                  ticket["available_quantity"]) as int;
+            }
+
+            price += (ticket["max_quantity"] - ticket["available_quantity"]) *
+                ticket["price"];
+            takenTickets +=
+                (ticket["max_quantity"] - ticket["available_quantity"]) as int;
+          });
+          element.price = price;
+          element.maxTickets = available;
+          element.takenTickets = takenTickets;
+
+          element.maxTicketsRegular = regularmax;
+          element.maxTicketsVip = vipmax;
+          element.takenTicketsRegular = regulartaken;
+          element.takenTicketsVip = viptaken;
+        }
+      } catch (error) {
+        print(error);
+
+        throw HttpException('Error fetching data:');
       }
-    } catch (error) {
-      print(error);
+    } else {
+      String email = await getEmail();
+      var usersbox = ObjectBox.userBox;
+      var user = usersbox.query(User_.email.equals(email)).build().findFirst();
+      var eventsbox = ObjectBox.eventBox;
 
-      throw HttpException('Error fetching data:');
+      var promocodesBox = ObjectBox.eventPromocodeBox;
+      var ticketClassesBox = ObjectBox.ticketClassBox;
+
+      List<Event> events =
+          eventsbox.query(Event_.creatorId.equals(user!.mockId)).build().find();
+      events.forEach((element) {
+        List<TicketClass> tickets = ticketClassesBox
+            .query(TicketClass_.eventId.equals(element.mockId))
+            .build()
+            .find();
+
+        double price = 0;
+        int maxTickets = 0;
+        int takenTickets = 0;
+        int maxTicketsVip = 0;
+        int takenTicketsVip = 0;
+        int maxTicketsRegular = 0;
+        int takenTicketsRegular = 0;
+        tickets.forEach((ticket) {
+          price +=
+              ticket.price * (ticket.maxQuantity - ticket.availableQuantity);
+          maxTickets += ticket.maxQuantity;
+          takenTickets += ticket.maxQuantity - ticket.availableQuantity;
+          if (ticket.isVip == false) {
+            maxTicketsRegular += ticket.maxQuantity;
+            takenTicketsRegular +=
+                ticket.maxQuantity - ticket.availableQuantity;
+          } else {
+            maxTicketsVip += ticket.maxQuantity;
+            takenTicketsVip += ticket.maxQuantity - ticket.availableQuantity;
+          }
+        });
+        theEvent newevent = theEvent(
+          id: element.id,
+          title: element.title,
+          startDate:
+              DateFormat("yyyy-MM-ddTHH:mm:ss").format(element.startDate),
+          endDate: DateFormat("yyyy-MM-ddTHH:mm:ss").format(element.endDate),
+          price: price,
+          maxTickets: maxTickets,
+          takenTickets: takenTickets,
+          maxTicketsRegular: maxTicketsRegular,
+          takenTicketsRegular: takenTicketsRegular,
+          maxTicketsVip: maxTicketsVip,
+          takenTicketsVip: takenTicketsVip,
+        );
+        newevent.mockId = element.mockId;
+        items.add(newevent);
+      });
     }
   }
 

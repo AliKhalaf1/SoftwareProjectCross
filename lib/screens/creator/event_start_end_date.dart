@@ -24,7 +24,7 @@ class _EventDateState extends State<EventDate> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2015),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2035),
     ).then((value) {
       setState(() {
@@ -37,7 +37,7 @@ class _EventDateState extends State<EventDate> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2015),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2035),
     ).then((value) {
       setState(() {

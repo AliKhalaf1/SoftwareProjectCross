@@ -196,17 +196,6 @@ Future<void> passCheck(BuildContext ctx, String password, String email) async {
 
     print(response.statusCode);
     print(resData);
-
-    if (DBMock.checkAuth(email, password)) {
-      setLoggedIn(email, 'Dummy Token');
-      Navigator.of(ctx).popUntil((route) => route.isFirst);
-      Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
-        return TabBarScreen(title: 'Profile', tabBarIndex: 4);
-      }));
-    } else {
-      ScaffoldMessenger.of(ctx)
-          .showSnackBar(const SnackBar(content: Text('Wrong password')));
-    }
   } else {
     var authbox = ObjectBox.authBox;
 

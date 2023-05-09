@@ -6,6 +6,8 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'models/auth.dart';
+import 'models/event_promocode.dart';
+import 'models/ticket_class.dart';
 import 'models/user.dart';
 import 'objectbox.g.dart'; // created by `flutter pub run build_runner build`
 
@@ -20,12 +22,16 @@ class ObjectBox {
   static late Box<Auth> authBox;
   static late Box<Event> eventBox;
   static late Box<UserLikesEvents> likesBox;
+  static late Box<TicketClass> ticketClassBox;
+  static late Box<EventPromocodeInfo> eventPromocodeBox;
 
   ObjectBox._create(this.store) {
     userBox = store.box<User>();
     authBox = store.box<Auth>();
     eventBox = store.box<Event>();
     likesBox = store.box<UserLikesEvents>();
+    ticketClassBox = store.box<TicketClass>();
+    eventPromocodeBox = store.box<EventPromocodeInfo>();
 
     if (userBox.isEmpty()) {
       userBox.putMany(DBMock.users);

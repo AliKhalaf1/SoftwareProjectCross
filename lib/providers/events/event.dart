@@ -33,6 +33,7 @@ class Event with ChangeNotifier {
   //parameters of the EventCard Widget
   @Id()
   int mockId = 0;
+  int creatorId = 0;
 
   final String eventImg; /*event card image */
   final DateTime startDate; /*start event date*/
@@ -46,6 +47,7 @@ class Event with ChangeNotifier {
   final String id;
   final String title;
   final String organization;
+  String city = "";
 
   ///Constructor
   Event(
