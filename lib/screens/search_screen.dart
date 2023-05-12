@@ -66,7 +66,7 @@ class _SearchState extends State<Search> {
     } else if (dateSelected == 'In the next month') {
       duration[0] = DateTime.now().add(const Duration(days: 30));
       duration[1] = DateTime.now().add(const Duration(days: 60));
-    }
+    } else {}
     return duration;
   }
 
@@ -110,10 +110,8 @@ class _SearchState extends State<Search> {
     });
   }
 
-  void searchByEventTitle(String title) {
-    final filtersDataValuesLocal = Provider.of<FilterSelectionValues>(context);
-    filtersDataValuesLocal.setSearchByName(title);
-    fetchAllEvents().then((value) => {
+  void searchByEventTitle() async {
+    await fetchAllEvents().then((value) => {
           setState(() {
             widget.isLoading = false;
           })
@@ -251,8 +249,14 @@ class _SearchState extends State<Search> {
                     controller: _controller,
                     key: const Key("TextFieldInput"),
                     cursorWidth: 0.5,
-                    onSubmitted: searchByEventTitle,
+                    // onSubmitted: (value) {
+
+                    // },
                     cursorColor: Colors.grey,
+                    onChanged: (value) {
+                      filtersDataValues.setSearchByName(value);
+                      searchByEventTitle();
+                    },
                     style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,

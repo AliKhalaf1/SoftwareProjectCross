@@ -348,7 +348,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(8, 8447108209305675333),
       name: 'Ticket',
-      lastPropertyId: const IdUid(4, 6392252427891117316),
+      lastPropertyId: const IdUid(6, 3245024752326045496),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -370,6 +370,16 @@ final _entities = <ModelEntity>[
             id: const IdUid(4, 6392252427891117316),
             name: 'title',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 2918791835758847873),
+            name: 'OrderId',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 3245024752326045496),
+            name: 'price',
+            type: 8,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -499,7 +509,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(13, 939543582948794085),
       name: 'TicketAttendee',
-      lastPropertyId: const IdUid(10, 2591500730910463390),
+      lastPropertyId: const IdUid(11, 1275253068768484166),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -550,6 +560,11 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(10, 2591500730910463390),
             name: 'email',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 1275253068768484166),
+            name: 'typeOfReservedTicket',
             type: 9,
             flags: 0)
       ],
@@ -932,11 +947,14 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (Ticket object, fb.Builder fbb) {
           final eventImgUrlOffset = fbb.writeString(object.eventImgUrl);
           final titleOffset = fbb.writeString(object.title);
-          fbb.startTable(5);
+          final OrderIdOffset = fbb.writeString(object.OrderId);
+          fbb.startTable(7);
           fbb.addInt64(0, object.mockId);
           fbb.addOffset(1, eventImgUrlOffset);
           fbb.addInt64(2, object.date.millisecondsSinceEpoch);
           fbb.addOffset(3, titleOffset);
+          fbb.addOffset(4, OrderIdOffset);
+          fbb.addFloat64(5, object.price);
           fbb.finish(fbb.endTable());
           return object.mockId;
         },
@@ -950,9 +968,12 @@ ModelDefinition getObjectBoxModel() {
               DateTime.fromMillisecondsSinceEpoch(
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)),
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''))
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0))
             ..mockId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..OrderId = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 12, '');
 
           return object;
         }),
@@ -1090,7 +1111,9 @@ ModelDefinition getObjectBoxModel() {
           final firstNameOffset = fbb.writeString(object.firstName);
           final lastNameOffset = fbb.writeString(object.lastName);
           final emailOffset = fbb.writeString(object.email);
-          fbb.startTable(11);
+          final typeOfReservedTicketOffset =
+              fbb.writeString(object.typeOfReservedTicket);
+          fbb.startTable(12);
           fbb.addInt64(0, object.mockId);
           fbb.addInt64(1, object.eventMockId);
           fbb.addInt64(2, object.orderMockId);
@@ -1101,6 +1124,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(7, firstNameOffset);
           fbb.addOffset(8, lastNameOffset);
           fbb.addOffset(9, emailOffset);
+          fbb.addOffset(10, typeOfReservedTicketOffset);
           fbb.finish(fbb.endTable());
           return object.mockId;
         },
@@ -1127,7 +1151,10 @@ ModelDefinition getObjectBoxModel() {
             ..eventMockId =
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0)
             ..orderMockId =
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0)
+            ..typeOfReservedTicket =
+                const fb.StringReader(asciiOptimization: true)
+                    .vTableGet(buffer, rootOffset, 24, '');
 
           return object;
         })
@@ -1363,6 +1390,13 @@ class Ticket_ {
 
   /// see [Ticket.title]
   static final title = QueryStringProperty<Ticket>(_entities[6].properties[3]);
+
+  /// see [Ticket.OrderId]
+  static final OrderId =
+      QueryStringProperty<Ticket>(_entities[6].properties[4]);
+
+  /// see [Ticket.price]
+  static final price = QueryDoubleProperty<Ticket>(_entities[6].properties[5]);
 }
 
 /// [TicketClass] entity fields to define ObjectBox queries.
@@ -1491,4 +1525,8 @@ class TicketAttendee_ {
   /// see [TicketAttendee.email]
   static final email =
       QueryStringProperty<TicketAttendee>(_entities[10].properties[9]);
+
+  /// see [TicketAttendee.typeOfReservedTicket]
+  static final typeOfReservedTicket =
+      QueryStringProperty<TicketAttendee>(_entities[10].properties[10]);
 }

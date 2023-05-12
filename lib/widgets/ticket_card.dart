@@ -28,11 +28,12 @@ class TicketCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (ctx) => TicketsDetailsScreen(),
-        //   ),
-        // );
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) =>
+                TicketsDetailsScreen(ticket.OrderId, ticket.mockId),
+          ),
+        );
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -137,6 +138,27 @@ class TicketCard extends StatelessWidget {
                                           style: GoogleFonts.roboto(
                                             fontSize: 12,
                                             color: Colors.grey[700],
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9 *
+                                                0.5 *
+                                                0.6,
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          ticket.price == 0
+                                              ? 'Free'
+                                              : '${ticket.price} EGP',
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: GoogleFonts.roboto(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black,
                                           ),
                                         ),
                                       ),

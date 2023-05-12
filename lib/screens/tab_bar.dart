@@ -100,7 +100,7 @@ class TabBarScreenState extends State<TabBarScreen> {
         pages = [
           Home(),
           Search(),
-          AttendeeReport("645a5d1434408e733ba56993", 12),
+          const FavouritesSignUp(),
           const TicketsSignUp(),
           const ProfileSignUp(),
         ];

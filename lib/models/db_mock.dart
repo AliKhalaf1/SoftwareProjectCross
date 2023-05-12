@@ -141,10 +141,10 @@ class DBMock {
 
   static List<Ticket> tickets = [
     Ticket('https://i.ibb.co/vxFX1kg/IMG-20221203-WA0061.jpg',
-        DateTime.now().subtract(Duration(days: 1)), 'Ana el 7koma ylaaaa'),
+        DateTime.now().subtract(Duration(days: 1)), 'Ana el 7koma ylaaaa', 150),
     Ticket('https://i.ibb.co/f08m21y/IMG-20230416-WA0022.jpg',
-        DateTime.now().add(Duration(days: 1)), 'Adiny 7ob akter'),
-    Ticket('', DateTime.now(), 'sika haaaaaaaa'),
+        DateTime.now().add(Duration(days: 1)), 'Adiny 7ob akter', 150),
+    Ticket('', DateTime.now(), 'sika haaaaaaaa', 100),
   ];
 
   static List<Auth> auths = [

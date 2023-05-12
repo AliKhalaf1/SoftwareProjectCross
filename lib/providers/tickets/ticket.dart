@@ -25,11 +25,13 @@ class Ticket with ChangeNotifier {
   final String eventImgUrl; /*event card image */
   final DateTime date; /*event date*/
   final String title; /*event dscription*/
+  final double price;
 
   ///Ticket Constructor
   Ticket(
     this.eventImgUrl,
     this.date,
     this.title,
+    this.price,
   );
 }

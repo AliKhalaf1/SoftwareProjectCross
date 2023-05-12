@@ -323,7 +323,7 @@
     },
     {
       "id": "8:8447108209305675333",
-      "lastPropertyId": "4:6392252427891117316",
+      "lastPropertyId": "6:3245024752326045496",
       "name": "Ticket",
       "properties": [
         {
@@ -346,6 +346,16 @@
           "id": "4:6392252427891117316",
           "name": "title",
           "type": 9
+        },
+        {
+          "id": "5:2918791835758847873",
+          "name": "OrderId",
+          "type": 9
+        },
+        {
+          "id": "6:3245024752326045496",
+          "name": "price",
+          "type": 8
         }
       ],
       "relations": []
@@ -474,7 +484,7 @@
     },
     {
       "id": "13:939543582948794085",
-      "lastPropertyId": "10:2591500730910463390",
+      "lastPropertyId": "11:1275253068768484166",
       "name": "TicketAttendee",
       "properties": [
         {
@@ -526,6 +536,11 @@
         {
           "id": "10:2591500730910463390",
           "name": "email",
+          "type": 9
+        },
+        {
+          "id": "11:1275253068768484166",
+          "name": "typeOfReservedTicket",
           "type": 9
         }
       ],

@@ -11,11 +11,13 @@ class Tickets with ChangeNotifier {
       'https://www.example.com/image.png',
       DateTime.parse('2023-09-15 05:00:00'),
       'EVENT 1 FOR A NEW TICKET',
+      100,
     ),
     Ticket(
       'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
       DateTime.parse('2023-09-05 10:15:00'),
       'EVENT 2 FOR A NEW TICKET',
+      100,
     ),
   ];
   final List<Ticket> _pastTickets = [
@@ -23,16 +25,19 @@ class Tickets with ChangeNotifier {
       'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
       DateTime.parse('2021-10-29 16:15:00'),
       'EVENT FOR A PAST TICKET',
+      250,
     ),
     Ticket(
       '',
       DateTime.parse('2022-11-15 19:45:00'),
       'EVENT FOR A PAST TICKET',
+      250,
     ),
     Ticket(
       'https://th.bing.com/th/id/R.20e1ec01835b936b4912a85e9dbd241b?rik=REl2x5yuLqQ%2f4w&pid=ImgRaw&r=0&sres=1&sresct=1',
       DateTime.parse('2020-12-20 10:00:00'),
       'EVENT FOR A PAST TICKET',
+      0,
     ),
   ];
 

@@ -1,3 +1,4 @@
+import 'package:Eventbrite/models/Ticket_attendee.dart';
 import 'package:Eventbrite/models/db_mock.dart';
 import 'package:Eventbrite/models/user_likes_event.dart';
 import 'package:Eventbrite/providers/events/event.dart';
@@ -7,9 +8,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'models/auth.dart';
 import 'models/event_promocode.dart';
+import 'models/order_class.dart';
 import 'models/ticket_class.dart';
 import 'models/user.dart';
-import 'objectbox.g.dart'; // created by `flutter pub run build_runner build`
+import 'objectbox.g.dart';
+import 'providers/tickets/ticket.dart'; // created by `flutter pub run build_runner build`
 
 class ObjectBox {
   /// The Store of this app.
@@ -24,6 +27,8 @@ class ObjectBox {
   static late Box<UserLikesEvents> likesBox;
   static late Box<TicketClass> ticketClassBox;
   static late Box<EventPromocodeInfo> eventPromocodeBox;
+  static late Box<Ticket> OrdersBox;
+  static late Box<TicketAttendee> TicketAttendeeBox;
 
   ObjectBox._create(this.store) {
     userBox = store.box<User>();
@@ -32,6 +37,8 @@ class ObjectBox {
     likesBox = store.box<UserLikesEvents>();
     ticketClassBox = store.box<TicketClass>();
     eventPromocodeBox = store.box<EventPromocodeInfo>();
+    OrdersBox = store.box<Ticket>();
+    TicketAttendeeBox = store.box<TicketAttendee>();
 
     if (userBox.isEmpty()) {
       userBox.putMany(DBMock.users);
@@ -41,7 +48,10 @@ class ObjectBox {
       authBox.putMany(DBMock.auths);
     }
     if (eventBox.isEmpty()) {
-      eventBox.putMany(DBMock.events);
+      DBMock.events.forEach((element) {
+        element.creatorId = userBox.query().build().findFirst()!.mockId;
+        eventBox = store.box<Event>();
+      });
     }
     // Add any additional setup code, e.g. build queries.
   }

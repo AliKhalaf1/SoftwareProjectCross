@@ -42,6 +42,7 @@ class TicketAttendee {
   String firstName;
   String lastName;
   String email;
+  String typeOfReservedTicket = "";
 
   //constructor
   TicketAttendee(
