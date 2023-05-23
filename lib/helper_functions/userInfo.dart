@@ -1,4 +1,4 @@
-library LogInHelperFunctions;
+library UserInfoHelperFunctions;
 
 import 'dart:convert';
 
@@ -18,6 +18,8 @@ import '../screens/tab_bar.dart';
 import 'constants.dart';
 
 /// {@category Helper Functions}
+///
+/// <h1>This function is called when the user logs in.</h1>
 ///
 Future<User> getUserInfo(String info) async {
   User currUser = new User("", "", "", "");
@@ -55,6 +57,9 @@ Future<User> getUserInfo(String info) async {
   return currUser;
 }
 
+/// {@category Helper Functions}
+///
+
 void setUserinfo(String firstname, String lastname) {
   // var userbox = ObjectBox.userBox;
   // var user = userbox.query(User_.email.equals(email)).build().findFirst()!;
@@ -69,10 +74,18 @@ void setUserinfo(String firstname, String lastname) {
   });
 }
 
+/// {@category Helper Functions}
+///
+/// <h1>This function is used to get User First Name</h1>
+///
 Future<String> getFirstName() async {
   var cache_mem = await SharedPreferences.getInstance();
   return cache_mem.getString('firstname') ?? "";
 }
+
+/// {@category Helper Functions}
+///
+/// <h1>This function is used to get User Last Name</h1>
 
 Future<String> getLastName() async {
   var cache_mem = await SharedPreferences.getInstance();

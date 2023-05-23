@@ -1,4 +1,5 @@
 library TicketsForm;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -8,9 +9,9 @@ import '../../providers/createevent/createevent.dart';
 
 /// {@category Creator}
 /// {@category Screens}
-/// 
-/// 
-/// 
+///
+///
+///
 
 enum ticketType {
   regular,
@@ -125,11 +126,24 @@ class _TicketFormState extends State<TicketForm> {
       return "Error in your date  ";
     }
 
+    DateTime dateTime3 = DateTime(
+        event.endofEvent!.year,
+        event.endofEvent!.month,
+        event.endofEvent!.day,
+        event.endofEventClock!.hour,
+        event.endofEventClock!.minute);
+
+    if (dateTime2.isAfter(dateTime3)) {
+      return "Error in your date";
+    }
+
     return "Done";
   }
 
+  late TheEvent event;
+
   Widget build(BuildContext context) {
-    final event = Provider.of<TheEvent>(context, listen: false);
+    event = Provider.of<TheEvent>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(31, 10, 61, 1),

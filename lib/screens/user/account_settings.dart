@@ -172,11 +172,15 @@ class _AccountSettingsState extends State<AccountSettings> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     //Text('${widget.firstname} ${widget.lastname}'),
-                    Text(
-                      widget.email,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: Text(
+                        overflow: TextOverflow.fade,
+                        widget.email,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],

@@ -13,8 +13,11 @@ import '../helper_functions/event_tickets_info.dart';
 import '../helper_functions/place_order_api.dart';
 import '../models/event_promocode.dart';
 import '../screens/event_page.dart';
+import 'loading_spinner.dart';
 import 'transparent_button_no_icon.dart';
 import '../models/event_ticket.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/material.dart';
 
 /// {@category Widgets}
 ///
@@ -83,6 +86,8 @@ class _PlaceOrderState extends State<PlaceOrder> {
 // 2: timeout
   int screen = 0;
 
+  bool isloading = false;
+
 //--================================================== Methods ==============================================--
 //**************************************************************************************************************** */
 
@@ -96,13 +101,16 @@ class _PlaceOrderState extends State<PlaceOrder> {
               'Are you sure you want to leave checkOut? The items you\'ve selected may not be available later.'),
           actions: [
             TextButton(
-              child: const Text('Leave'),
+              child: Text('Leave',
+                  style: TextStyle(color: Theme.of(context).primaryColor)),
               onPressed: () {
                 Map<String, dynamic> args = {
                   'eventId': widget.eventId,
                   'isLogged': "1",
                   'eventIdMock': 0,
                 };
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                //Navigator.popUntil(context, ModalRoute.withName("/search"));
                 Navigator.of(context).pushNamed(
                   EventPage.eventPageRoute,
                   arguments: args,
@@ -126,13 +134,16 @@ class _PlaceOrderState extends State<PlaceOrder> {
               'Your reservation has been released. please re-start your purchase.'),
           actions: [
             TextButton(
-              child: const Text('Back to Event'),
+              child: Text('Back to Event',
+                  style: TextStyle(color: Theme.of(context).primaryColor)),
               onPressed: () {
                 Map<String, dynamic> args = {
                   'eventId': widget.eventId,
                   'isLogged': "1",
                   'eventIdMock': 0,
                 };
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                //Navigator.popUntil(context, ModalRoute.withName("/search"));
                 Navigator.of(context).pushNamed(
                   EventPage.eventPageRoute,
                   arguments: args,
@@ -155,7 +166,8 @@ class _PlaceOrderState extends State<PlaceOrder> {
           content: const Text('Faild to place your order'),
           actions: [
             TextButton(
-              child: const Text('Back to Event'),
+              child: Text('Back to Event',
+                  style: TextStyle(color: Theme.of(context).primaryColor)),
               onPressed: () {
                 stopTimer();
                 Map<String, dynamic> args = {
@@ -163,6 +175,8 @@ class _PlaceOrderState extends State<PlaceOrder> {
                   'isLogged': "1",
                   'eventIdMock': 0,
                 };
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                //Navigator.popUntil(context, ModalRoute.withName("/search"));
                 Navigator.of(context).pushNamed(
                   EventPage.eventPageRoute,
                   arguments: args,
@@ -175,6 +189,16 @@ class _PlaceOrderState extends State<PlaceOrder> {
     );
   }
 
+  // Audio functions
+  final player = AudioPlayer();
+
+  void playSound() async {
+    await player.play(AssetSource('sounds/placeorder.mp4'));
+    await player.onPlayerComplete.first;
+    await player.stop();
+  }
+
+  // Timer functions
   void stopTimer() {
     if (_timer != null) {
       _timer!.cancel();
@@ -204,117 +228,138 @@ class _PlaceOrderState extends State<PlaceOrder> {
   }
 
   /// Function to be called when checkout button is clicked
-  void saveForm(BuildContext ctx, String eventId) {
+  void saveForm(BuildContext ctx, String eventId) async {
     final isValid = _form.currentState?.validate();
     if (!isValid!) {
-      print(
-          "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
       return;
     }
     _form.currentState?.save();
+    setState(() {
+      isloading = true;
+    });
     // ====================== call Apis =====================
     String orderId;
-    postOrder(eventId, data.firstName, data.lastname, data.email,
+    await postOrder(eventId, data.firstName, data.lastname, data.email,
             data.creationDate, data.totalPrice.toInt(), widget.eventImg)
-        .then((value) => {
-              if (value == "1000")
-                {
-                  print('order fail'),
-                  print(data.creationDate),
-                  print(
-                      "++++++++++++++++++//////////////////////////////////++++++++++++++++++++"),
-                  showFail(context),
-                }
-              else
-                {
-                  orderId = value,
-                  for (int i = 0; i < data.reservedFreeTickets.length; i++)
-                    {
-                      postEventTicketInfo(data.reservedFreeTickets[i].id,
-                              data.reservedFreeTickets[i].selectedQuantity)
-                          .then((value) => {
-                                if (!value)
-                                  {
-                                    print(
-                                        "------------------------------//////////////////////////////////------------------"),
-                                    print('free tick fail'),
-                                    showFail(context),
-                                  }
-                              })
-                    },
-                  for (int i = 0; i < data.reservedVipTickets.length; i++)
-                    {
-                      postEventTicketInfo(data.reservedVipTickets[i].id,
-                              data.reservedVipTickets[i].selectedQuantity)
-                          .then((value) => {
-                                if (!value)
-                                  {
-                                    print(
-                                        "------------------------------------------------"),
-                                    print('vip tick fail'),
-                                    showFail(context)
-                                  }
-                              })
-                    },
-                  for (int i = 0; i < data.fnamesFree.length; i++)
-                    {
-                      addAtendee(
-                        data.fnamesFree[i],
-                        data.lnamesFree[i],
-                        data.emailsFree[i],
-                        "regular",
-                        orderId,
-                        eventId,
-                      ).then((value) {
-                        if (!value) {
-                          print('free Atendee fail');
-                          print(
-                              "***********************Freeeeeeeeee*************************************");
-                          showFail(context);
-                        }
-                      })
-                    },
-                  for (int i = 0; i < data.fnamesVip.length; i++)
-                    {
-                      addAtendee(
-                        data.fnamesVip[i],
-                        data.lnamesVip[i],
-                        data.emailsVip[i],
-                        "vip",
-                        orderId,
-                        eventId,
-                      ).then((value) {
-                        if (!value) {
-                          print('vip Atendee fail');
-                          print(
-                              "***********************Viiiiiiiiiiiiiiiiiiip*************************************");
-                          showFail(context);
-                        }
-                      })
-                    },
-                  if (data.promocodetId == "")
-                    {}
-                  else
-                    {
-                      postEventPrmocodeInfo(data.promocodetId),
-                      print("*&^###%^^&"),
-                    }
-                }
-            });
+        .then((value) async {
+      if (value == "1000") {
+        print('order fail');
+        print(data.creationDate);
+        print(
+            "++++++++++++++++++//////////////////////////////////++++++++++++++++++++");
+        showFail(context);
+        return;
+      } else {
+        orderId = value;
+        for (int i = 0; i < data.reservedFreeTickets.length; i++) {
+          await postEventTicketInfo(data.reservedFreeTickets[i].id,
+                  data.reservedFreeTickets[i].selectedQuantity)
+              .then((value) {
+            if (!value) {
+              print(
+                  "------------------------------//////////////////////////////////------------------");
+              print('free tick fail');
+              showFail(context);
+              return;
+            }
+          });
+        }
+        for (int i = 0; i < data.reservedVipTickets.length; i++) {
+          await postEventTicketInfo(data.reservedVipTickets[i].id,
+                  data.reservedVipTickets[i].selectedQuantity)
+              .then((value) {
+            if (!value) {
+              print("------------------------------------------------");
+              print('vip tick fail');
+              showFail(context);
+              return;
+            }
+          });
+        }
+        for (int i = 0; i < data.fnamesFree.length; i++) {
+          await addAtendee(
+            data.fnamesFree[i],
+            data.lnamesFree[i],
+            data.emailsFree[i],
+            "regular",
+            orderId,
+            eventId,
+          ).then((value) {
+            if (!value) {
+              print('free Atendee fail');
+              print(
+                  "***********************Freeeeeeeeee*************************************");
+              showFail(context);
+              return;
+            }
+          });
+        }
+        for (int i = 0; i < data.fnamesVip.length; i++) {
+          await addAtendee(
+            data.fnamesVip[i],
+            data.lnamesVip[i],
+            data.emailsVip[i],
+            "vip",
+            orderId,
+            eventId,
+          ).then((value) {
+            if (!value) {
+              print('vip Atendee fail');
+              print(
+                  "***********************Viiiiiiiiiiiiiiiiiiip*************************************");
+              showFail(context);
+              return;
+            }
+          });
+        }
+        if (data.promocodetId == "") {
+          print('sucess');
+          // ====================== navigate ======================
+          // To Be:
+          stopTimer();
+          playSound();
 
-    // ====================== navigate ======================
-    // To Be:
-    stopTimer();
+          Map<String, dynamic> args = {
+            'eventId': widget.eventId,
+            'isLogged': "1",
+            'eventIdMock': 0,
+          };
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          //Navigator.popUntil(context, ModalRoute.withName("/search"));
+          Navigator.of(context).pushNamed(
+            EventPage.eventPageRoute,
+            arguments: args,
+          );
+        } else {
+          await postEventPrmocodeInfo(data.promocodetId).then((value) {
+            if (!value) {
+              print('Promo fail');
+              print(
+                  "***********************Promoooooooooooooo*************************************");
+              showFail(context);
+            } else {
+              print('sucess');
+              // ====================== navigate ======================
+              // To Be:
+              stopTimer();
+              playSound();
 
-    Map<String, dynamic> args = {
-      'eventId': widget.eventId,
-      'isLogged': "1",
-      'eventIdMock': 0,
-    };
-    Navigator.of(context).pushNamed(
-      EventPage.eventPageRoute,
-      arguments: args,
-    );
+              Map<String, dynamic> args = {
+                'eventId': widget.eventId,
+                'isLogged': "1",
+                'eventIdMock': 0,
+              };
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              //Navigator.popUntil(context, ModalRoute.withName("/search"));
+              Navigator.of(context).pushNamed(
+                EventPage.eventPageRoute,
+                arguments: args,
+              );
+            }
+          });
+        }
+      }
+    });
   }
 
   @override
@@ -392,148 +437,199 @@ class _PlaceOrderState extends State<PlaceOrder> {
           ),
         ],
       ),
-      body: GlowingOverscrollIndicator(
-        axisDirection: AxisDirection.down,
-        color: const Color.fromARGB(255, 255, 72, 0),
-        child: ListView(children: <Widget>[
-          Card(
-            color: Colors.white,
-            elevation: 5,
-            child: Form(
-              key: _form,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    const SizedBox(height: 30),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.only(right: 15, bottom: 10),
-                        child: const Text(
-                          'Billing information',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 20,
-                              height: 1.2,
-                              letterSpacing: 1.3,
-                              fontFamily: 'Neue Plak Extended',
-                              fontWeight: FontWeight.w700,
-                              color: Color.fromRGBO(17, 3, 59, 1)),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
+      body: isloading
+          ? const LoadingSpinner()
+          : GlowingOverscrollIndicator(
+              axisDirection: AxisDirection.down,
+              color: const Color.fromARGB(255, 255, 72, 0),
+              child: ListView(children: <Widget>[
+                Card(
+                  color: Colors.white,
+                  elevation: 5,
+                  child: Form(
+                    key: _form,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
                       child: Column(
-                        children: [
-                          // ---------------------------- first and last names -----------------------------------------------
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          const SizedBox(height: 30),
                           SizedBox(
-                            width: double.infinity,
-                            child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child: Container(
+                              width: double.infinity,
+                              padding:
+                                  const EdgeInsets.only(right: 15, bottom: 10),
+                              child: const Text(
+                                'Billing information',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    height: 1.2,
+                                    letterSpacing: 1.3,
+                                    fontFamily: 'Neue Plak Extended',
+                                    fontWeight: FontWeight.w700,
+                                    color: Color.fromRGBO(17, 3, 59, 1)),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child: Column(
                               children: [
+                                // ---------------------------- first and last names -----------------------------------------------
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Row(
+                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.4,
+                                        height: 80,
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: TextFormField(
+                                          // autovalidateMode: AutovalidateMode.onUserInteraction,
+                                          //Validations
+                                          validator: (value) {
+                                            /// PromoCheck: check that promocode valid or no promocode entered
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return "Enter your first name";
+                                            }
+                                            return null;
+                                          },
+
+                                          /// Save first name
+                                          onSaved: (newValue) {
+                                            data.firstName = newValue!;
+                                          },
+                                          cursorColor: const Color.fromARGB(
+                                              255, 50, 100, 237),
+                                          maxLength: 10,
+                                          style: const TextStyle(),
+                                          decoration: const InputDecoration(
+                                              hintText: "Enter fname",
+                                              floatingLabelBehavior:
+                                                  FloatingLabelBehavior.always,
+                                              floatingLabelStyle: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 50, 100, 237)),
+                                              labelText: 'First name',
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(0)),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 50, 100, 237),
+                                                ),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(0)),
+                                              )),
+                                          controller: firstNameInp,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.1,
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.4,
+                                        height: 80,
+                                        margin: const EdgeInsets.all(0),
+                                        padding: const EdgeInsets.only(
+                                            top: 10, right: 0),
+                                        child: TextFormField(
+                                          // autovalidateMode: AutovalidateMode.onUserInteraction,
+                                          //Validations
+
+                                          validator: (value) {
+                                            /// PromoCheck: check that promocode valid or no promocode entered
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return "Enter your last name";
+                                            }
+                                            return null;
+                                          },
+
+                                          /// Save first name
+                                          onSaved: (newValue) {
+                                            data.lastname = newValue!;
+                                          },
+                                          cursorColor: const Color.fromARGB(
+                                              255, 50, 100, 237),
+                                          maxLength: 10,
+                                          style: const TextStyle(),
+                                          decoration: const InputDecoration(
+                                              hintText: "Enter lname",
+                                              floatingLabelBehavior:
+                                                  FloatingLabelBehavior.always,
+                                              floatingLabelStyle: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 50, 100, 237)),
+                                              labelText: 'Last name',
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(0)),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color.fromARGB(
+                                                      255, 50, 100, 237),
+                                                ),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(0)),
+                                              )),
+                                          controller: lastNameInp,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                // ---------------------------- Email -----------------------------------------------
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.4,
+                                      MediaQuery.of(context).size.width * 0.9,
                                   height: 80,
                                   padding: const EdgeInsets.only(top: 10),
                                   child: TextFormField(
-                                    // autovalidateMode: AutovalidateMode.onUserInteraction,
-                                    //Validations
-                                    validator: (value) {
-                                      /// PromoCheck: check that promocode valid or no promocode entered
-                                      if (value == null || value.isEmpty) {
-                                        return "Enter your first name";
-                                      }
-                                      return null;
-                                    },
-
-                                    /// Save first name
-                                    onSaved: (newValue) {
-                                      data.firstName = newValue!;
-                                    },
+                                    readOnly: true,
+                                    enabled: false,
                                     cursorColor:
-                                        const Color.fromARGB(255, 50, 100, 237),
-                                    maxLength: 10,
-                                    style: const TextStyle(),
-                                    decoration: const InputDecoration(
-                                        hintText: "Enter fname",
+                                        const Color.fromARGB(255, 77, 77, 77),
+                                    // maxLength: 10,
+                                    decoration: InputDecoration(
+                                        filled: true,
+                                        // MaxLines: null,
+                                        fillColor: const Color.fromARGB(
+                                            255, 245, 245, 245),
+                                        floatingLabelStyle: const TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 77, 77, 77)),
+                                        hintText: data.email,
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.always,
-                                        floatingLabelStyle: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 50, 100, 237)),
-                                        labelText: 'First name',
-                                        border: OutlineInputBorder(
+                                        labelText: 'Email Address',
+                                        border: const OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(0)),
                                         ),
-                                        focusedBorder: OutlineInputBorder(
+                                        focusedBorder: const OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 50, 100, 237),
+                                            color: Colors.grey,
                                           ),
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(0)),
                                         )),
-                                    controller: firstNameInp,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.1,
-                                ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  height: 80,
-                                  margin: const EdgeInsets.all(0),
-                                  padding:
-                                      const EdgeInsets.only(top: 10, right: 0),
-                                  child: TextFormField(
-                                    // autovalidateMode: AutovalidateMode.onUserInteraction,
-                                    //Validations
-
-                                    validator: (value) {
-                                      /// PromoCheck: check that promocode valid or no promocode entered
-                                      if (value == null || value.isEmpty) {
-                                        return "Enter your last name";
-                                      }
-                                      return null;
-                                    },
-
-                                    /// Save first name
-                                    onSaved: (newValue) {
-                                      data.lastname = newValue!;
-                                    },
-                                    cursorColor:
-                                        const Color.fromARGB(255, 50, 100, 237),
-                                    maxLength: 10,
-                                    style: const TextStyle(),
-                                    decoration: const InputDecoration(
-                                        hintText: "Enter lname",
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.always,
-                                        floatingLabelStyle: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 50, 100, 237)),
-                                        labelText: 'Last name',
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(0)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 50, 100, 237),
-                                          ),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(0)),
-                                        )),
-                                    controller: lastNameInp,
                                   ),
                                 ),
                                 const SizedBox(
@@ -542,577 +638,645 @@ class _PlaceOrderState extends State<PlaceOrder> {
                               ],
                             ),
                           ),
-                          // ---------------------------- Email -----------------------------------------------
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            height: 80,
-                            padding: const EdgeInsets.only(top: 10),
-                            child: TextFormField(
-                              readOnly: true,
-                              enabled: false,
-                              cursorColor:
-                                  const Color.fromARGB(255, 77, 77, 77),
-                              // maxLength: 10,
-                              decoration: InputDecoration(
-                                  filled: true,
-                                  // MaxLines: null,
-                                  fillColor:
-                                      const Color.fromARGB(255, 245, 245, 245),
-                                  floatingLabelStyle: const TextStyle(
-                                      color: Color.fromARGB(255, 77, 77, 77)),
-                                  hintText: data.email,
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  labelText: 'Email Address',
-                                  border: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(0)),
-                                  ),
-                                  focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey,
-                                    ),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(0)),
-                                  )),
+                          // ----------------------------------------- Tickets Info ----------------------------------------
+                          data.reservedFreeTickets.isEmpty
+                              ? const SizedBox()
+                              : Column(
+                                  children: data.reservedFreeTickets
+                                      .map((eventFreeTicket) {
+                                    int index = data.reservedFreeTickets
+                                        .indexOf(eventFreeTicket);
+                                    return Column(
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.9,
+                                          child: Container(
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.only(
+                                                right: 15, bottom: 10),
+                                            child: Text(
+                                              'Ticket${index + 1} • ${eventFreeTicket.name}',
+                                              textAlign: TextAlign.left,
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  height: 1.2,
+                                                  letterSpacing: 1.3,
+                                                  fontFamily:
+                                                      'Neue Plak Extended',
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color.fromRGBO(
+                                                      17, 3, 59, 1)),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: Row(
+                                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.4,
+                                                height: 80,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10),
+                                                child: TextFormField(
+                                                  // autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                  //Validations
+                                                  validator: (value) {
+                                                    /// PromoCheck: check that promocode valid or no promocode entered
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return "Enter ticket owner first name";
+                                                    }
+                                                    return null;
+                                                  },
+
+                                                  /// Save first name
+                                                  onSaved: (newValue) {
+                                                    data.fnamesFree[index] =
+                                                        newValue!;
+                                                  },
+                                                  cursorColor:
+                                                      const Color.fromARGB(
+                                                          255, 50, 100, 237),
+                                                  maxLength: 10,
+                                                  style: const TextStyle(),
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          hintText:
+                                                              "Enter fname",
+                                                          floatingLabelBehavior:
+                                                              FloatingLabelBehavior
+                                                                  .always,
+                                                          floatingLabelStyle:
+                                                              TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          50,
+                                                                          100,
+                                                                          237)),
+                                                          labelText:
+                                                              'First name',
+                                                          border:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            0)),
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      50,
+                                                                      100,
+                                                                      237),
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            0)),
+                                                          )),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.1,
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.4,
+                                                height: 80,
+                                                margin: const EdgeInsets.all(0),
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, right: 0),
+                                                child: TextFormField(
+                                                  // autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                  //Validations
+
+                                                  validator: (value) {
+                                                    /// PromoCheck: check that promocode valid or no promocode entered
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return "Enter ticket owner last name";
+                                                    }
+                                                    return null;
+                                                  },
+
+                                                  /// Save first name
+                                                  onSaved: (newValue) {
+                                                    data.lnamesFree[index] =
+                                                        newValue!;
+                                                  },
+                                                  cursorColor:
+                                                      const Color.fromARGB(
+                                                          255, 50, 100, 237),
+                                                  maxLength: 10,
+                                                  style: const TextStyle(),
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          hintText:
+                                                              "Enter lname",
+                                                          floatingLabelBehavior:
+                                                              FloatingLabelBehavior
+                                                                  .always,
+                                                          floatingLabelStyle:
+                                                              TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          50,
+                                                                          100,
+                                                                          237)),
+                                                          labelText:
+                                                              'Last name',
+                                                          border:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            0)),
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      50,
+                                                                      100,
+                                                                      237),
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            0)),
+                                                          )),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 30,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        // ---------------------------- Email -----------------------------------------------
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.9,
+                                          height: 80,
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
+                                          child: TextFormField(
+                                            // autovalidateMode: AutovalidateMode.onUserInteraction,
+                                            //Validations
+                                            validator: (value) {
+                                              /// PromoCheck: check that promocode valid or no promocode entered
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return "Enter ticket owner email";
+                                              }
+                                              if (!EmailValidator.validate(
+                                                  value)) {
+                                                return "Enter valid email";
+                                              }
+                                              return null;
+                                            },
+
+                                            /// Save first name
+                                            onSaved: (newValue) {
+                                              data.emailsFree[index] =
+                                                  newValue!;
+                                            },
+                                            cursorColor: const Color.fromARGB(
+                                                255, 50, 100, 237),
+                                            maxLength: 50,
+                                            style: const TextStyle(),
+                                            decoration: const InputDecoration(
+                                                hintText: "Enter email",
+                                                floatingLabelBehavior:
+                                                    FloatingLabelBehavior
+                                                        .always,
+                                                floatingLabelStyle: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 50, 100, 237)),
+                                                labelText: 'email',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(0)),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                        255, 50, 100, 237),
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(0)),
+                                                )),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                      ],
+                                    );
+                                  }).toList(),
+                                ),
+
+                          data.reservedVipTickets.isEmpty
+                              ? const SizedBox()
+                              : Column(
+                                  children: data.reservedVipTickets
+                                      .map((eventVipTicket) {
+                                    int index = data.reservedVipTickets
+                                        .indexOf(eventVipTicket);
+                                    return Column(
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.9,
+                                          child: Container(
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.only(
+                                                right: 15, bottom: 10),
+                                            child: Text(
+                                              'Ticket${widget.reservedFreeTickets.length + index + 1} • ${eventVipTicket.name}',
+                                              textAlign: TextAlign.left,
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  height: 1.2,
+                                                  letterSpacing: 1.3,
+                                                  fontFamily:
+                                                      'Neue Plak Extended',
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color.fromRGBO(
+                                                      17, 3, 59, 1)),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: Row(
+                                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.4,
+                                                height: 80,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10),
+                                                child: TextFormField(
+                                                  // autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                  //Validations
+                                                  validator: (value) {
+                                                    /// PromoCheck: check that promocode valid or no promocode entered
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return "Enter ticket owner first name";
+                                                    }
+                                                    return null;
+                                                  },
+
+                                                  /// Save first name
+                                                  onSaved: (newValue) {
+                                                    data.fnamesVip[index] =
+                                                        newValue!;
+                                                  },
+                                                  cursorColor:
+                                                      const Color.fromARGB(
+                                                          255, 50, 100, 237),
+                                                  maxLength: 10,
+                                                  style: const TextStyle(),
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          hintText:
+                                                              "Enter fname",
+                                                          floatingLabelBehavior:
+                                                              FloatingLabelBehavior
+                                                                  .always,
+                                                          floatingLabelStyle:
+                                                              TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          50,
+                                                                          100,
+                                                                          237)),
+                                                          labelText:
+                                                              'First name',
+                                                          border:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            0)),
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      50,
+                                                                      100,
+                                                                      237),
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            0)),
+                                                          )),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.1,
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.4,
+                                                height: 80,
+                                                margin: const EdgeInsets.all(0),
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, right: 0),
+                                                child: TextFormField(
+                                                  // autovalidateMode: AutovalidateMode.onUserInteraction,
+                                                  //Validations
+
+                                                  validator: (value) {
+                                                    /// PromoCheck: check that promocode valid or no promocode entered
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return "Enter ticket owner last name";
+                                                    }
+                                                    return null;
+                                                  },
+
+                                                  /// Save first name
+                                                  onSaved: (newValue) {
+                                                    data.lnamesVip[index] =
+                                                        newValue!;
+                                                  },
+                                                  cursorColor:
+                                                      const Color.fromARGB(
+                                                          255, 50, 100, 237),
+                                                  maxLength: 10,
+                                                  style: const TextStyle(),
+                                                  decoration:
+                                                      const InputDecoration(
+                                                          hintText:
+                                                              "Enter lname",
+                                                          floatingLabelBehavior:
+                                                              FloatingLabelBehavior
+                                                                  .always,
+                                                          floatingLabelStyle:
+                                                              TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          50,
+                                                                          100,
+                                                                          237)),
+                                                          labelText:
+                                                              'Last name',
+                                                          border:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            0)),
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      50,
+                                                                      100,
+                                                                      237),
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            0)),
+                                                          )),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 30,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        // ---------------------------- Email -----------------------------------------------
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.9,
+                                          height: 80,
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
+                                          child: TextFormField(
+                                            // autovalidateMode: AutovalidateMode.onUserInteraction,
+                                            //Validations
+                                            validator: (value) {
+                                              /// PromoCheck: check that promocode valid or no promocode entered
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return "Enter ticket owner email";
+                                              }
+                                              if (!EmailValidator.validate(
+                                                  value)) {
+                                                return "Enter valid email";
+                                              }
+                                              return null;
+                                            },
+
+                                            /// Save first name
+                                            onSaved: (newValue) {
+                                              data.emailsVip[index] = newValue!;
+                                            },
+                                            cursorColor: const Color.fromARGB(
+                                                255, 50, 100, 237),
+                                            maxLength: 50,
+                                            style: const TextStyle(),
+                                            decoration: const InputDecoration(
+                                                hintText: "Enter email",
+                                                floatingLabelBehavior:
+                                                    FloatingLabelBehavior
+                                                        .always,
+                                                floatingLabelStyle: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 50, 100, 237)),
+                                                labelText: 'email',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(0)),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                        255, 50, 100, 237),
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(0)),
+                                                )),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                      ],
+                                    );
+                                  }).toList(),
+                                ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                Text('Powered by ',
+                                    style: TextStyle(
+                                        fontFamily: "Neue Plak",
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color:
+                                            Color.fromARGB(255, 92, 92, 92))),
+                                Text('Borto',
+                                    style: TextStyle(
+                                        fontFamily: "Neue Plak Text",
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                        color:
+                                            Color.fromARGB(255, 88, 88, 88))),
+                                Image(
+                                  image: AssetImage("assets/images/icon.png"),
+                                  width: 17,
+                                  height: 17,
+                                ),
+                                Text('an ',
+                                    style: TextStyle(
+                                        fontFamily: "Neue Plak Text",
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                        color:
+                                            Color.fromARGB(255, 88, 88, 88))),
+                              ],
                             ),
                           ),
+
                           const SizedBox(
-                            height: 30,
-                          ),
-                        ],
-                      ),
-                    ),
-                    // ----------------------------------------- Tickets Info ----------------------------------------
-                    data.reservedFreeTickets.isEmpty
-                        ? const SizedBox()
-                        : Column(
-                            children:
-                                data.reservedFreeTickets.map((eventFreeTicket) {
-                              int index = data.reservedFreeTickets
-                                  .indexOf(eventFreeTicket);
-                              return Column(
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    child: Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.only(
-                                          right: 15, bottom: 10),
-                                      child: Text(
-                                        'Ticket${index + 1} • ${eventFreeTicket.name}',
-                                        textAlign: TextAlign.left,
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            height: 1.2,
-                                            letterSpacing: 1.3,
-                                            fontFamily: 'Neue Plak Extended',
-                                            fontWeight: FontWeight.w500,
-                                            color:
-                                                Color.fromRGBO(17, 3, 59, 1)),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: Row(
-                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.4,
-                                          height: 80,
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: TextFormField(
-                                            // autovalidateMode: AutovalidateMode.onUserInteraction,
-                                            //Validations
-                                            validator: (value) {
-                                              /// PromoCheck: check that promocode valid or no promocode entered
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return "Enter ticket owner first name";
-                                              }
-                                              return null;
-                                            },
-
-                                            /// Save first name
-                                            onSaved: (newValue) {
-                                              data.fnamesFree[index] =
-                                                  newValue!;
-                                            },
-                                            cursorColor: const Color.fromARGB(
-                                                255, 50, 100, 237),
-                                            maxLength: 10,
-                                            style: const TextStyle(),
-                                            decoration: const InputDecoration(
-                                                hintText: "Enter fname",
-                                                floatingLabelBehavior:
-                                                    FloatingLabelBehavior
-                                                        .always,
-                                                floatingLabelStyle: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 50, 100, 237)),
-                                                labelText: 'First name',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(0)),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 50, 100, 237),
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(0)),
-                                                )),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.1,
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.4,
-                                          height: 80,
-                                          margin: const EdgeInsets.all(0),
-                                          padding: const EdgeInsets.only(
-                                              top: 10, right: 0),
-                                          child: TextFormField(
-                                            // autovalidateMode: AutovalidateMode.onUserInteraction,
-                                            //Validations
-
-                                            validator: (value) {
-                                              /// PromoCheck: check that promocode valid or no promocode entered
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return "Enter ticket owner last name";
-                                              }
-                                              return null;
-                                            },
-
-                                            /// Save first name
-                                            onSaved: (newValue) {
-                                              data.lnamesFree[index] =
-                                                  newValue!;
-                                            },
-                                            cursorColor: const Color.fromARGB(
-                                                255, 50, 100, 237),
-                                            maxLength: 10,
-                                            style: const TextStyle(),
-                                            decoration: const InputDecoration(
-                                                hintText: "Enter lname",
-                                                floatingLabelBehavior:
-                                                    FloatingLabelBehavior
-                                                        .always,
-                                                floatingLabelStyle: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 50, 100, 237)),
-                                                labelText: 'Last name',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(0)),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 50, 100, 237),
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(0)),
-                                                )),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  // ---------------------------- Email -----------------------------------------------
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    height: 80,
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: TextFormField(
-                                      // autovalidateMode: AutovalidateMode.onUserInteraction,
-                                      //Validations
-                                      validator: (value) {
-                                        /// PromoCheck: check that promocode valid or no promocode entered
-                                        if (value == null || value.isEmpty) {
-                                          return "Enter ticket owner email";
-                                        }
-                                        if (!EmailValidator.validate(value)) {
-                                          return "Enter valid email";
-                                        }
-                                        return null;
-                                      },
-
-                                      /// Save first name
-                                      onSaved: (newValue) {
-                                        data.emailsFree[index] = newValue!;
-                                      },
-                                      cursorColor: const Color.fromARGB(
-                                          255, 50, 100, 237),
-                                      maxLength: 20,
-                                      style: const TextStyle(),
-                                      decoration: const InputDecoration(
-                                          hintText: "Enter email",
-                                          floatingLabelBehavior:
-                                              FloatingLabelBehavior.always,
-                                          floatingLabelStyle: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 50, 100, 237)),
-                                          labelText: 'email',
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(0)),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 50, 100, 237),
-                                            ),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(0)),
-                                          )),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                ],
-                              );
-                            }).toList(),
+                            height: 10,
                           ),
 
-                    data.reservedVipTickets.isEmpty
-                        ? const SizedBox()
-                        : Column(
-                            children:
-                                data.reservedVipTickets.map((eventVipTicket) {
-                              int index = data.reservedVipTickets
-                                  .indexOf(eventVipTicket);
-                              return Column(
-                                children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    child: Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.only(
-                                          right: 15, bottom: 10),
-                                      child: Text(
-                                        'Ticket${widget.reservedFreeTickets.length + index + 1} • ${eventVipTicket.name}',
-                                        textAlign: TextAlign.left,
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            height: 1.2,
-                                            letterSpacing: 1.3,
-                                            fontFamily: 'Neue Plak Extended',
-                                            fontWeight: FontWeight.w500,
-                                            color:
-                                                Color.fromRGBO(17, 3, 59, 1)),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: Row(
-                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.4,
-                                          height: 80,
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: TextFormField(
-                                            // autovalidateMode: AutovalidateMode.onUserInteraction,
-                                            //Validations
-                                            validator: (value) {
-                                              /// PromoCheck: check that promocode valid or no promocode entered
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return "Enter ticket owner first name";
-                                              }
-                                              return null;
-                                            },
-
-                                            /// Save first name
-                                            onSaved: (newValue) {
-                                              data.fnamesVip[index] = newValue!;
-                                            },
-                                            cursorColor: const Color.fromARGB(
-                                                255, 50, 100, 237),
-                                            maxLength: 10,
-                                            style: const TextStyle(),
-                                            decoration: const InputDecoration(
-                                                hintText: "Enter fname",
-                                                floatingLabelBehavior:
-                                                    FloatingLabelBehavior
-                                                        .always,
-                                                floatingLabelStyle: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 50, 100, 237)),
-                                                labelText: 'First name',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(0)),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 50, 100, 237),
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(0)),
-                                                )),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.1,
-                                        ),
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.4,
-                                          height: 80,
-                                          margin: const EdgeInsets.all(0),
-                                          padding: const EdgeInsets.only(
-                                              top: 10, right: 0),
-                                          child: TextFormField(
-                                            // autovalidateMode: AutovalidateMode.onUserInteraction,
-                                            //Validations
-
-                                            validator: (value) {
-                                              /// PromoCheck: check that promocode valid or no promocode entered
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return "Enter ticket owner last name";
-                                              }
-                                              return null;
-                                            },
-
-                                            /// Save first name
-                                            onSaved: (newValue) {
-                                              data.lnamesVip[index] = newValue!;
-                                            },
-                                            cursorColor: const Color.fromARGB(
-                                                255, 50, 100, 237),
-                                            maxLength: 10,
-                                            style: const TextStyle(),
-                                            decoration: const InputDecoration(
-                                                hintText: "Enter lname",
-                                                floatingLabelBehavior:
-                                                    FloatingLabelBehavior
-                                                        .always,
-                                                floatingLabelStyle: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 50, 100, 237)),
-                                                labelText: 'Last name',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(0)),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 50, 100, 237),
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(0)),
-                                                )),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  // ---------------------------- Email -----------------------------------------------
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    height: 80,
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: TextFormField(
-                                      // autovalidateMode: AutovalidateMode.onUserInteraction,
-                                      //Validations
-                                      validator: (value) {
-                                        /// PromoCheck: check that promocode valid or no promocode entered
-                                        if (value == null || value.isEmpty) {
-                                          return "Enter ticket owner email";
-                                        }
-                                        if (!EmailValidator.validate(value)) {
-                                          return "Enter valid email";
-                                        }
-                                        return null;
-                                      },
-
-                                      /// Save first name
-                                      onSaved: (newValue) {
-                                        data.emailsVip[index] = newValue!;
-                                      },
-                                      cursorColor: const Color.fromARGB(
-                                          255, 50, 100, 237),
-                                      maxLength: 20,
-                                      style: const TextStyle(),
-                                      decoration: const InputDecoration(
-                                          hintText: "Enter email",
-                                          floatingLabelBehavior:
-                                              FloatingLabelBehavior.always,
-                                          floatingLabelStyle: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 50, 100, 237)),
-                                          labelText: 'email',
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(0)),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 50, 100, 237),
-                                            ),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(0)),
-                                          )),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                ],
-                              );
-                            }).toList(),
-                          ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: const [
-                          Text('Powered by ',
-                              style: TextStyle(
-                                  fontFamily: "Neue Plak",
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color.fromARGB(255, 92, 92, 92))),
-                          Text('Borto',
-                              style: TextStyle(
-                                  fontFamily: "Neue Plak Text",
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color.fromARGB(255, 88, 88, 88))),
-                          Image(
-                            image: AssetImage("assets/images/icon.png"),
-                            width: 17,
-                            height: 17,
-                          ),
-                          Text('an ',
-                              style: TextStyle(
-                                  fontFamily: "Neue Plak Text",
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color.fromARGB(255, 88, 88, 88))),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    //--------------------------------------- Check out button --------------------------------------------------------
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                          //--------------------------------------- Check out button --------------------------------------------------------
+                          Column(
                             children: [
-                              const Icon(
-                                Icons.credit_card,
-                                color: Color.fromARGB(255, 50, 100, 237),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    const Icon(
+                                      Icons.credit_card,
+                                      color: Color.fromARGB(255, 50, 100, 237),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(data.totalPrice.toString(),
+                                        overflow: TextOverflow.clip,
+                                        style: const TextStyle(
+                                            fontFamily: "Neue Plak Extended",
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color.fromARGB(
+                                                255, 51, 51, 51))),
+                                    const Text(' EGP',
+                                        style: TextStyle(
+                                            fontFamily: "Neue Plak Condensed",
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400,
+                                            color: Color.fromARGB(
+                                                255, 51, 51, 51))),
+                                  ],
+                                ),
                               ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(data.totalPrice.toString(),
-                                  overflow: TextOverflow.clip,
-                                  style: const TextStyle(
-                                      fontFamily: "Neue Plak Extended",
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 51, 51, 51))),
-                              const Text(' EGP',
-                                  style: TextStyle(
-                                      fontFamily: "Neue Plak Condensed",
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color.fromARGB(255, 51, 51, 51))),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 10, top: 10),
+                                  child: TransparentButtonNoIcon(
+                                    key: const Key("PlaceOrder"),
+                                    'Place order',
+                                    saveForm,
+                                    false,
+                                    widget.eventId,
+                                  ),
+                                ),
+                              )
                             ],
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 10, top: 10),
-                            child: TransparentButtonNoIcon(
-                              key: const Key("PlaceOrder"),
-                              'Place order',
-                              saveForm,
-                              false,
-                              widget.eventId,
-                            ),
-                          ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ]),
             ),
-          ),
-        ]),
-      ),
     );
   }
 }

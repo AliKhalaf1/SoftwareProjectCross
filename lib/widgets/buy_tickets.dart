@@ -88,6 +88,7 @@ class _BuyTicketsState extends State<BuyTickets> {
       data.promocodetId = null;
       return;
     }
+    _fieldKey.currentState?.save();
     setState(() {
       // Entered value is valid so apply promocode
       promocodeApplied = true;
@@ -95,10 +96,9 @@ class _BuyTicketsState extends State<BuyTickets> {
     });
 
     /// PromoCheck: close Textfield
-    // FocusScope.of(context).requestFocus(FocusNode());
+    FocusScope.of(context).requestFocus(FocusNode());
 
     /// _fieldKey.currentState?.save(): save the value into submitted data class by calling onsave:
-    _fieldKey.currentState?.save();
   }
 
   void applyPromoOnPrice() {
@@ -132,8 +132,12 @@ class _BuyTicketsState extends State<BuyTickets> {
     }
     // if type percentage
     else {
-      data.totalPrice = data.totalPrice * (1 - eventPromocode.discount);
-      data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
+      if (data.totalPrice * (1 - eventPromocode.discount) > 0) {
+        data.totalPrice = data.totalPrice * (1 - eventPromocode.discount);
+        data.totalPrice = ((data.totalPrice * 100).toInt()).toDouble() / (100);
+        return;
+      }
+      data.totalPrice = 0;
     }
   }
 
@@ -344,16 +348,17 @@ class _BuyTicketsState extends State<BuyTickets> {
           IconButton(
             onPressed: () {
               // dispose();
-              Navigator.of(context).popUntil((route) => route.isFirst);
-              Map<String, dynamic> args = {
-                'eventId': widget.eventId,
-                'isLogged': "1",
-                'eventIdMock': 0,
-              };
-              Navigator.of(context).pushNamed(
-                EventPage.eventPageRoute,
-                arguments: args,
-              );
+              // Navigator.of(context).popUntil((route) => route.isFirst);
+              // Map<String, dynamic> args = {
+              //   'eventId': widget.eventId,
+              //   'isLogged': "1",
+              //   'eventIdMock': 0,
+              // };
+              // Navigator.of(context).pushNamed(
+              //   EventPage.eventPageRoute,
+              //   arguments: args,
+              // );
+              Navigator.of(context).pop();
             },
             icon: const Icon(Icons.close, size: 15),
           ),
@@ -390,6 +395,11 @@ class _BuyTicketsState extends State<BuyTickets> {
                                 if (value == null) {
                                   return null;
                                 }
+
+                                if (value.isEmpty || value.length < 4) {
+                                  return null;
+                                }
+
                                 for (int i = 0;
                                     i < widget.eventPromocodes.length;
                                     i++) {
@@ -407,17 +417,14 @@ class _BuyTicketsState extends State<BuyTickets> {
                                             .isBefore(DateTime.now())) {
                                       return "Promocode expired";
                                     }
-                                  }
-
-                                  if (value.isEmpty ||
-                                      value.length < 4 ||
-                                      value == widget.eventPromocodes[i].name) {
                                     return null;
                                   }
                                 }
+
                                 if (checkoutClicked && !promocodeApplied) {
                                   return null;
                                 }
+
                                 return "Invalid promocode";
                               },
 
@@ -426,8 +433,8 @@ class _BuyTicketsState extends State<BuyTickets> {
                                 for (int i = 0;
                                     i < widget.eventPromocodes.length;
                                     i++) {
-                                  if (data.promocodetId ==
-                                      widget.eventPromocodes[i].id) {
+                                  if (newValue ==
+                                      widget.eventPromocodes[i].name) {
                                     data.promocodetId =
                                         widget.eventPromocodes[i].id;
                                   }

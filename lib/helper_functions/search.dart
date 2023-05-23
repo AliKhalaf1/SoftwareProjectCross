@@ -51,16 +51,16 @@ Future<List<Event>> search(
 
   var uri = Uri.parse('${Constants.host}/events/search?${params}');
   var token = await getToken();
-  print(uri);
+  //print(uri);
   var response = await http.get(
     uri,
   );
 
   var resCode = response.statusCode;
-  print('-----------------');
+  //print('-----------------');
   // print("ResCode:");
   // print(resCode);
-  print('-----------------');
+  //print('-----------------');
   if (resCode == 200) {
     var resBody = response.body;
     var resData = jsonDecode(resBody);
@@ -94,6 +94,7 @@ Future<List<Event>> search(
             resData[i]['basic_info']['title'],
             resData[i]['basic_info']['organizer'],
             resData[i]['state']['is_public']));
+        categoreyEvents[i].city = resData[i]['location']['city'];
         // print('Length is :   ${categoreyEvents.length}');
       }
     } else {

@@ -45,18 +45,22 @@ Future<List<Event>> getLikedEvents() async {
       List<Event> LikedEvents = <Event>[];
       for (int i = 0; i < resData.length; i++) {
         var event = Event(
-            resData[i]['id'],
-            DateTime.parse(resData[i]['start_date_time']),
-            DateTime(2001, 1, 1),
-            "",
-            resData[i]['image_link'],
-            resData[i]['is_online'],
-            false,
-            "",
-            [],
-            resData[i]['title'],
-            "",
-            false);
+          resData[i]['id'],
+          DateTime.parse(resData[i]['start_date_time']),
+          DateTime(2001, 1, 1),
+          "",
+          resData[i]['image_link'],
+          resData[i]['is_online'],
+          false,
+          "",
+          [],
+          resData[i]['title'],
+          resData[i]['creator_info']['firstname'] +
+              " " +
+              resData[i]['creator_info']['lastname'],
+          false,
+        );
+        event.city = resData[i]['location']['city'];
         LikedEvents.add(event);
       }
       //Maping logic
@@ -133,6 +137,7 @@ Future<bool> likeEventHelper(String id, int eventid) async {
   if (Constants.MockServer == false) {
     var uri = Uri.parse('${Constants.host}/users/me/event/${id}/like');
     var token = await getToken();
+    print(uri);
     //encode Map to JSON
     Map<String, String> reqHeaders = {
       'Authorization': 'Bearer $token',
@@ -143,6 +148,7 @@ Future<bool> likeEventHelper(String id, int eventid) async {
       headers: reqHeaders,
     );
     var resCode = response.statusCode;
+    print(resCode);
     return (resCode == 200);
   }
   ///////////////////////////////////////////////////////////
@@ -155,5 +161,53 @@ Future<bool> likeEventHelper(String id, int eventid) async {
     var userlike = UserLikesEvents(user!.mockId, eventid);
     userLikesBox.put(userlike);
     return true;
+  }
+}
+
+Future<bool> isEventLikedHelper(String id, int eventid) async {
+  ///////////////////////////////////////////////////////////
+  ///api
+  ///
+  if (Constants.MockServer == false) {
+    var uri = Uri.parse('${Constants.host}/users/me/event/${id}/is_liked');
+    var token = await getToken();
+    //encode Map to JSON
+    Map<String, String> reqHeaders = {
+      'Authorization': 'Bearer $token',
+    };
+    //encode Map to JSON
+    var response = await http.get(
+      uri,
+      headers: reqHeaders,
+    );
+    var resCode = response.statusCode;
+    var resBody = response.body;
+
+    print("ana hna");
+    print(resCode);
+    if (resCode == 200) {
+      print("rg3t 200");
+      print(resBody);
+      if (resBody == "true") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {}
+    return (resCode == 200);
+  }
+  ///////////////////////////////////////////////////////////
+  //mock
+  else {
+    var userLikesBox = ObjectBox.likesBox;
+    var userbox = ObjectBox.userBox;
+    String email = await getEmail();
+    var user = userbox.query(User_.email.equals(email)).build().findFirst();
+    var userlike = userLikesBox
+        .query(UserLikesEvents_.userId.equals(user!.mockId) &
+            UserLikesEvents_.eventId.equals(eventid))
+        .build()
+        .findFirst();
+    return userlike != null;
   }
 }

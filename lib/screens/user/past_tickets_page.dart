@@ -1,4 +1,4 @@
-library UpcomingTicketsPage;
+library PastTicketsPage;
 
 import 'package:Eventbrite/providers/tickets/tickets.dart';
 import 'package:Eventbrite/widgets/app_bar_text.dart';

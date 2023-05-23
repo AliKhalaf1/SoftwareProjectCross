@@ -41,7 +41,9 @@ class _MyTicketViewState extends State<MyTicketView> {
       ),
       child: TicketWidget(
           width: MediaQuery.of(context).size.width * 0.9,
-          height: 350,
+          height: MediaQuery.of(context).orientation == Orientation.portrait
+              ? MediaQuery.of(context).size.height * 0.3
+              : MediaQuery.of(context).size.height * 0.6,
           isCornerRounded: true,
           padding: EdgeInsets.all(20),
           child: TicketData(
@@ -96,8 +98,8 @@ class TicketData extends StatelessWidget {
             SizedBox(
               width: 120.0,
               child: Text(
-                id,
-                overflow: TextOverflow.ellipsis,
+                'Ticket ID:  ${id}',
+                overflow: TextOverflow.fade,
                 style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12.0,
@@ -124,16 +126,14 @@ class TicketData extends StatelessWidget {
               ticketDetailsWidget(
                   'Name', '$firstName $lastName', 'OrderID', orderID),
               Padding(
-                padding: const EdgeInsets.only(top: 12.0, right: 52.0),
+                padding: const EdgeInsets.only(
+                  top: 12.0,
+                ),
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.9,
                   child: EmailWidget2('email', email),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 12.0, right: 53.0),
-              //   child: ticketDetailsWidget('', 'Business', 'Seat', '21B'),
-              // ),
             ],
           ),
         ),
@@ -165,7 +165,7 @@ class EmailWidget2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 20.0),
+      padding: const EdgeInsets.only(left: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -178,7 +178,7 @@ class EmailWidget2 extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4.0),
             child: Text(
               secondDesc,
-              overflow: TextOverflow.fade,
+              //overflow: TextOverflow.fade,
               style: const TextStyle(color: Colors.black),
             ),
           )

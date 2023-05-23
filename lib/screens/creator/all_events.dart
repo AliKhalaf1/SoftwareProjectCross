@@ -1,4 +1,5 @@
 library AllEventsScreen;
+
 import 'package:Eventbrite/providers/events/event.dart';
 import 'package:Eventbrite/widgets/draft_card.dart';
 import 'package:csv/csv.dart';
@@ -35,6 +36,8 @@ class _DraftEventsState extends State<DraftEvents> {
   late final events;
   @override
   void didChangeDependencies() async {
+    print("in didChange Dependencies ");
+    print(_isInit);
     if (_isInit) {
       setState(() {
         _isLoading = true;
@@ -124,21 +127,6 @@ class _DraftEventsState extends State<DraftEvents> {
         child: myWidget,
         onRefresh: () => _refreshProducts(context),
         color: Colors.orange,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            SplashRoute(
-              targetPage: EventTitle(),
-              splashColor: const Color.fromRGBO(209, 65, 12, 1),
-              startFractionalOffset: const FractionalOffset(1.0, 1.0),
-              transitionDuration: const Duration(milliseconds: 800),
-            ),
-          );
-        },
-        tooltip: 'Increment',
-        backgroundColor: Theme.of(context).primaryColor,
-        child: const Icon(Icons.add, key: Key("AddDraftEvent")),
       ),
     );
   }

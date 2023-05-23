@@ -36,7 +36,19 @@ class TheCoupon {
   int limitedTo;
   String discountType;
   double discountValue;
-  TheCoupon(this.name, this.limitedTo, this.discountType, this.discountValue);
+  DateTime startDateCoupon;
+  DateTime endDateCoupon;
+  TimeOfDay startofEventClockCoupon;
+  TimeOfDay endofEventClockCoupon;
+  TheCoupon(
+      this.name,
+      this.limitedTo,
+      this.discountType,
+      this.discountValue,
+      this.startDateCoupon,
+      this.endDateCoupon,
+      this.startofEventClockCoupon,
+      this.endofEventClockCoupon);
 }
 
 class TheEvent with ChangeNotifier {
@@ -172,8 +184,25 @@ class TheEvent with ChangeNotifier {
   }
 
   void addCoupon(
-      String name, int limitedTo, String discountType, double discountValue) {
-    allCoupon.add(TheCoupon(name, limitedTo, discountType, discountValue));
+    String name,
+    int limitedTo,
+    String discountType,
+    double discountValue,
+    DateTime startDate,
+    DateTime endDate,
+    TimeOfDay startDateClock,
+    TimeOfDay endDateClock,
+  ) {
+    allCoupon.add(TheCoupon(
+      name,
+      limitedTo,
+      discountType,
+      discountValue,
+      startDate,
+      endDate,
+      startDateClock,
+      endDateClock,
+    ));
     notifyListeners();
   }
 
@@ -217,6 +246,23 @@ class TheEvent with ChangeNotifier {
       }).toList();
 
       List<Map<String, dynamic>> mapsofCoupons = allCoupon.map((coupon) {
+        DateTime dateTime3 = DateTime(
+            coupon.startDateCoupon.year,
+            coupon.startDateCoupon.month,
+            coupon.startDateCoupon.day,
+            coupon.startofEventClockCoupon.hour,
+            coupon.startofEventClockCoupon.minute);
+        DateTime dateTime4 = DateTime(
+            coupon.endDateCoupon.year,
+            coupon.endDateCoupon.month,
+            coupon.endDateCoupon.day,
+            coupon.endofEventClockCoupon.hour,
+            coupon.endofEventClockCoupon.minute);
+        String formattedStart3 =
+            DateFormat('yyyy-MM-ddTHH:mm:ss').format(dateTime3);
+
+        String formattedend4 =
+            DateFormat('yyyy-MM-ddTHH:mm:ss').format(dateTime4);
         return {
           "name": coupon.name,
           "is_limited": true,
@@ -224,8 +270,8 @@ class TheEvent with ChangeNotifier {
           "current_amount": coupon.limitedTo,
           "is_percentage": coupon.discountType == "percentage" ? true : false,
           "discount_amount": coupon.discountValue,
-          "start_date_time": formattedStart,
-          "end_date_time": formattedend,
+          "start_date_time": formattedStart3,
+          "end_date_time": formattedend4,
         };
       }).toList();
 

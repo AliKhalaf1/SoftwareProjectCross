@@ -69,18 +69,15 @@ class EventCollections extends StatelessWidget {
               ),
             ),
       collecionListOfEvents.isEmpty
-          ?
-          const Padding(
-            padding: EdgeInsets.only(left: 70.0),
-            child: TitleText2(
-              'There is no current events',
-            ),
-          )
+          ? const Padding(
+              padding: EdgeInsets.only(left: 70.0),
+              child: TitleText2(
+                'There is no current events',
+              ),
+            )
           // const SizedBox()
           : Column(
               children: collecionListOfEvents.map((e) {
-                print(
-                    '%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ana da5alt %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
                 return ChangeNotifierProvider.value(
                     value: e, child: EventCard());
               }).toList(),

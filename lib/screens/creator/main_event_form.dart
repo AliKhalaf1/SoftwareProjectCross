@@ -1,4 +1,5 @@
 library MainEventForm;
+
 import 'dart:io';
 import 'package:Eventbrite/screens/creator/all_coupons.dart';
 import 'package:Eventbrite/screens/creator/all_tickets.dart';
@@ -18,7 +19,7 @@ import '../../widgets/tab_bar_Events.dart';
 
 /// {@category Creator}
 /// {@category Screens}
-/// 
+///
 
 enum eventPlace {
   Venue,
@@ -74,6 +75,7 @@ class _EventFormState extends State<EventForm> {
     ).then((value) {
       setState(() {
         _dateFrom = value!;
+        event.startofEvent = _dateFrom;
       });
     });
   }
@@ -87,6 +89,7 @@ class _EventFormState extends State<EventForm> {
     ).then((value) {
       setState(() {
         _dateTo = value!;
+        event.endofEvent = _dateTo;
       });
     });
   }
@@ -106,6 +109,7 @@ class _EventFormState extends State<EventForm> {
     ).then((value) {
       setState(() {
         _timeFrom = value!;
+        event.setStartOfEventClock = _timeFrom!;
       });
     });
   }
@@ -125,6 +129,7 @@ class _EventFormState extends State<EventForm> {
     ).then((value) {
       setState(() {
         _timeTo = value!;
+        event.setEndOfEventClock = _timeTo!;
       });
     });
   }
@@ -204,6 +209,34 @@ class _EventFormState extends State<EventForm> {
         (dateTime1.isAtSameMomentAs(dateTime2)) ||
         DateTime.now().isAfter(dateTime1)) {
       return "Error in your date  ";
+    }
+
+    if (event.alltheCoupons.isNotEmpty) {
+      for (int i = 0; i < event.alltheCoupons.length; i++) {
+        DateTime dateTime3 = DateTime(
+            event.alltheCoupons[i].endDateCoupon.year,
+            event.alltheCoupons[i].endDateCoupon.month,
+            event.alltheCoupons[i].endDateCoupon.day,
+            event.alltheCoupons[i].endofEventClockCoupon.hour,
+            event.alltheCoupons[i].endofEventClockCoupon.minute);
+        if (dateTime3.isAfter(dateTime2)) {
+          return "Error in your Coupon date";
+        }
+      }
+    }
+
+    if (event.alltheTickets.isNotEmpty) {
+      for (int i = 0; i < event.alltheTickets.length; i++) {
+        DateTime dateTime3 = DateTime(
+            event.alltheTickets[i].endDate.year,
+            event.alltheTickets[i].endDate.month,
+            event.alltheTickets[i].endDate.day,
+            event.alltheTickets[i].endofEventClock.hour,
+            event.alltheTickets[i].endofEventClock.minute);
+        if (dateTime3.isAfter(dateTime2)) {
+          return "Error in your Ticket date";
+        }
+      }
     }
 
     return "Done";

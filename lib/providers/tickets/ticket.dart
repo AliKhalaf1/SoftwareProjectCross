@@ -17,13 +17,12 @@ import '../filters/tag.dart';
 
 @Entity()
 class Ticket with ChangeNotifier {
-  //parameters of the EventCard Widget
+  ///parameters of the OrderCard Widget
   @Id()
   int mockId = 0;
-
   String OrderId = "";
   final String eventImgUrl; /*event card image */
-  final DateTime date; /*event date*/
+  DateTime date; /*event date*/
   final String title; /*event dscription*/
   final double price;
 

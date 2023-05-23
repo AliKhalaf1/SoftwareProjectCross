@@ -1,4 +1,4 @@
-library CreatorEventsPage;
+library TabBarEvent;
 
 import 'package:splash_route/splash_route.dart';
 
@@ -13,7 +13,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 /// {@category Widgets}
 ///
-///TabBarEvents widget that contains a DefaultTabController widget and a FutureBuilder widget.
+///abBarEvents widget that contains a DefaultTabController widget and a FutureBuilder widget.
 ///
 ///The DefaultTabController widget creates a tabbed layout with three tabs: "Live", "Past", and "All".
 ///

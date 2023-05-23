@@ -114,26 +114,60 @@ class _MoreLikeEventCardState extends State<MoreLikeEventCard> {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                           fontWeight: FontWeight.w500, fontSize: 16))),
+              Container(
+                padding: const EdgeInsets.only(left: 8.0),
+                width: 200,
+                child: Text(
+                  (widget.event.isOnline == true)
+                      ? 'Online'
+                      : widget.event.city,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.grey),
+                ),
+              ),
+              const SizedBox(height: 20,),
+              Container(
+                padding: const EdgeInsets.only(left: 8.0),
+                width: 200,
+                child: Row(
+                  children: [
+                    const Icon(
+                      key: Key("person"),
+                      Icons.person_outline_outlined,
+                      color: Color.fromRGBO(0, 0, 0, 0.7),
+                    ),
+                    SizedBox(
+                      width: 130,
+                      child: Text(widget.event.organization,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              color: Color.fromRGBO(0, 0, 0, 0.7),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500)),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),
-        Positioned(
-          bottom: 2,
-          right: 0,
-          child: IconButton(
-            key: const Key("AddToFavBtn"),
-            onPressed: () => toggleFav(context),
-            icon: Icon(
-              key: const Key("favIcon"),
-              !widget.event.isFav
-                  ? Icons.favorite_border_rounded
-                  : Icons.favorite_sharp,
-              color: !widget.event.isFav
-                  ? const Color.fromRGBO(0, 0, 0, 0.7)
-                  : const Color.fromARGB(255, 209, 65, 12),
-            ),
-          ),
-        ),
+        // Positioned(
+        //   bottom: 2,
+        //   right: 0,
+        //   child: IconButton(
+        //     key: const Key("AddToFavBtn"),
+        //     onPressed: () => toggleFav(context),
+        //     icon: Icon(
+        //       key: const Key("favIcon"),
+        //       !widget.event.isFav
+        //           ? Icons.favorite_border_rounded
+        //           : Icons.favorite_sharp,
+        //       color: !widget.event.isFav
+        //           ? const Color.fromRGBO(0, 0, 0, 0.7)
+        //           : const Color.fromARGB(255, 209, 65, 12),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

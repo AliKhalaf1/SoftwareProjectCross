@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'dart:async';
 
 // import '../helper_functions/log_in.dart';
+import '../helper_functions/Likes_functions.dart';
 import '../helper_functions/select_event_api.dart';
 import '../models/event_promocode.dart';
 import '../models/event_ticket.dart';
@@ -47,6 +48,7 @@ class EventPage extends StatefulWidget {
   // To Be: Not to give initial value as it could be NULL => make sure ? is added as if no promocode it must be null
   List<EventPromocodeInfo> eventPromocodes = [];
   bool isLoading = true;
+  bool disableDependencies = false;
 
   // Data passed from navigating screen at initState()
   String eventId;
@@ -106,45 +108,6 @@ class _EventPageState extends State<EventPage> {
     await getEventTicketsInfo(eventId).then((eventTicketsdata) {
       widget.eventFreeTickets = eventTicketsdata[0];
       widget.eventVipTickets = eventTicketsdata[1];
-
-      // ////////////////////////////////////////////////////////////
-      // widget.eventFreeTickets = [
-      //   EventTicketInfo(
-      //       '000000',
-      //       'regular',
-      //       'Ana Ticket Gamda',
-      //       0,
-      //       DateTime.now().subtract(const Duration(days: 10)),
-      //       DateTime.now().add(const Duration(days: 10)),
-      //       5),
-      //   EventTicketInfo(
-      //       '0111111',
-      //       'regular',
-      //       'Ana Ticket Gamda',
-      //       0,
-      //       DateTime.now().subtract(const Duration(days: 10)),
-      //       DateTime.now().add(const Duration(days: 10)),
-      //       5),
-      // ];
-      // widget.eventVipTickets = [
-      //   EventTicketInfo(
-      //       '00000',
-      //       'vip',
-      //       'Ana Ticket Gamda VIP',
-      //       50,
-      //       DateTime.now().subtract(const Duration(days: 10)),
-      //       DateTime.now().add(const Duration(days: 10)),
-      //       5),
-      //   EventTicketInfo(
-      //       '0111',
-      //       'vip',
-      //       'Ana Ticket Gamda VIP',
-      //       50,
-      //       DateTime.now().subtract(const Duration(days: 10)),
-      //       DateTime.now().add(const Duration(days: 10)),
-      //       5)
-      // ];
-      // ////////////////////////////////////////////////////////////
     });
   }
 
@@ -158,16 +121,6 @@ class _EventPageState extends State<EventPage> {
         // example: widget.eventTickets.avaliableQuantaties = eventTicketsdata.avaliableQuantaties
         (eventPromodata) {
       widget.eventPromocodes = eventPromodata;
-      /////////////////////////////////////////////////////////////////
-      // widget.eventPromocode = EventPromocodeInfo(
-      //     '0',
-      //     '1234',
-      //     true,
-      //     10,
-      //     true,
-      //     0.2,
-      //     DateTime.now().subtract(const Duration(days: 10)),
-      //     DateTime.now().add(const Duration(days: 10)));
     });
   }
 
@@ -199,6 +152,7 @@ class _EventPageState extends State<EventPage> {
 
   // Open buyTickets model
   void buyTickets(BuildContext ctx) {
+    widget.disableDependencies = false;
     List<EventTicketInfo> evTF = [];
     List<EventTicketInfo> evTV = [];
     for (int i = 0; i < widget.eventFreeTickets.length; i++) {
@@ -226,6 +180,7 @@ class _EventPageState extends State<EventPage> {
         isScrollControlled: true,
         enableDrag: false,
         builder: (_) {
+          widget.disableDependencies = false;
           //------------------------ user input -------------------//
           return GestureDetector(
               // onTap: () {
@@ -238,12 +193,14 @@ class _EventPageState extends State<EventPage> {
                   '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET',
                   evTF,
                   evTV,
-                  widget.eventPromocodes, widget.loadedEvent.eventImg));
+                  widget.eventPromocodes,
+                  widget.loadedEvent.eventImg));
         });
   }
 
   // If user not loged in so apper login Btn to show tickets after login
   Future<void> logInNavigate(BuildContext ctx) async {
+    widget.disableDependencies = false;
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return const SignUpOrLogIn();
     }));
@@ -305,6 +262,9 @@ class _EventPageState extends State<EventPage> {
   // 4. Get promocode
   @override
   void didChangeDependencies() {
+    if (widget.disableDependencies) {
+      return;
+    }
     // --------------- Args Passed from parent widget ---------------------------
     Map<String, dynamic> args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
@@ -319,10 +279,18 @@ class _EventPageState extends State<EventPage> {
 
     // Render Page After finish
     fetchEventApis().then((value) {
+      isEventLikedHelper(widget.loadedEvent.id, widget.loadedEvent.mockId)
+          .then((value) {
+        setState(() {
+          widget.loadedEvent.isFav = value;
+        });
+      });
+
       setState(() {
         widget.isLoading = false;
       });
     });
+
     super.didChangeDependencies();
   }
 
@@ -343,22 +311,36 @@ class _EventPageState extends State<EventPage> {
     //----------------------- Methods ------------------------------
 
     // TO BE: toggle fav state API
-    Future<void> toggleFav(BuildContext ctx) async {
+    Future<void> toggleFav(BuildContext ctx, bool check) async {
       //add to favourites list
       // isLogged = await checkLoggedUser();
-      setState(() {
-        if (widget.isLogged) {
-          //Call toggleStatus function from event class
-          if (widget.loadedEvent.isFav) {
-            favsData.removeEventFromFav(widget.loadedEvent);
-          } else {
-            favsData.addEventToFav(widget.loadedEvent);
-          }
+      if (widget.isLogged) {
+        bool status = true;
+        //Call toggleStatus function from event class
+        if (!check) {
+          status = await likeEventHelper(
+              widget.loadedEvent.id, widget.loadedEvent.mockId);
         } else {
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-            return const SignUpOrLogIn();
-          }));
+          status = await UnlikeEventHelper(
+              widget.loadedEvent.id, widget.loadedEvent.mockId);
         }
+        if (status) {
+        } else {
+          widget.loadedEvent.isFav = !widget.loadedEvent.isFav;
+          ScaffoldMessenger.of(ctx).showSnackBar(
+            const SnackBar(
+              content: Text('Something went wrong!'),
+            ),
+          );
+        }
+      } else {
+        Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+          return const SignUpOrLogIn();
+        }));
+      }
+
+      setState(() {
+        widget.disableDependencies = true;
       });
     }
 
@@ -377,7 +359,7 @@ class _EventPageState extends State<EventPage> {
                   //     ?
                   const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/o3.png"),
+                  image: AssetImage("assets/images/appbarimg.jpg"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -400,6 +382,7 @@ class _EventPageState extends State<EventPage> {
                 icon: const Icon(Icons.arrow_back),
                 color: const Color.fromARGB(255, 255, 255, 255),
                 onPressed: () {
+                  widget.disableDependencies = false;
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 },
               ),
@@ -410,7 +393,14 @@ class _EventPageState extends State<EventPage> {
               padding: const EdgeInsets.only(right: 8.0),
               child: IconButton(
                 key: const Key("AddToFavBtn"),
-                onPressed: () => toggleFav(context),
+                onPressed: () {
+                  bool check = widget.loadedEvent.isFav;
+                  setState(() {
+                    widget.loadedEvent.isFav = !widget.loadedEvent.isFav;
+                  });
+
+                  toggleFav(context, check);
+                },
                 icon: Icon(
                   key: const Key("favIcon"),
                   !widget.loadedEvent.isFav
@@ -514,7 +504,7 @@ class _EventPageState extends State<EventPage> {
                                 title: Text(
                                   (widget.loadedEvent.isOnline == true)
                                       ? 'Online event'
-                                      : 'Offline event',
+                                      : widget.loadedEvent.city,
                                 ),
                               ),
                             ),
@@ -656,9 +646,15 @@ class _EventPageState extends State<EventPage> {
                                                 child: PhysicalModel(
                                                     color: Colors.white,
                                                     elevation: 10.0,
-                                                    child: MoreLikeEventCard(
-                                                        widget.similarEvents[
-                                                            index])),
+                                                    child: widget.eventId ==
+                                                            widget
+                                                                .similarEvents[
+                                                                    index]
+                                                                .id
+                                                        ? const SizedBox()
+                                                        : MoreLikeEventCard(
+                                                            widget.similarEvents[
+                                                                index])),
                                               ));
                                         },
                                       ),
@@ -696,7 +692,7 @@ class _EventPageState extends State<EventPage> {
                             '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.loadedEvent.startDate)} EET'),
                       ),
                     )
-                  else if (widget.loadedEvent.startDate.toUtc().isBefore(
+                  else if (widget.loadedEvent.endDate.toUtc().isBefore(
                           DateTime.now()
                               .add(const Duration(hours: 1))
                               .toUtc()) ||

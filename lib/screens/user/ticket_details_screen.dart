@@ -1,4 +1,4 @@
-library TicketDetails;
+library TicketDetailsScreen;
 
 import 'dart:convert';
 

@@ -61,8 +61,8 @@ class _FavouritesState extends State<Favourites> {
 
     getLikedEvents().then(
       (value) {
+        widget.LikedEvents = value;
         setState(() {
-          widget.LikedEvents = value;
           widget.isLoading = false;
         });
       },

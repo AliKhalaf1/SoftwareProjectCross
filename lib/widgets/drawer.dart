@@ -2,6 +2,7 @@ library CreatorViewSideDrawer;
 
 import 'package:Eventbrite/helper_functions/log_in.dart';
 import 'package:Eventbrite/models/db_mock.dart';
+import 'package:Eventbrite/screens/creator/event_title.dart';
 import 'package:Eventbrite/widgets/tab_bar_Events.dart';
 import 'package:flutter/material.dart';
 import '../helper_functions/log_out.dart';
@@ -81,6 +82,12 @@ class _EventDrawerState extends State<EventDrawer> {
     ); // we use same string in main it’s a key
   }
 
+  void eventAdd(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(
+      EventTitle.route,
+    ); // we use same string in main it’s a key
+  }
+
 // Function return the main widget in the Drawer
   Widget buildlistview(String title, IconData icon, int index, Function handler,
       {required Key key}) {
@@ -137,36 +144,16 @@ class _EventDrawerState extends State<EventDrawer> {
             eventNavigate(context);
             iconHandler(1);
           }, key: const Key("Events")),
-          buildlistview('Search Orders', Icons.event_rounded, 2, () {
+          buildlistview('Add Event', Icons.add, 2, () {
+            eventAdd(context);
             iconHandler(2);
-          }, key: const Key("SearchOrders")),
-          buildlistview('Change Organisation', Icons.compare_arrows_rounded, 3,
-              () {
-            iconHandler(3);
-          }, key: const Key("Change Organisation")),
-          const Divider(),
-          buildlistview('Device Settings', Icons.settings, 4, () {
-            iconHandler(4);
-          }, key: const Key("Device Settings")),
-          buildlistview('Feedback', Icons.mms, 5, () {
-            iconHandler(5);
-          }, key: const Key("Feedback")),
+          }, key: const Key("Add Event")),
           const Divider(),
           Column(
             children: [
-              ListTile(
-                leading: Text(
-                  widget.email,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color.fromRGBO(94, 92, 109, 1),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              buildlistview('Log Out', Icons.logout, 6, () {
+              buildlistview('Log Out', Icons.logout, 3, () {
                 logOutLogic(context);
-                iconHandler(6);
+                iconHandler(3);
               }, key: const Key("Log Out")),
             ],
           ),

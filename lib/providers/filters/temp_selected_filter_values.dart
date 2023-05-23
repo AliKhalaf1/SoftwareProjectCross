@@ -28,7 +28,7 @@ import 'tag.dart';
 class TempFilterSelectionValues with ChangeNotifier {
   Tag _date = Tag('Anytime', true, 'date', 'Anytime');
   Tag _cat = Tag('Anything', true, 'field', 'Anything');
-  String _location = "Online events";
+  String _location = "";
   bool _price = false;
   bool _organizer = false;
   int _sortBy = 0;

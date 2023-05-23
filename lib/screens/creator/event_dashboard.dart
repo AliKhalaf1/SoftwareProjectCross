@@ -1,9 +1,11 @@
 library DashBoard;
 
 import 'package:Eventbrite/providers/getevent/getevent.dart';
+import 'package:Eventbrite/screens/creator/Attendee_report.dart';
 import 'package:Eventbrite/widgets/dashboard_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 /// {@category Creator}
 /// {@category Screens}
@@ -58,7 +60,7 @@ class _EventsDashboardState extends State<EventsDashboard> {
                 style: const TextStyle(
                     fontFamily: "Neue Plak",
                     fontWeight: FontWeight.w600,
-                    color: Color.fromRGBO(31, 10, 61, 1),
+                    color: Colors.black87,
                     fontSize: 25),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -67,8 +69,43 @@ class _EventsDashboardState extends State<EventsDashboard> {
             const SizedBox(
               height: 20,
             ),
+            SizedBox(
+              width: 50,
+              height: 100,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Text(
+                      "ID : ${Event.id}",
+                      style: const TextStyle(
+                          fontFamily: "Neue Plak Light",
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromRGBO(31, 10, 61, 1),
+                          fontSize: 20),
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () async {
+                        await Clipboard.setData(ClipboardData(text: Event.id));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Copied to Clipboard'),
+                          ),
+                        );
+                        // copied successfully
+                      },
+                      icon: const Icon(Icons.copy)),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             const Text(
-              " Gross sales",
+              " Net sales",
               style: TextStyle(
                 fontFamily: "Neue Plak",
                 fontWeight: FontWeight.w800,
@@ -118,7 +155,14 @@ class _EventsDashboardState extends State<EventsDashboard> {
                     'eventIDMock': Event.mockId
                   });
                 },
-                child: const Text("Add Attendee"))
+                child: const Text("Add Attendee")),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          AttendeeReport(Event.id, Event.mockId)));
+                },
+                child: const Text("Attendee Report")),
           ],
         ),
       ),

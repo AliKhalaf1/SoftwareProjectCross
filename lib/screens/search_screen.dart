@@ -84,8 +84,14 @@ class _SearchState extends State<Search> {
     await search(
       filtersDataValues.location == "Online events"
           ? ""
-          : filtersDataValues.location,
-      filtersDataValues.location == "Online events" ? "" : "false",
+          : filtersDataValues.location == ""
+              ? ""
+              : filtersDataValues.location,
+      filtersDataValues.location == "Online events"
+          ? "true"
+          : filtersDataValues.location == ""
+              ? ""
+              : "false",
       filtersDataValues.price ? "true" : "false",
       filtersDataValues.nameSearch,
       duration[0],
@@ -97,15 +103,7 @@ class _SearchState extends State<Search> {
       if (value.isEmpty) {
         events = [];
       } else {
-        // print('Database sucess');
         events = value;
-        // print('success');
-        // print(events.last[0].categ);
-        // print(events.last[0].description);
-        // print(events.last[0].id);
-        // print(events.last[0].eventImg);
-        // print(events.last[0].isFav);
-        // print(events.last[0].organization);
       }
     });
   }
@@ -128,15 +126,15 @@ class _SearchState extends State<Search> {
     super.didChangeDependencies();
   }
 
-  // @override
-  // void initState() {
-  //   fetchAllEvents().then((value) {
-  //     setState(() {
-  //       widget.isLoading = false;
-  //     });
-  //   });
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    fetchAllEvents().then((value) {
+      setState(() {
+        widget.isLoading = false;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +226,9 @@ class _SearchState extends State<Search> {
                         child: TextButton(
                           onPressed: null,
                           child: Text(
-                            filtersDataValues.location,
+                            filtersDataValues.location == ""
+                                ? 'Offline'
+                                : filtersDataValues.location,
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 14,

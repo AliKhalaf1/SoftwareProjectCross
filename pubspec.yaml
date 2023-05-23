@@ -66,6 +66,8 @@ dependencies:
   flutter_ticket_widget: ^0.0.1
   csv: ^5.0.2
   url_launcher: ^6.1.11
+  audioplayers: ^4.0.1
+  open_file: ^3.3.1
 
  
 
@@ -135,6 +137,10 @@ flutter:
     - assets/images/TicketShape2.png
     - assets/images/icon.png
     - assets/images/o3.png
+    - assets/images/appbarimg.jpg
+    - assets/sounds/confirm.wav
+    - assets/sounds/placeorder.mp4
+    - assets/sounds/welcome.mp4
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

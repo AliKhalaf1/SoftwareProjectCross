@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:splash_route/splash_route.dart';
-
+import 'package:audioplayers/audioplayers.dart';
 import 'tab_bar.dart';
+
 /// {@category user}
 /// {@category Screens}
 ///
@@ -28,9 +29,8 @@ class _LandingScreenState extends State<LandingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Timer(
-      Duration(seconds: 3),
-      () => Navigator.of(context).pushReplacement(
+    Timer(Duration(seconds: 3), () async {
+      Navigator.of(context).pushReplacement(
         SplashRoute(
           targetPage: TabBarScreen(
             title: 'Eventbrite',
@@ -40,8 +40,13 @@ class _LandingScreenState extends State<LandingScreen> {
           startFractionalOffset: FractionalOffset.bottomRight,
           transitionDuration: const Duration(milliseconds: 2000),
         ),
-      ),
-    );
+      );
+
+      final player = AudioPlayer();
+      await player.play(AssetSource('sounds/welcome.mp4'));
+      await player.onPlayerComplete.first;
+      await player.stop();
+    });
     return Scaffold(
       appBar: null,
       //get system main primary color

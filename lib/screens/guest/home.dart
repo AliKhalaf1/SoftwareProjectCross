@@ -175,7 +175,7 @@ class _HomeState extends State<Home> {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/o3.png"),
+                image: AssetImage("assets/images/appbarimg.jpg"),
                 fit: BoxFit.cover,
               ),
             ),

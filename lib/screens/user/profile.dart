@@ -9,6 +9,7 @@ import 'package:Eventbrite/widgets/loading_spinner.dart';
 import 'package:provider/provider.dart';
 
 import '../../helper_functions/api/google_signin_api.dart';
+import '../../helper_functions/events_handlers.dart';
 import '../../helper_functions/log_out.dart';
 import '../../helper_functions/organizer_view.dart';
 import '../../helper_functions/userInfo.dart';
@@ -23,6 +24,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/button_find_things.dart';
 import '../../widgets/button_link.dart';
 import '../../widgets/counter_button.dart';
+import '../event_page.dart';
 
 /// {@category user}
 /// {@category Screens}
@@ -130,6 +132,10 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
+  String error = '';
+  final fieldKey = GlobalKey<FormFieldState>();
+
+  TextEditingController _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,39 +177,72 @@ class _ProfileState extends State<Profile> {
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                      top: 15, bottom: 15),
-                                  padding: const EdgeInsets.only(
-                                      top: 15, bottom: 15),
-                                  decoration: const BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        Colors.transparent,
-                                        Colors.transparent
-                                      ],
-                                    ),
-                                  ),
-                                  child: IntrinsicHeight(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        CounterButton(
-                                          "Likes",
-                                          widget.likesCount,
-                                          key: const Key('Likes'),
-                                        ),
-                                        const VDivider(),
-                                        CounterButton(
-                                            "My tickets", widget.myTicketsCount,
-                                            key: const Key('Mytickets')),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                // Container(
+                                //   margin: const EdgeInsets.only(
+                                //       top: 15, bottom: 15),
+                                //   padding: const EdgeInsets.only(
+                                //       top: 15, bottom: 15),
+                                //   decoration: const BoxDecoration(
+                                //     gradient: LinearGradient(
+                                //       begin: Alignment.topCenter,
+                                //       end: Alignment.bottomCenter,
+                                //       colors: [
+                                //         Colors.transparent,
+                                //         Colors.transparent
+                                //       ],
+                                //     ),
+                                //   ),
+                                //   child: IntrinsicHeight(
+                                //     child: Row(
+                                //       mainAxisAlignment:
+                                //           MainAxisAlignment.spaceEvenly,
+                                //       children: [
+                                //         CounterButton(
+                                //           "Likes",
+                                //           widget.likesCount,
+                                //           key: const Key('Likes'),
+                                //         ),
+                                //         const VDivider(),
+                                //         CounterButton(
+                                //             "My tickets", widget.myTicketsCount,
+                                //             key: const Key('Mytickets')),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
+                                //  Container(
+                                //   margin: const EdgeInsets.only(
+                                //       top: 15, bottom: 15),
+                                //   padding: const EdgeInsets.only(
+                                //       top: 15, bottom: 15),
+                                //   decoration: const BoxDecoration(
+                                //     gradient: LinearGradient(
+                                //       begin: Alignment.topCenter,
+                                //       end: Alignment.bottomCenter,
+                                //       colors: [
+                                //         Colors.transparent,
+                                //         Colors.transparent
+                                //       ],
+                                //     ),
+                                //   ),
+                                //   child: IntrinsicHeight(
+                                //     child: Row(
+                                //       mainAxisAlignment:
+                                //           MainAxisAlignment.spaceEvenly,
+                                //       children: [
+                                //         CounterButton(
+                                //           "Likes",
+                                //           widget.likesCount,
+                                //           key: const Key('Likes'),
+                                //         ),
+                                //         const VDivider(),
+                                //         CounterButton(
+                                //             "My tickets", widget.myTicketsCount,
+                                //             key: const Key('Mytickets')),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
                                 Container(
                                   color: Colors.white,
                                   padding: const EdgeInsets.only(
@@ -218,8 +257,189 @@ class _ProfileState extends State<Profile> {
                                       ),
                                       ButtonLink("Linked Accounts", () {},
                                           key: const Key('Linked')),
-                                      ButtonLink("Following", () {},
-                                          key: const Key('Following')),
+                                      ButtonLink("Access Event By Id", () {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (_) {
+                                              //------------------------ user input -------------------//
+                                              return GestureDetector(
+                                                onTap: () {},
+                                                behavior:
+                                                    HitTestBehavior.opaque,
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.9,
+                                                      height: 80,
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 10),
+                                                      child: Form(
+                                                        //key: fieldKey,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              _emailController,
+                                                          key: fieldKey,
+                                                          //Validations
+
+                                                          validator:
+                                                              (valuesss) {
+                                                            if (valuesss!
+                                                                .isEmpty) {
+                                                              return "Please enter event id";
+                                                            }
+                                                          },
+
+                                                          /// Go to valid
+                                                          onSaved:
+                                                              (newValue) async {
+                                                            bool asd =
+                                                                await checkLoggedUser();
+                                                            Map<String, dynamic>
+                                                                args = {
+                                                              'eventId':
+                                                                  Constants.MockServer ==
+                                                                          false
+                                                                      ? newValue
+                                                                      : "",
+                                                              'isLogged':
+                                                                  asd == true
+                                                                      ? "1"
+                                                                      : "0",
+                                                              'eventIdMock':
+                                                                  Constants.MockServer ==
+                                                                          true
+                                                                      ? newValue
+                                                                      : 0,
+                                                            };
+
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pushNamed(
+                                                              EventPage
+                                                                  .eventPageRoute,
+                                                              arguments: args,
+                                                            );
+                                                          },
+
+                                                          cursorColor:
+                                                              const Color
+                                                                      .fromARGB(
+                                                                  255,
+                                                                  50,
+                                                                  100,
+                                                                  237),
+                                                          // maxLength: 20,
+                                                          style:
+                                                              const TextStyle(),
+                                                          decoration:
+                                                              InputDecoration(
+                                                                  suffixIcon:
+                                                                      IconButton(
+                                                                    key: const Key(
+                                                                        'privateEventBtn'),
+                                                                    icon: const Icon(
+                                                                        Icons
+                                                                            .check_circle),
+                                                                    onPressed:
+                                                                        () {
+                                                                      String
+                                                                          message =
+                                                                          "";
+
+                                                                      selectEventById(_emailController
+                                                                              .text)
+                                                                          .then(
+                                                                              (value) {
+                                                                        if (value ==
+                                                                            200) {
+                                                                          fieldKey
+                                                                              .currentState
+                                                                              ?.save();
+                                                                        } else if (value ==
+                                                                            404) {
+                                                                          message =
+                                                                              "Event is not found";
+                                                                        } else if (value ==
+                                                                            400) {
+                                                                          message =
+                                                                              "Event Id is not valid";
+                                                                        } else {
+                                                                          message =
+                                                                              "Something went wrong";
+                                                                        }
+                                                                        FocusScope.of(context)
+                                                                            .requestFocus(FocusNode());
+                                                                        setState(
+                                                                            () {
+                                                                          error =
+                                                                              message;
+                                                                        });
+                                                                      });
+                                                                    },
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            50,
+                                                                            100,
+                                                                            237),
+                                                                  ),
+                                                                  hintText:
+                                                                      "Enter event pass",
+                                                                  floatingLabelBehavior:
+                                                                      FloatingLabelBehavior
+                                                                          .always,
+                                                                  floatingLabelStyle: const TextStyle(
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          50,
+                                                                          100,
+                                                                          237)),
+                                                                  labelText:
+                                                                      'event password',
+                                                                  border:
+                                                                      const OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(0)),
+                                                                  ),
+                                                                  focusedBorder:
+                                                                      const OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          50,
+                                                                          100,
+                                                                          237),
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(0)),
+                                                                  )),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    Text(
+                                                      error,
+                                                      style: const TextStyle(
+                                                          color: Colors.red),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            });
+                                      }, key: const Key('Following')),
                                       ButtonLink("Ticket Issues", () {},
                                           key: const Key('Issues')),
                                       ButtonLink("Manage Events",

@@ -97,9 +97,13 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 16))),
-                      Text(
-                        (widget.event.isOnline == true) ? 'Online' : 'Offline',
-                        style: const TextStyle(color: Colors.grey),
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                          (widget.event.isOnline == true) ? 'Online' : widget.event.city,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
                       ),
                       Row(
                         children: [

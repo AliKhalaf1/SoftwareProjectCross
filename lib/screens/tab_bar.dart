@@ -71,6 +71,7 @@ class TabBarScreenState extends State<TabBarScreen> {
       print('tab_bar token: $token');
 
       isLoggedIn = await checkToken(token);
+      //isLoggedIn = true;
       widget.isLoading = false;
       //////////////////////////////////////////////////////////////////////////////////////////////
     } else {

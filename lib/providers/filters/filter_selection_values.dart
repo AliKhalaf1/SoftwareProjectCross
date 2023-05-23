@@ -27,8 +27,10 @@ import 'temp_selected_filter_values.dart';
 
 class FilterSelectionValues with ChangeNotifier {
   Tag _date = Tag('Anytime', true, 'date', 'Anytime');
+  DateTime _startDatePick = DateTime.now();
+  DateTime _endDatePick = DateTime.now();
   Tag _cat = Tag('Anything', true, 'field', 'Anything');
-  String _location = "Online events";
+  String _location = "";
   bool _price = false;
   String _nameSearch = "";
   // bool _organizer = false;
@@ -40,9 +42,11 @@ class FilterSelectionValues with ChangeNotifier {
   void resetSelectionValues() {
     _date = Tag('Anytime', true, 'date', 'Anytime');
     _cat = Tag('Anything', true, 'field', 'Anything');
-    _location = "Online events";
+    _location = "";
     _price = false;
     _nameSearch = "";
+    DateTime _startDatePick = DateTime.now();
+    DateTime _endDatePick = DateTime.now();
     // _organizer = false;
     // _sortBy = 0;
     selectedFilterCount = 0;
@@ -58,6 +62,7 @@ class FilterSelectionValues with ChangeNotifier {
     // _organizer = temp.organizer;
     // _sortBy = temp.sortBy;
     selectedFilterCount = temp.selectedFilterCount;
+    
     notifyListeners();
   }
 
@@ -67,6 +72,16 @@ class FilterSelectionValues with ChangeNotifier {
   }
 
   ///Get data value
+  DateTime get startDatePick {
+    return _startDatePick;
+  }
+
+    ///Get data value
+  DateTime get endDatePick {
+    return _endDatePick;
+  }
+
+    ///Get data value
   Tag get date {
     return _date;
   }

@@ -19,10 +19,10 @@ Future<Event> selectEventApi(String id) async {
   );
 
   var resCode = response.statusCode;
-  print('-----------------');
+  //print('-----------------');
   // print("ResCode:");
   // print(resCode);
-  print('-----------------');
+  //print('-----------------');
   if (resCode == 200) {
     var resBody = response.body;
     var resData = jsonDecode(resBody);
@@ -40,7 +40,8 @@ Future<Event> selectEventApi(String id) async {
     // print(resData[i]['basic_info']['organizer']);
     // print(resData[i]['state']['is_public']);
     // print('**************************************************************');
-    return Event(
+
+    Event newevevnt = Event(
         resData['id'],
         DateTime.parse(resData['date_and_time']['start_date_time']),
         DateTime.parse(resData['date_and_time']['end_date_time']),
@@ -53,7 +54,8 @@ Future<Event> selectEventApi(String id) async {
         resData['basic_info']['title'],
         resData['basic_info']['organizer'],
         resData['state']['is_public']);
-    // print('Length is :   ${categoreyEvents.length}');
+    newevevnt.city = resData['location']['city'];
+    return newevevnt;
   } else {
     return Event('', DateTime.now(), DateTime.now(), '', '', false, false, '',
         [], '', '', false);

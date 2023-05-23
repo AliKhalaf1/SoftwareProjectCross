@@ -32,16 +32,15 @@ class _NearbyEventsState extends State<NearbyEvents> {
 
     /* Method handler to return back after select browsing in what */
     void selectLocation(BuildContext ctx, String loc) {
-      setState(() {
-        if (!filtersDataValues.locSelectedBefore &&
-                filtersDataValues.location != loc // check that value toggeled
-            ) {
-          filtersDataValues.selectedFilterCount++;
-        }
-        // Set value by new value
-        filtersDataValues.setLoc(loc);
-        filtersDataValues.locSelectedBefore = true;
-      });
+      if (!filtersDataValues.locSelectedBefore &&
+              filtersDataValues.location != loc // check that value toggeled
+          ) {
+        filtersDataValues.selectedFilterCount++;
+      }
+      // Set value by new value
+      filtersDataValues.setLoc(loc);
+      filtersDataValues.locSelectedBefore = true;
+
       Navigator.pop(
         context,
       );

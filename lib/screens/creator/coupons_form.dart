@@ -1,13 +1,15 @@
 library CouponsForm;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/createevent/createevent.dart';
 
 /// {@category Creator}
 /// {@category Screens}
-/// 
+///
 ///  A form that allows the user to create a new coupon with a name, type (percentage or amount), a limit, and a discount value.
 enum discountType {
   percentage,
@@ -28,6 +30,76 @@ final _form = GlobalKey<FormState>();
 
 class _CouponFormState extends State<CouponForm> {
   @override
+  DateTime? _dateFrom = DateTime.now();
+  DateTime? _dateTo = DateTime.now();
+  TimeOfDay? _timeFrom = TimeOfDay.now();
+  TimeOfDay? _timeTo = TimeOfDay.now();
+  final DateFormat formatter = DateFormat('EEE, dd MMM yyyy');
+
+  void _showDatePickerfrom() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2035),
+    ).then((value) {
+      setState(() {
+        _dateFrom = value!;
+      });
+    });
+  }
+
+  void _showDatePickerto() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2035),
+    ).then((value) {
+      setState(() {
+        _dateTo = value!;
+      });
+    });
+  }
+
+  void _showTimePickerFrom() {
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            backgroundColor: Colors.grey,
+          ),
+          child: child!,
+        );
+      },
+    ).then((value) {
+      setState(() {
+        _timeFrom = value!;
+      });
+    });
+  }
+
+  void _showTimePickerTo() {
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            backgroundColor: Colors.grey,
+          ),
+          child: child!,
+        );
+      },
+    ).then((value) {
+      setState(() {
+        _timeTo = value!;
+      });
+    });
+  }
+
   discountType couponType = discountType.percentage;
   final _focusNode1 = FocusNode();
   final _focusNode2 = FocusNode();
@@ -41,15 +113,81 @@ class _CouponFormState extends State<CouponForm> {
     super.dispose();
   }
 
+  String timeCheck() {
+    DateTime dateTime1 = DateTime.now();
+    DateTime dateTime2 = DateTime.now();
+
+    if (_dateFrom == null ||
+        _dateTo == null ||
+        _timeFrom == null ||
+        _timeTo == null) {
+      // Display an error message if any of the values are null
+      // ...
+      return "Error in your date";
+    }
+    dateTime1 = DateTime(_dateFrom!.year, _dateFrom!.month, _dateFrom!.day,
+        _timeFrom!.hour, _timeFrom!.minute);
+    dateTime2 = DateTime(_dateTo!.year, _dateTo!.month, _dateTo!.day,
+        _timeTo!.hour, _timeTo!.minute);
+
+    if ((dateTime1.isAfter(dateTime2)) ||
+        (dateTime1.isAtSameMomentAs(dateTime2)) ||
+        DateTime.now().isAfter(dateTime1)) {
+      return "Error in your date  ";
+    }
+    DateTime dateTime3 = DateTime(
+        event.endofEvent!.year,
+        event.endofEvent!.month,
+        event.endofEvent!.day,
+        event.endofEventClock!.hour,
+        event.endofEventClock!.minute);
+
+    if (dateTime2.isAfter(dateTime3)) {
+      return "Error in your date";
+    }
+
+    return "Done";
+  }
+
   late TheEvent event;
   void submit() {
+    String checker;
+    checker = timeCheck();
+    if (checker != "Done") {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const Text("Error in your date"),
+            actions: [
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
     final isValid = _form.currentState?.validate();
     if (!isValid!) {
       return;
     }
     _form.currentState?.save();
-    event.addCoupon(couponName!, limitedTo!,
-        couponType.toString().split('.').last, discountValue!);
+    event.addCoupon(
+        couponName!,
+        limitedTo!,
+        couponType.toString().split('.').last,
+        discountValue!,
+        _dateFrom!,
+        _dateTo!,
+        _timeFrom!,
+        _timeTo!);
 
     showDialog(
       context: context,
@@ -293,7 +431,99 @@ class _CouponFormState extends State<CouponForm> {
             ),
             const SizedBox(
               height: 15,
-            )
+            ),
+            Text(
+              "Sales date",
+              style: TextStyle(color: Colors.blue[700]),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.calendar_month,
+                color: Colors.blue[700],
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Start of sale"),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _showDatePickerfrom();
+                        },
+                        child: Text(
+                          formatter.format(_dateFrom!),
+                          style: const TextStyle(
+                              fontFamily: 'Neue Plak Extended',
+                              fontWeight: FontWeight.w100,
+                              fontSize: 15,
+                              color: Colors.black),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _showTimePickerFrom();
+                        },
+                        child: Text(
+                          _timeFrom!.format(context).toString(),
+                          style: const TextStyle(
+                              fontFamily: 'Neue Plak Extended',
+                              fontWeight: FontWeight.w100,
+                              fontSize: 15,
+                              color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text("End of sale"),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _showDatePickerto();
+                        },
+                        child: Text(
+                          formatter.format(_dateTo!),
+                          style: const TextStyle(
+                              fontFamily: 'Neue Plak Extended',
+                              fontWeight: FontWeight.w100,
+                              fontSize: 15,
+                              color: Colors.black),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _showTimePickerTo();
+                        },
+                        child: Text(
+                          _timeTo!.format(context).toString(),
+                          style: const TextStyle(
+                              fontFamily: 'Neue Plak Extended',
+                              fontWeight: FontWeight.w100,
+                              fontSize: 15,
+                              color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
           ]),
         ),
       ),

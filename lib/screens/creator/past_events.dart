@@ -118,24 +118,6 @@ class _PastEventsState extends State<PastEvents> {
         onRefresh: () => _refreshProducts(context),
         color: Colors.orange,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            SplashRoute(
-              targetPage: EventTitle(),
-              splashColor: const Color.fromRGBO(209, 65, 12, 1),
-              startFractionalOffset: const FractionalOffset(1.0, 1.0),
-              transitionDuration: const Duration(milliseconds: 800),
-            ),
-          );
-        },
-        tooltip: 'Increment',
-        child: Icon(
-          Icons.add,
-          key: Key("AddPastEvent"),
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
     );
   }
 }

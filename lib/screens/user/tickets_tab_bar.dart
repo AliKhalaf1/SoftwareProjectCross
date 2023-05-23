@@ -82,11 +82,8 @@ class _TicketsTabBarState extends State<TicketsTabBar> {
             price.toDouble(),
           );
           newticket.OrderId = resData[i]['id'];
-          if (DateTimesss.isBefore(DateTime.now())) {
-            widget.oldtickets.add(newticket);
-          } else {
-            widget.newtickets.add(newticket);
-          }
+
+          widget.newtickets.add(newticket);
         }
       }
     } else {}
@@ -104,59 +101,20 @@ class _TicketsTabBarState extends State<TicketsTabBar> {
         },
       );
     }
-
-    // // Set a delay to simulate loading
-    // Future.delayed(Duration(seconds: 1), () {
-    //   setState(() {
-    //   });
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            title: const AppBarText("Tickets"),
-            bottom: PreferredSize(
-              preferredSize:
-                  Size.fromHeight(MediaQuery.of(context).size.height * 0.05),
-              child: TabBar(
-                tabs: [
-                  Tab(
-                    child: Text(
-                      "Upcoming",
-                      style: TextStyle(
-                        color: Theme.of(context).cardColor,
-                      ),
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      "Past tickets",
-                      style: TextStyle(
-                        color: Theme.of(context).cardColor,
-                      ),
-                    ),
-                  ),
-                ],
-                onTap: _handleTabSelection,
-                indicatorColor: Color.fromARGB(255, 13, 18, 161),
-                labelPadding: EdgeInsets.zero,
-              ),
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              title: const AppBarText("Orders"),
             ),
-          ),
-          body: !widget._isLoading
-              ? TabBarView(
-                  children: [
-                    UpcomingTicketsPage(widget.newtickets),
-                    PastTicketsPage(widget.oldtickets),
-                  ],
-                )
-              : const LoadingSpinner()),
-    );
+            body: widget._isLoading
+                ? const LoadingSpinner()
+                : UpcomingTicketsPage(widget.newtickets)));
   }
 }

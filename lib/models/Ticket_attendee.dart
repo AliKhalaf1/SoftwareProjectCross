@@ -1,4 +1,4 @@
-library EventTicketModel;
+library EventTicketAttendeeModel;
 
 import 'package:objectbox/objectbox.dart';
 import '../screens/event_page.dart';
@@ -7,7 +7,7 @@ import '../widgets/buy_tickets.dart';
 /// {@category Models}
 ///
 ///
-/// <h1> This model represents the event tickets Data </h1>
+/// <h1> This model represents the event tickets Placed in Orders </h1>
 ///
 /// it's used in the [EventPage] screen
 ///
@@ -15,19 +15,12 @@ import '../widgets/buy_tickets.dart';
 ///
 ///   • id: tickets ids [String]
 ///
-///   • type: regular/vip [String]
+///   • type: regular/vip [bool]
 ///
-///   • name: ticket name [String]
+///   • type:  orderId    [String]
 ///
-///   • ticketPrice: 0 if free / Vip tickets price [int]
+///   • type:  eventId    [String]
 ///
-///   • startDate: when sales Start [DateTime]
-///
-///   • endDate: when sales end [DateTime]
-///
-///   • avaliableQuantity: avaliable quantity of each ticket [int]
-///
-///   • selectedQuantity: selected quantity of each ticket from avaliableQuantity [int]
 ///
 @Entity()
 class TicketAttendee {
