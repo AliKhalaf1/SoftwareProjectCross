@@ -31,6 +31,7 @@ class TextLink extends StatelessWidget {
         height: 25,
         width: double.infinity,
         child: Text(
+          overflow: TextOverflow.ellipsis,
           text,
           textAlign: alignment == 0
               ? TextAlign.left

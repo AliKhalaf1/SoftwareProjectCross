@@ -1,0 +1,596 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:6324978119880890039",
+      "lastPropertyId": "5:2163371784312554890",
+      "name": "Auth",
+      "properties": [
+        {
+          "id": "2:3532204531777365667",
+          "name": "email",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "1:862770701866512243"
+        },
+        {
+          "id": "3:7958771781219981162",
+          "name": "password",
+          "type": 9
+        },
+        {
+          "id": "5:2163371784312554890",
+          "name": "mockId",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:4908252787234866678",
+      "lastPropertyId": "9:6398951864244722080",
+      "name": "User",
+      "properties": [
+        {
+          "id": "2:590757566030278686",
+          "name": "email",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "2:2658527413851925650"
+        },
+        {
+          "id": "3:3338523289187129199",
+          "name": "imageUrl",
+          "type": 9
+        },
+        {
+          "id": "4:3562410967619780751",
+          "name": "firstName",
+          "type": 9
+        },
+        {
+          "id": "5:7780287094472565681",
+          "name": "lastName",
+          "type": 9
+        },
+        {
+          "id": "9:6398951864244722080",
+          "name": "mockId",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:5508452468500610366",
+      "lastPropertyId": "18:1266951468127446804",
+      "name": "Event",
+      "properties": [
+        {
+          "id": "1:2016973110007611165",
+          "name": "mockId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5082241329693792503",
+          "name": "eventImg",
+          "type": 9
+        },
+        {
+          "id": "3:7102013250862503281",
+          "name": "startDate",
+          "type": 10
+        },
+        {
+          "id": "4:7693361993009473706",
+          "name": "endDate",
+          "type": 10
+        },
+        {
+          "id": "5:4707418279590158048",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "6:4422311958945843855",
+          "name": "isFav",
+          "type": 1
+        },
+        {
+          "id": "7:5968870262409536648",
+          "name": "categ",
+          "type": 9
+        },
+        {
+          "id": "8:4729164772389778561",
+          "name": "tags",
+          "type": 30
+        },
+        {
+          "id": "9:4922030173832146386",
+          "name": "id",
+          "type": 9
+        },
+        {
+          "id": "10:9129872997020982913",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "11:8334308235645515459",
+          "name": "organization",
+          "type": 9
+        },
+        {
+          "id": "14:5082546397081466276",
+          "name": "isOnline",
+          "type": 1
+        },
+        {
+          "id": "15:7035098969218285509",
+          "name": "isPrivate",
+          "type": 1
+        },
+        {
+          "id": "17:2276175339021954406",
+          "name": "creatorId",
+          "type": 6
+        },
+        {
+          "id": "18:1266951468127446804",
+          "name": "city",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:5525868233582948149",
+      "lastPropertyId": "11:8200120566905106095",
+      "name": "EventPromocodeInfo",
+      "properties": [
+        {
+          "id": "1:5353090562630431911",
+          "name": "idMock",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8874204976811063996",
+          "name": "eventId",
+          "type": 9
+        },
+        {
+          "id": "3:8537787467494088178",
+          "name": "id",
+          "type": 9
+        },
+        {
+          "id": "4:6202859323255904156",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:4554966262323953210",
+          "name": "isLimited",
+          "type": 1
+        },
+        {
+          "id": "6:7822562165760290474",
+          "name": "availableAmount",
+          "type": 6
+        },
+        {
+          "id": "7:2292175194532891018",
+          "name": "isPercentage",
+          "type": 1
+        },
+        {
+          "id": "8:7732507031449238201",
+          "name": "discount",
+          "type": 8
+        },
+        {
+          "id": "9:7189591623872403922",
+          "name": "startDate",
+          "type": 10
+        },
+        {
+          "id": "10:7037553644394949172",
+          "name": "endDate",
+          "type": 10
+        },
+        {
+          "id": "11:8200120566905106095",
+          "name": "eventIdMock",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:1036121604102249217",
+      "lastPropertyId": "9:8380903954804700338",
+      "name": "EventTicketInfo",
+      "properties": [
+        {
+          "id": "1:2617638185035444333",
+          "name": "idsMock",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5577389383125447458",
+          "name": "id",
+          "type": 9
+        },
+        {
+          "id": "3:6414532817814401601",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "4:4274468845780772557",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:1656000154011148614",
+          "name": "ticketPrice",
+          "type": 6
+        },
+        {
+          "id": "6:143905716173355220",
+          "name": "startDate",
+          "type": 10
+        },
+        {
+          "id": "7:919807762122027255",
+          "name": "endDate",
+          "type": 10
+        },
+        {
+          "id": "8:7949049983805513831",
+          "name": "avaliableQuantity",
+          "type": 6
+        },
+        {
+          "id": "9:8380903954804700338",
+          "name": "selectedQuantity",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:5006778671799004852",
+      "lastPropertyId": "9:1484872339254244293",
+      "name": "OrderClass",
+      "properties": [
+        {
+          "id": "1:1363205073285178381",
+          "name": "mockId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3696563734098677620",
+          "name": "userId",
+          "type": 6
+        },
+        {
+          "id": "3:5248274431100351281",
+          "name": "eventId",
+          "type": 6
+        },
+        {
+          "id": "4:1493618381702173777",
+          "name": "id",
+          "type": 9
+        },
+        {
+          "id": "5:8240218852556847282",
+          "name": "firstName",
+          "type": 9
+        },
+        {
+          "id": "6:6137228707766949008",
+          "name": "lastName",
+          "type": 9
+        },
+        {
+          "id": "7:8184815880553137073",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "8:5965597124020801364",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "9:1484872339254244293",
+          "name": "creation_date",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:8447108209305675333",
+      "lastPropertyId": "6:3245024752326045496",
+      "name": "Ticket",
+      "properties": [
+        {
+          "id": "1:1578563307946542357",
+          "name": "mockId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7701539020685299918",
+          "name": "eventImgUrl",
+          "type": 9
+        },
+        {
+          "id": "3:6857826401444694449",
+          "name": "date",
+          "type": 10
+        },
+        {
+          "id": "4:6392252427891117316",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "5:2918791835758847873",
+          "name": "OrderId",
+          "type": 9
+        },
+        {
+          "id": "6:3245024752326045496",
+          "name": "price",
+          "type": 8
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "10:8200917204386437970",
+      "lastPropertyId": "10:2432142119261522732",
+      "name": "TicketClass",
+      "properties": [
+        {
+          "id": "1:6493710193710431440",
+          "name": "mockId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4400784480584213111",
+          "name": "eventId",
+          "type": 6
+        },
+        {
+          "id": "3:2743590794565559488",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:6323664243603015038",
+          "name": "isVip",
+          "type": 1
+        },
+        {
+          "id": "5:3544129012850086409",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "6:5838587001672269476",
+          "name": "maxQuantity",
+          "type": 6
+        },
+        {
+          "id": "7:8590610926142522357",
+          "name": "availableQuantity",
+          "type": 6
+        },
+        {
+          "id": "8:5311109087293239859",
+          "name": "startDate",
+          "type": 10
+        },
+        {
+          "id": "9:914962434125441347",
+          "name": "endDate",
+          "type": 10
+        },
+        {
+          "id": "10:2432142119261522732",
+          "name": "id",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "11:3804690194136939675",
+      "lastPropertyId": "3:4754277649475759083",
+      "name": "UserLikesEvents",
+      "properties": [
+        {
+          "id": "1:431275727842209311",
+          "name": "mockId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7058193668654788402",
+          "name": "userId",
+          "type": 6
+        },
+        {
+          "id": "3:4754277649475759083",
+          "name": "eventId",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "12:2067669968815746106",
+      "lastPropertyId": "6:7463573043435195910",
+      "name": "LikedEventCardModel",
+      "properties": [
+        {
+          "id": "1:5705283141748395259",
+          "name": "mockId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:470352315121987329",
+          "name": "id",
+          "type": 9
+        },
+        {
+          "id": "3:1933707016045911043",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:8536462134536752101",
+          "name": "startDate",
+          "type": 10
+        },
+        {
+          "id": "5:1475975273384285378",
+          "name": "eventImageUrl",
+          "type": 9
+        },
+        {
+          "id": "6:7463573043435195910",
+          "name": "isOnline",
+          "type": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "13:939543582948794085",
+      "lastPropertyId": "11:1275253068768484166",
+      "name": "TicketAttendee",
+      "properties": [
+        {
+          "id": "1:5148015034356525215",
+          "name": "mockId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7862359614652500250",
+          "name": "eventMockId",
+          "type": 6
+        },
+        {
+          "id": "3:3019878326367378166",
+          "name": "orderMockId",
+          "type": 6
+        },
+        {
+          "id": "4:6125820165508046979",
+          "name": "id",
+          "type": 9
+        },
+        {
+          "id": "5:6359757392398011238",
+          "name": "eventid",
+          "type": 9
+        },
+        {
+          "id": "6:3773358504010801126",
+          "name": "orderid",
+          "type": 9
+        },
+        {
+          "id": "7:6265562615389511321",
+          "name": "isVip",
+          "type": 1
+        },
+        {
+          "id": "8:7163285883100840764",
+          "name": "firstName",
+          "type": 9
+        },
+        {
+          "id": "9:7618915800121057651",
+          "name": "lastName",
+          "type": 9
+        },
+        {
+          "id": "10:2591500730910463390",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "11:1275253068768484166",
+          "name": "typeOfReservedTicket",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "13:939543582948794085",
+  "lastIndexId": "3:3425995927453799802",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [
+    4293081377155789754,
+    2329366862256821098
+  ],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    5488245486567488427,
+    7100372381637242612,
+    2312945438362267445,
+    2799260197233414138,
+    3470970142947361594,
+    333485570223091719,
+    3117369767745280882,
+    6246247013999198138,
+    2790287386267142519,
+    1958398107393670290,
+    3546888819780287214,
+    4959833791218966225,
+    6732839624408196016,
+    2161200068858155801,
+    7575698529104045696,
+    1405378043978180903,
+    447075717921643552,
+    3214205458895062553,
+    6493024197532204526,
+    7073026940504869321,
+    7895381826733041736,
+    1338969490856261255,
+    4151188518359849841,
+    1867367640587303365,
+    352664110196945194,
+    5322786395524993649,
+    1327959378613592614,
+    6182300656885291160,
+    8854794003904852627,
+    1111742592663004915,
+    6605078193810181580
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

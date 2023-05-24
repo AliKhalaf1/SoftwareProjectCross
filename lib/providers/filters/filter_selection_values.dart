@@ -27,21 +27,28 @@ import 'temp_selected_filter_values.dart';
 
 class FilterSelectionValues with ChangeNotifier {
   Tag _date = Tag('Anytime', true, 'date', 'Anytime');
+  DateTime _startDatePick = DateTime.now();
+  DateTime _endDatePick = DateTime.now();
   Tag _cat = Tag('Anything', true, 'field', 'Anything');
-  String _location = "Online events";
+  String _location = "";
   bool _price = false;
-  bool _organizer = false;
-  int _sortBy = 0;
+  String _nameSearch = "";
+  // bool _organizer = false;
+  // int _sortBy = 0;
   int selectedFilterCount = 0;
+  bool locSelectedBefore = false;
 
   ///Reset values to default
   void resetSelectionValues() {
     _date = Tag('Anytime', true, 'date', 'Anytime');
     _cat = Tag('Anything', true, 'field', 'Anything');
-    _location = "Online events";
+    _location = "";
     _price = false;
-    _organizer = false;
-    _sortBy = 0;
+    _nameSearch = "";
+    DateTime _startDatePick = DateTime.now();
+    DateTime _endDatePick = DateTime.now();
+    // _organizer = false;
+    // _sortBy = 0;
     selectedFilterCount = 0;
     notifyListeners();
   }
@@ -52,13 +59,29 @@ class FilterSelectionValues with ChangeNotifier {
     _cat = temp.cat;
     _location = temp.location;
     _price = temp.price;
-    _organizer = temp.organizer;
-    _sortBy = temp.sortBy;
+    // _organizer = temp.organizer;
+    // _sortBy = temp.sortBy;
     selectedFilterCount = temp.selectedFilterCount;
+    
     notifyListeners();
   }
 
   ///Get data value
+  String get nameSearch {
+    return _nameSearch;
+  }
+
+  ///Get data value
+  DateTime get startDatePick {
+    return _startDatePick;
+  }
+
+    ///Get data value
+  DateTime get endDatePick {
+    return _endDatePick;
+  }
+
+    ///Get data value
   Tag get date {
     return _date;
   }
@@ -79,13 +102,25 @@ class FilterSelectionValues with ChangeNotifier {
   }
 
   ///Get organizer(From which I follow /  not)
-  bool get organizer {
-    return _organizer;
-  }
+  // bool get organizer {
+  //   return _organizer;
+  // }
 
   ///Get sort by
-  int get sortBy {
-    return _sortBy;
+  // int get sortBy {
+  //   return _sortBy;
+  // }
+
+  ///Set SearchByName
+  void setSearchByName(String searchTitle) {
+    _nameSearch = searchTitle;
+    notifyListeners();
+  }
+
+  ///Set SearchByName
+  void clearSearchByName() {
+    _nameSearch = "";
+    notifyListeners();
   }
 
   ///Set Date
@@ -113,16 +148,16 @@ class FilterSelectionValues with ChangeNotifier {
   }
 
   ///Set organizer
-  void setOrg(bool o) {
-    _organizer = o;
-    notifyListeners();
-  }
+  // void setOrg(bool o) {
+  //   _organizer = o;
+  //   notifyListeners();
+  // }
 
   ///Set organizer
-  void setSortingBy(int sb) {
-    _sortBy = sb;
-    notifyListeners();
-  }
+  // void setSortingBy(int sb) {
+  //   _sortBy = sb;
+  //   notifyListeners();
+  // }
 
   ///Increment filter count
   void incSelecFiltersCount() {

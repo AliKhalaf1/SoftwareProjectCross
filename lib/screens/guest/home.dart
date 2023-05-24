@@ -1,6 +1,14 @@
 library GuestHomeScreen;
 
+import 'dart:ui';
+
+import 'package:Eventbrite/helper_functions/Search.dart';
+import 'package:Eventbrite/helper_functions/constants.dart';
+import 'package:Eventbrite/objectbox.dart';
+import 'package:Eventbrite/providers/getevent/getevent.dart';
+
 import '../../helper_functions/log_in.dart';
+import '../../objectbox.g.dart';
 import '../../providers/events/event.dart';
 import '../../widgets/event_collection.dart';
 import '../../providers/categories/categories.dart';
@@ -10,6 +18,7 @@ import '../../providers/events/events.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../providers/categories/categorey.dart';
+import '../../widgets/loading_spinner.dart';
 
 /// {@category Guest}
 /// {@category Screens}
@@ -19,7 +28,6 @@ import '../../providers/categories/categorey.dart';
 /// it contains a list of events in a column
 /// andeach event is in a card
 ///
-///DUMMY DATA to be substituted after linking with Apis and database.
 ///
 ///<b>ListView</b>
 ///
@@ -46,6 +54,7 @@ import '../../providers/categories/categorey.dart';
 ///Search screen index is 1 in tabBaerScreen so we send its index to tabBaerScreen to understands which page to render.
 ///
 class Home extends StatefulWidget {
+  bool isLoading = true;
   static const homePageRoute = '/home';
 
   @override
@@ -57,97 +66,200 @@ class _HomeState extends State<Home> {
   // var _isInit = true;
   // var _isLoading = false;
 
+  // list of all static categories
   final List<String> categoryTitles = [
-    "Tech",
-    "Sports",
-    "Health & Wellness",
-    "Art",
+    "Loyality",
+    "Learn",
     "Business",
-    "Family & Education",
-    "Science",
-    "Culture"
+    "Health",
+    "Tech",
+    "Sports & Fitness",
+    "Culture",
+    "Music",
+    "Performing & Visual Arts",
+    "Holiday",
+    "Hobbies",
+    "Food & Drink",
   ];
 
-  // List<Categorey> _categories = [];
+  // list of list<Event> of all static categories
+  List<List<Event>> events = [];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
+  Future<void> fetchAllEvents() async {
+    setState(() {
+      widget.isLoading = true;
+    });
+    if (Constants.MockServer == false) {
+      for (int i = 0; i < categoryTitles.length; i++) {
+        await search(
+          "",
+          "",
+          "",
+          "",
+          DateTime(2100, 1, 1),
+          DateTime(2100, 1, 1),
+          categoryTitles[i],
+        ).then((value) {
+          if (value.isEmpty) {
+            events.add([]);
+          } else {
+            // print('Database sucess');
+            events.add(value);
+            // print('success');
+            // print(events.last[0].categ);
+            // print(events.last[0].description);
+            // print(events.last[0].id);
+            // print(events.last[0].eventImg);
+            // print(events.last[0].isFav);
+            // print(events.last[0].organization);
+          }
+        });
+      }
+    } else {
+      var eventsbox = ObjectBox.eventBox;
+      for (int i = 0; i < categoryTitles.length; i++) {
+        var fetchedevents = eventsbox
+            .query(Event_.categ.equals(categoryTitles[i]))
+            .build()
+            .find();
+        if (fetchedevents.isEmpty) {
+          print(categoryTitles[i]);
+          print('empty');
+          events.add([]);
+        } else {
+          print(categoryTitles[i]);
+          print('not empty');
+          print(fetchedevents[0].title);
+          events.add(fetchedevents);
+        }
+      }
+    }
+  }
 
   // @override
   // void didChangeDependencies() {
-  //   if (_isInit) {
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-  //     Provider.of<Categories>(context).fetchCategories().then((_) {
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //     });
-  //   }
-  //   _isInit = false;
-  //   super.didChangeDependencies();
-  // }
 
-  // @override
-  // Future<void> didChangeDependencies() async {
-  //   if (_isInit) {
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-  //     final url = Uri.http('http://127.0.0.1:8000/categories/');
-  //     try {
-  //       final response = await http.get(url);
-  //       final extractedData =
-  //           json.decode(response.body) as Map<String, List<String>>;
-  //       if (extractedData == null) {
-  //         return;
-  //       }
-  //       final List<Categorey> loadedcategories = [];
-  //       extractedData.forEach((catTitle, subCats) {
-  //         loadedcategories.add(Categorey(catTitle, subCats));
-  //       });
-  //       _categories = loadedcategories;
-
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //     } catch (error) {
-  //       throw (error);
-  //     }
-  //   }
-  //   _isInit = false;
   //   super.didChangeDependencies();
   // }
 
   @override
-  Widget build(BuildContext context) {
-    final eventsData = Provider.of<Events>(context);
-    final events = eventsData.events;
+  void initState() {
+    fetchAllEvents().then((value) {
+      setState(() {
+        widget.isLoading = false;
+      });
+    });
+    super.initState();
+  }
 
-    if (checkLoggedUser() == false) {
-      eventsData.unFavouriteAll();
-    }
+  @override
+  Widget build(BuildContext context) {
+    // final eventsData = Provider.of<Events>(context);
+    // final events = eventsData.events;
+
+    // if (checkLoggedUser() == false) {
+    //   eventsData.unFavouriteAll();
+    // }
 
     // final cats = Provider.of<Categories>(context);
 
     return Scaffold(
       key: const Key("HomeScreen"),
-      body: SizedBox(
-        height: 700,
-        child: ListView.builder(
-          padding: const EdgeInsets.only(top: 40),
-          itemCount: categoryTitles.length, // substitute with collectionCounts
-          itemBuilder: (ctx, index) {
-            List<Event> matchedEvents = events
-                .where((eventItem) => eventItem.categ == categoryTitles[index])
-                .toList();
-            return EventCollections(categoryTitles[index], true, matchedEvents);
-          },
-        ),
+      appBar: AppBar(
+        toolbarHeight: 70,
+        elevation: 1,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        shadowColor: const Color.fromARGB(255, 255, 255, 255),
+        leadingWidth: double.infinity,
+        leading: Stack(children: <Widget>[
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/appbarimg.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+              child: Container(
+                color: Colors.black.withOpacity(0),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0, bottom: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text('Borto',
+                    style: TextStyle(
+                        fontFamily: "Neue Plak Text",
+                        fontSize: 27,
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromARGB(255, 55, 55, 55))),
+                Image(
+                  image: AssetImage("assets/images/icon.png"),
+                  width: 35,
+                  height: 35,
+                ),
+                Text('an ',
+                    style: TextStyle(
+                        fontFamily: "Neue Plak Text",
+                        fontSize: 27,
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromARGB(255, 55, 55, 55))),
+              ],
+            ),
+          ),
+        ]),
       ),
+      body: widget.isLoading == true
+          ? const LoadingSpinner()
+          : SizedBox(
+              height: 700,
+              child: GlowingOverscrollIndicator(
+                axisDirection: AxisDirection.down,
+                color: const Color.fromARGB(255, 255, 72, 0),
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(top: 10),
+                  itemCount: categoryTitles.length,
+                  itemBuilder: (ctx, index) {
+                    // List<Event> events = [];
+                    // search(
+                    //   "",
+                    //   "",
+                    //   "",
+                    //   "",
+                    //   DateTime(2100, 1, 1),
+                    //   DateTime(2100, 1, 1),
+                    //   categoryTitles[index],
+                    // ).then((value) {
+                    //   if (value.isEmpty) {
+                    //     events = [];
+                    //     print('${categoryTitles[index]} is empty');
+                    //   } else {
+                    //     print('${categoryTitles[index]} is Not empty');
+                    //     events = value;
+                    //     print('success');
+                    //     print(events[0].categ);
+                    //     print(events[0].description);
+                    //     print(events[0].id);
+                    //     print(events[0].eventImg);
+                    //     print(events[0].isFav);
+                    //     print(events[0].organization);
+                    //   }
+                    // });
+
+                    // List<Event> matchedEvents = events
+                    //     .where(
+                    //         (eventItem) => eventItem.categ == categoryTitles[index])
+                    //     .toList();
+                    return EventCollections(
+                        categoryTitles[index], true, events[index]);
+                  },
+                ),
+              ),
+            ),
     );
   }
 }

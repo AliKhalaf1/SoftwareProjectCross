@@ -9,6 +9,7 @@ import '../providers/filters/filter_selection_values.dart';
 import '../providers/filters/tags.dart';
 import '../widgets/event_card.dart';
 import '../providers/events/event.dart';
+import 'title_text_2.dart';
 
 /// {@category Widgets}
 /// Collection of events with similar categorey.
@@ -43,7 +44,7 @@ class EventCollections extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Column(children: [
       parent
           ? Padding(
               padding: const EdgeInsets.only(left: 15, top: 15, bottom: 5),
@@ -68,11 +69,13 @@ class EventCollections extends StatelessWidget {
               ),
             ),
       collecionListOfEvents.isEmpty
-          ? const Center(
-            key:  Key("NoCurrentEvent"),
-              child: Text('There is no current events',
-                  style: TextStyle(color: Colors.grey)),
+          ? const Padding(
+              padding: EdgeInsets.only(left: 70.0),
+              child: TitleText2(
+                'There is no current events',
+              ),
             )
+          // const SizedBox()
           : Column(
               children: collecionListOfEvents.map((e) {
                 return ChangeNotifierProvider.value(

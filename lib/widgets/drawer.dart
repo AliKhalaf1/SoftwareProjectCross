@@ -2,11 +2,13 @@ library CreatorViewSideDrawer;
 
 import 'package:Eventbrite/helper_functions/log_in.dart';
 import 'package:Eventbrite/models/db_mock.dart';
+import 'package:Eventbrite/screens/creator/event_title.dart';
 import 'package:Eventbrite/widgets/tab_bar_Events.dart';
 import 'package:flutter/material.dart';
 import '../helper_functions/log_out.dart';
 import '../models/user.dart';
 import '../screens/tab_bar.dart';
+import 'package:Eventbrite/helper_functions/userInfo.dart';
 
 /// {@category Creator}
 /// {@category Widgets}
@@ -15,7 +17,8 @@ import '../screens/tab_bar.dart';
 ///
 
 class EventDrawer extends StatefulWidget {
-  EventDrawer({super.key});
+  final String userName;
+  EventDrawer({required this.userName});
   var email = '';
   var Name = '';
 
@@ -51,7 +54,7 @@ class _EventDrawerState extends State<EventDrawer> {
   }
 
   void logOutLogic(BuildContext ctx) {
-    setLoggedOut(widget.email);
+    setLoggedOut();
     Navigator.of(ctx).popUntil((route) => route.isFirst);
     Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
       return TabBarScreen(title: 'Profile', tabBarIndex: 4);
@@ -76,6 +79,12 @@ class _EventDrawerState extends State<EventDrawer> {
   void eventNavigate(BuildContext ctx) {
     Navigator.of(ctx).pushNamed(
       TabBarEvents.route,
+    ); // we use same string in main it’s a key
+  }
+
+  void eventAdd(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(
+      EventTitle.route,
     ); // we use same string in main it’s a key
   }
 
@@ -127,7 +136,7 @@ class _EventDrawerState extends State<EventDrawer> {
           const SizedBox(
             height: 20,
           ),
-          buildlistview(widget.Name, Icons.business_center_rounded, 0, () {
+          buildlistview(widget.userName, Icons.business_center_rounded, 0, () {
             iconHandler(0);
           }, key: const Key("UserName")),
           buildlistview('Events', Icons.date_range_rounded, 1, () {
@@ -135,36 +144,16 @@ class _EventDrawerState extends State<EventDrawer> {
             eventNavigate(context);
             iconHandler(1);
           }, key: const Key("Events")),
-          buildlistview('Search Orders', Icons.event_rounded, 2, () {
+          buildlistview('Add Event', Icons.add, 2, () {
+            eventAdd(context);
             iconHandler(2);
-          }, key: const Key("SearchOrders")),
-          buildlistview('Change Organisation', Icons.compare_arrows_rounded, 3,
-              () {
-            iconHandler(3);
-          }, key: const Key("Change Organisation")),
-          const Divider(),
-          buildlistview('Device Settings', Icons.settings, 4, () {
-            iconHandler(4);
-          }, key: const Key("Device Settings")),
-          buildlistview('Feedback', Icons.mms, 5, () {
-            iconHandler(5);
-          }, key: const Key("Feedback")),
+          }, key: const Key("Add Event")),
           const Divider(),
           Column(
             children: [
-              ListTile(
-                leading: Text(
-                  widget.email,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color.fromRGBO(94, 92, 109, 1),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              buildlistview('Log Out', Icons.logout, 6, () {
+              buildlistview('Log Out', Icons.logout, 3, () {
                 logOutLogic(context);
-                iconHandler(6);
+                iconHandler(3);
               }, key: const Key("Log Out")),
             ],
           ),

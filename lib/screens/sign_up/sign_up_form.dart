@@ -163,15 +163,16 @@ class _SignUpFormState extends State<SignUpForm> {
     String userLastName = widget._lastNameText.text;
     String userPassword = widget._passwordText.text;
     String userEmail = widget.emailText;
-    bool added = DBMock.addUser(
-      User(
-        userEmail,
-        '',
-        userFirstName,
-        userLastName,
-      ),
-      Auth(userEmail, userPassword),
-    );
+    // int res = 200;
+    // bool added = DBMock.addUser(
+    //   User(
+    //     userEmail,
+    //     '',
+    //     userFirstName,
+    //     userLastName,
+    //   ),
+    //   Auth(userEmail, userPassword),
+    // );
     Navigator.of(context).pop();
     setState(() {
       isLoading = true;
@@ -180,14 +181,16 @@ class _SignUpFormState extends State<SignUpForm> {
       setState(() {
         isLoading = false;
       });
+
       if (res == 200) {
+        //setLoggedIn(userEmail, "Dummy Token");
         Navigator.of(context).popUntil((route) => route.isFirst);
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
           return TabBarScreen(title: 'Profile', tabBarIndex: 4);
         }));
 
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Please verify your email then login')));
+            content: Text('Please verify your email then login again')));
       } else if (res == 400) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(

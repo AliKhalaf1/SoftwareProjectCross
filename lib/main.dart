@@ -1,25 +1,47 @@
 import 'package:Eventbrite/providers/categories/categories.dart';
+import 'package:Eventbrite/providers/createevent/createevent.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:Eventbrite/providers/filters/tags.dart';
 import 'package:Eventbrite/providers/filters/temp_tags.dart';
+import 'package:Eventbrite/providers/getevent/getevent.dart';
+import 'package:Eventbrite/screens/creator/add_attendee.dart';
+import 'package:Eventbrite/screens/creator/all_coupons.dart';
+import 'package:Eventbrite/screens/creator/all_tickets.dart';
+import 'package:Eventbrite/screens/creator/bar_location.dart';
+import 'package:Eventbrite/screens/creator/coupons_form.dart';
+import 'package:Eventbrite/screens/creator/description_event.dart';
+import 'package:Eventbrite/screens/creator/event_dashboard.dart';
+import 'package:Eventbrite/screens/creator/event_location.dart';
+import 'package:Eventbrite/screens/creator/event_start_end_date.dart';
+import 'package:Eventbrite/screens/creator/event_title.dart';
+import 'package:Eventbrite/screens/creator/main_event_form.dart';
+import 'package:Eventbrite/screens/creator/tickets_form.dart';
 import 'package:Eventbrite/screens/event_page.dart';
 import 'package:Eventbrite/screens/guest/home.dart';
+import 'package:Eventbrite/screens/landing_screen.dart';
 import 'package:Eventbrite/screens/search_screen.dart';
 import 'package:Eventbrite/screens/user/account_settings.dart';
 import 'package:Eventbrite/screens/creator/past_events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'objectbox.dart';
 import 'providers/filters/filter_selection_values.dart';
 import 'providers/filters/temp_selected_filter_values.dart';
+import 'providers/tickets/tickets.dart';
 import 'screens/sign_up/sign_up_or_log_in.dart';
 import 'screens/tab_bar.dart';
 import 'screens/sign_in/email_check.dart';
-import './screens/find_tickets.dart';
 import 'widgets/tab_bar_Events.dart';
 import 'providers/events/events.dart';
 
+late ObjectBox objectbox;
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  ObjectBox.create().then((value) => objectbox = value);
+
   runApp(const MainApp());
 }
 
@@ -57,6 +79,15 @@ class _MainAppState extends State<MainApp> {
         ChangeNotifierProvider.value(
           value: Categories(),
         ),
+        ChangeNotifierProvider.value(
+          value: Tickets(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TheEvent(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => totalEvents(),
+        ),
       ],
       child: MaterialApp(
         title: 'Eventbrite',
@@ -70,19 +101,34 @@ class _MainAppState extends State<MainApp> {
         ),
 
         // home: const TabBarScreen(title: 'Eventbrite'),
-        initialRoute: TabBarScreen.tabBarScreenRoute,
+        initialRoute: LandingScreen.landingScreenRoute,
+
         routes: {
+          LandingScreen.landingScreenRoute: (ctx) => const LandingScreen(),
           TabBarScreen.tabBarScreenRoute: (ctx) =>
               TabBarScreen(title: 'Eventbrite', tabBarIndex: 0),
           SignUpOrLogIn.signUpRoute: (ctx) => const SignUpOrLogIn(),
           EmailCheck.emailCheckRoute: (ctx) => EmailCheck(),
-          FindTickets.findTicketsRoute: (ctx) => const FindTickets(),
           TabBarEvents.route: (ctx) => TabBarEvents(),
-          PastEvents.route: (ctx) => const PastEvents(),
-          AccountSettings.accountSettingsRoute: (ctx) => AccountSettings(),
-          EventPage.eventPageRoute: (ctx) => const EventPage(),
+          PastEvents.route: (ctx) => PastEvents(),
+          EventTitle.route: (ctx) => EventTitle(),
+          Event_Description.route: (ctx) => Event_Description(),
+          AccountSettings.accountSettingsRoute: (ctx) =>
+              AccountSettings("", "", "", ""),
+          EventDate.route: (ctx) => EventDate(),
+          EventPage.eventPageRoute: (ctx) => EventPage("", false, 0),
+          // EventPage.eventPageRoute: (ctx) => EventPage(),
+          EventLocation.route: (ctx) => const EventLocation(),
           Home.homePageRoute: (ctx) => Home(),
-          Search.searchPageRoute: (ctx) => const Search(),
+          EventForm.route: (ctx) => const EventForm(),
+          All_Tickets.route: (ctx) => All_Tickets(),
+          TicketForm.route: (ctx) => TicketForm(),
+          Search.searchPageRoute: (ctx) => Search(),
+          BarLocation.route: (ctx) => BarLocation(),
+          AllCoupons.route: (ctx) => AllCoupons(),
+          CouponForm.route: (ctx) => CouponForm(),
+          EventsDashboard.route: (ctx) => EventsDashboard(),
+          AttendeeForm.route: (ctx) => AttendeeForm(),
         },
       ),
     );

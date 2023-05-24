@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:objectbox/objectbox.dart';
 import '../filters/tag.dart';
 
 /// {@category Providers}
@@ -16,37 +17,52 @@ import '../filters/tag.dart';
 ///
 ///   • state: Online / Offline
 ///
-///   • creatorFollowers: number of followers who follow the event organizer
+///   • status: private / public
+///
+///   • organization: organization that organize the event
 ///
 ///   • isFav: boolean variable check if user mark this event to its favourites or not
 ///
 
-enum EventState { online, offline }
+// enum EventState { online, offline }
 
+// enum EventStatus { private, public }
+
+@Entity()
 class Event with ChangeNotifier {
   //parameters of the EventCard Widget
+  @Id()
+  int mockId = 0;
+  int creatorId = 0;
+
   final String eventImg; /*event card image */
-  final DateTime date; /*event date*/
+  final DateTime startDate; /*start event date*/
+  final DateTime endDate; /*end event date*/
   final String description; /*event dscription*/
-  final EventState state; /*event state (online/onsite)*/
-  final int creatorFollowers; /*number of followers of the event creator*/
+  final bool isOnline; /*event state (online/onsite)*/
+  final bool isPrivate; /*event status (private/public) */
   bool isFav;
   final String categ;
   final List<String> tags;
   final String id;
+  final String title;
+  final String organization;
+  String city = "";
 
   ///Constructor
   Event(
-    this.creatorFollowers,
-    this.date,
-    this.description,
-    this.eventImg,
-    this.state,
-    this.isFav,
-    this.categ,
-    this.tags,
-    this.id,
-  );
+      this.id,
+      this.startDate,
+      this.endDate,
+      this.description,
+      this.eventImg,
+      this.isOnline,
+      this.isFav,
+      this.categ,
+      this.tags,
+      this.title,
+      this.organization,
+      this.isPrivate);
 
   /// Set isFav Value by true or false
   void _setFavValue(bool newValue) {

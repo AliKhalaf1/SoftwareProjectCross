@@ -1,5 +1,6 @@
 library EventCard;
 
+import 'package:Eventbrite/helper_functions/Likes_functions.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,27 +44,26 @@ class _EventCardState extends State<EventCard> {
 
     //----------------------- Methods ------------------------------
 
-    Future<void> toggleFav(BuildContext ctx) async {
+    Future<void> toggleFav(
+        BuildContext ctx, String eventid, int eventmockId) async {
       //add to favourites list
       bool isLogged = await checkLoggedUser();
       setState(() {
-        if (isLogged) {
-          //Call toggleStatus function from event class
-          if (event.isFav) {
-            favsData.removeEventFromFav(event);
-          } else {
-            favsData.addEventToFav(event);
-          }
-        } else {
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-            return const SignUpOrLogIn();
-          }));
-        }
+        event.isFav = !event.isFav;
       });
-    }
 
-    void share() {
-      return;
+      if (isLogged) {
+        //Call toggleStatus function from event class
+        if (event.isFav) {
+          bool asd = await UnlikeEventHelper(eventid, eventmockId);
+        } else {
+          bool asd = await likeEventHelper(eventid, eventmockId);
+        }
+      } else {
+        Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+          return const SignUpOrLogIn();
+        }));
+      }
     }
 
     return Stack(
@@ -82,8 +82,16 @@ class _EventCardState extends State<EventCard> {
                     width: 100,
                     height: 100,
                     child: event.eventImg.startsWith('http')
-                        ? Image.network(
-                            event.eventImg,
+                        ? FadeInImage(
+                            placeholder: const AssetImage(
+                                'assets/images/no_image_found.png'),
+                            imageErrorBuilder: (context, error, stackTrace) =>
+                                const Image(
+                              image: AssetImage(
+                                  'assets/images/no_image_found.png'),
+                              fit: BoxFit.cover,
+                            ),
+                            image: NetworkImage(event.eventImg),
                             fit: BoxFit.cover,
                           )
                         : Image.asset(
@@ -98,23 +106,25 @@ class _EventCardState extends State<EventCard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.date)} EET',
+                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.startDate)} EET',
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w500,
                               fontSize: 14)),
                       SizedBox(
                           width: 200,
-                          child: Text(event.description,
+                          child: Text(event.title,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 16))),
-                      Text(
-                        (event.state == EventState.online)
-                            ? 'Online'
-                            : 'Offline',
-                        style: const TextStyle(color: Colors.grey),
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                          (event.isOnline == true) ? 'Online' : event.city,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
                       ),
                       Row(
                         children: [
@@ -125,12 +135,11 @@ class _EventCardState extends State<EventCard> {
                           ),
                           SizedBox(
                             width: 130,
-                            child: Text(
-                                '${event.creatorFollowers} creator followers',
+                            child: Text(event.organization,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     color: Color.fromRGBO(0, 0, 0, 0.7),
-                                    fontSize: 10,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w500)),
                           )
                         ],
@@ -142,37 +151,23 @@ class _EventCardState extends State<EventCard> {
             ),
           ),
         ),
-        Positioned(
-            bottom: 2,
-            right: 10,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  key: const Key("ShareBtn"),
-                  onPressed: share,
-                  icon: const Icon(
-                    key: Key("shareIcon"),
-                    Icons.share,
-                    size: 20,
-                    color: Color.fromRGBO(0, 0, 0, 0.7),
-                  ),
-                ),
-                IconButton(
-                  key: const Key("AddToFavBtn"),
-                  onPressed: () => toggleFav(context),
-                  icon: Icon(
-                    key: const Key("favIcon"),
-                    !event.isFav
-                        ? Icons.favorite_border_rounded
-                        : Icons.favorite_sharp,
-                    color: !event.isFav
-                        ? const Color.fromRGBO(0, 0, 0, 0.7)
-                        : const Color.fromARGB(255, 209, 65, 12),
-                  ),
-                ),
-              ],
-            )),
+        // Positioned(
+        //   bottom: 2,
+        //   right: 10,
+        //   child: IconButton(
+        //     key: const Key("AddToFavBtn"),
+        //     onPressed: () => toggleFav(context, event.id, event.mockId),
+        //     icon: Icon(
+        //       key: const Key("favIcon"),
+        //       !event.isFav
+        //           ? Icons.favorite_border_rounded
+        //           : Icons.favorite_sharp,
+        //       color: !event.isFav
+        //           ? const Color.fromRGBO(0, 0, 0, 0.7)
+        //           : const Color.fromARGB(255, 209, 65, 12),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

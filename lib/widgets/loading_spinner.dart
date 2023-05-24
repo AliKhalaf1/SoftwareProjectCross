@@ -3,6 +3,12 @@ library LoadingSpinner;
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+/// {@category Widgets}
+///
+/// stateless widget called LoadingSpinner that displays a loading animation with a text "Loading" below it.
+///
+/// The loading animation is a circular progress indicator provided by the LoadingAnimationWidget class.
+/// 
 class LoadingSpinner extends StatelessWidget {
   const LoadingSpinner({
     super.key,

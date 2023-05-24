@@ -1,6 +1,9 @@
 library FavouriteEventCard;
 
+import 'package:Eventbrite/helper_functions/Likes_functions.dart';
+import 'package:Eventbrite/models/liked_event_card_model.dart';
 import 'package:Eventbrite/providers/events/fav_events.dart';
+import 'package:Eventbrite/screens/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../helper_functions/events_handlers.dart';
@@ -24,11 +27,10 @@ import '../screens/sign_up/sign_up_or_log_in.dart';
 ///
 class FavouriteEventCard extends StatefulWidget {
   //event to be shown in the card
-  // Event event;
-
+  final Event event;
+  bool isFav = true;
   //constructor
-  // EventCard(this.event, {super.key});
-
+  FavouriteEventCard(this.event, {super.key});
   @override
   State<FavouriteEventCard> createState() => _FavouriteEventCardState();
 }
@@ -36,41 +38,19 @@ class FavouriteEventCard extends StatefulWidget {
 class _FavouriteEventCardState extends State<FavouriteEventCard> {
   @override
   Widget build(BuildContext context) {
-    //----------------------- Event provider ------------------------------
+    // //----------------------- Event provider ------------------------------
 
-    final event = Provider.of<Event>(context, listen: false);
-    final favsData = Provider.of<FavEvents>(context);
+    // final event = Provider.of<Event>(context, listen: false);
+    // final favsData = Provider.of<FavEvents>(context);
 
-    //----------------------- Methods ------------------------------
-
-    Future<void> toggleFav(BuildContext ctx) async {
-      //add to favourites list
-      bool isLogged = await checkLoggedUser();
-      setState(() {
-        if (isLogged) {
-          //Call toggleStatus function from event class
-          if (event.isFav) {
-            favsData.removeEventFromFav(event);
-          } else {
-            favsData.addEventToFav(event);
-          }
-        } else {
-          Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-            return const SignUpOrLogIn();
-          }));
-        }
-      });
-    }
-
-    void share() {
-      return;
-    }
+    // //----------------------- Methods ------------------------------
 
     return Stack(
       fit: StackFit.loose,
       children: [
         InkWell(
-          onTap: () => selectEvent(context, event),
+          key: const Key("EventsCard"),
+          onTap: () => selectEvent(context, widget.event),
           child: Padding(
             padding: const EdgeInsets.only(top: 15, left: 15, bottom: 15),
             child: Row(
@@ -80,13 +60,21 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                 SizedBox(
                     width: 100,
                     height: 100,
-                    child: event.eventImg.startsWith('http')
-                        ? Image.network(
-                            event.eventImg,
+                    child: widget.event.eventImg.startsWith('http')
+                        ? FadeInImage(
+                            placeholder: const AssetImage(
+                                'assets/images/no_image_found.png'),
+                            imageErrorBuilder: (context, error, stackTrace) =>
+                                const Image(
+                              image: AssetImage(
+                                  'assets/images/no_image_found.png'),
+                              fit: BoxFit.cover,
+                            ),
+                            image: NetworkImage(widget.event.eventImg),
                             fit: BoxFit.cover,
                           )
                         : Image.asset(
-                            event.eventImg,
+                            widget.event.eventImg,
                             fit: BoxFit.cover,
                           )),
                 Container(
@@ -94,21 +82,47 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
                   padding: const EdgeInsets.only(left: 10, top: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(event.date)} EET',
+                          '${DateFormat('EEE, MMM d • hh:mmaaa ').format(widget.event.startDate)} EET',
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.w500,
                               fontSize: 14)),
                       SizedBox(
                           width: 200,
-                          child: Text(event.description,
+                          child: Text(widget.event.title,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 16))),
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                          (widget.event.isOnline == true) ? 'Online' : widget.event.city,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            key: Key("person"),
+                            Icons.person_outline_outlined,
+                            color: Color.fromRGBO(0, 0, 0, 0.7),
+                          ),
+                          SizedBox(
+                            width: 130,
+                            child: Text(widget.event.organization,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(0, 0, 0, 0.7),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500)),
+                          )
+                        ],
+                      )
                     ],
                   ),
                 )
@@ -117,35 +131,46 @@ class _FavouriteEventCardState extends State<FavouriteEventCard> {
           ),
         ),
         Positioned(
-            bottom: 2,
-            right: 10,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  onPressed: share,
-                  icon: const Icon(
-                    key: Key("share"),
-                    Icons.share,
-                    size: 20,
-                    color: Color.fromRGBO(0, 0, 0, 0.7),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () => toggleFav(context),
-                  icon: Icon(
-                    key: const Key("fav"),
-                    !event.isFav
-                        ? Icons.favorite_border_rounded
-                        : Icons.favorite_sharp,
-                    color: !event.isFav
-                        ? const Color.fromRGBO(0, 0, 0, 0.7)
-                        : const Color.fromARGB(255, 209, 65, 12),
-                  ),
-                ),
-              ],
-            )),
+          bottom: 2,
+          right: 10,
+          child: IconButton(
+            key: const Key("AddToFavBtn"),
+            onPressed: () {
+              UnlikeEvent(context, widget.event.id, widget.event.mockId);
+              setState(() {
+                widget.isFav = !widget.isFav;
+              });
+            },
+            icon: Icon(
+              key: const Key("favIcon"),
+              widget.isFav == false
+                  ? Icons.favorite_border_rounded
+                  : Icons.favorite_sharp,
+              color: const Color.fromARGB(255, 209, 65, 12),
+            ),
+          ),
+        ),
       ],
     );
+  }
+}
+
+void UnlikeEvent(
+  BuildContext context,
+  String eventId,
+  int eventmockID,
+) async {
+  // Navigator.of(context).pop();
+  bool state = await UnlikeEventHelper(eventId, eventmockID);
+
+  Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => TabBarScreen(
+            title: "Favourites",
+            tabBarIndex: 2,
+          )));
+  if (state != true) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Something Wrong Happened"),
+    ));
   }
 }

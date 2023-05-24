@@ -50,6 +50,26 @@ dependencies:
   provider: ^6.0.5
   dotted_border: ^2.0.0
   percent_indicator: ^3.4.0
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  objectbox: ^2.0.0
+  objectbox_flutter_libs: any
+  splash_route: ^0.0.2
+  google_places_for_flutter: ^1.0.1
+  google_maps_flutter: ^2.2.6
+  search_map_location: ^0.0.6
+  change_app_package_name: ^1.1.0
+  google_sign_in: ^6.1.0
+  flutter_facebook_auth: ^5.0.10
+  ticket_widget: ^0.0.1
+  circle_progress_bar: ^0.1.2
+  flutter_ticket_widget: ^0.0.1
+  csv: ^5.0.2
+  url_launcher: ^6.1.11
+  audioplayers: ^4.0.1
+  open_file: ^3.3.1
+
+ 
 
 
 
@@ -66,6 +86,19 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   mocktail: ^0.2.0
+  flutter_launcher_icons: "^0.13.1"
+  build_runner: ^2.3.3
+  objectbox_generator: any
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+    
+
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -83,7 +116,10 @@ flutter:
     - assets/images/images.jfif
     - assets/images/images1.jfif
     - assets/images/camera.jfif
+    - assets/images/camera2.jfif
+    - assets/images/tickets.jfif
     - assets/images/no_user_found.jfif
+    - assets/images/no_image_found.png
     - assets/images/yla.png
     - assets/doc/Screens/homePage/homeScreen.png
     - assets/doc/Screens/homePage/eventCollection.png
@@ -98,7 +134,13 @@ flutter:
     - assets/images/past_events.jfif
     - assets/images/draft_events.jfif
     - assets/images/TicketShape.png
-
+    - assets/images/TicketShape2.png
+    - assets/images/icon.png
+    - assets/images/o3.png
+    - assets/images/appbarimg.jpg
+    - assets/sounds/confirm.wav
+    - assets/sounds/placeorder.mp4
+    - assets/sounds/welcome.mp4
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

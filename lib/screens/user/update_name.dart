@@ -8,7 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import '../../helper_functions/constants.dart';
 import '../../models/db_mock.dart';
+import 'package:http/http.dart' as http;
+
+import '../../objectbox.dart';
+import '../../objectbox.g.dart';
 
 /// {@category user}
 /// {@category Screens}
@@ -24,7 +29,7 @@ class UpdateNamePage extends StatefulWidget {
   var firstNameText = TextEditingController();
   var lastNameText = TextEditingController();
   List<bool> checks = [false, false, false];
-  bool _SaveBtnActive = false;
+  bool _saveBtnActive = false;
   bool _isLoading = false;
 
   @override
@@ -41,9 +46,9 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
 
     setState(() {
       if ((widget.checks[0] || widget.checks[1]) && widget.checks[2]) {
-        widget._SaveBtnActive = true;
+        widget._saveBtnActive = true;
       } else {
-        widget._SaveBtnActive = false;
+        widget._saveBtnActive = false;
       }
     });
   }
@@ -174,20 +179,20 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
                   child: TextButton(
                     key: const Key("save_button"),
                     style: ButtonStyle(
-                      overlayColor: widget._SaveBtnActive
+                      overlayColor: widget._saveBtnActive
                           ? MaterialStateProperty.all(Colors.black12)
                           : MaterialStateProperty.all(Colors.transparent),
                       side: MaterialStateProperty.all<BorderSide>(
                         BorderSide(
-                          color: widget._SaveBtnActive
+                          color: widget._saveBtnActive
                               ? Colors.black38
-                              : Color.fromARGB(255, 219, 219, 219),
+                              : const Color.fromARGB(255, 219, 219, 219),
                           width: 2.2,
                         ),
                       ),
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent),
-                      foregroundColor: widget._SaveBtnActive
+                      foregroundColor: widget._saveBtnActive
                           ? MaterialStateProperty.all(Colors.black87)
                           : MaterialStateProperty.all(Colors.grey[400]),
                       shape: MaterialStatePropertyAll(
@@ -196,20 +201,58 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
                         ),
                       ),
                     ),
-                    onPressed: widget._SaveBtnActive
+                    onPressed: widget._saveBtnActive
                         ? () async {
                             setState(() {
                               widget._isLoading = true;
                             });
-                            getEmail().then((value) {
-                              DBMock.updateUserName(
-                                  value,
-                                  widget.firstNameText.text,
-                                  widget.lastNameText.text);
+                            ///////////////////////////////////////////////////////////////////////////////////////
+                            if (Constants.MockServer == true) {
+                              getEmail().then((value) {
+                                var userbox = ObjectBox.userBox;
+                                var user = userbox
+                                    .query(User_.email.equals(value))
+                                    .build()
+                                    .findFirst();
+                                user!.firstName = widget.firstNameText.text;
+                                user.lastName = widget.lastNameText.text;
 
+                                userbox.put(user);
+
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop(true);
+                              });
+                            } else {
+                              ///////////////////////////////////////////////////////////////////////////////////////
+                              /// api implementation
+                              String token = await getToken();
+                              var uri = Uri.parse(
+                                  '${Constants.host}/users/me/edit?firstname=${widget.firstNameText.text}&lastname=${widget.lastNameText.text}');
+
+                              //create multipart request
+                              Map<String, String> reqHeaders = {
+                                'Authorization': 'Bearer $token',
+                              };
+                              var response = await http.put(
+                                uri,
+                                headers: reqHeaders,
+                              );
+                              int responseCode = response.statusCode;
+                              setState(() {
+                                widget._isLoading = false;
+                              });
                               Navigator.of(context).pop();
-                              Navigator.of(context).pop();
-                            });
+                              Navigator.of(context).pop(true);
+                              print(responseCode);
+                              if (responseCode != 200) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Error updating info'),
+                                  ),
+                                );
+                              }
+                            }
+                            ///////////////////////////////////////////////////////////////////////////////////////
                           }
                         : () => {},
                     child: const Text(

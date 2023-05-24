@@ -1,9 +1,11 @@
-library TabBarScreen;
+library BottomNavBar;
 
-import 'package:Eventbrite/screens/creator/live_events.dart';
-import 'package:Eventbrite/screens/creator/past_events.dart';
+import 'package:Eventbrite/helper_functions/constants.dart';
+import 'package:Eventbrite/helper_functions/log_in.dart';
+import 'package:Eventbrite/screens/creator/Attendee_report.dart';
 import 'package:Eventbrite/screens/user/favourites.dart';
-import 'package:Eventbrite/screens/user/tickets_page.dart';
+import 'package:Eventbrite/screens/user/tickets_tab_bar.dart';
+import 'package:Eventbrite/widgets/loading_spinner.dart';
 import 'package:provider/provider.dart';
 
 import '../../screens/guest/favourites_sign_up.dart';
@@ -45,9 +47,10 @@ class TabBarScreen extends StatefulWidget {
   // const TabBarScreen({super.key});
 
   //Routing value
-  static const tabBarScreenRoute = '/';
+  static const tabBarScreenRoute = '/tabBar';
   final String title;
   int tabBarIndex;
+  bool isLoading = false;
   TabBarScreen({super.key, required this.title, this.tabBarIndex = 0});
 
   @override
@@ -59,20 +62,35 @@ class TabBarScreen extends StatefulWidget {
 ///
 class TabBarScreenState extends State<TabBarScreen> {
   Future<void> checkLoggedUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.getString('token') ?? '';
+    widget.isLoading = true;
+    bool isLoggedIn = false;
+    if (Constants.MockServer == false) {
+      //////////////////////////////////////////////////////////////////////////////////////////////
+      String token = await getToken();
 
-    if (token.isNotEmpty) {
-      var email = prefs.getString('email') ?? '';
-      User user = DBMock.getUserData(email);
+      print('tab_bar token: $token');
 
+      isLoggedIn = await checkToken(token);
+      //isLoggedIn = true;
+      widget.isLoading = false;
+      //////////////////////////////////////////////////////////////////////////////////////////////
+    } else {
+      String email = await getEmail();
+      isLoggedIn = email.isNotEmpty;
+      //////////////////////////////////////////////////////////////////////////////////////////////
+      widget.isLoading = false;
+    }
+    //bool isLoggedIn = token.isNotEmpty;
+    print('tab_bar isLoggedIn: $isLoggedIn');
+
+    if (isLoggedIn) {
       setState(() {
         widget.tabBarIndex = 4;
         pages = [
           Home(),
-          const Search(),
-          const Favourites(),
-          const TicketsPage(),
+          Search(),
+          Favourites(),
+          TicketsTabBar(),
           Profile(
             checkLoggedUser,
           ),
@@ -82,7 +100,7 @@ class TabBarScreenState extends State<TabBarScreen> {
       setState(() {
         pages = [
           Home(),
-          const Search(),
+          Search(),
           const FavouritesSignUp(),
           const TicketsSignUp(),
           const ProfileSignUp(),
@@ -101,7 +119,7 @@ class TabBarScreenState extends State<TabBarScreen> {
 
   List<Widget> pages = [
     Home(),
-    const Search(),
+    Search(),
     const FavouritesSignUp(),
     const TicketsSignUp(),
     const ProfileSignUp(),
@@ -169,7 +187,7 @@ class TabBarScreenState extends State<TabBarScreen> {
               label: 'Profile',
             ),
           ]),
-      body: pages[_currentIndex],
+      body: widget.isLoading ? const LoadingSpinner() : pages[_currentIndex],
     );
   }
 }

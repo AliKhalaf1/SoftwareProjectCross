@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class ProfileImage extends StatelessWidget {
   final String link;
 
-  ProfileImage(this.link, {super.key});
+  const ProfileImage(this.link, {super.key});
 
   @override
   Widget build(BuildContext context) {

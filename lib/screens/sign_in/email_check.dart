@@ -2,6 +2,7 @@ library EmailCheckScreen;
 
 import 'dart:convert';
 
+import 'package:Eventbrite/widgets/loading_spinner.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../helper_functions/constants.dart';
@@ -70,22 +71,7 @@ class _EmailCheckState extends State<EmailCheck> {
         title: const AppBarText('Log in or Sign up'),
       ),
       body: isLoading
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  LoadingAnimationWidget.discreteCircle(
-                      secondRingColor: Colors.grey,
-                      thirdRingColor: Colors.grey,
-                      color: Colors.grey,
-                      size: 60),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  const Text("Loading"),
-                ],
-              ),
-            )
+          ? const LoadingSpinner()
           : Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
