@@ -6,6 +6,7 @@
 <!-- ![Icon Image](assets\images\icon.png "Borto2an") -->
 <h2><i>EventBrite Mobile Application Clone</i><h2>
 
+
 ## Description
 Borto2an is a clone of the EventBrite mobile application. It allows users to create/attend events. Users can also search for events by category and location. This application was built using Flutter , Dart, ObjectBox for Mock Version and Fast-Api with MonogDb for the Live Version.
 
