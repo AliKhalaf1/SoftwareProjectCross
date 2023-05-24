@@ -52,4 +52,4 @@ Borto2an is a clone of the EventBrite mobile application. It allows users to cre
 - Use the <strong>APK</strong> file in the repository to install the app on your android device
     - Make sure to enable installing apps from unknown sources in your device settings
     - You can find the Live Version APK file in the following path: `build\app\outputs\flutter-apk\Borto2an_live_version.apk`.
-    - You can find the Live Version APK file in the following path: `build\app\outputs\flutter-apk\Borto2an_mock_version.apk`.
+    - You can find the Mock Version APK file in the following path: `build\app\outputs\flutter-apk\Borto2an_mock_version.apk`.
